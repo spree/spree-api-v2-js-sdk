@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": ">=9.3.0",
+    "node": ">=8",
     "yarn": ">=1.13.0"
   },
   "main": "dist/index.js",
@@ -37,5 +37,12 @@
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
     "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "@orbit/coordinator": "^0.15.23",
+    "@orbit/data": "^0.15.23",
+    "@orbit/jsonapi": "^0.15.25",
+    "@orbit/store": "^0.15.25",
+    "isomorphic-fetch": "^2.2.1"
   }
 }
