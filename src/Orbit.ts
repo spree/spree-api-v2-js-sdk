@@ -3,9 +3,10 @@ import Store from '@orbit/store'
 import JSONAPISource from '@orbit/jsonapi'
 import Coordinator, { RequestStrategy, SyncStrategy, EventLoggingStrategy } from '@orbit/coordinator'
 import { currentSchema } from './schema'
+import { Model } from './interfaces/Model'
 
 export default class Orbit {
-  public currentSchema: any
+  public currentSchema: Model
   public coordinator: Coordinator
   public schema: Schema
   public remote: JSONAPISource
