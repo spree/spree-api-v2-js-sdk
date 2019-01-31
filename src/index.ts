@@ -17,9 +17,8 @@ const schemaDefinition = {
       },
       relationships: {
         taxons: {
-          type: 'hasMany' as 'hasMany',
-          model: 'taxon',
-          inverse: 'products'
+          type: 'hasMany',
+          model: 'taxon'
         }
       }
     },
@@ -27,13 +26,6 @@ const schemaDefinition = {
       attributes: {
         name: { type: 'string' },
         permalink: { type: 'string' }
-      },
-      relationships: {
-        products: {
-          type: 'hasMany' as 'hasMany',
-          model: 'product',
-          inverse: 'taxons'
-        }
       }
     }
   }
@@ -85,11 +77,9 @@ coordinator.addStrategy(new RequestStrategy({
 
 coordinator.activate({ logLevel: LogLevel.None })
   .then(() => {
-    store.query(q => q.findRecord({ type: 'product', id: '10' }), { sources: { remote: { include: ['taxons'] } } })
-      .then(res => {
-        console.log(JSON.stringify(res, null, 2))
-        console.log(store.cache.query(q => q.findRecords('taxon')));
-      })
+    store.query(q => q.findRecords('product'))
+      .then(console.log)
       .catch(console.error)
   })
   .catch(console.error)
+  
