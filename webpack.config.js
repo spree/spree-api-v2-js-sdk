@@ -40,8 +40,7 @@ module.exports = {
             }
           }
         ],
-        include: baseDirectoryPath,
-        exclude: /node_modules/
+        include: srcDirectoryPath
       },
       {
         test: /\.js$/,
