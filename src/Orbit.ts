@@ -2,17 +2,18 @@ import { Schema } from '@orbit/data'
 import Store from '@orbit/store'
 import JSONAPISource from '@orbit/jsonapi'
 import Coordinator, { RequestStrategy, SyncStrategy, EventLoggingStrategy } from '@orbit/coordinator'
+import { currentSchema } from './schema'
 
 export default class Orbit {
   public currentSchema: any
-  public coordinator: any
-  public schema: any
-  public remote: any
-  public store: any
+  public coordinator: Coordinator
+  public schema: Schema
+  public remote: JSONAPISource
+  public store: Store
 
-  constructor(schema) {
-    this.currentSchema = schema
-    this.schema = new Schema(schema)
+  constructor() {
+    this.currentSchema = currentSchema
+    this.schema = new Schema(currentSchema)
     this.remote = new JSONAPISource({ schema: this.schema, name: 'remote', host: 'http://localhost:5000/api/v2/storefront' })
     this.coordinator = new Coordinator()
     this.store = new Store({ schema: this.schema, name: 'store' })
