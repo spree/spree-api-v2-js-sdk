@@ -1,7 +1,7 @@
 import { Schema } from '@orbit/data'
 import Store from '@orbit/store'
 import JSONAPISource from '@orbit/jsonapi'
-import Coordinator, { RequestStrategy, SyncStrategy, EventLoggingStrategy, LogLevel } from '@orbit/coordinator'
+import Coordinator, { RequestStrategy, SyncStrategy, EventLoggingStrategy } from '@orbit/coordinator'
 
 export default class Orbit {
   public currentSchema: any

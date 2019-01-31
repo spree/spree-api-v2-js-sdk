@@ -1,11 +1,9 @@
 require('isomorphic-fetch')
 import Orbit from '../Orbit'
-import { ProductSchema } from '../shcema/ProrductSchema'
+import { ProductSchema } from '../schema/ProrductSchema'
 import { LogLevel } from '@orbit/coordinator'
 
 export default class Products extends Orbit {
-  schemaDefinition: any = ProductSchema
-
   constructor() {
     super(ProductSchema)
   }
