@@ -1,5 +1,13 @@
 import 'reflect-metadata'
 import { container } from 'tsyringe'
-import Client from './Client'
+import Instance from './Instance'
 
-export const client = () => container.resolve(Client)
+const setEnv = (config) => {
+  process.env.SPREE_HOST = config.host
+}
+
+export const Client = (config) => {
+  setEnv(config)
+
+  return container.resolve(Instance)
+}

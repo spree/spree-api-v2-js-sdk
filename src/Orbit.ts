@@ -10,11 +10,14 @@ export default class Orbit {
   public schema: Schema
   public remote: JSONAPISource
   public store: Store
+  public host: string
 
   constructor() {
+    this.host = process.env.SPREE_HOST || 'http://localhost:3000/api/v2/storefront'
+
     this.currentSchema = currentSchema
     this.schema = new Schema(currentSchema)
-    this.remote = new JSONAPISource({ schema: this.schema, name: 'remote', host: 'http://localhost:5000/api/v2/storefront' })
+    this.remote = new JSONAPISource({ schema: this.schema, name: 'remote', host: this.host })
     this.coordinator = new Coordinator()
     this.store = new Store({ schema: this.schema, name: 'store' })
 
