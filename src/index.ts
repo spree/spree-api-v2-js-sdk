@@ -1,5 +1,3 @@
-const log = (message: string) => {
-  console.log(message)
-}
+import { client } from './main'
 
-log("hello TS")
+client().products.exec({ type: 'product', id: '10' }, { sources: { remote: { include: ['taxons'] }}}).then(console.log)
