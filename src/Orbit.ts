@@ -1,7 +1,7 @@
 import { Schema } from '@orbit/data'
 import Store from '@orbit/store'
 import JSONAPISource from '@orbit/jsonapi'
-import Coordinator, { RequestStrategy, SyncStrategy, EventLoggingStrategy } from '@orbit/coordinator'
+import Coordinator, { RequestStrategy, SyncStrategy, EventLoggingStrategy, LogLevel } from '@orbit/coordinator'
 import { currentSchema } from './schema'
 
 export default class Orbit {
@@ -29,15 +29,9 @@ export default class Orbit {
       blocking: true
     }))
 
-    this.coordinator.addStrategy(new SyncStrategy({
-      source: 'remote',
-      target: 'store',
-      blocking: true
-    }))
-
     this.coordinator.addStrategy(new EventLoggingStrategy({
       sources: ['remote']
-    }));
+    }))
 
     this.coordinator.addStrategy(new RequestStrategy({
       source: 'store',
@@ -46,5 +40,13 @@ export default class Orbit {
       action: 'push',
       blocking: true
     }))
+
+    this.coordinator.addStrategy(new SyncStrategy({
+      source: 'remote',
+      target: 'store',
+      blocking: true
+    }))
+
+    this.coordinator.activate({ logLevel: LogLevel.Info })
   }
 }
