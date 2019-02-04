@@ -1,9 +1,9 @@
 import Http from '../Http'
-import { ProductClass } from '../interfaces/endpoints/ProductClass'
+import { SimpleEndpoint } from '../interfaces/endpoints/SimpleEndpoint'
 import { Product } from '../interfaces/Product'
 import { Routes } from '../routes'
 
-export default class Products extends Http implements ProductClass {
+export default class Products extends Http implements SimpleEndpoint {
   public async list(params = {}): Promise<Product[]> {
     try {
       const res = await this.get(Routes.productsPath(), params)
