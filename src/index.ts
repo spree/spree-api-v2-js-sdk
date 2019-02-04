@@ -9,7 +9,9 @@ const client = Client({
 //   per_page: 1
 // }).then(res => console.log(JSON.stringify(res, null, 2)))
 
-client.taxons.list({
-  page: 1,
-  per_page: 1
-}).then(res => console.log(JSON.stringify(res, null, 2)))
+// client.taxons.list({
+//   page: 1,
+//   per_page: 1
+// }).then(res => console.log(JSON.stringify(res, null, 2)))
+
+client.countries.show('ZM').then(res => console.log(JSON.stringify(res, null, 2)))
