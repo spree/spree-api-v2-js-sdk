@@ -1,5 +1,6 @@
+import { Relationships } from './Relationships'
+
 export interface Product {
-  dat
   type: string
   id: string,
   attributes: {
@@ -18,31 +19,5 @@ export interface Product {
     slug: string
   }
 
-   relationships: {
-    variants: {
-      [key: string]: {
-        data: Array<any>
-      }
-    }
-    option_types: {
-      [key: string]: {
-        data: Array<any>
-      }
-    }
-    product_properties: {
-      [key: string]: {
-        data: Array<any>
-      }
-    }
-    taxons: {
-      [key: string]: {
-        data: Array<any>
-      }
-    }
-    images: {
-      [key: string]: {
-        data: Array<any>
-      }
-    }
-  } 
+  relationships: Relationships
 } 
