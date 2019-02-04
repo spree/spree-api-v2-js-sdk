@@ -30,4 +30,16 @@ export default class Http {
   async delete(q, params = {}) {
     return await this.axios.delete(q, params)
   }
+
+  async post(q, params = {}) {
+    return await this.axios.post(q, params)
+  }
+
+  async patch(q, params = {}) {
+    return await this.axios.patch(q, params)
+  }
+
+  async delete(q, params = {}) {
+    return await this.axios.delete(q, params)
+  }
 }
