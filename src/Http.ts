@@ -16,7 +16,7 @@ export default class Http {
   }
 
   async get(q, params = {}) {
-    return await this.axios.get(q, params)
+    return await this.axios.get(q, { params: { ...params }})
   }
 
   async post(q, params = {}) {
