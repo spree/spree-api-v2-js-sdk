@@ -1,3 +1,7 @@
-import { client } from './main'
+import { Client } from './main'
 
-client().products.exec({ type: 'product', id: '10' }, { sources: { remote: { include: ['taxons'] }}}).then(console.log)
+const client = Client({
+  host: 'http://localhost:5000/api/v2/storefront'
+})
+
+client.products.exec({ type: 'product', id: '10' }, { sources: { remote: { include: ['taxons'] }}}).then(console.log)
