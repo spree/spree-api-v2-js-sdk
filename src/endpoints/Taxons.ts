@@ -8,7 +8,7 @@ export default class Taxons extends Http implements SimpleEndpoint {
     try {
       const res = await this.get(Routes.taxonsPath(), params)
       return await res.data
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
   }
@@ -17,7 +17,7 @@ export default class Taxons extends Http implements SimpleEndpoint {
     try {
       const res = await this.get(Routes.taxonPath(id))
       return await res.data
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
   }

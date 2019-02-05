@@ -18,6 +18,6 @@ export interface Taxon {
     is_root: boolean
     is_child: boolean
     is_leaf: string
-    updated_at: Date
+    updated_at: Date,
   }
 }
