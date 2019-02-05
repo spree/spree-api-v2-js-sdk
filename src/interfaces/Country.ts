@@ -14,4 +14,4 @@ export interface Country {
   }
 
   relationships: Relationships
-} 
+}
