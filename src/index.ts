@@ -4,8 +4,12 @@ const client = Client({
   host: 'http://localhost:5000/api/v2/storefront'
 })
 
-client.products.list({
+// client.products.list({
+//   page: 1,
+//   per_page: 1
+// }).then(res => console.log(JSON.stringify(res, null, 2)))
+
+client.taxons.list({
   page: 1,
   per_page: 1
-})
-.then(res => console.log(JSON.stringify(res, null, 2)))
+}).then(res => console.log(JSON.stringify(res, null, 2)))
