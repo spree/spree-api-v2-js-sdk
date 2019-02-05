@@ -8,7 +8,7 @@ export default class Products extends Http implements ProductClass {
     try {
       const res = await this.get(Routes.productsPath(), params)
       return await res.data
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
   }
@@ -17,7 +17,7 @@ export default class Products extends Http implements ProductClass {
     try {
       const res = await this.get(Routes.productPath(id))
       return await res.data
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
   }

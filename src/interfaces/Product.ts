@@ -16,8 +16,8 @@ export interface Product {
     purchasable: boolean
     in_stock: boolean
     backorderable: boolean
-    slug: string
+    slug: string,
   }
 
   relationships: Relationships
-} 
+}
