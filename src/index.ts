@@ -4,4 +4,8 @@ const client = Client({
   host: 'http://localhost:5000/api/v2/storefront'
 })
 
-client.products.exec().then(console.log)
+client.products.list({
+  page: 1,
+  per_page: 1
+})
+.then(res => console.log(JSON.stringify(res, null, 2)))
