@@ -1,10 +1,12 @@
 import Http from '../Http'
+import { Order, AddItem, SetQuantity, CouponCode } from '../interfaces/Order'
+import { CartClass } from '../interfaces/endpoints/CartClass'
 import { Routes } from '../routes'
 
-export default class Cart extends Http {
+export default class Cart extends Http implements CartClass {
   public spreeOrderToken: string
 
-  public async show(token: string) {
+  public async show(token: string): Promise<Order> {
     this.spreeOrderToken = token
 
     try {
@@ -15,7 +17,7 @@ export default class Cart extends Http {
     }
   }
 
-  public async create() {
+  public async create(): Promise<Order> {
     try {
       const res = await this.post(Routes.cartPath())
       return await res.data
@@ -24,7 +26,7 @@ export default class Cart extends Http {
     }
   }
 
-  public async addItem(token: string, params) {
+  public async addItem(token: string, params: AddItem): Promise<Order> {
     this.spreeOrderToken = token
 
     try {
@@ -35,7 +37,7 @@ export default class Cart extends Http {
     }
   }
 
-  public async removeItem(token: string, id: string) {
+  public async removeItem(token: string, id: string): Promise<Order> {
     this.spreeOrderToken = token
 
     try {
@@ -46,7 +48,7 @@ export default class Cart extends Http {
     }
   }
 
-  public async emptyCart(token: string) {
+  public async emptyCart(token: string): Promise<Order> {
     this.spreeOrderToken = token
 
     try {
@@ -57,7 +59,7 @@ export default class Cart extends Http {
     }
   }
 
-  public async setQuantity(token: string, params) {
+  public async setQuantity(token: string, params: SetQuantity): Promise<Order> {
     this.spreeOrderToken = token
 
     try {
@@ -68,7 +70,7 @@ export default class Cart extends Http {
     }
   }
 
-  public async applyCouponCode(token: string, params) {
+  public async applyCouponCode(token: string, params: CouponCode): Promise<Order> {
     this.spreeOrderToken = token
 
     try {
@@ -79,7 +81,7 @@ export default class Cart extends Http {
     }
   }
 
-  public async removeCouponCode(token: string, code: string) {
+  public async removeCouponCode(token: string, code: string): Promise<Order> {
     this.spreeOrderToken = token
 
     try {
