@@ -1,17 +1,23 @@
-require('isomorphic-fetch')
-import Orbit from '../Orbit'
-import { LogLevel } from '@orbit/coordinator'
+import Http from '../Http'
+import { ProductClass } from '../interfaces/endpoints/ProductClass'
+import { Product } from '../interfaces/Product'
+import { Routes } from '../routes'
 
-export default class Products extends Orbit {
-  public async exec(query: any, store: any) {
+export default class Products extends Http implements ProductClass {
+  public async list(params = {}): Promise<Product[]> {
     try {
-      await this.coordinator.activate({ logLevel: LogLevel.None })
+      const res = await this.get(Routes.productsPath(), params)
+      return await res.data
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-      const requst = await this.store.query(q => q.findRecord(query), store)
-      const response = await JSON.stringify(requst, null, 2)
-
-      return await response
-    } catch(err) {
+  public async show(id: string): Promise<Product> {
+    try {
+      const res = await this.get(Routes.productPath(id))
+      return await res.data
+    } catch (err) {
       console.error(err)
     }
   }

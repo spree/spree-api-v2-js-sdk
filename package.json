@@ -42,11 +42,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "@orbit/coordinator": "^0.15.23",
-    "@orbit/data": "^0.15.23",
-    "@orbit/jsonapi": "^0.15.25",
-    "@orbit/store": "^0.15.25",
-    "isomorphic-fetch": "^2.2.1",
+    "axios": "^0.18.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^3.0.1"
   }
