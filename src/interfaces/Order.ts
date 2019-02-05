@@ -29,7 +29,7 @@ export interface Order {
     display_total: string
     created_at: Date
     updated_at: Date
-    completed_at: Date
+    completed_at: Date,
   }
 
   relationships: Relationships

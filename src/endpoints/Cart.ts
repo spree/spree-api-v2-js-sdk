@@ -1,6 +1,6 @@
 import Http from '../Http'
-import { Order, AddItem, SetQuantity, CouponCode } from '../interfaces/Order'
 import { CartClass } from '../interfaces/endpoints/CartClass'
+import { AddItem, CouponCode, Order, SetQuantity } from '../interfaces/Order'
 import { Routes } from '../routes'
 
 export default class Cart extends Http implements CartClass {
@@ -94,7 +94,7 @@ export default class Cart extends Http implements CartClass {
 
   get spreeOrderHeaders() {
     return {
-      'X-Spree-Order-Token': this.spreeOrderToken
+      'X-Spree-Order-Token': this.spreeOrderToken,
     }
   }
 }
