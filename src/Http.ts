@@ -15,19 +15,35 @@ export default class Http {
     })
   }
 
-  async get(q, params = {}) {
+  async get(q, params = {}, headers = null) {
+    if (headers) this.setHeaders(headers)
+
     return await this.axios.get(q, { params: { ...params }})
   }
 
-  async post(q, params = {}) {
+  async post(q, params = {}, headers = null) {
+    if (headers) this.setHeaders(headers)
+
     return await this.axios.post(q, params)
   }
 
-  async patch(q, params = {}) {
+  async patch(q, params = {}, headers = null) {
+    if (headers) this.setHeaders(headers)
+
     return await this.axios.patch(q, params)
   }
 
-  async delete(q, params = {}) {
+  async delete(q, params = {}, headers = null) {
+    if (headers) this.setHeaders(headers)
+
     return await this.axios.delete(q, params)
+  }
+
+  private setHeaders(headers = {}) {
+    const currentHeader = this.axios.defaults.headers
+    this.axios.defaults.headers = { 
+      ...currentHeader, 
+      ...headers 
+    }
   }
 }
