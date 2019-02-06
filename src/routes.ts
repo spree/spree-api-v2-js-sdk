@@ -11,5 +11,12 @@ export const Routes = {
   cartEmptyPath: () => 'cart/empty',
   cartSetItemQuantity: () => 'cart/set_quantity',
   cartApplyCodePath: () => 'cart/apply_coupon_code',
-  cartRemoveCodePath: (code: string) => `cart/remove_coupon_code/${code}`
+  cartRemoveCodePath: (code: string) => `cart/remove_coupon_code/${code}`,
+  checkoutPath: () => 'checkout',
+  checkoutNextPath: () => 'checkout/next',
+  checkoutAdvancePath: () => 'checkout/advance',
+  checkoutAddStoreCreditsPath: () => 'checkout/add_store_credit',
+  checkoutRemoveStoreCreditsPath: () => 'checkout/remove_store_credit',
+  checkoutPaymentMethodsPath: () => 'checkout/payment_methods',
+  checkoutShippingMethodsPath: () => 'checkout/shipping_rates'
 }
