@@ -1,4 +1,17 @@
-import { AddItem, SetQuantity, CouponCode } from '../Order'
+export interface AddItem {
+  variant_id: number
+  quantity: number
+  options: any
+}
+
+export interface SetQuantity {
+  line_item_id: number
+  quantity: number
+}
+
+export interface CouponCode {
+  coupon_code: string
+}
 
 export interface CartClass {
   show(token: string)
