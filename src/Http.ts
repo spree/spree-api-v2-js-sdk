@@ -1,15 +1,16 @@
 import Axios, { AxiosInstance } from 'axios'
+import { Token } from './interfaces/Token'
 
 export default class Http {
   public host: string;
-  public spreeToken: string
+  public spreeTokens: Token
   public axios: AxiosInstance
 
   constructor() {
-    this.host = process.env.SPREE_HOST || 'http://localhost:3000/api/v2/storefront'
+    this.host = process.env.SPREE_HOST || 'http://localhost:3000/'
 
     this.axios = Axios.create({
-      baseURL: this.host,
+      baseURL: this.host + 'api/v2/storefront',
       headers: {
         'Content-Type': 'application/vnd.api+json'
       }
@@ -17,25 +18,25 @@ export default class Http {
   }
 
   async get(q, params = {}) {
-    if (this.spreeToken) this.setHeaders()
+    if (this.spreeTokens) this.setHeaders()
 
     return await this.axios.get(q, { params: { ...params }})
   }
 
   async post(q, params = {}) {
-    if (this.spreeToken) this.setHeaders()
+    if (this.spreeTokens) this.setHeaders()
 
     return await this.axios.post(q, params)
   }
 
   async patch(q, params = {}) {
-    if (this.spreeToken) this.setHeaders()
+    if (this.spreeTokens) this.setHeaders()
 
     return await this.axios.patch(q, params)
   }
 
   async delete(q, params = {}) {
-    if (this.spreeToken) this.setHeaders()
+    if (this.spreeTokens) this.setHeaders()
 
     return await this.axios.delete(q, params)
   }
@@ -49,8 +50,16 @@ export default class Http {
   }
 
   get spreeOrderHeaders() {
-    return {
-      'X-Spree-Order-Token': this.spreeToken,
+    let header = {}
+
+    if (this.spreeTokens.orderToken) {
+      header['X-Spree-Order-Token'] = this.spreeTokens.orderToken
     }
+
+    if (this.spreeTokens.bearerToken) {
+      header['Authorization'] = `Bearer ${this.spreeTokens.bearerToken}`
+    }
+
+    return header
   }
 }

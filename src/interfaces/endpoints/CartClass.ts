@@ -1,7 +1,9 @@
+import { Token } from '../Token'
+
 export interface AddItem {
   variant_id: number
   quantity: number
-  options: any
+  options?: any
 }
 
 export interface SetQuantity {
@@ -14,12 +16,12 @@ export interface CouponCode {
 }
 
 export interface CartClass {
-  show(token: string)
+  show(token: Token)
   create()
-  addItem(token: string, params: AddItem)
-  removeItem(token: string, id: string)
-  emptyCart(token: string)
-  setQuantity(token: string, params: SetQuantity)
-  applyCouponCode(token: string, params: CouponCode)
-  removeCouponCode(token: string, code: string)
+  addItem(token: Token, params: AddItem)
+  removeItem(token: Token, id: string)
+  emptyCart(token: Token)
+  setQuantity(token: Token, params: SetQuantity)
+  applyCouponCode(token: Token, params: CouponCode)
+  removeCouponCode(token: Token, code: string)
 } 

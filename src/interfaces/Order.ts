@@ -32,5 +32,5 @@ export interface Order {
     completed_at: Date,
   }
 
-  relationships: Relationships
+  relationships: Relationships,
 }
