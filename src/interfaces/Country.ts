@@ -10,7 +10,7 @@ export interface Country {
     name: string
     states_required: boolean
     zipcode_required: boolean
-    default: boolean
+    default: boolean,
   }
 
   relationships: Relationships

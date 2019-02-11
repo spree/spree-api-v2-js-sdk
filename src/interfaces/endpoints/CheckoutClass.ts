@@ -1,6 +1,7 @@
 import { Address } from '../Address'
 import { Payment } from '../Payment'
 import { Shipping } from '../Shipping'
+import { Token } from '../Token'
 
 export interface AddStoreCredit {
   amount: number
@@ -15,11 +16,11 @@ export interface NestedAttributes {
 }
 
 export interface CheckoutClass {
-  orderNext(token: string)
-  orderUpdate(token: string, params: NestedAttributes)
-  advance(token: string)
-  addStoreCredits(token: string, params: AddStoreCredit)
-  removeStoreCredits(token: string)
-  paymentMethods(token: string)
-  shippingMethods(token: string)
+  orderNext(token: Token)
+  orderUpdate(token: Token, params: NestedAttributes)
+  advance(token: Token)
+  addStoreCredits(token: Token, params: AddStoreCredit)
+  removeStoreCredits(token: Token)
+  paymentMethods(token: Token)
+  shippingMethods(token: Token)
 }

@@ -18,5 +18,6 @@ export const Routes = {
   checkoutAddStoreCreditsPath: () => 'checkout/add_store_credit',
   checkoutRemoveStoreCreditsPath: () => 'checkout/remove_store_credit',
   checkoutPaymentMethodsPath: () => 'checkout/payment_methods',
-  checkoutShippingMethodsPath: () => 'checkout/shipping_rates'
+  checkoutShippingMethodsPath: () => 'checkout/shipping_rates',
+  oauthTokenPath: () => `spree_oauth/token`
 }
