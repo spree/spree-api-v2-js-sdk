@@ -1,10 +1,10 @@
 import Http from '../Http'
 import { SimpleEndpoint } from '../interfaces/endpoints/SimpleEndpoint'
-import { Taxon } from '../interfaces/Taxon'
+import { ITaxon, ITaxons } from '../interfaces/Taxon'
 import { Routes } from '../routes'
 
 export default class Taxons extends Http implements SimpleEndpoint {
-  public async list(params = {}): Promise<Taxon[]> {
+  public async list(params = {}): Promise<ITaxons> {
     try {
       const res = await this.get(Routes.taxonsPath(), params)
       return await res.data
@@ -13,7 +13,7 @@ export default class Taxons extends Http implements SimpleEndpoint {
     }
   }
 
-  public async show(id: string): Promise<Taxon> {
+  public async show(id: string): Promise<ITaxon> {
     try {
       const res = await this.get(Routes.taxonPath(id))
       return await res.data

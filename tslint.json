@@ -10,8 +10,9 @@
         "semicolon": [true, "never"],
         "quotemark": [true, "single"],
         "no-duplicate-imports": true,
-        "interface-name" : [true, "never-prefix"],
-        "no-console": [false, "error"]
+        "interface-name" : [false],
+        "no-console": [false, "error"],
+        "trailing-comma": [false]
     },
     "rulesDirectory": []
 }

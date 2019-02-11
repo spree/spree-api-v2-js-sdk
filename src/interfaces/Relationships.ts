@@ -1,7 +1,10 @@
-import { RelationType } from './RelationTypes'
+export interface RelationType {
+  id: string
+  type: string
+}
 
-export interface Relationships {
+export interface IRelationships {
   [key: string]: {
-    data: RelationType,
+    data: RelationType
   }
 }

@@ -1,6 +1,6 @@
-import { Relationships } from './Relationships'
+import { IRelationships } from './Relationships'
 
-export interface Taxon {
+export interface TaxonAttr {
   type: string
   id: string,
   attributes: {
@@ -18,6 +18,16 @@ export interface Taxon {
     is_root: boolean
     is_child: boolean
     is_leaf: string
-    updated_at: Date,
+    updated_at: Date
   }
+
+  relationships: IRelationships
+}
+
+export interface ITaxon {
+  data: TaxonAttr
+}
+
+export interface ITaxons {
+  data: TaxonAttr[]
 }

@@ -1,8 +1,8 @@
-import { Relationships } from './Relationships'
+import { IRelationships } from './Relationships'
 
-export interface Product {
+export interface ProductAttr {
   type: string
-  id: string,
+  id: string
   attributes: {
     name: string
     description: string
@@ -16,8 +16,16 @@ export interface Product {
     purchasable: boolean
     in_stock: boolean
     backorderable: boolean
-    slug: string,
+    slug: string
   }
 
-  relationships: Relationships
+  relationships: IRelationships
+}
+
+export interface IProduct {
+  data: ProductAttr
+}
+
+export interface IProducts {
+  data: ProductAttr[]
 }

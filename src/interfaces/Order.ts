@@ -1,8 +1,8 @@
-import { Relationships } from './Relationships'
+import { IRelationships } from './Relationships'
 
-export interface Order {
+export interface OrderAttr {
   type: string
-  id: string,
+  id: string
   attributes: {
     number: string
     item_total: string
@@ -29,8 +29,16 @@ export interface Order {
     display_total: string
     created_at: Date
     updated_at: Date
-    completed_at: Date,
+    completed_at: Date
   }
 
-  relationships: Relationships,
+  relationships: IRelationships
+}
+
+export interface IOrder {
+  data: OrderAttr
+}
+
+export interface IOrders {
+  data: OrderAttr[]
 }

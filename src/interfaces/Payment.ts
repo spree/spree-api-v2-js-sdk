@@ -7,7 +7,7 @@ export interface Payment {
     attributes: {
       type: string
       name: string
-      description: string,
-    },
+      description: string
+    }
   }
 }

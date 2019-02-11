@@ -1,7 +1,7 @@
 import { Client } from './main'
 
 const client = Client({
-  host: 'http://localhost:5000/api/v2/storefront'
+  host: 'http://localhost:5000/'
 })
 
 // client.products.list({
@@ -14,4 +14,4 @@ const client = Client({
 //   per_page: 1
 // }).then(res => console.log(JSON.stringify(res, null, 2)))
 
-client.countries.show('ZM').then(res => console.log(JSON.stringify(res, null, 2)))
+client.products.show('3').then(res => console.log(res.data.type))

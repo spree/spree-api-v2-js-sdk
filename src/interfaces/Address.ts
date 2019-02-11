@@ -17,10 +17,10 @@ export interface Address {
     iso: string
     iso3: string
     name: string
-    iso_name: string,
+    iso_name: string
   }
   state?: {
     name: string
-    abbr: string,
+    abbr: string
   }
 }
