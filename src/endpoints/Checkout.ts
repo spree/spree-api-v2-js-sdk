@@ -1,10 +1,10 @@
 import Http from '../Http'
 import { AddStoreCredit, CheckoutClass, NestedAttributes } from '../interfaces/endpoints/CheckoutClass'
-import { Token } from '../interfaces/Token'
+import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
 export default class Checkout extends Http implements CheckoutClass {
-  public async orderNext(token: Token) {
+  public async orderNext(token: IToken) {
     this.spreeTokens = token
 
     try {
@@ -15,7 +15,7 @@ export default class Checkout extends Http implements CheckoutClass {
     }
   }
 
-  public async orderUpdate(token: Token, params: NestedAttributes) {
+  public async orderUpdate(token: IToken, params: NestedAttributes) {
     this.spreeTokens = token
 
     try {
@@ -26,7 +26,7 @@ export default class Checkout extends Http implements CheckoutClass {
     }
   }
 
-  public async advance(token: Token) {
+  public async advance(token: IToken) {
     this.spreeTokens = token
 
     try {
@@ -37,7 +37,7 @@ export default class Checkout extends Http implements CheckoutClass {
     }
   }
 
-  public async addStoreCredits(token: Token, params: AddStoreCredit) {
+  public async addStoreCredits(token: IToken, params: AddStoreCredit) {
     this.spreeTokens = token
 
     try {
@@ -48,7 +48,7 @@ export default class Checkout extends Http implements CheckoutClass {
     }
   }
 
-  public async removeStoreCredits(token: Token) {
+  public async removeStoreCredits(token: IToken) {
     this.spreeTokens = token
 
     try {
@@ -59,7 +59,7 @@ export default class Checkout extends Http implements CheckoutClass {
     }
   }
 
-  public async paymentMethods(token: Token) {
+  public async paymentMethods(token: IToken) {
     this.spreeTokens = token
 
     try {
@@ -70,7 +70,7 @@ export default class Checkout extends Http implements CheckoutClass {
     }
   }
 
-  public async shippingMethods(token: Token) {
+  public async shippingMethods(token: IToken) {
     this.spreeTokens = token
 
     try {

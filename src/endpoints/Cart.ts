@@ -1,11 +1,11 @@
 import Http from '../Http'
 import { AddItem, CartClass, CouponCode, SetQuantity } from '../interfaces/endpoints/CartClass'
-import { Order } from '../interfaces/Order'
-import { Token } from '../interfaces/Token'
+import { IOrder } from '../interfaces/Order'
+import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
 export default class Cart extends Http implements CartClass {
-  public async show(token: Token): Promise<Order> {
+  public async show(token: IToken): Promise<IOrder> {
     this.spreeTokens = token
 
     try {
@@ -16,7 +16,7 @@ export default class Cart extends Http implements CartClass {
     }
   }
 
-  public async create(): Promise<Order> {
+  public async create(): Promise<IOrder> {
     try {
       const res = await this.post(Routes.cartPath())
       return await res.data
@@ -25,7 +25,7 @@ export default class Cart extends Http implements CartClass {
     }
   }
 
-  public async addItem(token: Token, params: AddItem): Promise<Order> {
+  public async addItem(token: IToken, params: AddItem): Promise<IOrder> {
     this.spreeTokens = token
 
     try {
@@ -36,7 +36,7 @@ export default class Cart extends Http implements CartClass {
     }
   }
 
-  public async removeItem(token: Token, id: string): Promise<Order> {
+  public async removeItem(token: IToken, id: string): Promise<IOrder> {
     this.spreeTokens = token
 
     try {
@@ -47,7 +47,7 @@ export default class Cart extends Http implements CartClass {
     }
   }
 
-  public async emptyCart(token: Token): Promise<Order> {
+  public async emptyCart(token: IToken): Promise<IOrder> {
     this.spreeTokens = token
 
     try {
@@ -58,7 +58,7 @@ export default class Cart extends Http implements CartClass {
     }
   }
 
-  public async setQuantity(token: Token, params: SetQuantity): Promise<Order> {
+  public async setQuantity(token: IToken, params: SetQuantity): Promise<IOrder> {
     this.spreeTokens = token
 
     try {
@@ -69,7 +69,7 @@ export default class Cart extends Http implements CartClass {
     }
   }
 
-  public async applyCouponCode(token: Token, params: CouponCode): Promise<Order> {
+  public async applyCouponCode(token: IToken, params: CouponCode): Promise<IOrder> {
     this.spreeTokens = token
 
     try {
@@ -80,7 +80,7 @@ export default class Cart extends Http implements CartClass {
     }
   }
 
-  public async removeCouponCode(token: Token, code: string): Promise<Order> {
+  public async removeCouponCode(token: IToken, code: string): Promise<IOrder> {
     this.spreeTokens = token
 
     try {

@@ -1,6 +1,6 @@
-import { Relationships } from './Relationships'
+import { IRelationships } from './Relationships'
 
-export interface Country {
+export interface CountryAttr {
   type: string
   id: string,
   attributes: {
@@ -13,5 +13,13 @@ export interface Country {
     default: boolean,
   }
 
-  relationships: Relationships
+  relationships: IRelationships
+}
+
+export interface ICountry {
+  data: CountryAttr
+}
+
+export interface ICountries {
+  data: CountryAttr[]
 }

@@ -1,10 +1,10 @@
 import Http from '../Http'
-import { Country } from '../interfaces/Country'
+import { ICountries, ICountry } from '../interfaces/Country'
 import { SimpleEndpoint } from '../interfaces/endpoints/SimpleEndpoint'
 import { Routes } from '../routes'
 
 export default class Countries extends Http implements SimpleEndpoint {
-  public async list(): Promise<Country[]> {
+  public async list(): Promise<ICountries> {
     try {
       const res = await this.get(Routes.countriesPath())
       return await res.data
@@ -13,7 +13,7 @@ export default class Countries extends Http implements SimpleEndpoint {
     }
   }
 
-  public async show(iso: string): Promise<Country> {
+  public async show(iso: string): Promise<ICountry> {
     try {
       const res = await this.get(Routes.countryPath(iso))
       return await res.data

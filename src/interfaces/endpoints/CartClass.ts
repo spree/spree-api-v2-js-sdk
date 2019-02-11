@@ -1,4 +1,4 @@
-import { Token } from '../Token'
+import { IToken } from '../Token'
 
 export interface AddItem {
   variant_id: number
@@ -16,12 +16,12 @@ export interface CouponCode {
 }
 
 export interface CartClass {
-  show(token: Token)
+  show(token: IToken)
   create()
-  addItem(token: Token, params: AddItem)
-  removeItem(token: Token, id: string)
-  emptyCart(token: Token)
-  setQuantity(token: Token, params: SetQuantity)
-  applyCouponCode(token: Token, params: CouponCode)
-  removeCouponCode(token: Token, code: string)
+  addItem(token: IToken, params: AddItem)
+  removeItem(token: IToken, id: string)
+  emptyCart(token: IToken)
+  setQuantity(token: IToken, params: SetQuantity)
+  applyCouponCode(token: IToken, params: CouponCode)
+  removeCouponCode(token: IToken, code: string)
 } 
