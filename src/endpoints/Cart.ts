@@ -16,7 +16,9 @@ export default class Cart extends Http implements CartClass {
     }
   }
 
-  public async create(): Promise<IOrder> {
+  public async create(token?: IToken): Promise<IToken> {
+    this.spreeTokens = token
+
     try {
       const res = await this.post(Routes.cartPath())
       return await res.data
