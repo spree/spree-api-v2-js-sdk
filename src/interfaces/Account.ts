@@ -10,6 +10,8 @@ export interface IAccount {
       completed_orders: number
     }
 
-    relationships: IRelationships
+    relationships?: IRelationships
+
+    include?: any
   }
 }

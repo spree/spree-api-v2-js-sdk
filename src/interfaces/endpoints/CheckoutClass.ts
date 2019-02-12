@@ -1,6 +1,7 @@
-import { Address } from '../Address'
-import { Payment } from '../Payment'
-import { Shipping } from '../Shipping'
+import { IPayment } from '../attributes/Payment'
+import { IPaymentSource } from '../attributes/PaymentSource'
+import { IAddress } from '../attributes/Address'
+import { IShipment } from '../attributes/Shipment'
 import { IToken } from '../Token'
 
 export interface AddStoreCredit {
@@ -8,11 +9,14 @@ export interface AddStoreCredit {
 }
 
 export interface NestedAttributes {
-  email?: string
-  bill_address_attributes?: Address
-  ship_address_attributes?: Address
-  payments_attributes?: Payment
-  shipments_attributes?: Shipping
+  order?: {
+    email?: string
+    bill_address_attributes?: IAddress
+    ship_address_attributes?: IAddress
+    payments_attributes?: [ IPayment ]
+    shipments_attributes?: IShipment
+  },
+  payment_source?: IPaymentSource
 }
 
 export interface CheckoutClass {

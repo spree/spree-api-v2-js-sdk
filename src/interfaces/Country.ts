@@ -2,7 +2,7 @@ import { IRelationships } from './Relationships'
 
 export interface CountryAttr {
   type: string
-  id: string,
+  id: string
   attributes: {
     iso: string
     iso3: string
@@ -10,10 +10,12 @@ export interface CountryAttr {
     name: string
     states_required: boolean
     zipcode_required: boolean
-    default: boolean,
+    default: boolean
   }
 
-  relationships: IRelationships
+  relationships?: IRelationships
+
+  include?: any
 }
 
 export interface ICountry {

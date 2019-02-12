@@ -21,7 +21,9 @@ export interface TaxonAttr {
     updated_at: Date
   }
 
-  relationships: IRelationships
+  relationships?: IRelationships
+
+  include?: any
 }
 
 export interface ITaxon {
