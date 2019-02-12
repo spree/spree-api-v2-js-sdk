@@ -1,9 +1,9 @@
 import Axios, { AxiosInstance } from 'axios'
-import { Token } from './interfaces/Token'
+import { IToken } from './interfaces/Token'
 
 export default class Http {
   public host: string;
-  public spreeTokens: Token
+  public spreeTokens: IToken
   public axios: AxiosInstance
 
   constructor() {
