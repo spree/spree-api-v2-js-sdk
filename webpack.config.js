@@ -16,7 +16,7 @@ module.exports = {
   entry: {
     index: [
       resolve(baseDirectoryPath, 'load-sourcemaps.js'),
-      resolve(srcDirectoryPath, 'index.ts')
+      resolve(srcDirectoryPath, 'main.ts')
     ]
   },
   target: 'node',
