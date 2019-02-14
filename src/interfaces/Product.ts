@@ -19,7 +19,9 @@ export interface ProductAttr {
     slug: string
   }
 
-  relationships: IRelationships
+  relationships?: IRelationships
+
+  include?: any
 }
 
 export interface IProduct {

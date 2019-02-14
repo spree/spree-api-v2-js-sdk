@@ -32,7 +32,9 @@ export interface OrderAttr {
     completed_at: Date
   }
 
-  relationships: IRelationships
+  relationships?: IRelationships
+
+  include?: any
 }
 
 export interface IOrder {

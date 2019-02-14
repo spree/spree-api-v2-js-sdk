@@ -19,7 +19,7 @@ export default class Checkout extends Http implements CheckoutClass {
     this.spreeTokens = token
 
     try {
-      const res = await this.patch(Routes.checkoutPath(), { order: params })
+      const res = await this.patch(Routes.checkoutPath(), params)
       return await res.data
     } catch (err) {
       console.error(err)
