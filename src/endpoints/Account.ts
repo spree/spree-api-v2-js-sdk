@@ -4,14 +4,14 @@ import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
 export default class Account extends Http {
-  public async accountInfo(token: IToken): Promise<IAccount> {
+  public async accountInfo(token: IToken): Promise<IAccount | Error> {
     this.spreeTokens = token
 
     try {
       const res = await this.get(Routes.accountPath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -22,7 +22,7 @@ export default class Account extends Http {
       const res = await this.get(Routes.accountCreditCardsPath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -33,7 +33,7 @@ export default class Account extends Http {
       const res = await this.get(Routes.accountDefaultCreditCardPath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -44,7 +44,7 @@ export default class Account extends Http {
       const res = await this.get(Routes.accountCompletedOrdersPath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -55,7 +55,7 @@ export default class Account extends Http {
       const res = await this.get(Routes.accountCompletedOrderPath(number))
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 }

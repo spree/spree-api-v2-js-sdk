@@ -11,7 +11,7 @@ export default class Checkout extends Http implements CheckoutClass {
       const res = await this.patch(Routes.checkoutNextPath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -22,7 +22,7 @@ export default class Checkout extends Http implements CheckoutClass {
       const res = await this.patch(Routes.checkoutPath(), params)
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -33,7 +33,7 @@ export default class Checkout extends Http implements CheckoutClass {
       const res = await this.patch(Routes.checkoutAdvancePath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -44,7 +44,7 @@ export default class Checkout extends Http implements CheckoutClass {
       const res = await this.post(Routes.checkoutAddStoreCreditsPath(), params)
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -55,7 +55,7 @@ export default class Checkout extends Http implements CheckoutClass {
       const res = await this.post(Routes.checkoutRemoveStoreCreditsPath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -66,7 +66,7 @@ export default class Checkout extends Http implements CheckoutClass {
       const res = await this.get(Routes.checkoutPaymentMethodsPath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 
@@ -77,7 +77,7 @@ export default class Checkout extends Http implements CheckoutClass {
       const res = await this.get(Routes.checkoutShippingMethodsPath())
       return await res.data
     } catch (err) {
-      console.error(err)
+      return this.errorMessage
     }
   }
 }
