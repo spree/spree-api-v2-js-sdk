@@ -2,7 +2,6 @@ import Axios, { AxiosInstance } from 'axios'
 import { IToken } from './interfaces/Token'
 
 export default class Http {
-  public error: any
   public host: string
   public spreeTokens: IToken
   public axios: AxiosInstance
@@ -18,45 +17,15 @@ export default class Http {
     })
   }
 
-  setErrorMessage(err: string) {
-    this.error = { error: Error(err).message }
-  }
-
-  get errorMessage() {
-    throw this.error
-    return this.error
-  }
-
-  async get(q, params = {}) {
+  async spreeResponse(method: string, route: string, params: any = {}) {
     if (this.spreeTokens) this.setHeaders()
 
     try {
-      return await this.axios.get(q, { params: { ...params }})
-    } catch (err) { this.setErrorMessage(err) }
-  }
-
-  async post(q, params = {}) {
-    if (this.spreeTokens) this.setHeaders()
-
-    try {
-      return await this.axios.post(q, params)      
-    } catch (err) { this.setErrorMessage(err) }
-  }
-
-  async patch(q, params = {}) {
-    if (this.spreeTokens) this.setHeaders()
-
-    try {
-      return await this.axios.patch(q, params)
-    } catch (err) { this.setErrorMessage(err) }
-  }
-
-  async delete(q, params = {}) {
-    if (this.spreeTokens) this.setHeaders()
-
-    try {
-      return await this.axios.delete(q, params)
-    } catch (err) { this.setErrorMessage(err) }
+      const res = await this.axios[method](route, { params })
+      return res.data
+    } catch (err) {
+      this.errorMessage(err)
+    }
   }
 
   private setHeaders() {
@@ -65,6 +34,10 @@ export default class Http {
       ...currentHeader, 
       ...this.spreeOrderHeaders 
     }
+  }
+
+  errorMessage(err: string) {
+    throw { error: Error(err).message }
   }
 
   get spreeOrderHeaders() {
