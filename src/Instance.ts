@@ -6,6 +6,7 @@ import Cart from './endpoints/Cart'
 import Checkout from './endpoints/Checkout'
 import Authentication from './endpoints/Authentication'
 import Account from './endpoints/Account'
+import Order from './endpoints/Order'
 
 @injectable()
 export default class Instance {
@@ -16,6 +17,7 @@ export default class Instance {
     public cart: Cart,
     public checkout: Checkout,
     public authentication: Authentication,
-    public account: Account
+    public account: Account,
+    public order: Order
   ) { }
 }
