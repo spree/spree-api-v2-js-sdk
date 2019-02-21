@@ -25,5 +25,6 @@ export const Routes = {
   accountCreditCardsPath: () => 'account/credit_cards',
   accountDefaultCreditCardPath: () => 'account/credit_cards/default',
   accountCompletedOrdersPath: () => 'account/orders',
-  accountCompletedOrderPath: (number: string) => `/account/orders/${number}`
+  accountCompletedOrderPath: (number: string) => `/account/orders/${number}`,
+  orderStatusPath: (number: string) => `/order_status/${number}`
 }
