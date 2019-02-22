@@ -4,15 +4,21 @@ export interface AddItem {
   variant_id: number
   quantity: number
   options?: any
+  include?: string
+  fields?: any
 }
 
 export interface SetQuantity {
   line_item_id: number
   quantity: number
+  include?: string
+  fields?: any
 }
 
 export interface CouponCode {
   coupon_code: string
+  include?: string
+  fields?: any
 }
 
 export interface CartClass {
