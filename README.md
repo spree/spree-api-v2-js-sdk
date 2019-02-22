@@ -9,6 +9,9 @@ Node module for integration with Spree API V2
 
 - [Quick Start](#quick-start)
 - [Example](#example)
+- [Response schema](#response-schema)
+  - [Order schema](#order-schema)
+  - [Error schema](#error-schema)
 - [Endpoints](#endpoints)
   - [Authentication](#authentication)
     - [getToken](#getToken)
@@ -24,6 +27,11 @@ Node module for integration with Spree API V2
   - [Cart](#cart)
     - [create](#create)
     - [show](#show)
+    - [addItem](#addItem)
+    - [setQuantity](#setQuantity)
+    - [removeItem](#removeItem)
+    - [emptyCart](#emptyCart)
+    - [applyCouponCode](#applyCouponCode)
 
 
 <br/>
@@ -47,6 +55,112 @@ Node module for integration with Spree API V2
   ```
 
 <br/>
+
+## Response schema
+
+### Order schema
+
+```ts
+  data: {
+    id: number
+    type: string
+    attributes: {
+      numbe: string
+      item_total: string
+      total: string
+      ship_total: string
+      adjustment_total: string
+      created_at: Date
+      updated_at: Date
+      completed_at: Date
+      included_tax_total: string
+      additional_tax_total: string
+      display_additional_tax_total: string
+      display_included_tax_total: string
+      tax_total: string
+      currency: string
+      state: string
+      token: string
+      email: string
+      display_item_total: string
+      display_ship_total: string
+      display_adjustment_total: string
+      display_tax_total: string
+      promo_total: string
+      display_promo_total: string
+      item_count: number
+      special_instructions: string
+      display_total: string
+    }
+    relationships: {
+      line_items: {
+        data: [
+          {
+            id: string
+            type: string
+          }
+        ]
+      }
+      variants: {
+        data: [
+          {
+            id: string
+            type: string
+          }
+        ]
+      }
+      promotions: {
+        data: [
+          {
+            id: string
+            type: string
+          }
+        ]
+      }
+      payment: {
+        data: [
+          {
+            id: string
+            type: string
+          }
+        ]
+      },
+      shipments: {
+        data: [
+          {
+            id: string
+            type: string
+          }
+        ]
+      }
+      user: {
+        data: {
+          id: string
+          type: string
+        }
+      }
+      billing_address: {
+        data: {
+          id: string
+          type: string
+        }
+      }
+      shipping_address: {
+        data: {
+          id: string
+          type: string
+        }
+      }
+    }
+  }
+```
+
+### Error schema
+
+```ts
+  error: string
+```
+
 
 ## Endpoints
 
@@ -76,11 +190,8 @@ __success response schema:__
   created_at: number
 ```
 
-__failed response schema:__
-
-```ts
-  error: number
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
@@ -117,11 +228,8 @@ __success response schema:__
   created_at: number
 ```
 
-__failed response schema:__
-
-```ts
-  error: string
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
@@ -179,11 +287,8 @@ __success response schema:__
   }
 ```
 
-__failed response schema:__
-
-```ts
-  error: string
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
@@ -242,11 +347,8 @@ __success response schema:__
   ]
 ```
 
-__failed response schema:__
-
-```ts
-  error: string
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
@@ -303,11 +405,8 @@ __success response schema:__
   }
 ```
 
-__failed response schema:__
-
-```ts
-  error: string
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
@@ -340,110 +439,11 @@ __parameters schema:__
   }
 ```
 
-__success response schema:__
+__success response schema:__ [Order schema](#order-schema)
+<br/>
 
-```ts
-  data: [
-    {
-      id: number
-      type: string
-      attributes: {
-        numbe: string
-        item_total: string
-        total: string
-        ship_total: string
-        adjustment_total: string
-        created_at: Date
-        updated_at: Date
-        completed_at: Date
-        included_tax_total: string
-        additional_tax_total: string
-        display_additional_tax_total: string
-        display_included_tax_total: string
-        tax_total: string
-        currency: string
-        state: string
-        token: string
-        email: string
-        display_item_total: string
-        display_ship_total: string
-        display_adjustment_total: string
-        display_tax_total: string
-        promo_total: string
-        display_promo_total: string
-        item_count: number
-        special_instructions: string
-        display_total: string
-      }
-      relationships: {
-        line_items: {
-          data: [
-            {
-              id: string
-              type: string
-            }
-          ]
-        }
-        variants: {
-          data: [
-            {
-              id: string
-              type: string
-            }
-          ]
-        }
-        promotions: {
-          data: [
-            {
-              id: string
-              type: string
-            }
-          ]
-        }
-        payment: {
-          data: [
-            {
-              id: string
-              type: string
-            }
-          ]
-        },
-        shipments: {
-          data: [
-            {
-              id: string
-              type: string
-            }
-          ]
-        }
-        user: {
-          data: {
-            id: string
-            type: string
-          }
-        }
-        billing_address: {
-          data: {
-            id: string
-            type: string
-          }
-        }
-        shipping_address: {
-          data: {
-            id: string
-            type: string
-          }
-        }
-      }
-    }
-  ]
-```
-
-__failed response schema:__
-
-```ts
-  error: string
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
@@ -477,108 +477,11 @@ __parameters schema:__
   id: string
 ```
 
-__success response schema:__
+__success response schema:__ [Order schema](#order-schema)
+<br/>
 
-```ts
-  data: {
-    id: number
-    type: string
-    attributes: {
-      numbe: string
-      item_total: string
-      total: string
-      ship_total: string
-      adjustment_total: string
-      created_at: Date
-      updated_at: Date
-      completed_at: Date
-      included_tax_total: string
-      additional_tax_total: string
-      display_additional_tax_total: string
-      display_included_tax_total: string
-      tax_total: string
-      currency: string
-      state: string
-      token: string
-      email: string
-      display_item_total: string
-      display_ship_total: string
-      display_adjustment_total: string
-      display_tax_total: string
-      promo_total: string
-      display_promo_total: string
-      item_count: number
-      special_instructions: string
-      display_total: string
-    }
-    relationships: {
-      line_items: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      variants: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      promotions: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      payment: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      },
-      shipments: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      user: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-      billing_address: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-      shipping_address: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-    }
-  }
-```
-
-__failed response schema:__
-
-```ts
-  error: string
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
@@ -610,108 +513,11 @@ __parameters schema:__
   number: string
 ```
 
-__success response schema:__
+__success response schema:__ [Order schema](#order-schema)
+<br/>
 
-```ts
-  data: {
-    id: number
-    type: string
-    attributes: {
-      numbe: string
-      item_total: string
-      total: string
-      ship_total: string
-      adjustment_total: string
-      created_at: Date
-      updated_at: Date
-      completed_at: Date
-      included_tax_total: string
-      additional_tax_total: string
-      display_additional_tax_total: string
-      display_included_tax_total: string
-      tax_total: string
-      currency: string
-      state: string
-      token: string
-      email: string
-      display_item_total: string
-      display_ship_total: string
-      display_adjustment_total: string
-      display_tax_total: string
-      promo_total: string
-      display_promo_total: string
-      item_count: number
-      special_instructions: string
-      display_total: string
-    }
-    relationships: {
-      line_items: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      variants: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      promotions: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      payment: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      },
-      shipments: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      user: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-      billing_address: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-      shipping_address: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-    }
-  }
-```
-
-__failed response schema:__
-
-```ts
-  error: string
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
@@ -738,114 +544,32 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__
+__success response schema:__ [Order schema](#order-schema)
+<br/>
 
-```ts
-  data: {
-    id: number
-    type: string
-    attributes: {
-      numbe: string
-      item_total: string
-      total: string
-      ship_total: string
-      adjustment_total: string
-      created_at: Date
-      updated_at: Date
-      completed_at: Date
-      included_tax_total: string
-      additional_tax_total: string
-      display_additional_tax_total: string
-      display_included_tax_total: string
-      tax_total: string
-      currency: string
-      state: string
-      token: string
-      email: string
-      display_item_total: string
-      display_ship_total: string
-      display_adjustment_total: string
-      display_tax_total: string
-      promo_total: string
-      display_promo_total: string
-      item_count: number
-      special_instructions: string
-      display_total: string
-    }
-    relationships: {
-      line_items: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      variants: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      promotions: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      payment: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      },
-      shipments: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      user: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-      billing_address: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-      shipping_address: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-    }
-  }
-```
-
-__failed response schema:__
-
-```ts
-  error: string
-```
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
 
 __Example:__
 
 ```ts
+  try {
+    const token = await await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const cart = await client.cart.create({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
   try {  
-    const order = await client.cart.create()
+    const cart = await client.cart.create()
   } catch (err) {
     console.error(err)
   }
@@ -854,4 +578,400 @@ __Example:__
 <br/>
 
 ### `show`
+Returns contents of the cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Get%20Cart)
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const cart = await client.cart.show({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.cart.show({
+      orderToken: cart.data.attributes.token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `addItem`
+Adds a Product Variant to the Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Add%20Item)
+
+__parameters schema:__
+
+```ts
+  {
+    variant_id: number
+    quantity: number
+  }
+```
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const cart = await client.cart.addItem({
+      bearerToken: token.access_token
+    }, {
+      variant_id: 1,
+      quantity: 1
+
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.cart.addItem({
+      orderToken: cart.data.attributes.token
+    }, {
+      variant_id: 1,
+      quantity: 1
+
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `setQuantity`
+Sets the quantity of a given line item. It has to be a positive integer greater than 0. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Set%20Quantity)
+
+__parameters schema:__
+
+```ts
+  {
+    line_item_id: number
+    quantity: number
+  }
+```
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const cart = await client.cart.addItem({
+      bearerToken: token.access_token
+    }, {
+      line_item_id: 9,
+      quantity: 100
+
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.cart.addItem({
+      orderToken: cart.data.attributes.token
+    }, {
+      line_item_id: 9,
+      quantity: 100
+
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `removeItem`
+Removes Line Item from Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Remove%20Line%20Item)
+
+__parameters schema:__
+
+```ts
+  line_item_id: string
+```
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const cart = await client.cart.removeItem({
+      bearerToken: token.access_token
+    }, '1')
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.cart.removeItem({
+      orderToken: cart.data.attributes.token
+    }, '1')
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `emptyCart`
+Empties the Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Empty%20Cart)
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    cart = await client.cart.emptyCart({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.cart.emptyCart({
+      orderToken: cart.data.attributes.token
+    }, '1')
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `applyCouponCode`
+Applies a coupon code to the Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Apply%20Coupon%20Code)
+
+__parameters schema:__
+
+```ts
+  {
+    coupon_code: string
+  }
+```
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    cart = await client.cart.applyCouponCode({
+      bearerToken: token.access_token
+    }, {
+      coupon_code: 'promo_test'
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.cart.applyCouponCode({
+      orderToken: cart.data.attributes.token
+    }, {
+      coupon_code: 'promo_test'
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+### `removeCouponCode`
+Removes a coupon code from the Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Remove%20Coupon%20Code)
+
+__parameters schema:__
+
+```ts
+  coupon_code: string
+```
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    cart = await client.cart.removeCouponCode({
+      bearerToken: token.access_token
+    }, 'promo_test')
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.cart.removeCouponCode({
+      orderToken: cart.data.attributes.token
+    }, 'promo_test')
+  } catch (err) {
+    console.error(err)
+  }
+```
+<br/>
 
