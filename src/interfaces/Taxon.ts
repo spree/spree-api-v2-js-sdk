@@ -1,6 +1,7 @@
+import { IQuery } from './Query'
 import { IRelationships } from './Relationships'
 
-export interface TaxonAttr {
+export interface TaxonAttr extends IQuery {
   type: string
   id: string,
   attributes: {
@@ -22,8 +23,6 @@ export interface TaxonAttr {
   }
 
   relationships?: IRelationships
-
-  include?: any
 }
 
 export interface ITaxon {

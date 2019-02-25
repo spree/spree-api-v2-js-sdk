@@ -1,6 +1,7 @@
+import { IQuery } from './Query'
 import { IRelationships } from './Relationships'
 
-export interface OrderAttr {
+export interface OrderAttr extends IQuery {
   type: string
   id: string
   attributes: {
@@ -33,8 +34,6 @@ export interface OrderAttr {
   }
 
   relationships?: IRelationships
-
-  include?: any
 }
 
 export interface IOrder {
