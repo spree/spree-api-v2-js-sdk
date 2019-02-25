@@ -1,8 +1,8 @@
 import { GET, PATCH, POST } from '../constants'
 import Http from '../Http'
 import { AddStoreCredit, CheckoutClass, NestedAttributes } from '../interfaces/endpoints/CheckoutClass'
-import { IToken } from '../interfaces/Token'
 import { IQueryAttr } from '../interfaces/Query'
+import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
 export default class Checkout extends Http implements CheckoutClass {

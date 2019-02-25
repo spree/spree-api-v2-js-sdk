@@ -1,8 +1,8 @@
 import { GET } from '../constants'
 import Http from '../Http'
 import { IAccount } from '../interfaces/Account'
-import { IToken } from '../interfaces/Token'
 import { IQuery } from '../interfaces/Query'
+import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
 export default class Account extends Http {

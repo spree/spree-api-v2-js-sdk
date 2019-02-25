@@ -1,8 +1,8 @@
 import { GET } from '../constants'
 import Http from '../Http'
 import { SimpleEndpoint } from '../interfaces/endpoints/SimpleEndpoint'
-import { ITaxon, ITaxons } from '../interfaces/Taxon'
 import { IQuery } from '../interfaces/Query'
+import { ITaxon, ITaxons } from '../interfaces/Taxon'
 import { Routes } from '../routes'
 
 export default class Taxons extends Http implements SimpleEndpoint {

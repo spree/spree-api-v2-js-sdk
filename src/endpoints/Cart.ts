@@ -2,8 +2,8 @@ import { DELETE, GET, PATCH, POST } from '../constants'
 import Http from '../Http'
 import { AddItem, CartClass, CouponCode, SetQuantity } from '../interfaces/endpoints/CartClass'
 import { IOrder } from '../interfaces/Order'
-import { IToken } from '../interfaces/Token'
 import { IQuery, IQueryAttr } from '../interfaces/Query'
+import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
 export default class Cart extends Http implements CartClass {

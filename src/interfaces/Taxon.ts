@@ -1,5 +1,5 @@
-import { IRelationships } from './Relationships'
 import { IQuery } from './Query'
+import { IRelationships } from './Relationships'
 
 export interface TaxonAttr extends IQuery {
   type: string
