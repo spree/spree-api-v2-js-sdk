@@ -2,7 +2,7 @@ import { DELETE, GET, PATCH, POST } from '../constants'
 import Http from '../Http'
 import { AddItem, CartClass, CouponCode, SetQuantity } from '../interfaces/endpoints/CartClass'
 import { IOrder } from '../interfaces/Order'
-import { IQuery, IQueryAttr } from '../interfaces/Query'
+import { IQuery } from '../interfaces/Query'
 import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
@@ -12,7 +12,7 @@ export default class Cart extends Http implements CartClass {
     return await this.spreeResponse(GET, Routes.cartPath(), params)
   }
 
-  public async create(token?: IToken, params: IQueryAttr = {}): Promise<IOrder> {
+  public async create(token?: IToken, params: IQuery = {}): Promise<IOrder> {
     this.spreeTokens = token
     return await this.spreeResponse(POST, Routes.cartPath(), params)
   }
@@ -27,7 +27,7 @@ export default class Cart extends Http implements CartClass {
     return await this.spreeResponse(DELETE, Routes.cartRemoveItemPath(id), params)
   }
 
-  public async emptyCart(token: IToken, params: IQueryAttr = {}): Promise<IOrder> {
+  public async emptyCart(token: IToken, params: IQuery = {}): Promise<IOrder> {
     this.spreeTokens = token
     return await this.spreeResponse(PATCH, Routes.cartEmptyPath(), params)
   }
@@ -42,7 +42,7 @@ export default class Cart extends Http implements CartClass {
     return await this.spreeResponse(PATCH, Routes.cartApplyCodePath(), params)
   }
 
-  public async removeCouponCode(token: IToken, code: string, params: IQueryAttr = {}): Promise<IOrder> {
+  public async removeCouponCode(token: IToken, code: string, params: IQuery = {}): Promise<IOrder> {
     this.spreeTokens = token
     return await this.spreeResponse(PATCH, Routes.cartRemoveCodePath(code), params)
   }

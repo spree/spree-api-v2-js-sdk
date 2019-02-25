@@ -1,17 +1,17 @@
 import { IToken } from '../Token'
-import { IQueryAttr } from '../Query'
+import { IQuery } from '../Query'
 
-export interface AddItem extends IQueryAttr {
+export interface AddItem extends IQuery {
   variant_id: number
   quantity: number
 }
 
-export interface SetQuantity extends IQueryAttr {
+export interface SetQuantity extends IQuery {
   line_item_id: number
   quantity: number
 }
 
-export interface CouponCode extends IQueryAttr {
+export interface CouponCode extends IQuery {
   coupon_code: string
 }
 

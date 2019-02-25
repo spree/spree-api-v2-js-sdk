@@ -1,4 +1,4 @@
-export interface IQueryAttr {
+export interface IQuery {
   include?: string
   fields?: {
     [key: string]: string
@@ -8,8 +8,4 @@ export interface IQueryAttr {
   }
   page?: number
   per_page?: number
-}
-
-export interface IQuery {
-  params?: IQueryAttr
 }
