@@ -6,7 +6,7 @@ const setEnv = (config) => {
   process.env.SPREE_HOST = config.host
 }
 
-export const Client = (config) => {
+export const makeClient = (config) => {
   setEnv(config)
 
   return container.resolve(Instance)
