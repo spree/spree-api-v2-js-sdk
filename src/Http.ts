@@ -21,7 +21,7 @@ export default class Http {
     if (this.spreeTokens) this.setHeaders()
 
     try {
-      const res = await this.axios[method](route, { params })
+      const res = await this.axios[method](route, { ...params })
       return res.data
     } catch (err) {
       this.errorMessage(err)

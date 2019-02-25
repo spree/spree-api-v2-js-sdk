@@ -3,14 +3,13 @@ import { IPaymentSource } from '../attributes/PaymentSource'
 import { IAddress } from '../attributes/Address'
 import { IShipment } from '../attributes/Shipment'
 import { IToken } from '../Token'
+import { IQueryAttr } from '../Query'
 
-export interface AddStoreCredit {
-  amount: number,
-  includes?: string,
-  fields?: any
+export interface AddStoreCredit extends IQueryAttr {
+  amount: number
 }
 
-export interface NestedAttributes {
+export interface NestedAttributes extends IQueryAttr {
   order?: {
     email?: string
     bill_address_attributes?: IAddress
@@ -18,8 +17,7 @@ export interface NestedAttributes {
     payments_attributes?: IPayment[]
     shipments_attributes?: IShipment[]
   },
-  payment_source?: IPaymentSource,
-  includes?: string
+  payment_source?: IPaymentSource
 }
 
 export interface CheckoutClass {

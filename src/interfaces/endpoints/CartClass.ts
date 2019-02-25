@@ -1,24 +1,18 @@
 import { IToken } from '../Token'
+import { IQueryAttr } from '../Query'
 
-export interface AddItem {
+export interface AddItem extends IQueryAttr {
   variant_id: number
   quantity: number
-  options?: any
-  include?: string
-  fields?: any
 }
 
-export interface SetQuantity {
+export interface SetQuantity extends IQueryAttr {
   line_item_id: number
   quantity: number
-  include?: string
-  fields?: any
 }
 
-export interface CouponCode {
+export interface CouponCode extends IQueryAttr {
   coupon_code: string
-  include?: string
-  fields?: any
 }
 
 export interface CartClass {

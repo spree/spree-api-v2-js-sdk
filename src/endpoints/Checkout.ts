@@ -2,11 +2,11 @@ import { GET, PATCH, POST } from '../constants'
 import Http from '../Http'
 import { AddStoreCredit, CheckoutClass, NestedAttributes } from '../interfaces/endpoints/CheckoutClass'
 import { IToken } from '../interfaces/Token'
-import { IQuery } from '../interfaces/Query'
+import { IQueryAttr } from '../interfaces/Query'
 import { Routes } from '../routes'
 
 export default class Checkout extends Http implements CheckoutClass {
-  public async orderNext(token: IToken, params: IQuery = {}) {
+  public async orderNext(token: IToken, params: IQueryAttr = {}) {
     this.spreeTokens = token
     return await this.spreeResponse(PATCH, Routes.checkoutNextPath(), params)
   }
@@ -16,12 +16,12 @@ export default class Checkout extends Http implements CheckoutClass {
     return await this.spreeResponse(PATCH, Routes.checkoutPath(), params)
   }
 
-  public async advance(token: IToken, params: IQuery = {}) {
+  public async advance(token: IToken, params: IQueryAttr = {}) {
     this.spreeTokens = token
     return await this.spreeResponse(PATCH, Routes.checkoutAdvancePath(), params)
   }
 
-  public async complete(token: IToken, params: IQuery = {}) {
+  public async complete(token: IToken, params: IQueryAttr = {}) {
     this.spreeTokens = token
     return await this.spreeResponse(PATCH, Routes.checkoutCompletePath(), params)
   }
@@ -31,7 +31,7 @@ export default class Checkout extends Http implements CheckoutClass {
     return await this.spreeResponse(POST, Routes.checkoutAddStoreCreditsPath(), params)
   }
 
-  public async removeStoreCredits(token: IToken, params: IQuery = {}) {
+  public async removeStoreCredits(token: IToken, params: IQueryAttr = {}) {
     this.spreeTokens = token
     return await this.spreeResponse(POST, Routes.checkoutRemoveStoreCreditsPath(), params)
   }

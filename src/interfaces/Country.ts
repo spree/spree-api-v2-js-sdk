@@ -1,6 +1,7 @@
 import { IRelationships } from './Relationships'
+import { IQuery } from './Query'
 
-export interface CountryAttr {
+export interface CountryAttr extends IQuery {
   type: string
   id: string
   attributes: {
@@ -14,8 +15,6 @@ export interface CountryAttr {
   }
 
   relationships?: IRelationships
-
-  include?: any
 }
 
 export interface ICountry {

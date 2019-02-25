@@ -1,6 +1,7 @@
 import { IRelationships } from './Relationships'
+import { IQuery } from './Query'
 
-export interface ProductAttr {
+export interface ProductAttr extends IQuery {
   type: string
   id: string
   attributes: {
@@ -20,8 +21,6 @@ export interface ProductAttr {
   }
 
   relationships?: IRelationships
-
-  include?: any
 }
 
 export interface IProduct {
