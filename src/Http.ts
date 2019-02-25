@@ -1,5 +1,6 @@
 import Axios, { AxiosInstance } from 'axios'
 import { IToken } from './interfaces/Token'
+import { GET, DELETE } from './constants'
 
 export default class Http {
   public host: string
@@ -21,7 +22,15 @@ export default class Http {
     if (this.spreeTokens) this.setHeaders()
 
     try {
-      const res = await this.axios[method](route, { ...params })
+      let res
+      const reqFunc = this.axios[method]
+
+      if (method === GET || method === DELETE) {
+        res = await reqFunc(route, { params: { ...params } })
+      } else {
+        res = await reqFunc(route, { ...params })
+      }
+
       return res.data
     } catch (err) {
       this.errorMessage(err)

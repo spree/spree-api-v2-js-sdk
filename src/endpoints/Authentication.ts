@@ -1,6 +1,6 @@
 import Axios, { AxiosInstance } from 'axios'
-import { AuthTokenAttr, RefreshTokenAttr } from '../interfaces/Authentication'
 import { authParams, refreshParams } from '../helpers/auth'
+import { AuthTokenAttr, RefreshTokenAttr } from '../interfaces/Authentication'
 import { Routes } from '../routes'
 
 export default class Authentication {
