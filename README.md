@@ -32,6 +32,17 @@ Node module for integration with Spree API V2
     - [removeItem](#removeItem)
     - [emptyCart](#emptyCart)
     - [applyCouponCode](#applyCouponCode)
+    - [removeCouponCode](#removeCouponCode)
+  - [Checkout](#checkout)
+    - [orderUpdate](#orderUpdate)
+    - [orderNext](#orderNext)
+    - [advance](#advance)
+    - [complete](#complete)
+    - [addStoreCredits](#addStoreCredits)
+    - [removeStoreCredits](#removeStoreCredits)
+    - [paymentMethods](#paymentMethods)
+    - [shippingMethods](#shippingMethods)
+    - [Checkout Examples](#checkout-examples)
 
 
 <br/>
@@ -47,9 +58,9 @@ Node module for integration with Spree API V2
 2. Initialize `Client`
 
   ```ts
-    import { Client } from 'spree-storefront-api-v2-js-sdk'
+    import { spreeClient } from 'spree-storefront-api-v2-js-sdk'
 
-    const client = Client({
+    const client = spreeClient({
       host: 'http://localhost:3000'
     })
   ```
@@ -554,7 +565,7 @@ __Example:__
 
 ```ts
   try {
-    const token = await await client.authentication.getToken({
+    const token = await client.authentication.getToken({
       username: 'spree@example.com',
       password: 'spree123'
     })
@@ -599,7 +610,7 @@ __Example:__
 
 ```ts
   try {
-    const token = await await client.authentication.getToken({
+    const token = await client.authentication.getToken({
       username: 'spree@example.com',
       password: 'spree123'
     })
@@ -657,7 +668,7 @@ __Example:__
 
 ```ts
   try {
-    const token = await await client.authentication.getToken({
+    const token = await client.authentication.getToken({
       username: 'spree@example.com',
       password: 'spree123'
     })
@@ -723,7 +734,7 @@ __Example:__
 
 ```ts
   try {
-    const token = await await client.authentication.getToken({
+    const token = await client.authentication.getToken({
       username: 'spree@example.com',
       password: 'spree123'
     })
@@ -786,7 +797,7 @@ __Example:__
 
 ```ts
   try {
-    const token = await await client.authentication.getToken({
+    const token = await client.authentication.getToken({
       username: 'spree@example.com',
       password: 'spree123'
     })
@@ -835,7 +846,7 @@ __Example:__
 
 ```ts
   try {
-    const token = await await client.authentication.getToken({
+    const token = await client.authentication.getToken({
       username: 'spree@example.com',
       password: 'spree123'
     })
@@ -892,7 +903,7 @@ __Example:__
 
 ```ts
   try {
-    const token = await await client.authentication.getToken({
+    const token = await client.authentication.getToken({
       username: 'spree@example.com',
       password: 'spree123'
     })
@@ -949,12 +960,12 @@ __Example:__
 
 ```ts
   try {
-    const token = await await client.authentication.getToken({
+    const token = await client.authentication.getToken({
       username: 'spree@example.com',
       password: 'spree123'
     })
 
-    cart = await client.cart.removeCouponCode({
+    const cart = await client.cart.removeCouponCode({
       bearerToken: token.access_token
     }, 'promo_test')
   } catch (err) {
@@ -975,3 +986,767 @@ __Example:__
 ```
 <br/>
 
+## Checkout
+
+### `orderUpdate`
+Updates the Checkout 
+You can run multiple Checkout updates with different data types.
+[Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Update%20Checkout)
+
+__parameters schema:__
+
+```ts
+  order: {
+    email: string
+    bill_address_attributes?: {
+      firstname: string
+      lastname: string
+      address1: string
+      city: string
+      phone: string
+      zipcode: string
+      state_name: string
+      country_iso: string
+    }
+    ship_address_attributes?: {
+      firstname: string
+      lastname: string
+      address1: string
+      city: string
+      phone: string
+      zipcode: string
+      state_name: string
+      country_iso: string
+    }
+    shipments_attributes?: [
+      {
+        selected_shipping_rate_id: number
+        id: number
+      }
+    ]
+    payments_attributes?: [
+      {
+        payment_method_id: number
+      }
+    ]
+  }
+  payment_source?: {
+    [payment_method_id: number]: {
+      number: string
+      month: string
+      year: string
+      verification_value: string
+      name: string
+    }
+  }
+```
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const order = await client.checkout.orderUpdate({
+      bearerToken: token.access_token
+    }, {
+      order: {
+        email: 'john@snow.org',
+        bill_address_attributes: {
+          firstname: 'John',
+          lastname: 'Snow',
+          address1: '7735 Old Georgetown Road',
+          city: 'Bethesda',
+          phone: '3014445002',
+          zipcode: '20814',
+          state_name: 'MD',
+          country_iso: 'US'
+        },
+        ship_address_attributes: {
+          firstname: 'John',
+          lastname: 'Snow',
+          address1: '7735 Old Georgetown Road',
+          city: 'Bethesda',
+          phone: '3014445002',
+          zipcode: '20814',
+          state_name: 'MD',
+          country_iso: 'US'
+        },
+        shipments_attributes: [{
+          id: 1,
+          selected_shipping_rate_id: 1
+        }],
+        payments_attributes: [{
+          payment_method_id: 1
+        }]
+      },
+      payment_source: {
+        1: {
+          number: '4111111111111111',
+          month: '1',
+          year: '2022',
+          verification_value: '123',
+          name: 'John Doe'
+        }
+      }
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.checkout.orderUpdate({
+      orderToken: cart.data.attributes.token
+    }, {
+      order: {
+        email: 'john@snow.org',
+        bill_address_attributes: {
+          firstname: 'John',
+          lastname: 'Snow',
+          address1: '7735 Old Georgetown Road',
+          city: 'Bethesda',
+          phone: '3014445002',
+          zipcode: '20814',
+          state_name: 'MD',
+          country_iso: 'US'
+        },
+        ship_address_attributes: {
+          firstname: 'John',
+          lastname: 'Snow',
+          address1: '7735 Old Georgetown Road',
+          city: 'Bethesda',
+          phone: '3014445002',
+          zipcode: '20814',
+          state_name: 'MD',
+          country_iso: 'US'
+        },
+        shipments_attributes: [{
+          id: 1,
+          selected_shipping_rate_id: 1
+        }],
+        payments_attributes: [{
+          payment_method_id: 1
+        }]
+      },
+      payment_source: {
+        1: {
+          number: '4111111111111111',
+          month: '1',
+          year: '2022',
+          verification_value: '123',
+          name: 'John Doe'
+        }
+      }
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `orderNext`
+
+Goes to the next Checkout step
+[Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Checkout%20Next)
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const order = await client.checkout.orderNext({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    const order = await client.checkout.orderNext({
+      orderToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `advance`
+
+Advances Checkout to the furthest Checkout step validation allows, until the Complete step. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Advance%20Checkout)
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const order = await client.checkout.advance({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    const order = await client.checkout.advance({
+      orderToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `complete`
+Completes the Checkout. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Complete%20Checkout)
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const order = await client.checkout.complete({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    const order = await client.checkout.complete({
+      orderToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `addStoreCredits`
+Adds Store Credit payments if a user has any. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Add%20Store%20Credit)
+
+
+__parameters schema:__
+```ts
+  {
+    amount: number
+  }
+```
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const order = await client.checkout.addStoreCredits({
+      bearerToken: token.access_token
+    }, {
+      amount: 100
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    const order = await client.checkout.addStoreCredits({
+      orderToken: token.access_token
+    }, {
+      amount: 100
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `removeStoreCredits`
+Remove Store Credit payments if any applied. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Remove%20Store%20Credit)
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Order schema](#order-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const order = await client.checkout.removeStoreCredits({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    const order = await client.checkout.removeStoreCredits({
+      orderToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `paymentMethods`
+Returns a list of available Payment Methods. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Payment%20Methods)
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ 
+```ts
+  {
+    data: [
+      {
+        id: atring
+        type: string
+        attributes: {
+          type: string
+          name: string
+          description: string
+        }
+      }
+    ]
+  }
+```
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const order = await client.checkout.paymentMethods({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    const order = await client.checkout.paymentMethods({
+      orderToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `shippingMethods`
+Returns a list of available Shipping Rates for Checkout. Shipping Rates are grouped against Shipments. Each checkout cna have multiple Shipments eg. some products are available in stock and will be send out instantly and some needs to be backordered. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Shipping%20Rates)
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ 
+```ts
+  {
+    data: [
+      {
+        id: atring
+        type: string
+        attributes: {
+          type: string
+          name: string
+          description: string
+        }
+      }
+    ]
+  }
+```
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const order = await client.checkout.shippingMethods({
+      bearerToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    const order = await client.checkout.shippingMethods({
+      orderToken: token.access_token
+    })
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### Checkout Examples
+
+1. One-step checkout
+
+```ts
+try {
+  const { access_token: accessToken } = await client.authentication.getToken({
+    username: 'spree@example.com',
+    password: 'spree123'
+  })
+
+  await client.cart.create({
+    bearerToken: accessToken
+  })
+
+  await client.cart.addItem({
+    bearerToken: accessToken
+  }, {
+    variant_id: 1,
+    variant_id: 10
+  })
+
+  const shipping = await client.checkout.shippingMethods({
+    bearerToken: accessToken
+  })
+
+  const payment = await client.checkout.paymentMethods({
+    bearerToken: accessToken
+  })
+
+  let order = await client.checkout.orderUpdate({
+    bearerToken: token.access_token
+  }, {
+    order: {
+      email: 'john@snow.org',
+      bill_address_attributes: {
+        firstname: 'John',
+        lastname: 'Snow',
+        address1: '7735 Old Georgetown Road',
+        city: 'Bethesda',
+        phone: '3014445002',
+        zipcode: '20814',
+        state_name: 'MD',
+        country_iso: 'US'
+      },
+      ship_address_attributes: {
+        firstname: 'John',
+        lastname: 'Snow',
+        address1: '7735 Old Georgetown Road',
+        city: 'Bethesda',
+        phone: '3014445002',
+        zipcode: '20814',
+        state_name: 'MD',
+        country_iso: 'US'
+      },
+      shipments_attributes: [{
+        id: shipping.data[0].id,
+        selected_shipping_rate_id: shipping.data[0].relationships.shipping_rates.data[0].id
+      }],
+      payments_attributes: [{
+        payment_method_id: payment.data[0].id
+      }]
+    },
+    payment_source: {
+      [payment.data[0].id]: {
+        number: '4111111111111111',
+        month: '1',
+        year: '2022',
+        verification_value: '123',
+        name: 'John Doe'
+      }
+    }
+  })
+
+  order = await client.checkout.complete({
+    bearerToken: token.access_token
+  })
+} catch (err) {
+  console.error(err) 
+}
+```
+
+1. Three-step checkout
+
+```ts
+try {
+  const { access_token: accessToken } = await client.authentication.getToken({
+    username: 'spree@example.com',
+    password: 'spree123'
+  })
+
+  await client.cart.create({
+    bearerToken: accessToken
+  })
+
+  await client.cart.addItem({
+    bearerToken: accessToken
+  }, {
+    variant_id: 1,
+    variant_id: 10
+  })
+
+  // Step one 
+
+  let order = await client.checkout.orderUpdate({
+    bearerToken: token.access_token
+  }, {
+    order: {
+      email: 'john@snow.org',
+      bill_address_attributes: {
+        firstname: 'John',
+        lastname: 'Snow',
+        address1: '7735 Old Georgetown Road',
+        city: 'Bethesda',
+        phone: '3014445002',
+        zipcode: '20814',
+        state_name: 'MD',
+        country_iso: 'US'
+      },
+      ship_address_attributes: {
+        firstname: 'John',
+        lastname: 'Snow',
+        address1: '7735 Old Georgetown Road',
+        city: 'Bethesda',
+        phone: '3014445002',
+        zipcode: '20814',
+        state_name: 'MD',
+        country_iso: 'US'
+      }
+    },
+  })
+
+  await client.checkout.orderNext({
+    bearerToken: accessToken
+  })
+
+  // Step two
+
+  const shipping = await client.checkout.shippingMethods({
+    bearerToken: accessToken
+  })
+
+  let order = await client.checkout.orderUpdate({
+    bearerToken: token.access_token
+  }, {
+    order: {
+      shipments_attributes: [{
+        id: shipping.data[0].id,
+        selected_shipping_rate_id: shipping.data[0].relationships.shipping_rates.data[0].id
+      }]
+    }
+  })
+
+  await client.checkout.orderNext({
+    bearerToken: accessToken
+  })
+
+  // Step three
+
+  const payment = await client.checkout.paymentMethods({
+    bearerToken: accessToken
+  })
+
+  let order = await client.checkout.orderUpdate({
+    bearerToken: token.access_token
+  }, {
+    order: {
+      payments_attributes: [{
+        payment_method_id: payment.data[0].id
+      }]
+    },
+    payment_source: {
+      [payment.data[0].id]: {
+        number: '4111111111111111',
+        month: '1',
+        year: '2022',
+        verification_value: '123',
+        name: 'John Doe'
+      }
+    }
+  })
+
+  // Order complete
+
+  await client.checkout.orderNext({
+    bearerToken: accessToken
+  })
+
+  order = await client.checkout.complete({
+    bearerToken: token.access_token
+  })
+} catch (err) {
+  console.error(err) 
+}
+```
