@@ -43,6 +43,9 @@ Node module for integration with Spree API V2
     - [paymentMethods](#paymentMethods)
     - [shippingMethods](#shippingMethods)
     - [Checkout Examples](#checkout-examples)
+  - [Products](#products)
+    - [list](#list)
+    - [show](#show)
 
 
 <br/>
@@ -1750,3 +1753,73 @@ try {
   console.error(err) 
 }
 ```
+
+<br/>
+
+## Products
+Returns a list of Products. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Shipping%20Rates)
+
+### `list`
+
+__optional parameters schema:__
+
+```ts
+  {
+    include?: string
+    fields?: {
+      [key: string]: string
+    }
+    filter?: {
+      [key: string]: number
+    }
+    sort?: string
+    page?: number
+    per_page?: number
+  }
+```
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const products = await client.products.list()
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
+### `list`
+
+__optional parameters schema:__
+
+```ts
+  {
+    id: string
+    params?: {
+      include: string
+      fields: {
+        [key: string]: string
+      }
+    }
+  }
+```
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const products = await client.products.show('product_id')
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
