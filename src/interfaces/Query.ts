@@ -4,7 +4,7 @@ export interface IQuery {
     [key: string]: string
   }
   filter?: {
-    [key: string]: number
+    [key: string]: number | string
   }
   page?: number
   per_page?: number
