@@ -1,7 +1,7 @@
-import { IQuery } from './Query'
+import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
 
-export interface OrderAttr extends IQuery {
+export interface OrderAttr extends JsonApiDocument {
   type: string
   id: string
   attributes: {
@@ -33,13 +33,13 @@ export interface OrderAttr extends IQuery {
     completed_at: Date
   }
 
-  relationships?: IRelationships
+  relationships: IRelationships
 }
 
-export interface IOrder {
+export interface IOrder extends JsonApiSingleResponse {
   data: OrderAttr
 }
 
-export interface IOrders {
+export interface IOrders extends JsonApiListResponse {
   data: OrderAttr[]
 }

@@ -1,7 +1,7 @@
-import { IQuery } from './Query'
+import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
 
-export interface CountryAttr extends IQuery {
+export interface CountryAttr extends JsonApiDocument {
   type: string
   id: string
   attributes: {
@@ -14,13 +14,13 @@ export interface CountryAttr extends IQuery {
     default: boolean
   }
 
-  relationships?: IRelationships
+  relationships: IRelationships
 }
 
-export interface ICountry {
+export interface ICountry extends JsonApiSingleResponse {
   data: CountryAttr
 }
 
-export interface ICountries {
+export interface ICountries extends JsonApiListResponse {
   data: CountryAttr[]
 }

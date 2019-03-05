@@ -1,7 +1,7 @@
-import { IQuery } from './Query'
+import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
 
-export interface TaxonAttr extends IQuery {
+export interface TaxonAttr extends JsonApiDocument {
   type: string
   id: string,
   attributes: {
@@ -22,13 +22,13 @@ export interface TaxonAttr extends IQuery {
     updated_at: Date
   }
 
-  relationships?: IRelationships
+  relationships: IRelationships
 }
 
-export interface ITaxon {
+export interface ITaxon extends JsonApiSingleResponse {
   data: TaxonAttr
 }
 
-export interface ITaxons {
+export interface ITaxons extends JsonApiListResponse {
   data: TaxonAttr[]
 }
