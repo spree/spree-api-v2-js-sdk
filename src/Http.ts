@@ -1,4 +1,5 @@
 import Axios, { AxiosInstance } from 'axios'
+import qs from 'qs'
 import { IToken } from './interfaces/Token'
 import { GET, DELETE } from './constants'
 
@@ -14,6 +15,9 @@ export default class Http {
       baseURL: this.host + 'api/v2/storefront',
       headers: {
         'Content-Type': 'application/vnd.api+json'
+      },
+      paramsSerializer: (params) => {
+        return qs.stringify(params, { arrayFormat: 'brackets' })
       }
     })
   }
