@@ -1,3 +1,3 @@
 export interface OrderClass {
-  status(number: string)
-} 
+  status(orderNumber: string)
+}

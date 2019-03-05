@@ -1,9 +1,9 @@
+import { IAddress } from '../attributes/Address'
 import { IPayment } from '../attributes/Payment'
 import { IPaymentSource } from '../attributes/PaymentSource'
-import { IAddress } from '../attributes/Address'
 import { IShipment } from '../attributes/Shipment'
-import { IToken } from '../Token'
 import { IQuery } from '../Query'
+import { IToken } from '../Token'
 
 export interface AddStoreCredit extends IQuery {
   amount: number

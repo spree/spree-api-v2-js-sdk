@@ -1,7 +1,7 @@
 import Axios, { AxiosInstance } from 'axios'
 import qs from 'qs'
+import { DELETE, GET } from './constants'
 import { IToken } from './interfaces/Token'
-import { GET, DELETE } from './constants'
 
 export default class Http {
   public host: string
@@ -22,8 +22,10 @@ export default class Http {
     })
   }
 
-  async spreeResponse(method: string, route: string, params: any = {}) {
-    if (this.spreeTokens) this.setHeaders()
+  protected async spreeResponse(method: string, route: string, params: any = {}) {
+    if (this.spreeTokens) {
+      this.setHeaders()
+    }
 
     try {
       let res
@@ -43,18 +45,18 @@ export default class Http {
 
   private setHeaders() {
     const currentHeader = this.axios.defaults.headers
-    this.axios.defaults.headers = { 
-      ...currentHeader, 
-      ...this.spreeOrderHeaders 
+    this.axios.defaults.headers = {
+      ...currentHeader,
+      ...this.spreeOrderHeaders
     }
   }
 
-  errorMessage(err: string) {
+  private errorMessage(err: string) {
     throw { error: Error(err).message }
   }
 
   get spreeOrderHeaders() {
-    let header = {}
+    const header = {}
 
     if (this.spreeTokens.orderToken) {
       header['X-Spree-Order-Token'] = this.spreeTokens.orderToken

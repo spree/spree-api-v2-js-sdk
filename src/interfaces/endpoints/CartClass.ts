@@ -1,5 +1,5 @@
-import { IToken } from '../Token'
 import { IQuery } from '../Query'
+import { IToken } from '../Token'
 
 export interface AddItem extends IQuery {
   variant_id: string
@@ -24,4 +24,4 @@ export interface CartClass {
   setQuantity(token: IToken, params: SetQuantity)
   applyCouponCode(token: IToken, params: CouponCode)
   removeCouponCode(token: IToken, code: string)
-} 
+}
