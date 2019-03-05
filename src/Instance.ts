@@ -1,12 +1,12 @@
-import { injectable } from "tsyringe"
-import  Products from './endpoints/Products'
-import Taxons from './endpoints/Taxons'
-import Countries from './endpoints/Countries'
+import { injectable } from 'tsyringe'
+import Account from './endpoints/Account'
+import Authentication from './endpoints/Authentication'
 import Cart from './endpoints/Cart'
 import Checkout from './endpoints/Checkout'
-import Authentication from './endpoints/Authentication'
-import Account from './endpoints/Account'
+import Countries from './endpoints/Countries'
 import Order from './endpoints/Order'
+import Products from './endpoints/Products'
+import Taxons from './endpoints/Taxons'
 
 @injectable()
 export default class Instance {

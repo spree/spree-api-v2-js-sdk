@@ -26,8 +26,8 @@ export default class Account extends Http {
     return await this.spreeResponse(GET, Routes.accountCompletedOrdersPath(), params)
   }
 
-  public async completedOrder(token: IToken, number: string, params: IQuery = {}) {
+  public async completedOrder(token: IToken, orderNumber: string, params: IQuery = {}) {
     this.spreeTokens = token
-    return await this.spreeResponse(GET, Routes.accountCompletedOrderPath(number), params)
+    return await this.spreeResponse(GET, Routes.accountCompletedOrderPath(orderNumber), params)
   }
 }
