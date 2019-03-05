@@ -7,11 +7,12 @@
     "rules": {
         "experimentalDecorators": false,
         "indent": [true, "spaces", 2],
-        "semicolon": [true, "never"],
-        "quotemark": [true, "single"],
-        "no-duplicate-imports": true,
         "interface-name" : [false],
         "no-console": [false, "error"],
+        "no-duplicate-imports": true,
+        "object-literal-sort-keys": false,
+        "quotemark": [true, "single"],
+        "semicolon": [true, "never"],
         "trailing-comma": [false]
     },
     "rulesDirectory": []
