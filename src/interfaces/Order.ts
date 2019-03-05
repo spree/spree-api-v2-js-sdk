@@ -1,3 +1,5 @@
+import { Validation } from 'monet'
+import { SpreeError } from '../errors'
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
 
@@ -43,3 +45,5 @@ export interface IOrder extends JsonApiSingleResponse {
 export interface IOrders extends JsonApiListResponse {
   data: OrderAttr[]
 }
+
+export interface IOrderResult extends Validation<SpreeError, IOrder> {}

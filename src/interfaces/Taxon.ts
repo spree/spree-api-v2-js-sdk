@@ -1,3 +1,5 @@
+import { Validation } from 'monet'
+import { SpreeError } from '../errors'
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
 
@@ -32,3 +34,7 @@ export interface ITaxon extends JsonApiSingleResponse {
 export interface ITaxons extends JsonApiListResponse {
   data: TaxonAttr[]
 }
+
+export interface ITaxonResult extends Validation<SpreeError, ITaxon> { }
+
+export interface ITaxonsResult extends Validation<SpreeError, ITaxons> { }
