@@ -647,7 +647,7 @@ __parameters schema:__
 
 ```ts
   {
-    variant_id: number
+    variant_id: string
     quantity: number
   }
 ```
@@ -679,7 +679,7 @@ __Example:__
     const cart = await client.cart.addItem({
       bearerToken: token.access_token
     }, {
-      variant_id: 1,
+      variant_id: '1',
       quantity: 1
 
     })
@@ -695,7 +695,7 @@ __Example:__
     cart = await client.cart.addItem({
       orderToken: cart.data.attributes.token
     }, {
-      variant_id: 1,
+      variant_id: '1',
       quantity: 1
 
     })
@@ -713,7 +713,7 @@ __parameters schema:__
 
 ```ts
   {
-    line_item_id: number
+    line_item_id: string
     quantity: number
   }
 ```
@@ -742,10 +742,10 @@ __Example:__
       password: 'spree123'
     })
 
-    const cart = await client.cart.addItem({
+    const cart = await client.cart.setQuantity({
       bearerToken: token.access_token
     }, {
-      line_item_id: 9,
+      line_item_id: '9',
       quantity: 100
 
     })
@@ -758,10 +758,10 @@ __Example:__
   try {
     let cart = await client.cart.create()
 
-    cart = await client.cart.addItem({
+    cart = await client.cart.setQuantity({
       orderToken: cart.data.attributes.token
     }, {
-      line_item_id: 9,
+      line_item_id: '9',
       quantity: 100
 
     })
@@ -1576,8 +1576,7 @@ try {
   await client.cart.addItem({
     bearerToken: accessToken
   }, {
-    variant_id: 1,
-    variant_id: 10
+    variant_id: '1'
   })
 
   const shipping = await client.checkout.shippingMethods({
@@ -1656,8 +1655,7 @@ try {
   await client.cart.addItem({
     bearerToken: accessToken
   }, {
-    variant_id: 1,
-    variant_id: 10
+    variant_id: '1'
   })
 
   // Step one 

@@ -2,12 +2,12 @@ import { IToken } from '../Token'
 import { IQuery } from '../Query'
 
 export interface AddItem extends IQuery {
-  variant_id: number
+  variant_id: string
   quantity: number
 }
 
 export interface SetQuantity extends IQuery {
-  line_item_id: number
+  line_item_id: string
   quantity: number
 }
 
