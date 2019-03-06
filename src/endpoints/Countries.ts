@@ -11,6 +11,6 @@ export default class Countries extends Http implements SimpleEndpoint {
   }
 
   public async show(iso: string, params: IQuery = {}): Promise<ICountry> {
-    return await this.spreeResponse(GET, Routes.countryPath(iso), params)
+    return await this.spreeResponse(GET, Routes.countryPath(iso), {}, params)
   }
 }

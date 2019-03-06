@@ -7,10 +7,10 @@ import { Routes } from '../routes'
 
 export default class Products extends Http implements SimpleEndpoint {
   public async list(params: IQuery = {}): Promise<IProducts> {
-    return await this.spreeResponse(GET, Routes.productsPath(), params)
+    return await this.spreeResponse(GET, Routes.productsPath(), {}, params)
   }
 
   public async show(id: string, params: IQuery = {}): Promise<IProduct> {
-    return await this.spreeResponse(GET, Routes.productPath(id), params)
+    return await this.spreeResponse(GET, Routes.productPath(id), {}, params)
   }
 }

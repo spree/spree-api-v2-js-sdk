@@ -5,7 +5,6 @@ import { IToken } from './interfaces/Token'
 
 export default class Http {
   public host: string
-  public spreeTokens: IToken
   public axios: AxiosInstance
 
   constructor() {
@@ -14,7 +13,7 @@ export default class Http {
     this.axios = Axios.create({
       baseURL: this.host + 'api/v2/storefront',
       headers: {
-        'Content-Type': 'application/vnd.api+json'
+        'Content-Type': 'application/json'
       },
       paramsSerializer: (params) => {
         return qs.stringify(params, { arrayFormat: 'brackets' })
@@ -22,19 +21,16 @@ export default class Http {
     })
   }
 
-  protected async spreeResponse(method: string, route: string, params: any = {}) {
-    if (this.spreeTokens) {
-      this.setHeaders()
-    }
-
+  protected async spreeResponse(method: string, route: string, tokens: any = {}, params: any = {}) {
     try {
       let res
       const reqFunc = this.axios[method]
+      const headers = this.spreeOrderHeaders(tokens)
 
       if (method === GET || method === DELETE) {
-        res = await reqFunc(route, { params: { ...params } })
+        res = await reqFunc(route, { params, headers })
       } else {
-        res = await reqFunc(route, { ...params })
+        res = await reqFunc(route, params, { headers })
       }
 
       return res.data
@@ -43,27 +39,19 @@ export default class Http {
     }
   }
 
-  private setHeaders() {
-    const currentHeader = this.axios.defaults.headers
-    this.axios.defaults.headers = {
-      ...currentHeader,
-      ...this.spreeOrderHeaders
-    }
-  }
-
   private errorMessage(err: string) {
     throw { error: Error(err).message }
   }
 
-  get spreeOrderHeaders() {
+  private spreeOrderHeaders(tokens) {
     const header = {}
 
-    if (this.spreeTokens.orderToken) {
-      header['X-Spree-Order-Token'] = this.spreeTokens.orderToken
+    if (tokens.orderToken) {
+      header['X-Spree-Order-Token'] = tokens.orderToken
     }
 
-    if (this.spreeTokens.bearerToken) {
-      header['Authorization'] = `Bearer ${this.spreeTokens.bearerToken}`
+    if (tokens.bearerToken) {
+      header['Authorization'] = `Bearer ${tokens.bearerToken}`
     }
 
     return header
