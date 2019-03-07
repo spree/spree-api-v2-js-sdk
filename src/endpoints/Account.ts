@@ -7,27 +7,22 @@ import { Routes } from '../routes'
 
 export default class Account extends Http {
   public async accountInfo(token: IToken, params: IQuery = {}): Promise<IAccount> {
-    this.spreeTokens = token
-    return await this.spreeResponse(GET, Routes.accountPath(), params)
+    return await this.spreeResponse(GET, Routes.accountPath(), token, params)
   }
 
   public async creditCardsList(token: IToken, params: IQuery = {}) {
-    this.spreeTokens = token
-    return await this.spreeResponse(GET, Routes.accountCreditCardsPath(), params)
+    return await this.spreeResponse(GET, Routes.accountCreditCardsPath(), token, params)
   }
 
   public async defaultCreditCard(token: IToken, params: IQuery = {}) {
-    this.spreeTokens = token
-    return await this.spreeResponse(GET, Routes.accountDefaultCreditCardPath(), params)
+    return await this.spreeResponse(GET, Routes.accountDefaultCreditCardPath(), token, params)
   }
 
   public async completedOrdersList(token: IToken, params: IQuery = {}) {
-    this.spreeTokens = token
-    return await this.spreeResponse(GET, Routes.accountCompletedOrdersPath(), params)
+    return await this.spreeResponse(GET, Routes.accountCompletedOrdersPath(), token, params)
   }
 
   public async completedOrder(token: IToken, orderNumber: string, params: IQuery = {}) {
-    this.spreeTokens = token
-    return await this.spreeResponse(GET, Routes.accountCompletedOrderPath(orderNumber), params)
+    return await this.spreeResponse(GET, Routes.accountCompletedOrderPath(orderNumber), token, params)
   }
 }

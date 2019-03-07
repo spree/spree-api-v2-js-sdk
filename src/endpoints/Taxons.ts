@@ -7,10 +7,10 @@ import { Routes } from '../routes'
 
 export default class Taxons extends Http implements SimpleEndpoint {
   public async list(params: IQuery = {}): Promise<ITaxons> {
-    return await this.spreeResponse(GET, Routes.taxonsPath(), params)
+    return await this.spreeResponse(GET, Routes.taxonsPath(), {}, params)
   }
 
   public async show(id: string, params: IQuery = {}): Promise<ITaxon> {
-    return await this.spreeResponse(GET, Routes.taxonPath(id), params)
+    return await this.spreeResponse(GET, Routes.taxonPath(id), {}, params)
   }
 }

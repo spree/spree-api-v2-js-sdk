@@ -7,6 +7,6 @@ import { Routes } from '../routes'
 
 export default class Order extends Http implements OrderClass {
   public async status(orderNumber: string, params: IQuery = {}): Promise<IOrder> {
-    return await this.spreeResponse(GET, Routes.orderStatusPath(orderNumber), params)
+    return await this.spreeResponse(GET, Routes.orderStatusPath(orderNumber), {}, params)
   }
 }
