@@ -1,7 +1,6 @@
-import { Validation } from 'monet'
-import { SpreeError } from '../errors'
 import { JsonApiDocument, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
+import { ResultResponse } from './ResultResponse'
 
 export interface AccountAttr extends JsonApiDocument {
   data: {
@@ -21,4 +20,4 @@ export interface IAccount extends JsonApiSingleResponse {
   data: AccountAttr
 }
 
-export interface IAccountResult extends Validation<SpreeError, IAccount> {}
+export interface IAccountResult extends ResultResponse<IAccount> {}

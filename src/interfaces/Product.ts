@@ -1,7 +1,6 @@
-import { Validation } from 'monet'
-import { SpreeError } from '../errors'
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
+import { ResultResponse } from './ResultResponse'
 
 export interface ProductAttr extends JsonApiDocument {
   type: string
@@ -32,6 +31,6 @@ export interface IProducts extends JsonApiListResponse {
   data: ProductAttr[]
 }
 
-export interface IProductResult extends Validation<SpreeError, IProduct> {}
+export interface IProductResult extends ResultResponse<IProduct> {}
 
-export interface IProductsResult extends Validation<SpreeError, IProducts> {}
+export interface IProductsResult extends ResultResponse<IProducts> {}

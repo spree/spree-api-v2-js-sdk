@@ -1,7 +1,7 @@
-import { Validation } from 'monet'
-import { SpreeError } from '../errors'
+import { SpreeSDKError } from '../errors'
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
+import { ResultResponse } from './ResultResponse'
 
 export interface CountryAttr extends JsonApiDocument {
   type: string
@@ -27,6 +27,6 @@ export interface ICountries extends JsonApiListResponse {
   data: CountryAttr[]
 }
 
-export interface ICountryResult extends Validation<SpreeError, ICountry> { }
+export interface ICountryResult extends ResultResponse<ICountry> { }
 
-export interface ICountriesResult extends Validation<SpreeError, ICountries> { }
+export interface ICountriesResult extends ResultResponse<ICountries> { }

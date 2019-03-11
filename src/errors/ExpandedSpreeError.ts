@@ -1,12 +1,13 @@
 import { AxiosResponse } from 'axios'
 import get from 'lodash/get'
-import { BasicSpreeError } from '.'
+import BasicSpreeError from './BasicSpreeError'
 
 export default class ExpandedSpreeError extends BasicSpreeError {
   public errors: any
 
   constructor(serverResponse: AxiosResponse, errorsSummary: string, errors: any) {
     super(serverResponse, errorsSummary)
+    Object.setPrototypeOf(this, new.target.prototype)
     this.name = 'ExpandedSpreeError'
     this.errors = Object.keys(errors).reduce((acc, field) => {
       const keys = field.split('.')

@@ -1,10 +1,13 @@
 import Axios, { AxiosError, AxiosInstance } from 'axios'
-import { Validation, Validation as Result } from 'monet'
+import { Validation as Result } from 'monet'
 import qs from 'qs'
 import { DELETE, GET } from './constants'
-import { BasicSpreeError, ExpandedSpreeError, SpreeError } from './errors'
+import {
+  BasicSpreeError, ExpandedSpreeError, MisconfigurationError, NoResponseError, SpreeError, SpreeSDKError
+} from './errors'
 import { ErrorClass } from './interfaces/errors/ErrorClass'
 import { JsonApiResponse } from './interfaces/JsonApi'
+import { ResultResponse } from './interfaces/ResultResponse'
 import { IToken } from './interfaces/Token'
 
 export default class Http {
@@ -27,7 +30,7 @@ export default class Http {
 
   protected async spreeResponse(
     method: string, route: string, tokens: IToken = {}, params: any = {}
-  ): Promise<Validation<SpreeError, JsonApiResponse>> {
+  ): Promise<ResultResponse<JsonApiResponse>> {
     try {
       let res
       const reqFunc = this.axios[method]
@@ -61,7 +64,20 @@ export default class Http {
     return ErrorClass.LIMITED
   }
 
-  private processError(error: AxiosError): SpreeError {
+  private processError(error: AxiosError): SpreeSDKError {
+    if (error.response) {
+      // Error from Spree outside HTTP 2xx codes
+      return this.processSpreeError(error)
+    } else if (error.request) {
+      // No response received from Spree
+      return new NoResponseError()
+    } else {
+      // Incorrect request setup
+      return new MisconfigurationError(error.message)
+    }
+  }
+
+  private processSpreeError(error: AxiosError): SpreeError {
     const { error: errorSummary, errors } = error.response.data
     const errorClass = this.classifyError(error)
 

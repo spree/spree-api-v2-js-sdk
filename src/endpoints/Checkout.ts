@@ -1,7 +1,9 @@
 import { GET, PATCH, POST } from '../constants'
 import Http from '../Http'
 import { AddStoreCredit, CheckoutClass, NestedAttributes } from '../interfaces/endpoints/CheckoutClass'
+import { JsonApiListResponse } from '../interfaces/JsonApi'
 import { IQuery } from '../interfaces/Query'
+import { ResultResponse } from '../interfaces/ResultResponse'
 import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
@@ -30,8 +32,8 @@ export default class Checkout extends Http implements CheckoutClass {
     return await this.spreeResponse(POST, Routes.checkoutRemoveStoreCreditsPath(), token, params)
   }
 
-  public async paymentMethods(token: IToken) {
-    return await this.spreeResponse(GET, Routes.checkoutPaymentMethodsPath(), token)
+  public async paymentMethods(token: IToken): Promise<ResultResponse<JsonApiListResponse>> {
+    return await this.spreeResponse(GET, Routes.checkoutPaymentMethodsPath(), token) as any
   }
 
   public async shippingMethods(token: IToken) {
