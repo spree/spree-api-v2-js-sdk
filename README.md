@@ -8,7 +8,6 @@ Node module for integration with Spree API V2
 Сontents:
 
 - [Quick Start](#quick-start)
-- [Example](#example)
 - [Response schema](#response-schema)
   - [Success schema](#success-schema)
   - [Error schema](#error-schema)
