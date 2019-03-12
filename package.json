@@ -1,7 +1,7 @@
 {
   "name": "@spree/storefront-api-v2-sdk",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node module to easily integrate your JavaScript or TypeScript application with Spree API V2. You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on",
   "engines": {
     "node": ">=8",
     "yarn": ">=1.13.0"
@@ -16,12 +16,12 @@
     "type": "git",
     "url": "git+https://github.com/spark-solutions/spree-storefront-api-v2-js-sdk.git"
   },
-  "author": "",
+  "author": "Spark Solutions <we@sparksolutions.co> (https://sparksolutions.co)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/spark-solutions/spree-storefront-api-v2-js-sdk/issues"
   },
-  "homepage": "https://github.com/spark-solutions/spree-storefront-api-v2-js-sdk#readme",
+  "homepage": "https://guides.spreecommerce.org/api/v2",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
