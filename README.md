@@ -171,10 +171,19 @@ Node module for integration with Spree API V2
 
 ### Error schema
 
-```ts
-  error: string
-```
+The Spree SDK never throws JavaScript [`Error`s][1]. Instead, methods calling Spree return a ["Result"][2] instance. To determine whether the call was succesful, use `isSuccess()` or `isFail()` methods on the instance. Details of a failed call can be retrieved using `fail()`. The method returns a `SpreeSDKError` instance, which is the primary type for all `Error`s returned by the SDK and extends the native JavaScript `Error` type.
 
+Available `SpreeSDKError` subtypes:
+
+|Class Name|Purpose|
+|---|---|
+|`MisconfigurationError`|Signifies the SDK's `Client` was created with improper options. Make sure the values of `host` and other options (if any) provided to `Client` have the correct format.|
+|`NoResponseError`|Spree store could not be reached. Ensure it's running and available under the `host` address provided to the `Client` instance.|
+|`SpreeError`|Spree responded with an error. To debug the issue, check the error's `serverResponse` field. It contains details about the response from Spree, such as the HTTP status code and headers.|
+|`BasicSpreeError`|Extends `SpreeError` with a `error` field provided by Spree and containing a summary of the issue.|
+|`ExpandedSpreeError`|Extends `BasicSpreeError` with a `errors` field. `errors` contains a detailed explanation of the issue, ex. all the validation errors when trying to add shipping details to a Spree order. The `getErrors` method can be used to retrieve a concrete value inside `errors`, ex. `expSpreeError.getErrors(['bill_address', 'firstname'])`.|
+
+The specific type of error returned by `fail()` can be determined using [`instanceof`][3], ex. `if(response.fail() instanceof BasicSpreeError){...}`.
 
 ## Endpoints
 
@@ -1821,3 +1830,7 @@ __Example:__
 ```
 
 <br/>
+
+[1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
+[2]: https://github.com/monet/monet.js/blob/master/docs/VALIDATION.md
+[3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
