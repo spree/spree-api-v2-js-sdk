@@ -54,14 +54,14 @@ Node module for integration with Spree API V2
 
 1. Install SDK
 
-  `npm install spree-storefront-api-v2-js-sdk --save`
+  `npm install @spree/storefront-api-v2-sdk --save`
 
 <br/>
 
 2. Initialize `Client`
 
   ```ts
-    import { spreeClient } from 'spree-storefront-api-v2-js-sdk'
+    import { spreeClient } from '@spree/storefront-api-v2-sdk'
 
     const client = spreeClient({
       host: 'http://localhost:3000'
@@ -178,13 +178,13 @@ Node module for integration with Spree API V2
 
 ## Endpoints
 
-Spree Storefront API SDK contains each endpoint according to [Spree Guides](https://guides2.spreecommerce.org/api/v2)
+Spree Storefront API SDK contains each endpoint according to [Spree Guides](https://guides.spreecommerce.org/api/v2/storefront)
 
-## Authentication
+## [Authentication](https://guides.spreecommerce.org/api/v2/storefront/#section/Authentication)
 
 ### `getToken`
 
-Method `getToken` used for creates a Bearer token required to authorize calls API calls. [Read more](https://guides2.spreecommerce.org/api/v2/authentication)
+Method `getToken` creates a Bearer token required to authorize calls API calls.
 
 __parameters schema:__
 
@@ -224,7 +224,7 @@ __Example:__
 
 ### `refreshToken`
 
-Method `refreshToken` used for refreshes a Bearer token required to authorize calls API calls. [Read more](https://guides2.spreecommerce.org/api/v2/authentication)
+Method `refreshToken` refreshes a Bearer token required to authorize calls API calls.
 
 __parameters schema:__
 
@@ -259,11 +259,11 @@ __Example:__
 
 <br/>
 
-## Account
+## [Account](https://guides.spreecommerce.org/api/v2/storefront/#tag/Account)
 
 ### `accountInfo`
 
-Returns current user information. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Account%20Information)
+Returns current user information.
 
 __parameters schema:__
 
@@ -312,7 +312,7 @@ __Example:__
       username: 'spree@example.com',
       password: 'spree123'
     })
-  
+
     const account = await client.account.accountInfo({
       bearerToken: token.access_token
     })
@@ -324,7 +324,7 @@ __Example:__
 <br/>
 
 ### `creditCardsList`
-Returns a list of Credit Cards for the signed in User. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Credit%20Cards%20list)
+Returns a list of Credit Cards for the signed in User.
 
 __parameters schema:__
 
@@ -346,7 +346,7 @@ __success response schema:__
         last_digits: string
         month: number
         year: number
-        name: string 
+        name: string
         default: boolean
       }
       relationships: {
@@ -372,7 +372,7 @@ __Example:__
       username: 'spree@example.com',
       password: 'spree123'
     })
-  
+
     const cardsList = await client.account.creditCardsList({
       bearerToken: token.access_token
     })
@@ -384,7 +384,7 @@ __Example:__
 <br/>
 
 ### `defaultCreditCard`
-Return the User's default Credit Card. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Default%20Credit%20Card)
+Return the User's default Credit Card.
 
 __parameters schema:__
 
@@ -405,7 +405,7 @@ __success response schema:__
       last_digits: string
       month: number
       year: number
-      name: string 
+      name: string
       default: boolean
     }
     relationships: {
@@ -430,7 +430,7 @@ __Example:__
       username: 'spree@example.com',
       password: 'spree123'
     })
-  
+
     const defaultCard = await client.account.defaultCreditCard({
       bearerToken: token.access_token
     })
@@ -442,8 +442,7 @@ __Example:__
 <br/>
 
 ### `completedOrdersList`
-Returns Orders placed by the User. Only completed ones. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Completed%20Orders)
-
+Returns Orders placed by the User. Only completed ones.
 
 __parameters schema:__
 
@@ -467,7 +466,7 @@ __Example:__
       username: 'spree@example.com',
       password: 'spree123'
     })
-  
+
     const ordersList = await client.account.completedOrdersList({
       bearerToken: token.access_token
     })
@@ -479,7 +478,7 @@ __Example:__
 <br/>
 
 ### `completedOrder`
-Return the User's completed Order. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Completed%20User%20Order)
+Return the User's completed Order.
 
 
 __parameters schema:__
@@ -505,7 +504,7 @@ __Example:__
       username: 'spree@example.com',
       password: 'spree123'
     })
-  
+
     const ordersList = await client.account.completedOrder({
       bearerToken: token.access_token
     }, 'order_id')
@@ -516,10 +515,10 @@ __Example:__
 
 <br/>
 
-## Order
+## [Order](https://guides.spreecommerce.org/api/v2/storefront/#tag/Order-Status)
 
 ### `status`
-Returns placed Order. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Order%20Status)
+Returns placed Order.
 
 __parameters schema:__
 
@@ -536,7 +535,7 @@ __failed response schema:__ [Error schema](#error-schema)
 __Example:__
 
 ```ts
-  try {  
+  try {
     const order = await client.order.status('order_number')
   } catch (err) {
     console.error(err)
@@ -545,16 +544,16 @@ __Example:__
 
 <br/>
 
-## Cart
+## [Cart](https://guides.spreecommerce.org/api/v2/storefront/#tag/Cart)
 
 ### `create`
-Creates new Cart and returns it attributes. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Create%20Cart)
+Creates new Cart and returns it attributes.
 
 __optional parameters schema:__
 
 ```ts
   {
-    bearerToken?: string 
+    bearerToken?: string
   }
 ```
 
@@ -582,7 +581,7 @@ __Example:__
 
   // or
 
-  try {  
+  try {
     const cart = await client.cart.create()
   } catch (err) {
     console.error(err)
@@ -592,7 +591,7 @@ __Example:__
 <br/>
 
 ### `show`
-Returns contents of the cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Get%20Cart)
+Returns contents of the cart.
 
 __optional parameters schema:__
 
@@ -641,7 +640,7 @@ __Example:__
 <br/>
 
 ### `addItem`
-Adds a Product Variant to the Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Add%20Item)
+Adds a Product Variant to the Cart.
 
 __parameters schema:__
 
@@ -707,7 +706,7 @@ __Example:__
 <br/>
 
 ### `setQuantity`
-Sets the quantity of a given line item. It has to be a positive integer greater than 0. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Set%20Quantity)
+Sets the quantity of a given line item. It has to be a positive integer greater than 0.
 
 __parameters schema:__
 
@@ -773,7 +772,7 @@ __Example:__
 <br/>
 
 ### `removeItem`
-Removes Line Item from Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Remove%20Line%20Item)
+Removes Line Item from Cart.
 
 __parameters schema:__
 
@@ -828,7 +827,7 @@ __Example:__
 <br/>
 
 ### `emptyCart`
-Empties the Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Empty%20Cart)
+Empties the Cart.
 
 __optional parameters schema:__
 
@@ -877,7 +876,7 @@ __Example:__
 <br/>
 
 ### `applyCouponCode`
-Applies a coupon code to the Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Apply%20Coupon%20Code)
+Applies a coupon code to the Cart.
 
 __parameters schema:__
 
@@ -936,7 +935,7 @@ __Example:__
 ```
 
 ### `removeCouponCode`
-Removes a coupon code from the Cart. [Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Remove%20Coupon%20Code)
+Removes a coupon code from the Cart.
 
 __parameters schema:__
 
@@ -989,12 +988,11 @@ __Example:__
 ```
 <br/>
 
-## Checkout
+## [Checkout](https://guides.spreecommerce.org/api/v2/storefront/#tag/Checkout)
 
 ### `orderUpdate`
-Updates the Checkout 
+Updates the Checkout
 You can run multiple Checkout updates with different data types.
-[Read more](https://guides2.spreecommerce.org/api/v2/storefront#operation/Update%20Checkout)
 
 __parameters schema:__
 
@@ -1172,8 +1170,7 @@ __Example:__
 
 ### `orderNext`
 
-Goes to the next Checkout step
-[Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Checkout%20Next)
+Goes to the next Checkout step.
 
 __optional parameters schema:__
 
@@ -1223,7 +1220,7 @@ __Example:__
 
 ### `advance`
 
-Advances Checkout to the furthest Checkout step validation allows, until the Complete step. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Advance%20Checkout)
+Advances Checkout to the furthest Checkout step validation allows, until the Complete step.
 
 __optional parameters schema:__
 
@@ -1272,7 +1269,7 @@ __Example:__
 <br/>
 
 ### `complete`
-Completes the Checkout. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Complete%20Checkout)
+Completes the Checkout.
 
 __optional parameters schema:__
 
@@ -1321,8 +1318,7 @@ __Example:__
 <br/>
 
 ### `addStoreCredits`
-Adds Store Credit payments if a user has any. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Add%20Store%20Credit)
-
+Adds Store Credit payments if a user has any.
 
 __parameters schema:__
 ```ts
@@ -1382,7 +1378,7 @@ __Example:__
 <br/>
 
 ### `removeStoreCredits`
-Remove Store Credit payments if any applied. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Remove%20Store%20Credit)
+Remove Store Credit payments if any applied.
 
 __optional parameters schema:__
 
@@ -1431,7 +1427,7 @@ __Example:__
 <br/>
 
 ### `paymentMethods`
-Returns a list of available Payment Methods. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Payment%20Methods)
+Returns a list of available Payment Methods.
 
 __optional parameters schema:__
 
@@ -1442,7 +1438,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ 
+__success response schema:__
 ```ts
   {
     data: [
@@ -1495,7 +1491,7 @@ __Example:__
 <br/>
 
 ### `shippingMethods`
-Returns a list of available Shipping Rates for Checkout. Shipping Rates are grouped against Shipments. Each checkout cna have multiple Shipments eg. some products are available in stock and will be send out instantly and some needs to be backordered. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Shipping%20Rates)
+Returns a list of available Shipping Rates for Checkout. Shipping Rates are grouped against Shipments. Each checkout cna have multiple Shipments eg. some products are available in stock and will be send out instantly and some needs to be backordered.
 
 __optional parameters schema:__
 
@@ -1506,7 +1502,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ 
+__success response schema:__
 ```ts
   {
     data: [
@@ -1635,7 +1631,7 @@ try {
     bearerToken: token.access_token
   })
 } catch (err) {
-  console.error(err) 
+  console.error(err)
 }
 ```
 
@@ -1658,7 +1654,7 @@ try {
     variant_id: '1'
   })
 
-  // Step one 
+  // Step one
 
   let order = await client.checkout.orderUpdate({
     bearerToken: token.access_token
@@ -1748,14 +1744,14 @@ try {
     bearerToken: token.access_token
   })
 } catch (err) {
-  console.error(err) 
+  console.error(err)
 }
 ```
 
 <br/>
 
-## Products
-Returns a list of Products. [Read more](https://guides2.spreecommerce.org/api/v2/storefront/#operation/Shipping%20Rates)
+## [Products](https://guides.spreecommerce.org/api/v2/storefront/#tag/Products)
+Returns a list of Products.
 
 ### `list`
 
