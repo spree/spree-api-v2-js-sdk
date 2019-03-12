@@ -96,7 +96,7 @@ client.products.list({
 
 The SDK avoids throwing JavaScript [`Error`s][1]. Instead, any error is included in a result object.
 
-To determine whether a call was succesful, use `isSuccess()` or `isFail()` methods on the result. Details of a failed call can be retrieved using `fail()`. The method returns a `SpreeSDKError` instance, which is the primary type for all `Error`s returned by the SDK and extends the native JavaScript `Error` type.
+To determine whether a call was successful, use `isSuccess()` or `isFail()` methods on the result. Details of a failed call can be retrieved using `fail()`. The method returns a `SpreeSDKError` instance, which is the primary type for all `Error`s returned by the SDK and extends the native JavaScript `Error` type.
 
 Available `SpreeSDKError` subtypes:
 
