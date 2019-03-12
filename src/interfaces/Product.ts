@@ -1,5 +1,6 @@
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
+import { ResultResponse } from './ResultResponse'
 
 export interface ProductAttr extends JsonApiDocument {
   type: string
@@ -29,3 +30,7 @@ export interface IProduct extends JsonApiSingleResponse {
 export interface IProducts extends JsonApiListResponse {
   data: ProductAttr[]
 }
+
+export interface IProductResult extends ResultResponse<IProduct> {}
+
+export interface IProductsResult extends ResultResponse<IProducts> {}

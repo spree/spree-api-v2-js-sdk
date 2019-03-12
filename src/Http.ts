@@ -1,6 +1,13 @@
-import Axios, { AxiosInstance } from 'axios'
+import Axios, { AxiosError, AxiosInstance } from 'axios'
+import { Validation as Result } from 'monet'
 import qs from 'qs'
 import { DELETE, GET } from './constants'
+import {
+  BasicSpreeError, ExpandedSpreeError, MisconfigurationError, NoResponseError, SpreeError, SpreeSDKError
+} from './errors'
+import { ErrorClass } from './interfaces/errors/ErrorClass'
+import { JsonApiResponse } from './interfaces/JsonApi'
+import { ResultResponse } from './interfaces/ResultResponse'
 import { IToken } from './interfaces/Token'
 
 export default class Http {
@@ -21,7 +28,9 @@ export default class Http {
     })
   }
 
-  protected async spreeResponse(method: string, route: string, tokens: any = {}, params: any = {}) {
+  protected async spreeResponse(
+    method: string, route: string, tokens: IToken = {}, params: any = {}
+  ): Promise<ResultResponse<JsonApiResponse>> {
     try {
       let res
       const reqFunc = this.axios[method]
@@ -33,14 +42,52 @@ export default class Http {
         res = await reqFunc(route, params, { headers })
       }
 
-      return res.data
-    } catch (err) {
-      this.errorMessage(err)
+      return Result.success(res.data)
+    } catch (error) {
+      return Result.fail(this.processError(error))
     }
   }
 
-  private errorMessage(err: string) {
-    throw { error: Error(err).message }
+  /**
+   * HTTP error code returned by Spree is not indicative of its response shape. This function attempts to figure out the
+   * information provided from Spree and use whatever is available.
+   */
+  private classifyError(error: AxiosError): ErrorClass {
+    const { error: errorSummary, errors } = error.response.data
+
+    if (typeof errorSummary === 'string') {
+      if (typeof errors === 'object') {
+        return ErrorClass.FULL
+      }
+      return ErrorClass.BASIC
+    }
+    return ErrorClass.LIMITED
+  }
+
+  private processError(error: AxiosError): SpreeSDKError {
+    if (error.response) {
+      // Error from Spree outside HTTP 2xx codes
+      return this.processSpreeError(error)
+    } else if (error.request) {
+      // No response received from Spree
+      return new NoResponseError()
+    } else {
+      // Incorrect request setup
+      return new MisconfigurationError(error.message)
+    }
+  }
+
+  private processSpreeError(error: AxiosError): SpreeError {
+    const { error: errorSummary, errors } = error.response.data
+    const errorClass = this.classifyError(error)
+
+    if (errorClass === ErrorClass.FULL) {
+      return new ExpandedSpreeError(error.response, errorSummary, errors)
+    } else if (errorClass === ErrorClass.BASIC) {
+      return new BasicSpreeError(error.response, errorSummary)
+    } else {
+      return new SpreeError(error.response)
+    }
   }
 
   private spreeOrderHeaders(tokens) {

@@ -1,5 +1,7 @@
+import { SpreeSDKError } from '../errors'
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
+import { ResultResponse } from './ResultResponse'
 
 export interface CountryAttr extends JsonApiDocument {
   type: string
@@ -24,3 +26,7 @@ export interface ICountry extends JsonApiSingleResponse {
 export interface ICountries extends JsonApiListResponse {
   data: CountryAttr[]
 }
+
+export interface ICountryResult extends ResultResponse<ICountry> { }
+
+export interface ICountriesResult extends ResultResponse<ICountries> { }

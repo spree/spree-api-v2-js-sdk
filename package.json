@@ -43,6 +43,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "lodash": "^4.17.11",
+    "monet": "^0.9.0",
     "qs": "^6.6.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^3.0.1"

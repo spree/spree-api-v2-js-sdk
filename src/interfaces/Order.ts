@@ -1,5 +1,6 @@
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
+import { ResultResponse } from './ResultResponse'
 
 export interface OrderAttr extends JsonApiDocument {
   type: string
@@ -43,3 +44,5 @@ export interface IOrder extends JsonApiSingleResponse {
 export interface IOrders extends JsonApiListResponse {
   data: OrderAttr[]
 }
+
+export interface IOrderResult extends ResultResponse<IOrder> {}

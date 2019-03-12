@@ -1,5 +1,6 @@
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
+import { ResultResponse } from './ResultResponse'
 
 export interface TaxonAttr extends JsonApiDocument {
   type: string
@@ -32,3 +33,7 @@ export interface ITaxon extends JsonApiSingleResponse {
 export interface ITaxons extends JsonApiListResponse {
   data: TaxonAttr[]
 }
+
+export interface ITaxonResult extends ResultResponse<ITaxon> { }
+
+export interface ITaxonsResult extends ResultResponse<ITaxons> { }
