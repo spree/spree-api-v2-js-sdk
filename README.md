@@ -1,9 +1,10 @@
-# Spree Storefront API SDK
+# Spree Commerce Storefront API v2 JavaScript / TypeScript SDK
 
-Node module for integration with Spree API V2
----
+Node module to easily integrate your JavaScript or TypeScript application with [Spree API V2](https://guides.spreecommerce.org/api/v2). You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on. 
 
+Developed and maintaned by:
 
+[![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
 
 Сontents:
 
@@ -1751,7 +1752,19 @@ __Example:__
 
 <br/>
 
+About Spark Solutions
+----------------------
+[![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
+
+Spree is maintained by [Spark Solutions Sp. z o.o.][spark].
+
+We are passionate about open source software.
+We are [available for hire][spark].
+
+
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [2]: https://github.com/monet/monet.js/blob/master/docs/VALIDATION.md
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 [4]: https://jsonapi.org/format/
+
+[spark]:http://sparksolutions.co?utm_source=github
