@@ -1,5 +1,5 @@
 {
-  "name": "spree-storefront-api-v2-js-sdk",
+  "name": "@spree/storefront-api-v2-sdk",
   "version": "1.0.0",
   "description": "",
   "engines": {
