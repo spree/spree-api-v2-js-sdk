@@ -52,23 +52,39 @@ Node module for integration with Spree API V2
 
 ## Quick Start
 
-1. Install SDK
+### Installation
 
-  `npm install @spree/storefront-api-v2-sdk --save`
+`npm install @spree/storefront-api-v2-sdk --save`
 
-<br/>
+### Creating a Spree client
 
-2. Initialize `Client`
+**JavaScript:**
+```js
+import { makeClient } from '@spree/storefront-api-v2-sdk'
 
-  ```ts
-    import { spreeClient } from '@spree/storefront-api-v2-sdk'
 
-    const client = spreeClient({
-      host: 'http://localhost:3000'
-    })
-  ```
+const client = makeClient({
+  host: 'http://localhost:3000'
+})
+```
 
-<br/>
+**TypeScript:**
+```ts
+import { makeClient } from '@spree/storefront-api-v2-sdk'
+import Instance from '@spree/storefront-api-v2-sdk/src/Instance'
+
+const client: Instance = makeClient({
+  host: 'http://localhost:3000'
+})
+```
+
+`client` allows calling Spree methods, ex.:
+```js
+client.products.list({
+  include: 'default_variant',
+  page: 1
+})
+```
 
 ## Response schema
 
