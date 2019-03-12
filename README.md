@@ -10,7 +10,7 @@ Node module for integration with Spree API V2
 - [Quick Start](#quick-start)
 - [Example](#example)
 - [Response schema](#response-schema)
-  - [Order schema](#order-schema)
+  - [Success schema](#success-schema)
   - [Error schema](#error-schema)
 - [Endpoints](#endpoints)
   - [Authentication](#authentication)
@@ -50,7 +50,7 @@ Node module for integration with Spree API V2
 
 <br/>
 
-## Quick Start
+## Quick start
 
 ### Installation
 
@@ -88,106 +88,15 @@ client.products.list({
 
 ## Response schema
 
-### Order schema
+### Success schema
 
-```ts
-  data: {
-    id: number
-    type: string
-    attributes: {
-      numbe: string
-      item_total: string
-      total: string
-      ship_total: string
-      adjustment_total: string
-      created_at: Date
-      updated_at: Date
-      completed_at: Date
-      included_tax_total: string
-      additional_tax_total: string
-      display_additional_tax_total: string
-      display_included_tax_total: string
-      tax_total: string
-      currency: string
-      state: string
-      token: string
-      email: string
-      display_item_total: string
-      display_ship_total: string
-      display_adjustment_total: string
-      display_tax_total: string
-      promo_total: string
-      display_promo_total: string
-      item_count: number
-      special_instructions: string
-      display_total: string
-    }
-    relationships: {
-      line_items: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      variants: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      promotions: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      payment: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      },
-      shipments: {
-        data: [
-          {
-            id: string
-            type: string
-          }
-        ]
-      }
-      user: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-      billing_address: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-      shipping_address: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-    }
-  }
-```
+`Client` methods return a ["result"][2] object. When a request succeeds, the data received from Spree is retrievable using its `success()` method and provided in the [JSON:API][4] format. `isSuccess()` tells if a request succeeded.
 
 ### Error schema
 
-The Spree SDK never throws JavaScript [`Error`s][1]. Instead, methods calling Spree return a ["Result"][2] instance. To determine whether the call was succesful, use `isSuccess()` or `isFail()` methods on the instance. Details of a failed call can be retrieved using `fail()`. The method returns a `SpreeSDKError` instance, which is the primary type for all `Error`s returned by the SDK and extends the native JavaScript `Error` type.
+The SDK avoids throwing JavaScript [`Error`s][1]. Instead, any error is included in a result object.
+
+To determine whether a call was succesful, use `isSuccess()` or `isFail()` methods on the result. Details of a failed call can be retrieved using `fail()`. The method returns a `SpreeSDKError` instance, which is the primary type for all `Error`s returned by the SDK and extends the native JavaScript `Error` type.
 
 Available `SpreeSDKError` subtypes:
 
@@ -477,7 +386,7 @@ __parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -515,7 +424,7 @@ __parameters schema:__
   id: string
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -551,7 +460,7 @@ __parameters schema:__
   number: string
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -582,7 +491,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -627,7 +536,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -685,7 +594,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -751,7 +660,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -814,7 +723,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -863,7 +772,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -920,7 +829,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -977,7 +886,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -1076,7 +985,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -1206,7 +1115,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -1256,7 +1165,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -1305,7 +1214,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -1361,7 +1270,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -1414,7 +1323,7 @@ __optional parameters schema:__
   }
 ```
 
-__success response schema:__ [Order schema](#order-schema)
+__success response schema:__ [Success schema](#success-schema)
 <br/>
 
 __failed response schema:__ [Error schema](#error-schema)
@@ -1846,3 +1755,4 @@ __Example:__
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [2]: https://github.com/monet/monet.js/blob/master/docs/VALIDATION.md
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
+[4]: https://jsonapi.org/format/
