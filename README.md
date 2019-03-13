@@ -58,25 +58,15 @@ Developed and maintained by:
 
 ### Creating a Spree client
 
-**JavaScript:**
 ```js
 import { makeClient } from '@spree/storefront-api-v2-sdk'
-
 
 const client = makeClient({
   host: 'http://localhost:3000'
 })
 ```
 
-**TypeScript:**
-```ts
-import { makeClient } from '@spree/storefront-api-v2-sdk'
-import Instance from '@spree/storefront-api-v2-sdk/src/Instance'
-
-const client: Instance = makeClient({
-  host: 'http://localhost:3000'
-})
-```
+TypeScript definitions are included in the module and should be automatically used by any editor that supports them.
 
 `client` allows calling Spree methods, ex.:
 ```js
