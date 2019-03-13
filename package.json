@@ -6,11 +6,15 @@
     "node": ">=8",
     "yarn": ">=1.13.0"
   },
-  "main": "dist/index.js",
+  "main": "dist/server/index.js",
   "types": "src/index.ts",
   "scripts": {
     "build": "webpack",
+    "build:server": "webpack --config-name server",
+    "build:client": "webpack --config-name client",
     "watch": "webpack --watch",
+    "watch:server": "webpack --watch --config-name server",
+    "watch:client": "webpack --watch --config-name client",
     "lint:fix": "tslint src/**/*.ts --fix"
   },
   "repository": {
@@ -48,6 +52,7 @@
     "monet": "^0.9.0",
     "qs": "^6.6.0",
     "reflect-metadata": "^0.1.13",
-    "tsyringe": "^3.0.1"
+    "tsyringe": "^3.0.1",
+    "webpack-merge": "^4.2.1"
   }
 }
