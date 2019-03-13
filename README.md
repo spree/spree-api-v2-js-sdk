@@ -1,6 +1,6 @@
 # Spree Commerce Storefront API v2 JavaScript / TypeScript SDK
 
-Node module to easily integrate your JavaScript or TypeScript application with [Spree API V2](https://guides.spreecommerce.org/api/v2). You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on. 
+Node module to easily integrate your JavaScript or TypeScript application with [Spree API V2](https://guides.spreecommerce.org/api/v2). You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on.
 
 Developed and maintained by:
 
@@ -44,6 +44,9 @@ Developed and maintained by:
     - [shippingMethods](#shippingMethods)
     - [Checkout Examples](#checkout-examples)
   - [Products](#products)
+    - [list](#list)
+    - [show](#show)
+  - [Taxons](#taxons)
     - [list](#list)
     - [show](#show)
 
@@ -1742,6 +1745,75 @@ __Example:__
 
 <br/>
 
+ ## [Taxons](https://guides.spreecommerce.org/api/v2/storefront/#tag/Taxons)
+
+ ### `list`
+Returns a list of Taxons.
+
+ __optional parameters schema:__
+
+ ```ts
+  {
+    include?: string
+    fields?: {
+      [key: string]: string
+    }
+    filter?: {
+      [key: string]: number
+    }
+    sort?: string
+    page?: number
+    per_page?: number
+  }
+```
+
+ __failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+ __Example:__
+
+ ```ts
+  try {
+    const products = await client.taxons.list()
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+ <br/>
+
+ ### `show`
+Returns a single Taxon.
+
+ __optional parameters schema:__
+
+ ```ts
+  {
+    id: string
+    params?: {
+      include: string
+      fields: {
+        [key: string]: string
+      }
+    }
+  }
+```
+
+ __failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+ __Example:__
+
+ ```ts
+  try {
+    const products = await client.taxons.show('taxon_id')
+  } catch (err) {
+    console.error(err)
+  }
+```
+
+<br/>
+
 About Spark Solutions
 ----------------------
 [![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
@@ -1757,4 +1829,4 @@ We are [available for hire][spark].
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 [4]: https://jsonapi.org/format/
 
-[spark]:http://sparksolutions.co?utm_source=github
+[spark]: http://sparksolutions.co?utm_source=github
