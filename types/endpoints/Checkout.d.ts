@@ -1,16 +1,17 @@
 import Http from '../Http';
 import { AddStoreCredit, CheckoutClass, NestedAttributes } from '../interfaces/endpoints/CheckoutClass';
-import { JsonApiListResponse } from '../interfaces/JsonApi';
+import { IOrderResult } from '../interfaces/Order';
+import { IPaymentMethodsResult } from '../interfaces/PaymentMethod';
 import { IQuery } from '../interfaces/Query';
-import { ResultResponse } from '../interfaces/ResultResponse';
+import { IShippingMethodsResult } from '../interfaces/ShippingMethod';
 import { IToken } from '../interfaces/Token';
 export default class Checkout extends Http implements CheckoutClass {
-    orderNext(token: IToken, params?: IQuery): Promise<ResultResponse<import("../interfaces/JsonApi").JsonApiResponse>>;
-    orderUpdate(token: IToken, params: NestedAttributes): Promise<ResultResponse<import("../interfaces/JsonApi").JsonApiResponse>>;
-    advance(token: IToken, params?: IQuery): Promise<ResultResponse<import("../interfaces/JsonApi").JsonApiResponse>>;
-    complete(token: IToken, params?: IQuery): Promise<ResultResponse<import("../interfaces/JsonApi").JsonApiResponse>>;
-    addStoreCredits(token: IToken, params: AddStoreCredit): Promise<ResultResponse<import("../interfaces/JsonApi").JsonApiResponse>>;
-    removeStoreCredits(token: IToken, params?: IQuery): Promise<ResultResponse<import("../interfaces/JsonApi").JsonApiResponse>>;
-    paymentMethods(token: IToken): Promise<ResultResponse<JsonApiListResponse>>;
-    shippingMethods(token: IToken): Promise<ResultResponse<import("../interfaces/JsonApi").JsonApiResponse>>;
+    orderNext(token: IToken, params?: IQuery): Promise<IOrderResult>;
+    orderUpdate(token: IToken, params: NestedAttributes): Promise<IOrderResult>;
+    advance(token: IToken, params?: IQuery): Promise<IOrderResult>;
+    complete(token: IToken, params?: IQuery): Promise<IOrderResult>;
+    addStoreCredits(token: IToken, params: AddStoreCredit): Promise<IOrderResult>;
+    removeStoreCredits(token: IToken, params?: IQuery): Promise<IOrderResult>;
+    paymentMethods(token: IToken): Promise<IPaymentMethodsResult>;
+    shippingMethods(token: IToken): Promise<IShippingMethodsResult>;
 }
