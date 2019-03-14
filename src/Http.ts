@@ -1,10 +1,10 @@
 import Axios, { AxiosError, AxiosInstance } from 'axios'
-import { Validation as Result } from 'monet'
 import qs from 'qs'
 import { DELETE, GET } from './constants'
 import {
   BasicSpreeError, ExpandedSpreeError, MisconfigurationError, NoResponseError, SpreeError, SpreeSDKError
 } from './errors'
+import Result from './helpers/Result'
 import { ErrorClass } from './interfaces/errors/ErrorClass'
 import { JsonApiResponse } from './interfaces/JsonApi'
 import { ResultResponse } from './interfaces/ResultResponse'

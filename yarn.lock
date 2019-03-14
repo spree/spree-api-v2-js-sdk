@@ -2688,11 +2688,6 @@ mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
-monet@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/monet/-/monet-0.9.0.tgz#77a5d112950243ac89189fadb745fb542313cbdb"
-  integrity sha512-63UOb3RD3zXP3F2kMhYDKZD0V4HBxWgaIHNkp1p+BBCS1AYX51o0o9JJ31KZKuX4aISw4lUwaH4oFbyiKsswgg==
-
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
