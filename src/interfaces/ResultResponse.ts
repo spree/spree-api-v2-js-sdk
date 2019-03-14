@@ -1,4 +1,4 @@
-import { Validation } from 'monet'
-import { SpreeSDKError } from '../errors';
+import { SpreeSDKError } from '../errors'
+import { Result } from './Result'
 
-export interface ResultResponse<SuccessType> extends Validation<SpreeSDKError, SuccessType> { }
+export interface ResultResponse<SuccessType> extends Result<SpreeSDKError, SuccessType> { }
