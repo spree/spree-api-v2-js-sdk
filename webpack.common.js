@@ -1,8 +1,6 @@
 const { resolve } = require('path')
 const baseDirectoryPath = __dirname
 const srcDirectoryPath = resolve(baseDirectoryPath, 'src')
-const distDirectoryPath = resolve(baseDirectoryPath, 'dist')
-const nodeExternals = require('webpack-node-externals')
 const ProgressBar = require('./webpack-plugins/ProgressBar')
 
 module.exports = {
@@ -12,7 +10,7 @@ module.exports = {
   ],
   entry: {
     index: [
-      resolve(srcDirectoryPath, 'main.ts')
+      resolve(srcDirectoryPath, 'index.ts')
     ]
   },
   output: {
@@ -30,7 +28,8 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              transpileOnly: false
+              transpileOnly: false,
+              onlyCompileBundledFiles: true
             }
           }
         ],

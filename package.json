@@ -7,7 +7,7 @@
     "yarn": ">=1.13.0"
   },
   "main": "dist/server/index.js",
-  "types": "src/index.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "webpack",
     "build:server": "webpack --config-name server",
