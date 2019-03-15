@@ -1,9 +1,9 @@
 import Http from '../Http';
-import { AddItem, CartClass, CouponCode, SetQuantity } from '../interfaces/endpoints/CartClass';
+import { AddItem, CouponCode, SetQuantity } from '../interfaces/endpoints/CartClass';
 import { IOrderResult } from '../interfaces/Order';
 import { IQuery } from '../interfaces/Query';
 import { IToken } from '../interfaces/Token';
-export default class Cart extends Http implements CartClass {
+export default class Cart extends Http {
     show(token: IToken, params?: IQuery): Promise<IOrderResult>;
     create(token?: IToken, params?: IQuery): Promise<IOrderResult>;
     addItem(token: IToken, params: AddItem): Promise<IOrderResult>;

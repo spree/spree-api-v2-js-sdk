@@ -1,11 +1,10 @@
 import { GET } from '../constants'
 import Http from '../Http'
-import { SimpleEndpoint } from '../interfaces/endpoints/SimpleEndpoint'
 import { IProductResult, IProductsResult } from '../interfaces/Product'
 import { IQuery } from '../interfaces/Query'
 import { Routes } from '../routes'
 
-export default class Products extends Http implements SimpleEndpoint {
+export default class Products extends Http {
   public async list(params: IQuery = {}): Promise<IProductsResult> {
     return await this.spreeResponse(GET, Routes.productsPath(), {}, params) as IProductsResult
   }

@@ -1,6 +1,6 @@
 import { GET, PATCH, POST } from '../constants'
 import Http from '../Http'
-import { AddStoreCredit, CheckoutClass, NestedAttributes } from '../interfaces/endpoints/CheckoutClass'
+import { AddStoreCredit, NestedAttributes } from '../interfaces/endpoints/CheckoutClass'
 import { IOrderResult } from '../interfaces/Order'
 import { IPaymentMethodsResult } from '../interfaces/PaymentMethod'
 import { IQuery } from '../interfaces/Query'
@@ -8,7 +8,7 @@ import { IShippingMethodsResult } from '../interfaces/ShippingMethod'
 import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
-export default class Checkout extends Http implements CheckoutClass {
+export default class Checkout extends Http {
   public async orderNext(token: IToken, params: IQuery = {}): Promise<IOrderResult> {
     return await this.spreeResponse(PATCH, Routes.checkoutNextPath(), token, params) as IOrderResult
   }
