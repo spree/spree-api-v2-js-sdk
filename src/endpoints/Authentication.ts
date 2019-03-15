@@ -1,42 +1,15 @@
-import Axios, { AxiosInstance } from 'axios'
+import { POST } from '../constants'
 import { authParams, refreshParams } from '../helpers/auth'
+import Http from '../Http'
 import { AuthTokenAttr, RefreshTokenAttr } from '../interfaces/Authentication'
+import { ITokenResult } from '../interfaces/Token'
 import { Routes } from '../routes'
 
-export default class Authentication {
-  public host: string
-  public axios: AxiosInstance
-
-  constructor() {
-    this.host = process.env.SPREE_HOST || 'http://localhost:3000/'
-
-    this.axios = Axios.create({
-      baseURL: this.host,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+export default class Authentication extends Http {
+  public async getToken(params: AuthTokenAttr): Promise<ITokenResult> {
+    return await this.spreeResponse(POST, Routes.oauthTokenPath(), {}, authParams(params)) as ITokenResult
   }
-
-  public async getToken(params: AuthTokenAttr) {
-    const body = await authParams(params)
-
-    try {
-      const res = await this.axios.post(Routes.oauthTokenPath(), body)
-      return await res.data
-    } catch (err) {
-      throw { error: Error(err).message }
-    }
-  }
-
-  public async refreshToken(params: RefreshTokenAttr) {
-    const body = await refreshParams(params)
-
-    try {
-      const res = await this.axios.post(Routes.oauthTokenPath(), body)
-      return await res.data
-    } catch (err) {
-      throw { error: Error(err).message }
-    }
+  public async refreshToken(params: RefreshTokenAttr): Promise<ITokenResult> {
+    return await this.spreeResponse(POST, Routes.oauthTokenPath(), {}, refreshParams(params)) as ITokenResult
   }
 }
