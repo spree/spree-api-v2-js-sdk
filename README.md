@@ -110,7 +110,7 @@ The specific type of error returned by `fail()` can be determined using [`instan
 
 Spree Storefront API SDK contains each endpoint according to [Spree Guides](https://guides.spreecommerce.org/api/v2/storefront)
 
-## [Authentication](https://guides.spreecommerce.org/api/v2/storefront/#section/Authentication)
+## [Authentication](https://guides.spreecommerce.org/api/v2/authentication)
 
 ### `getToken`
 
