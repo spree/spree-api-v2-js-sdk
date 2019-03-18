@@ -42,3 +42,5 @@ export interface IOrders extends JsonApiListResponse {
 }
 export interface IOrderResult extends ResultResponse<IOrder> {
 }
+export interface IOrdersResult extends ResultResponse<IOrders> {
+}
