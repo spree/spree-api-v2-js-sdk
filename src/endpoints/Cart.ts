@@ -1,12 +1,12 @@
 import { DELETE, GET, PATCH, POST } from '../constants'
 import Http from '../Http'
-import { AddItem, CartClass, CouponCode, SetQuantity } from '../interfaces/endpoints/CartClass'
+import { AddItem, CouponCode, SetQuantity } from '../interfaces/endpoints/CartClass'
 import { IOrderResult } from '../interfaces/Order'
 import { IQuery } from '../interfaces/Query'
 import { IToken } from '../interfaces/Token'
 import { Routes } from '../routes'
 
-export default class Cart extends Http implements CartClass {
+export default class Cart extends Http {
   public async show(token: IToken, params: IQuery = {}): Promise<IOrderResult> {
     return await this.spreeResponse(GET, Routes.cartPath(), token, params) as IOrderResult
   }

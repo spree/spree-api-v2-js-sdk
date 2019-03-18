@@ -1,11 +1,11 @@
 import Http from '../Http';
-import { AddStoreCredit, CheckoutClass, NestedAttributes } from '../interfaces/endpoints/CheckoutClass';
+import { AddStoreCredit, NestedAttributes } from '../interfaces/endpoints/CheckoutClass';
 import { IOrderResult } from '../interfaces/Order';
 import { IPaymentMethodsResult } from '../interfaces/PaymentMethod';
 import { IQuery } from '../interfaces/Query';
 import { IShippingMethodsResult } from '../interfaces/ShippingMethod';
 import { IToken } from '../interfaces/Token';
-export default class Checkout extends Http implements CheckoutClass {
+export default class Checkout extends Http {
     orderNext(token: IToken, params?: IQuery): Promise<IOrderResult>;
     orderUpdate(token: IToken, params: NestedAttributes): Promise<IOrderResult>;
     advance(token: IToken, params?: IQuery): Promise<IOrderResult>;

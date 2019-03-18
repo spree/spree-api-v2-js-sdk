@@ -1,4 +1,3 @@
-import { SpreeSDKError } from '../errors'
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
 import { ResultResponse } from './ResultResponse'
