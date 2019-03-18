@@ -2,11 +2,13 @@ const { resolve } = require('path')
 const baseDirectoryPath = __dirname
 const srcDirectoryPath = resolve(baseDirectoryPath, 'src')
 const ProgressBar = require('./webpack-plugins/ProgressBar')
+const DeleteBeforeEmit = require('./webpack-plugins/DeleteBeforeEmit')
 
 module.exports = {
   context: baseDirectoryPath,
   plugins: [
-    new ProgressBar()
+    new ProgressBar(),
+    new DeleteBeforeEmit(resolve(baseDirectoryPath, 'types'))
   ],
   entry: {
     index: [
