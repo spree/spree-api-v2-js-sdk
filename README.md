@@ -110,11 +110,11 @@ The specific type of error returned by `fail()` can be determined using [`instan
 
 Spree Storefront API SDK contains each endpoint according to [Spree Guides](https://guides.spreecommerce.org/api/v2/storefront)
 
-## [Authentication](https://guides.spreecommerce.org/api/v2/authentication)
+## [OAuth Authentication](https://guides.spreecommerce.org/api/v2/authentication)
 
 ### `getToken`
 
-Method `getToken` creates a Bearer token required to authorize calls API calls.
+Method `getToken` creates a Bearer token required to authorize OAuth API calls.
 
 __parameters schema:__
 
@@ -154,7 +154,7 @@ __Example:__
 
 ### `refreshToken`
 
-Method `refreshToken` refreshes a Bearer token required to authorize calls API calls.
+Method `refreshToken` refreshes a Bearer token required to authorize OAuth API calls.
 
 __parameters schema:__
 
