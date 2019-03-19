@@ -8,5 +8,11 @@
     "emitDecoratorMetadata": true,
     "declaration": true,
     "declarationDir": "./types"
-  }
+  },
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

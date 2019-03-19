@@ -8,8 +8,7 @@ import Order from './endpoints/Order'
 import Products from './endpoints/Products'
 import Taxons from './endpoints/Taxons'
 
-@injectable()
-export default class Instance {
+export default @injectable() class Instance {
   constructor(
     public products: Products,
     public taxons: Taxons,

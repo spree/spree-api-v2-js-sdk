@@ -1,12 +1,17 @@
 const { resolve } = require('path')
 const baseDirectoryPath = __dirname
 const srcDirectoryPath = resolve(baseDirectoryPath, 'src')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const ProgressBar = require('./webpack-plugins/ProgressBar')
 
 module.exports = {
   context: baseDirectoryPath,
   plugins: [
-    new ProgressBar()
+    new ProgressBar(),
+    new ForkTsCheckerWebpackPlugin({
+      tslint: true,
+      silent: false
+    })
   ],
   entry: {
     index: [
@@ -23,23 +28,12 @@ module.exports = {
     rules: [
       {
         test: /\.(tsx?|js)$/,
-        use: [
-          'babel-loader',
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: false,
-              onlyCompileBundledFiles: true
-            }
-          }
-        ],
+        use: 'babel-loader',
         include: srcDirectoryPath
       },
       {
         test: /\.js$/,
-        use: [
-          'source-map-loader'
-        ],
+        use: 'source-map-loader',
         include: /node_modules/,
         enforce: 'pre'
       }
