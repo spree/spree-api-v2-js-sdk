@@ -8,4 +8,5 @@ export interface IQuery {
     };
     page?: number;
     per_page?: number;
+    sort?: string;
 }

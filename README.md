@@ -1764,7 +1764,6 @@ Returns a list of Taxons.
     filter?: {
       [key: string]: number
     }
-    sort?: string
     page?: number
     per_page?: number
   }
