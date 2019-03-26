@@ -18,7 +18,7 @@ export default class Http {
     this.host = process.env.SPREE_HOST || 'http://localhost:3000/'
 
     this.axios = Axios.create({
-      baseURL: this.host + 'api/v2/storefront',
+      baseURL: this.host,
       headers: {
         'Content-Type': 'application/json'
       },
