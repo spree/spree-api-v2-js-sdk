@@ -25,6 +25,6 @@ export declare const Routes: {
     accountCreditCardsPath: () => string;
     accountDefaultCreditCardPath: () => string;
     accountCompletedOrdersPath: () => string;
-    accountCompletedOrderPath: (number: string) => string;
-    orderStatusPath: (number: string) => string;
+    accountCompletedOrderPath: (orderNumber: string) => string;
+    orderStatusPath: (orderNumber: string) => string;
 };

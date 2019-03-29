@@ -1,14 +1,14 @@
 const storefrontPath = `api/v2/storefront`
 
 export const Routes = {
-  productsPath: () =>`${storefrontPath}/products`,
+  productsPath: () => `${storefrontPath}/products`,
   productPath: (id: string) => `${storefrontPath}/products/${id}`,
   taxonsPath: () => `${storefrontPath}/taxons`,
   taxonPath: (id: string) => `${storefrontPath}/taxons/${id}`,
   countriesPath: () => `${storefrontPath}/countries`,
   countryPath: (iso: string) => `${storefrontPath}/countries/${iso}`,
   cartPath: () => `${storefrontPath}/cart`,
-  cartAddItemPath: () => `cart/add_item`,
+  cartAddItemPath: () => `${storefrontPath}/cart/add_item`,
   cartRemoveItemPath: (id: string) => `${storefrontPath}/cart/remove_line_item/${id}`,
   cartEmptyPath: () => `${storefrontPath}/cart/empty`,
   cartSetItemQuantity: () => `${storefrontPath}/cart/set_quantity`,
@@ -27,6 +27,6 @@ export const Routes = {
   accountCreditCardsPath: () => `${storefrontPath}/account/credit_cards`,
   accountDefaultCreditCardPath: () => `${storefrontPath}/account/credit_cards/default`,
   accountCompletedOrdersPath: () => `${storefrontPath}/account/orders`,
-  accountCompletedOrderPath: (number: string) => `${storefrontPath}/account/orders/${number}`,
-  orderStatusPath: (number: string) => `${storefrontPath}/order_status/${number}`
+  accountCompletedOrderPath: (orderNumber: string) => `${storefrontPath}/account/orders/${orderNumber}`,
+  orderStatusPath: (orderNumber: string) => `${storefrontPath}/order_status/${orderNumber}`
 }
