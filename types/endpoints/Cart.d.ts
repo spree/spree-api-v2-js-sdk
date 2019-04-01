@@ -1,5 +1,6 @@
 import Http from '../Http';
-import { AddItem, CouponCode, SetQuantity } from '../interfaces/endpoints/CartClass';
+import { AddItem, CouponCode, EstimateShippingMethods, SetQuantity } from '../interfaces/endpoints/CartClass';
+import { IEstimatedShippingMethodsResult } from '../interfaces/EstimatedShippingMethod';
 import { IOrderResult } from '../interfaces/Order';
 import { IQuery } from '../interfaces/Query';
 import { IToken } from '../interfaces/Token';
@@ -12,4 +13,5 @@ export default class Cart extends Http {
     setQuantity(token: IToken, params: SetQuantity): Promise<IOrderResult>;
     applyCouponCode(token: IToken, params: CouponCode): Promise<IOrderResult>;
     removeCouponCode(token: IToken, code: string, params?: IQuery): Promise<IOrderResult>;
+    estimateShippingMethods(token: IToken, params: EstimateShippingMethods): Promise<IEstimatedShippingMethodsResult>;
 }

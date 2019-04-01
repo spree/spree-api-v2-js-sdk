@@ -13,3 +13,7 @@ export interface SetQuantity extends IQuery {
 export interface CouponCode extends IQuery {
   coupon_code: string
 }
+
+export interface EstimateShippingMethods extends IQuery {
+  country_iso: string
+}
