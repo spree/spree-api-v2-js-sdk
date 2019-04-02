@@ -12,6 +12,7 @@ export declare const Routes: {
     cartSetItemQuantity: () => string;
     cartApplyCodePath: () => string;
     cartRemoveCodePath: (code: string) => string;
+    cartEstimateShippingMethodsPath: () => string;
     checkoutPath: () => string;
     checkoutNextPath: () => string;
     checkoutAdvancePath: () => string;

@@ -14,6 +14,7 @@ export const Routes = {
   cartSetItemQuantity: () => `${storefrontPath}/cart/set_quantity`,
   cartApplyCodePath: () => `${storefrontPath}/cart/apply_coupon_code`,
   cartRemoveCodePath: (code: string) => `${storefrontPath}/cart/remove_coupon_code/${code}`,
+  cartEstimateShippingMethodsPath: () => `${storefrontPath}/cart/estimate_shipping_rates`,
   checkoutPath: () => `${storefrontPath}/checkout`,
   checkoutNextPath: () => `${storefrontPath}/checkout/next`,
   checkoutAdvancePath: () => `${storefrontPath}/checkout/advance`,
