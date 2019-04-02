@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import { container } from 'tsyringe'
 import * as errors from './errors'
+import Result from './helpers/Result'
 import Instance from './Instance'
 
 const setEnv = (config) => {
@@ -13,4 +14,4 @@ export const makeClient = (config) => {
   return container.resolve(Instance)
 }
 
-export { errors }
+export { errors, Result }
