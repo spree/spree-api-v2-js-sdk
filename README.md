@@ -916,6 +916,60 @@ __Example:__
     console.error(err)
   }
 ```
+
+### `estimateShippingMethods`
+Returns a list of Estimated Shipping Rates for Cart.
+
+__parameters schema:__
+
+```ts
+  country_iso: string
+```
+
+__optional parameters schema:__
+
+```ts
+  {
+    bearerToken?: string
+    orderToken?: string
+  }
+```
+
+__success response schema:__ [Success schema](#success-schema)
+<br/>
+
+__failed response schema:__ [Error schema](#error-schema)
+<br/>
+
+__Example:__
+
+```ts
+  try {
+    const token = await client.authentication.getToken({
+      username: 'spree@example.com',
+      password: 'spree123'
+    })
+
+    const cart = await client.cart.estimateShippingMethods({
+      bearerToken: token.access_token
+    }, 'USA')
+  } catch (err) {
+    console.error(err)
+  }
+
+  // or
+
+  try {
+    let cart = await client.cart.create()
+
+    cart = await client.cart.estimateShippingMethods({
+      orderToken: cart.data.attributes.token
+    }, 'USA')
+  } catch (err) {
+    console.error(err)
+  }
+```
+
 <br/>
 
 ## [Checkout](https://guides.spreecommerce.org/api/v2/storefront/#tag/Checkout)
