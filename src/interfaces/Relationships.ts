@@ -5,6 +5,6 @@ export interface RelationType {
 
 export interface IRelationships {
   [key: string]: {
-    data: RelationType
+    data: RelationType | RelationType[]
   }
 }
