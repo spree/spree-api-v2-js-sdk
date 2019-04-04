@@ -1430,6 +1430,11 @@ __optional parameters schema:__
     bearerToken?: string
     orderToken?: string
   }
+  {
+    params?: {
+      include?: string
+    }
+  }
 ```
 
 __success response schema:__
@@ -1462,9 +1467,10 @@ __Example:__
       password: 'spree123'
     })
 
-    const order = await client.checkout.shippingMethods({
-      bearerToken: token.access_token
-    })
+    const order = await client.checkout.shippingMethods(
+      { bearerToken: token.access_token },
+      { include: 'shipping_rates' }
+    )
   } catch (err) {
     console.error(err)
   }
@@ -1474,9 +1480,10 @@ __Example:__
   try {
     let cart = await client.cart.create()
 
-    const order = await client.checkout.shippingMethods({
-      orderToken: token.access_token
-    })
+    const order = await client.checkout.shippingMethods(
+      { orderToken: token.access_token },
+      { include: 'shipping_rates' }
+    )
   } catch (err) {
     console.error(err)
   }
