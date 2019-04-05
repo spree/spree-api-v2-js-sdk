@@ -37,7 +37,7 @@ export default class Checkout extends Http {
     return await this.spreeResponse(GET, Routes.checkoutPaymentMethodsPath(), token) as IPaymentMethodsResult
   }
 
-  public async shippingMethods(token: IToken): Promise<IShippingMethodsResult> {
-    return await this.spreeResponse(GET, Routes.checkoutShippingMethodsPath(), token) as IShippingMethodsResult
+  public async shippingMethods(token: IToken, params: IQuery = {}): Promise<IShippingMethodsResult> {
+    return await this.spreeResponse(GET, Routes.checkoutShippingMethodsPath(), token, params) as IShippingMethodsResult
   }
 }

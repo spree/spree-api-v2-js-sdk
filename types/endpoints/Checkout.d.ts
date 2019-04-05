@@ -13,5 +13,5 @@ export default class Checkout extends Http {
     addStoreCredits(token: IToken, params: AddStoreCredit): Promise<IOrderResult>;
     removeStoreCredits(token: IToken, params?: IQuery): Promise<IOrderResult>;
     paymentMethods(token: IToken): Promise<IPaymentMethodsResult>;
-    shippingMethods(token: IToken): Promise<IShippingMethodsResult>;
+    shippingMethods(token: IToken, params?: IQuery): Promise<IShippingMethodsResult>;
 }
