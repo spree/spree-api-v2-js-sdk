@@ -14,8 +14,8 @@ export default class Http {
   public host: string
   public axios: AxiosInstance
 
-  constructor() {
-    this.host = process.env.SPREE_HOST || 'http://localhost:3000/'
+  constructor(host?: string) {
+    this.host = host || process.env.SPREE_HOST || 'http://localhost:3000/'
 
     this.axios = Axios.create({
       baseURL: this.host,
