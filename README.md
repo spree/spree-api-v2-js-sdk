@@ -42,16 +42,15 @@ Developed and maintained by:
     - [removeStoreCredits](#removeStoreCredits)
     - [paymentMethods](#paymentMethods)
     - [shippingMethods](#shippingMethods)
-    - [Checkout Examples](#checkout-examples)
   - [Products](#products)
     - [list](#list)
     - [show](#show)
   - [Taxons](#taxons)
     - [list](#list)
     - [show](#show)
-
-
-<br/>
+  - [Checkout Flow](#checkout-flow)
+    - [One step](#one-step)
+    - [Three steps](#three-steps)
 
 ## Quick start
 
@@ -106,6 +105,28 @@ Available `SpreeSDKError` subtypes:
 
 The specific type of error returned by `fail()` can be determined using [`instanceof`][3], ex. `if(response.fail() instanceof BasicSpreeError){...}`.
 
+## Tokens
+Most endpoints require a token for authentication. It can be either an Order Token or Bearer Token.
+
+### Order token
+Identifies a guest user's cart and order.
+```ts
+const response = await client.cart.create()
+
+const orderToken: string = response.data.attributes.token
+```
+
+### Bearer token
+Identifies a logged in user.
+```ts
+const response = await client.authentication.getToken({
+  username: 'spree@example.com',
+  password: 'spree123'
+})
+
+const bearerToken: string = response.access_token
+```
+
 ## Endpoints
 
 Spree Storefront API SDK contains each endpoint according to [Spree Guides](https://guides.spreecommerce.org/api/v2/storefront)
@@ -114,80 +135,59 @@ Spree Storefront API SDK contains each endpoint according to [Spree Guides](http
 
 ### `getToken`
 
-Method `getToken` creates a Bearer token required to authorize OAuth API calls.
+Creates a [Bearer token](#bearer-token) required to authorize OAuth API calls.
 
-__parameters schema:__
-
+__Parameters schema:__
 ```ts
-  username: string
-  password: string
-  grant_type: string = 'password'
+username: string
+password: string
 ```
 
-__success response schema:__
-
+__Success response schema:__
 ```ts
-  access_token: string
-  token_type: string = 'Bearer'
-  expires_in: number
-  refresh_token: string
-  created_at: number
+access_token: string
+token_type: string = 'Bearer'
+expires_in: number
+refresh_token: string
+created_at: number
 ```
 
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
-  } catch (err) {
-    console.error(err)
-  }
+const token = await client.authentication.getToken({
+  username: 'spree@example.com',
+  password: 'spree123'
+})
 ```
-
-<br/>
 
 ### `refreshToken`
 
-Method `refreshToken` refreshes a Bearer token required to authorize OAuth API calls.
+Method `refreshToken` refreshes a [Bearer token](#bearer-token) required to authorize OAuth API calls.
 
-__parameters schema:__
-
+__Parameters schema:__
 ```ts
-  refresh_token: string
+refresh_token: string
 ```
 
-__success response schema:__
-
+__Success response schema:__
 ```ts
-  access_token: string
-  token_type: string = 'Bearer'
-  expires_in: number
-  refresh_token: string
-  created_at: number
+access_token: string
+token_type: string = 'Bearer'
+expires_in: number
+refresh_token: string
+created_at: number
 ```
 
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const token = await client.authentication.refreshToken({
-      refresh_token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
-    })
-  } catch (err) {
-    console.error(err)
-  }
+const token = await client.authentication.refreshToken({
+  refresh_token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
+})
 ```
-
-<br/>
 
 ## [Account](https://guides.spreecommerce.org/api/v2/storefront/#tag/Account)
 
@@ -195,782 +195,324 @@ __Example:__
 
 Returns current user information.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token)
 
-```ts
-  token: {
-    bearerToken: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__
-
-```ts
-  data: {
-    id: number
-    type: string
-    attributes: {
-      email: string
-      store_credits: number
-      completed_orders: number
-    }
-    relationships: {
-      default_billing_address: {
-        data: {
-          id: number
-          type: string
-        }
-      }
-      default_shipping_address: {
-        data: {
-          id: number
-          type: string
-        }
-      }
-    }
-  }
-```
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
-
-    const account = await client.account.accountInfo({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+const response = await client.account.accountInfo({ bearerToken })
 ```
-
-<br/>
 
 ### `creditCardsList`
 Returns a list of Credit Cards for the signed in User.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token)
 
-```ts
-  token: {
-    bearerToken: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__
-
-```ts
-  data: [
-    {
-      id: number
-      type: string
-      attributes: {
-        cc_type: string
-        last_digits: string
-        month: number
-        year: number
-        name: string
-        default: boolean
-      }
-      relationships: {
-        payment_method: {
-          data: {
-            id: string
-            type: string
-          }
-        }
-      }
-    }
-  ]
-```
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
-
-    const cardsList = await client.account.creditCardsList({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+const response = await client.account.creditCardsList({ bearerToken })
 ```
-
-<br/>
 
 ### `defaultCreditCard`
 Return the User's default Credit Card.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token)
 
-```ts
-  token: {
-    bearerToken: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__
-
-```ts
-  data: {
-    id: number
-    type: string
-    attributes: {
-      cc_type: string
-      last_digits: string
-      month: number
-      year: number
-      name: string
-      default: boolean
-    }
-    relationships: {
-      payment_method: {
-        data: {
-          id: string
-          type: string
-        }
-      }
-    }
-  }
-```
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
-
-    const defaultCard = await client.account.defaultCreditCard({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+const response = await client.account.defaultCreditCard({ bearerToken })
 ```
-
-<br/>
 
 ### `completedOrdersList`
 Returns Orders placed by the User. Only completed ones.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token)
 
-```ts
-  token: {
-    bearerToken: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
-
-    const ordersList = await client.account.completedOrdersList({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+const response = await client.account.completedOrdersList({ bearerToken })
 ```
-
-<br/>
 
 ### `completedOrder`
 Return the User's completed Order.
 
+__Required token:__ [Bearer token](#bearer-token)
 
-__parameters schema:__
-
+__Parameters schema:__
 ```ts
-  token: {
-    bearerToken: string
-  }
-  id: string
+orderNumber: string
 ```
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
+__Success response schema:__ [Success schema](#success-schema)
 
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
-
-    const ordersList = await client.account.completedOrder({
-      bearerToken: token.access_token
-    }, 'order_id')
-  } catch (err) {
-    console.error(err)
-  }
+const response = await client.account.completedOrder({ bearerToken }, 'R653163382')
 ```
-
-<br/>
 
 ## [Order](https://guides.spreecommerce.org/api/v2/storefront/#tag/Order-Status)
 
 ### `status`
 Returns placed Order.
 
-__parameters schema:__
-
+__Parameters schema:__
 ```ts
-  number: string
+orderNumber: string
 ```
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
+__Success response schema:__ [Success schema](#success-schema)
 
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const order = await client.order.status('order_number')
-  } catch (err) {
-    console.error(err)
-  }
+const response = await client.order.status('R653163382')
 ```
-
-<br/>
 
 ## [Cart](https://guides.spreecommerce.org/api/v2/storefront/#tag/Cart)
 
 ### `create`
 Creates new Cart and returns it attributes.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) if logged in user
 
-```ts
-  {
-    bearerToken?: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.create({ bearerToken })
 
-    const cart = await client.cart.create({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    const cart = await client.cart.create()
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.create()
 ```
-
-<br/>
 
 ### `show`
 Returns contents of the cart.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.show({ bearerToken })
 
-    const cart = await client.cart.show({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.cart.show({
-      orderToken: cart.data.attributes.token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.show({ orderToken })
 ```
-
-<br/>
 
 ### `addItem`
 Adds a Product Variant to the Cart.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+
+__Parameters schema:__
 
 ```ts
-  {
-    variant_id: string
-    quantity: number
-  }
+{
+  variant_id: string
+  quantity: number
+}
 ```
 
-__optional parameters schema:__
+__Success response schema:__ [Success schema](#success-schema)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
-
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.addItem({ bearerToken }, {
+  variant_id: '1',
+  quantity: 1
+})
 
-    const cart = await client.cart.addItem({
-      bearerToken: token.access_token
-    }, {
-      variant_id: '1',
-      quantity: 1
-
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.cart.addItem({
-      orderToken: cart.data.attributes.token
-    }, {
-      variant_id: '1',
-      quantity: 1
-
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.addItem({ orderToken }, {
+  variant_id: '1',
+  quantity: 1
+})
 ```
-
-<br/>
 
 ### `setQuantity`
 Sets the quantity of a given line item. It has to be a positive integer greater than 0.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
+__Parameters schema:__
 ```ts
-  {
-    line_item_id: string
-    quantity: number
-  }
+{
+  line_item_id: string
+  quantity: number
+}
 ```
 
-__optional parameters schema:__
+__Success response schema:__ [Success schema](#success-schema)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
-
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.setQuantity({ bearerToken }, {
+  line_item_id: '9',
+  quantity: 100
+})
 
-    const cart = await client.cart.setQuantity({
-      bearerToken: token.access_token
-    }, {
-      line_item_id: '9',
-      quantity: 100
-
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.cart.setQuantity({
-      orderToken: cart.data.attributes.token
-    }, {
-      line_item_id: '9',
-      quantity: 100
-
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.setQuantity({ orderToken }, {
+  line_item_id: '9',
+  quantity: 100
+})
 ```
-
-<br/>
 
 ### `removeItem`
 Removes Line Item from Cart.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
+__Parameters schema:__
 ```ts
-  line_item_id: string
+line_item_id: string
 ```
 
-__optional parameters schema:__
+__Success response schema:__ [Success schema](#success-schema)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
-
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.removeItem({ bearerToken }, '1')
 
-    const cart = await client.cart.removeItem({
-      bearerToken: token.access_token
-    }, '1')
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.cart.removeItem({
-      orderToken: cart.data.attributes.token
-    }, '1')
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.removeItem({ orderToken }, '1')
 ```
-
-<br/>
 
 ### `emptyCart`
 Empties the Cart.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.emptyCart({ bearerToken })
 
-    cart = await client.cart.emptyCart({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.cart.emptyCart({
-      orderToken: cart.data.attributes.token
-    }, '1')
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.emptyCart({ orderToken })
 ```
-
-<br/>
 
 ### `applyCouponCode`
 Applies a coupon code to the Cart.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
+__Parameters schema:__
 ```ts
-  {
-    coupon_code: string
-  }
+{
+  coupon_code: string
+}
 ```
 
-__optional parameters schema:__
+__Success response schema:__ [Success schema](#success-schema)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
-
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Loged in user
+const response = await client.cart.applyCouponCode({ bearerToken }, {
+  coupon_code: 'promo_test'
+})
 
-    cart = await client.cart.applyCouponCode({
-      bearerToken: token.access_token
-    }, {
-      coupon_code: 'promo_test'
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.cart.applyCouponCode({
-      orderToken: cart.data.attributes.token
-    }, {
-      coupon_code: 'promo_test'
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.applyCouponCode({ orderToken  }, {
+  coupon_code: 'promo_test'
+})
 ```
 
 ### `removeCouponCode`
 Removes a coupon code from the Cart.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
+__Parameters schema:__
 ```ts
-  coupon_code: string
+coupon_code: string
 ```
 
-__optional parameters schema:__
+__Success response schema:__ [Success schema](#success-schema)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
-
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Filed response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.removeCouponCode({ bearerToken }, 'promo_test')
 
-    const cart = await client.cart.removeCouponCode({
-      bearerToken: token.access_token
-    }, 'promo_test')
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.cart.removeCouponCode({
-      orderToken: cart.data.attributes.token
-    }, 'promo_test')
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.removeCouponCode({ orderToken }, 'promo_test')
 ```
 
 ### `estimateShippingMethods`
 Returns a list of Estimated Shipping Rates for Cart.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
+__Parameters schema:__
 ```ts
-  country_iso: string
+country_iso: string
 ```
 
-__optional parameters schema:__
+__Success response schema:__ [Success schema](#success-schema)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
-
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.estimateShippingMethods({ bearerToken }, 'USA')
 
-    const cart = await client.cart.estimateShippingMethods({
-      bearerToken: token.access_token
-    }, 'USA')
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.cart.estimateShippingMethods({
-      orderToken: cart.data.attributes.token
-    }, 'USA')
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.estimateShippingMethods({ orderToken }, 'USA')
 ```
-
-<br/>
 
 ## [Checkout](https://guides.spreecommerce.org/api/v2/storefront/#tag/Checkout)
 
@@ -978,904 +520,424 @@ __Example:__
 Updates the Checkout
 You can run multiple Checkout updates with different data types.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
+__Parameters schema:__
 ```ts
-  order: {
-    email: string
-    bill_address_attributes?: {
-      firstname: string
-      lastname: string
-      address1: string
-      city: string
-      phone: string
-      zipcode: string
-      state_name: string
-      country_iso: string
-    }
-    ship_address_attributes?: {
-      firstname: string
-      lastname: string
-      address1: string
-      city: string
-      phone: string
-      zipcode: string
-      state_name: string
-      country_iso: string
-    }
-    shipments_attributes?: [
-      {
-        selected_shipping_rate_id: number
-        id: number
-      }
-    ]
-    payments_attributes?: [
-      {
-        payment_method_id: number
-      }
-    ]
+order: {
+  email: string
+  bill_address_attributes?: {
+    firstname: string
+    lastname: string
+    address1: string
+    city: string
+    phone: string
+    zipcode: string
+    state_name: string
+    country_iso: string
   }
-  payment_source?: {
-    [payment_method_id: number]: {
-      number: string
-      month: string
-      year: string
-      verification_value: string
-      name: string
-    }
+  ship_address_attributes?: {
+    firstname: string
+    lastname: string
+    address1: string
+    city: string
+    phone: string
+    zipcode: string
+    state_name: string
+    country_iso: string
   }
+  shipments_attributes?: [
+    {
+      selected_shipping_rate_id: number
+      id: number
+    }
+  ]
+  payments_attributes?: [
+    {
+      payment_method_id: number
+    }
+  ]
+}
+payment_source?: {
+  [payment_method_id: number]: {
+    number: string
+    month: string
+    year: string
+    verification_value: string
+    name: string
+  }
+}
 ```
 
-__optional parameters schema:__
+__Success response schema:__ [Success schema](#success-schema)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
-
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
-
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.orderUpdate({ bearerToken }, { order: {...} })
 
-    const order = await client.checkout.orderUpdate({
-      bearerToken: token.access_token
-    }, {
-      order: {
-        email: 'john@snow.org',
-        bill_address_attributes: {
-          firstname: 'John',
-          lastname: 'Snow',
-          address1: '7735 Old Georgetown Road',
-          city: 'Bethesda',
-          phone: '3014445002',
-          zipcode: '20814',
-          state_name: 'MD',
-          country_iso: 'US'
-        },
-        ship_address_attributes: {
-          firstname: 'John',
-          lastname: 'Snow',
-          address1: '7735 Old Georgetown Road',
-          city: 'Bethesda',
-          phone: '3014445002',
-          zipcode: '20814',
-          state_name: 'MD',
-          country_iso: 'US'
-        },
-        shipments_attributes: [{
-          id: 1,
-          selected_shipping_rate_id: 1
-        }],
-        payments_attributes: [{
-          payment_method_id: 1
-        }]
-      },
-      payment_source: {
-        1: {
-          number: '4111111111111111',
-          month: '1',
-          year: '2022',
-          verification_value: '123',
-          name: 'John Doe'
-        }
-      }
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    cart = await client.checkout.orderUpdate({
-      orderToken: cart.data.attributes.token
-    }, {
-      order: {
-        email: 'john@snow.org',
-        bill_address_attributes: {
-          firstname: 'John',
-          lastname: 'Snow',
-          address1: '7735 Old Georgetown Road',
-          city: 'Bethesda',
-          phone: '3014445002',
-          zipcode: '20814',
-          state_name: 'MD',
-          country_iso: 'US'
-        },
-        ship_address_attributes: {
-          firstname: 'John',
-          lastname: 'Snow',
-          address1: '7735 Old Georgetown Road',
-          city: 'Bethesda',
-          phone: '3014445002',
-          zipcode: '20814',
-          state_name: 'MD',
-          country_iso: 'US'
-        },
-        shipments_attributes: [{
-          id: 1,
-          selected_shipping_rate_id: 1
-        }],
-        payments_attributes: [{
-          payment_method_id: 1
-        }]
-      },
-      payment_source: {
-        1: {
-          number: '4111111111111111',
-          month: '1',
-          year: '2022',
-          verification_value: '123',
-          name: 'John Doe'
-        }
-      }
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.orderUpdate({ orderToken }, { order: {...} })
 ```
-
-<br/>
 
 ### `orderNext`
 
 Goes to the next Checkout step.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.orderNext({ bearerToken })
 
-    const order = await client.checkout.orderNext({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    const order = await client.checkout.orderNext({
-      orderToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.orderNext({ orderToken })
 ```
-
-<br/>
 
 ### `advance`
 
 Advances Checkout to the furthest Checkout step validation allows, until the Complete step.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.advance({ bearerToken })
 
-    const order = await client.checkout.advance({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    const order = await client.checkout.advance({
-      orderToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.advance({ orderToken })
 ```
-
-<br/>
 
 ### `complete`
 Completes the Checkout.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.complete({ bearerToken })
 
-    const order = await client.checkout.complete({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    const order = await client.checkout.complete({
-      orderToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.complete({ orderToken })
 ```
-
-<br/>
 
 ### `addStoreCredits`
 Adds Store Credit payments if a user has any.
 
-__parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+
+__Parameters schema:__
 ```ts
-  {
-    amount: number
-  }
+{
+  amount: number
+}
 ```
 
-__optional parameters schema:__
+__Success response schema:__ [Success schema](#success-schema)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
-
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.addStoreCredits({ bearerToken }, { amount: 100 })
 
-    const order = await client.checkout.addStoreCredits({
-      bearerToken: token.access_token
-    }, {
-      amount: 100
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    const order = await client.checkout.addStoreCredits({
-      orderToken: token.access_token
-    }, {
-      amount: 100
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.addStoreCredits({ orderToken }, { amount: 100 })
 ```
-
-<br/>
 
 ### `removeStoreCredits`
 Remove Store Credit payments if any applied.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__ [Success schema](#success-schema)
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.removeStoreCredits({ bearerToken })
 
-    const order = await client.checkout.removeStoreCredits({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    const order = await client.checkout.removeStoreCredits({
-      orderToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.removeStoreCredits({ orderToken })
 ```
-
-<br/>
 
 ### `paymentMethods`
 Returns a list of available Payment Methods.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
-```ts
-  {
-    bearerToken?: string
-    orderToken?: string
-  }
-```
+__Success response schema:__ [Success schema](#success-schema)
 
-__success response schema:__
-```ts
-  {
-    data: [
-      {
-        id: atring
-        type: string
-        attributes: {
-          type: string
-          name: string
-          description: string
-        }
-      }
-    ]
-  }
-```
-<br/>
-
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.cart.paymentMethods({ bearerToken })
 
-    const order = await client.checkout.paymentMethods({
-      bearerToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    const order = await client.checkout.paymentMethods({
-      orderToken: token.access_token
-    })
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.cart.paymentMethods({ orderToken })
 ```
-
-<br/>
 
 ### `shippingMethods`
 Returns a list of available Shipping Rates for Checkout. Shipping Rates are grouped against Shipments. Each checkout cna have multiple Shipments eg. some products are available in stock and will be send out instantly and some needs to be backordered.
 
-__optional parameters schema:__
+__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
+__Optional parameters schema:__
 ```ts
-  {
-    bearerToken?: string
-    orderToken?: string
+{
+  params?: {
+    include?: string
   }
-  {
-    params?: {
-      include?: string
-    }
-  }
+}
 ```
 
-__success response schema:__
-```ts
-  {
-    data: [
-      {
-        id: atring
-        type: string
-        attributes: {
-          type: string
-          name: string
-          description: string
-        }
-      }
-    ]
-  }
-```
-<br/>
+__Success response schema:__ [Success schema](#success-schema)
 
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const token = await client.authentication.getToken({
-      username: 'spree@example.com',
-      password: 'spree123'
-    })
+// Logged in user
+const response = await client.checkout.shippingMethods({ bearerToken }, {
+  include: 'shipping_rates'
+})
 
-    const order = await client.checkout.shippingMethods(
-      { bearerToken: token.access_token },
-      { include: 'shipping_rates' }
-    )
-  } catch (err) {
-    console.error(err)
-  }
-
-  // or
-
-  try {
-    let cart = await client.cart.create()
-
-    const order = await client.checkout.shippingMethods(
-      { orderToken: token.access_token },
-      { include: 'shipping_rates' }
-    )
-  } catch (err) {
-    console.error(err)
-  }
+// or guest user
+const response = await client.checkout.shippingMethods({ orderToken }, {
+  include: 'shipping_rates'
+})
 ```
-
-<br/>
-
-### Checkout Examples
-
-1. One-step checkout
-
-```ts
-try {
-  const { access_token: accessToken } = await client.authentication.getToken({
-    username: 'spree@example.com',
-    password: 'spree123'
-  })
-
-  await client.cart.create({
-    bearerToken: accessToken
-  })
-
-  await client.cart.addItem({
-    bearerToken: accessToken
-  }, {
-    variant_id: '1'
-  })
-
-  const shipping = await client.checkout.shippingMethods({
-    bearerToken: accessToken
-  })
-
-  const payment = await client.checkout.paymentMethods({
-    bearerToken: accessToken
-  })
-
-  let order = await client.checkout.orderUpdate({
-    bearerToken: token.access_token
-  }, {
-    order: {
-      email: 'john@snow.org',
-      bill_address_attributes: {
-        firstname: 'John',
-        lastname: 'Snow',
-        address1: '7735 Old Georgetown Road',
-        city: 'Bethesda',
-        phone: '3014445002',
-        zipcode: '20814',
-        state_name: 'MD',
-        country_iso: 'US'
-      },
-      ship_address_attributes: {
-        firstname: 'John',
-        lastname: 'Snow',
-        address1: '7735 Old Georgetown Road',
-        city: 'Bethesda',
-        phone: '3014445002',
-        zipcode: '20814',
-        state_name: 'MD',
-        country_iso: 'US'
-      },
-      shipments_attributes: [{
-        id: shipping.data[0].id,
-        selected_shipping_rate_id: shipping.data[0].relationships.shipping_rates.data[0].id
-      }],
-      payments_attributes: [{
-        payment_method_id: payment.data[0].id
-      }]
-    },
-    payment_source: {
-      [payment.data[0].id]: {
-        number: '4111111111111111',
-        month: '1',
-        year: '2022',
-        verification_value: '123',
-        name: 'John Doe'
-      }
-    }
-  })
-
-  order = await client.checkout.complete({
-    bearerToken: token.access_token
-  })
-} catch (err) {
-  console.error(err)
-}
-```
-
-1. Three-step checkout
-
-```ts
-try {
-  const { access_token: accessToken } = await client.authentication.getToken({
-    username: 'spree@example.com',
-    password: 'spree123'
-  })
-
-  await client.cart.create({
-    bearerToken: accessToken
-  })
-
-  await client.cart.addItem({
-    bearerToken: accessToken
-  }, {
-    variant_id: '1'
-  })
-
-  // Step one
-
-  let order = await client.checkout.orderUpdate({
-    bearerToken: token.access_token
-  }, {
-    order: {
-      email: 'john@snow.org',
-      bill_address_attributes: {
-        firstname: 'John',
-        lastname: 'Snow',
-        address1: '7735 Old Georgetown Road',
-        city: 'Bethesda',
-        phone: '3014445002',
-        zipcode: '20814',
-        state_name: 'MD',
-        country_iso: 'US'
-      },
-      ship_address_attributes: {
-        firstname: 'John',
-        lastname: 'Snow',
-        address1: '7735 Old Georgetown Road',
-        city: 'Bethesda',
-        phone: '3014445002',
-        zipcode: '20814',
-        state_name: 'MD',
-        country_iso: 'US'
-      }
-    },
-  })
-
-  await client.checkout.orderNext({
-    bearerToken: accessToken
-  })
-
-  // Step two
-
-  const shipping = await client.checkout.shippingMethods({
-    bearerToken: accessToken
-  })
-
-  let order = await client.checkout.orderUpdate({
-    bearerToken: token.access_token
-  }, {
-    order: {
-      shipments_attributes: [{
-        id: shipping.data[0].id,
-        selected_shipping_rate_id: shipping.data[0].relationships.shipping_rates.data[0].id
-      }]
-    }
-  })
-
-  await client.checkout.orderNext({
-    bearerToken: accessToken
-  })
-
-  // Step three
-
-  const payment = await client.checkout.paymentMethods({
-    bearerToken: accessToken
-  })
-
-  let order = await client.checkout.orderUpdate({
-    bearerToken: token.access_token
-  }, {
-    order: {
-      payments_attributes: [{
-        payment_method_id: payment.data[0].id
-      }]
-    },
-    payment_source: {
-      [payment.data[0].id]: {
-        number: '4111111111111111',
-        month: '1',
-        year: '2022',
-        verification_value: '123',
-        name: 'John Doe'
-      }
-    }
-  })
-
-  // Order complete
-
-  await client.checkout.orderNext({
-    bearerToken: accessToken
-  })
-
-  order = await client.checkout.complete({
-    bearerToken: token.access_token
-  })
-} catch (err) {
-  console.error(err)
-}
-```
-
-<br/>
 
 ## [Products](https://guides.spreecommerce.org/api/v2/storefront/#tag/Products)
 Returns a list of Products.
 
 ### `list`
 
-__optional parameters schema:__
-
+__Optional parameters schema:__
 ```ts
-  {
-    include?: string
-    fields?: {
-      [key: string]: string
-    }
-    filter?: {
-      [key: string]: number
-    }
-    sort?: string
-    page?: number
-    per_page?: number
+{
+  include?: string
+  fields?: {
+    [key: string]: string
   }
+  filter?: {
+    [key: string]: number
+  }
+  sort?: string
+  page?: number
+  per_page?: number
+}
 ```
+__Success response schema:__ [Success schema](#success-schema)
 
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const products = await client.products.list()
-  } catch (err) {
-    console.error(err)
-  }
+const response = await client.products.list()
 ```
 
-<br/>
+### `show`
+
+__Optional parameters schema:__
+```ts
+{
+  id: string
+  params?: {
+    include: string
+    fields: {
+      [key: string]: string
+    }
+  }
+}
+```
+
+__Success response schema:__ [Success schema](#success-schema)
+
+__Failure response schema:__ [Error schema](#error-schema)
+
+__Example:__
+
+```ts
+const response = = await client.products.show('123')
+```
+
+## [Taxons](https://guides.spreecommerce.org/api/v2/storefront/#tag/Taxons)
 
 ### `list`
+Returns a list of Taxons.
 
-__optional parameters schema:__
+__Optional parameters schema:__
 
 ```ts
-  {
-    id: string
-    params?: {
-      include: string
-      fields: {
-        [key: string]: string
-      }
-    }
+{
+  include?: string
+  fields?: {
+    [key: string]: string
   }
+  filter?: {
+    [key: string]: number
+  }
+  page?: number
+  per_page?: number
+}
 ```
 
-__failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Success response schema:__ [Success schema](#success-schema)
+
+__Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 
 ```ts
-  try {
-    const products = await client.products.show('product_id')
-  } catch (err) {
-    console.error(err)
-  }
+const response = await client.taxons.list()
 ```
 
-<br/>
-
- ## [Taxons](https://guides.spreecommerce.org/api/v2/storefront/#tag/Taxons)
-
- ### `list`
-Returns a list of Taxons.
-
- __optional parameters schema:__
-
- ```ts
-  {
-    include?: string
-    fields?: {
-      [key: string]: string
-    }
-    filter?: {
-      [key: string]: number
-    }
-    page?: number
-    per_page?: number
-  }
-```
-
- __failed response schema:__ [Error schema](#error-schema)
-<br/>
-
- __Example:__
-
- ```ts
-  try {
-    const products = await client.taxons.list()
-  } catch (err) {
-    console.error(err)
-  }
-```
-
- <br/>
-
- ### `show`
+### `show`
 Returns a single Taxon.
 
- __optional parameters schema:__
+__Optional parameters schema:__
 
- ```ts
-  {
-    id: string
-    params?: {
-      include: string
-      fields: {
-        [key: string]: string
-      }
+```ts
+{
+  id: string
+  params?: {
+    include: string
+    fields: {
+      [key: string]: string
     }
   }
+}
 ```
 
- __failed response schema:__ [Error schema](#error-schema)
-<br/>
+__Success response schema:__ [Success schema](#success-schema)
 
- __Example:__
+__Failure response schema:__ [Error schema](#error-schema)
 
- ```ts
-  try {
-    const products = await client.taxons.show('taxon_id')
-  } catch (err) {
-    console.error(err)
+__Example:__
+
+```ts
+const products = await client.taxons.show('1')
+```
+
+## Checkout Flow
+
+### One step
+
+```ts
+const cartCreateResponse = await client.cart.create()
+
+const orderToken = cartCreateResponse.success().data.attributes.token
+
+await client.cart.addItem({ orderToken }, { variant_id: '1' })
+
+// Save a shipping address for shipping methods
+await client.checkout.orderUpdate({ orderToken }, {
+  order: {
+    ship_address_attributes: {...}
   }
+})
+
+const shipping = await client.checkout.shippingMethods({ orderToken }).success()
+
+const payment = await client.checkout.paymentMethods({ orderToken }).success()
+
+// Pick a shipping and payment method
+
+await client.checkout.orderUpdate({ orderToken }, { order: {...} })
+
+await client.checkout.complete({ orderToken })
 ```
 
-<br/>
+### Three steps
+
+```ts
+const cartCreateResponse = await client.cart.create()
+
+const orderToken = cartCreateResponse.success().data.attributes.token
+
+await client.cart.addItem({ orderToken }, { variant_id: '1' })
+
+// Step one - save email, billing and shipping addresses
+await client.checkout.orderUpdate({ orderToken }, {
+  order: {
+    email,
+    bill_address_attributes: {...},
+    ship_address_attributes: {...}
+  }
+})
+
+await client.checkout.orderNext({ bearerToken })
+
+// Step two - pick a shipping method
+const shipping = await client.checkout.shippingMethods({ orderToken }).success()
+
+await client.checkout.orderUpdate({ orderToken }, {
+  order: {
+    shipments_attributes: [{
+      id: shipping.data[0].id,
+      selected_shipping_rate_id: shipping.data[0].relationships.shipping_rates.data[0].id
+    }]
+  }
+})
+
+await client.checkout.orderNext({ orderToken })
+
+// Step three - pick a payment method
+const payment = await client.checkout.paymentMethods({ orderToken }).success()
+
+await client.checkout.orderUpdate({ orderToken }, {
+  order: {
+    payments_attributes: [{
+      payment_method_id: payment.data[0].id
+    }]
+  },
+  payment_source: {
+    [payment.data[0].id]: {
+      number: '4111111111111111',
+      month: '1',
+      year: '2022',
+      verification_value: '123',
+      name: 'John Doe'
+    }
+  }
+})
+
+// Order complete
+await client.checkout.orderNext({ orderToken })
+
+await client.checkout.complete({ orderToken })
+```
 
 About Spark Solutions
 ----------------------
