@@ -868,9 +868,9 @@ await client.checkout.orderUpdate({ orderToken }, {
   }
 })
 
-const shipping = await client.checkout.shippingMethods({ orderToken }).success()
+const shipping = (await client.checkout.shippingMethods({ orderToken })).success()
 
-const payment = await client.checkout.paymentMethods({ orderToken }).success()
+const payment = (await client.checkout.paymentMethods({ orderToken })).success()
 
 // Pick a shipping and payment method
 
@@ -900,7 +900,7 @@ await client.checkout.orderUpdate({ orderToken }, {
 await client.checkout.orderNext({ bearerToken })
 
 // Step two - pick a shipping method
-const shipping = await client.checkout.shippingMethods({ orderToken }).success()
+const shipping = (await client.checkout.shippingMethods({ orderToken })).success()
 
 await client.checkout.orderUpdate({ orderToken }, {
   order: {
@@ -914,7 +914,7 @@ await client.checkout.orderUpdate({ orderToken }, {
 await client.checkout.orderNext({ orderToken })
 
 // Step three - pick a payment method
-const payment = await client.checkout.paymentMethods({ orderToken }).success()
+const payment = (await client.checkout.paymentMethods({ orderToken })).success()
 
 await client.checkout.orderUpdate({ orderToken }, {
   order: {
