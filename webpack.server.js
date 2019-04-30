@@ -12,11 +12,6 @@ const config = {
     nodeExternals()
   ],
   target: 'node',
-  entry: {
-    index: [
-      resolve(baseDirectoryPath, 'load-sourcemaps.js')
-    ]
-  },
   output: {
     path: serverDistDirectoryPath
   }
