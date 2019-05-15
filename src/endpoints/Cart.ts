@@ -36,8 +36,16 @@ export default class Cart extends Http {
     return await this.spreeResponse(PATCH, Routes.cartApplyCodePath(), token, params) as IOrderResult
   }
 
-  public async removeCouponCode(token: IToken, code: string, params: IQuery = {}): Promise<IOrderResult> {
-    return await this.spreeResponse(PATCH, Routes.cartRemoveCodePath(code), token, params) as IOrderResult
+  public async removeCouponCode(token: IToken, code: string = null, params: IQuery = {}): Promise<IOrderResult> {
+    let route = ''
+
+    if (code !== null) {
+      route = Routes.cartRemoveCodePath(code)
+    } else {
+      route = Routes.cartRemoveCodePath('')
+    }
+
+    return await this.spreeResponse(DELETE, route, token, params) as IOrderResult
   }
 
   public async estimateShippingMethods(

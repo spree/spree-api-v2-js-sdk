@@ -471,9 +471,9 @@ Removes a coupon code from the Cart.
 
 __Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Parameters schema:__
+__Optional parameters schema:__
 ```ts
-coupon_code: string
+coupon_code?: string
 ```
 
 __Success response schema:__ [Success schema](#success-schema)
