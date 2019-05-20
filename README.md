@@ -576,10 +576,10 @@ __Failure response schema:__ [Error schema](#error-schema)
 __Example:__
 ```ts
 // Logged in user
-const response = await client.cart.orderUpdate({ bearerToken }, { order: {...} })
+const response = await client.checkout.orderUpdate({ bearerToken }, { order: {...} })
 
 // or guest user
-const response = await client.cart.orderUpdate({ orderToken }, { order: {...} })
+const response = await client.checkout.orderUpdate({ orderToken }, { order: {...} })
 ```
 
 ### `orderNext`
@@ -596,10 +596,10 @@ __Example:__
 
 ```ts
 // Logged in user
-const response = await client.cart.orderNext({ bearerToken })
+const response = await client.checkout.orderNext({ bearerToken })
 
 // or guest user
-const response = await client.cart.orderNext({ orderToken })
+const response = await client.checkout.orderNext({ orderToken })
 ```
 
 ### `advance`
@@ -616,10 +616,10 @@ __Example:__
 
 ```ts
 // Logged in user
-const response = await client.cart.advance({ bearerToken })
+const response = await client.checkout.advance({ bearerToken })
 
 // or guest user
-const response = await client.cart.advance({ orderToken })
+const response = await client.checkout.advance({ orderToken })
 ```
 
 ### `complete`
@@ -635,10 +635,10 @@ __Example:__
 
 ```ts
 // Logged in user
-const response = await client.cart.complete({ bearerToken })
+const response = await client.checkout.complete({ bearerToken })
 
 // or guest user
-const response = await client.cart.complete({ orderToken })
+const response = await client.checkout.complete({ orderToken })
 ```
 
 ### `addStoreCredits`
@@ -661,10 +661,10 @@ __Example:__
 
 ```ts
 // Logged in user
-const response = await client.cart.addStoreCredits({ bearerToken }, { amount: 100 })
+const response = await client.checkout.addStoreCredits({ bearerToken }, { amount: 100 })
 
 // or guest user
-const response = await client.cart.addStoreCredits({ orderToken }, { amount: 100 })
+const response = await client.checkout.addStoreCredits({ orderToken }, { amount: 100 })
 ```
 
 ### `removeStoreCredits`
@@ -680,10 +680,10 @@ __Example:__
 
 ```ts
 // Logged in user
-const response = await client.cart.removeStoreCredits({ bearerToken })
+const response = await client.checkout.removeStoreCredits({ bearerToken })
 
 // or guest user
-const response = await client.cart.removeStoreCredits({ orderToken })
+const response = await client.checkout.removeStoreCredits({ orderToken })
 ```
 
 ### `paymentMethods`
@@ -699,10 +699,10 @@ __Example:__
 
 ```ts
 // Logged in user
-const response = await client.cart.paymentMethods({ bearerToken })
+const response = await client.checkout.paymentMethods({ bearerToken })
 
 // or guest user
-const response = await client.cart.paymentMethods({ orderToken })
+const response = await client.checkout.paymentMethods({ orderToken })
 ```
 
 ### `shippingMethods`
