@@ -1,5 +1,5 @@
 import Axios, { AxiosError, AxiosInstance } from 'axios'
-import qs from 'qs'
+import * as qs from 'qs'
 import { DELETE, GET } from './constants'
 import {
   BasicSpreeError, ExpandedSpreeError, MisconfigurationError, NoResponseError, SpreeError, SpreeSDKError
