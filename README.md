@@ -113,7 +113,7 @@ Identifies a guest user's cart and order.
 ```ts
 const response = await client.cart.create()
 
-const orderToken: string = response.data.attributes.token
+const orderToken: string = response.success().data.attributes.token
 ```
 
 ### Bearer token
@@ -124,7 +124,7 @@ const response = await client.authentication.getToken({
   password: 'spree123'
 })
 
-const bearerToken: string = response.access_token
+const bearerToken: string = response.success().access_token
 ```
 
 ## Endpoints
