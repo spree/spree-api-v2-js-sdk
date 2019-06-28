@@ -3,7 +3,7 @@ import { ResultResponse } from './ResultResponse'
 
 export interface EstimatedShippingMethodAttr extends JsonApiDocument {
   type: 'shipping_rate',
-  id: null,
+  id: string,
   attributes: {
     name: string,
     selected: boolean,
