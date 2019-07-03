@@ -4,7 +4,7 @@ const srcDirectoryPath = resolve(baseDirectoryPath, 'src')
 const ProgressBar = require('./webpack-plugins/ProgressBar')
 const DeleteBeforeEmit = require('./webpack-plugins/DeleteBeforeEmit')
 
-module.exports = {
+module.exports = ({ babelPresetEnvConfig }) => ({
   context: baseDirectoryPath,
   plugins: [
     new ProgressBar(),
@@ -26,7 +26,18 @@ module.exports = {
       {
         test: /\.(tsx?|js)$/,
         use: [
-          'babel-loader',
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env', babelPresetEnvConfig]],
+              plugins: [
+                '@babel/plugin-proposal-class-properties',
+                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/plugin-transform-runtime',
+                '@babel/plugin-transform-classes'
+              ]
+            }
+          },
           {
             loader: 'ts-loader',
             options: {
@@ -57,4 +68,4 @@ module.exports = {
     symlinks: false,
     extensions: ['.tsx', '.ts', '.js']
   }
-}
+})
