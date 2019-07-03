@@ -1,6 +1,6 @@
 const { resolve } = require('path')
 const merge = require('webpack-merge')
-const commonConfig = require('./webpack.common')
+const commonConfigMaker = require('./webpack.common.maker')
 const baseDirectoryPath = __dirname
 const distDirectoryPath = resolve(baseDirectoryPath, 'dist')
 const clientDistDirectoryPath = resolve(distDirectoryPath, 'client')
@@ -14,4 +14,13 @@ const config = {
   }
 }
 
-module.exports = merge(commonConfig, config)
+const merged = merge(
+  commonConfigMaker({
+    babelPresetEnvConfig: {
+      targets: '> 0.25%, not dead'
+    }
+  }),
+  config
+)
+
+module.exports = merged
