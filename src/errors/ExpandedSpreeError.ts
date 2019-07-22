@@ -7,7 +7,7 @@ export default class ExpandedSpreeError extends BasicSpreeError {
 
   constructor(serverResponse: AxiosResponse, errorsSummary: string, errors: any) {
     super(serverResponse, errorsSummary)
-    Object.setPrototypeOf(this, new.target.prototype)
+    Object.setPrototypeOf(this, ExpandedSpreeError.prototype)
     this.name = 'ExpandedSpreeError'
     this.errors = Object.keys(errors).reduce((acc, field) => {
       const keys = field.split('.')

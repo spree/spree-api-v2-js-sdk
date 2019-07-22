@@ -6,7 +6,7 @@ export default class SpreeError extends SpreeSDKError {
 
   constructor(serverResponse: AxiosResponse) {
     super(`Spree returned a HTTP ${serverResponse.status} error code`)
-    Object.setPrototypeOf(this, new.target.prototype)
+    Object.setPrototypeOf(this, SpreeError.prototype)
     this.name = 'SpreeError'
     const reducedServerResponse = { ...serverResponse }
     // Reduce logging by removing the 'enumerable' flag on some keys in AxiosResponse.

@@ -6,7 +6,7 @@ class BasicSpreeError extends SpreeError {
 
   constructor(serverResponse: AxiosResponse, errorsSummary: string) {
     super(serverResponse)
-    Object.setPrototypeOf(this, new.target.prototype)
+    Object.setPrototypeOf(this, BasicSpreeError.prototype)
     this.name = 'BasicSpreeError'
     this.summary = errorsSummary
   }
