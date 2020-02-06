@@ -272,7 +272,10 @@ const response = await client.account.completedOrder({ bearerToken }, 'R65316338
 ## [Order](https://guides.spreecommerce.org/api/v2/storefront/#tag/Order-Status)
 
 ### `status`
+
 Returns placed Order.
+
+__Required token:__ [Order token](#order-token)
 
 __Parameters schema:__
 ```ts
@@ -285,7 +288,7 @@ __Failure response schema:__ [Error schema](#error-schema)
 
 __Example:__
 ```ts
-const response = await client.order.status('R653163382')
+const response = await client.order.status({ orderToken }, 'R653163382')
 ```
 
 ## [Cart](https://guides.spreecommerce.org/api/v2/storefront/#tag/Cart)
