@@ -341,6 +341,9 @@ __Parameters schema:__
 {
   variant_id: string
   quantity: number
+  options?: {
+    [key: string]: string
+  }
 }
 ```
 
