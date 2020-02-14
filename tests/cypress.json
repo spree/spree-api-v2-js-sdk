@@ -1,0 +1,7 @@
+{
+  "video": false,
+  "fixturesFolder": false,
+  "pluginsFile": "plugins",
+  "supportFile": "support/commands",
+  "integrationFolder": "e2e"
+}
