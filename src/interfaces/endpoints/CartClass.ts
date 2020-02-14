@@ -2,7 +2,10 @@ import { IQuery } from '../Query'
 
 export interface AddItem extends IQuery {
   variant_id: string
-  quantity: number
+  quantity: number,
+  options?: {
+    [key: string]: string
+  }
 }
 
 export interface SetQuantity extends IQuery {
