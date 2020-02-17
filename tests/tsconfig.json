@@ -1,15 +1,12 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "strict": true,
-    "lib": [ "es2015", "dom", "scripthost" ],
-    "target": "es2015",
+    "lib": [ "es6", "dom", "scripthost" ],
     "moduleResolution" : "node",
     "types": ["cypress"]
   },
   "include" : [
     "e2e/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }
