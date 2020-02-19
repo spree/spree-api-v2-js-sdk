@@ -16,7 +16,8 @@
     "watch": "webpack --watch",
     "watch:server": "webpack --watch --config-name server",
     "watch:client": "webpack --watch --config-name client",
-    "lint:fix": "tslint src/**/*.ts --fix"
+    "lint:fix": "tslint src/**/*.ts --fix",
+    "test": "docker-compose down && docker-compose up --exit-code-from cypress"
   },
   "repository": {
     "type": "git",

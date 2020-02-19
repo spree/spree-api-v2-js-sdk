@@ -1,0 +1,8 @@
+{
+  "video": false,
+  "fixturesFolder": "fixtures",
+  "pluginsFile": "plugins",
+  "supportFile": "support/commands",
+  "integrationFolder": "e2e",
+  "defaultCommandTimeout": 20000
+}

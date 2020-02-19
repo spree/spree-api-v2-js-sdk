@@ -1,0 +1,21 @@
+version: "3.2"
+
+services:
+  spree:
+    container_name: spree_storefront_sdk_spree
+    image: sparksolutionstom/spree-storefront-api-v2-js-sdk:v4.1.0.rc2
+    build:
+      context: docker/spree
+      dockerfile: Dockerfile-spree
+  cypress:
+    container_name: spree_storefront_sdk_cypress
+    image: cypress/included:3.8.0
+    depends_on:
+      - spree
+    volumes:
+      - .:/sdk
+      - /sdk/node_modules
+      - /sdk/tests/node_modules
+    working_dir: /sdk
+    entrypoint: ["/sdk/tests/cypress-docker-entrypoint.sh"]
+

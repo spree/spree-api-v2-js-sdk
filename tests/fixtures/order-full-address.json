@@ -1,0 +1,24 @@
+{
+  "bill_address_attributes": {
+    "address1": "7735 Old Georgetown Road",
+    "city": "Bethesda",
+    "country_iso": "US",
+    "firstname": "John",
+    "lastname": "Snow",
+    "phone": "3014445002",
+    "state_name": "MD",
+    "zipcode": "20814"
+  },
+  "email": "john@snow.org",
+  "ship_address_attributes": {
+    "address1": "7735 Old Georgetown Road",
+    "city": "Bethesda",
+    "country_iso": "US",
+    "firstname": "John",
+    "lastname": "Snow",
+    "phone": "3014445002",
+    "state_name": "MD",
+    "zipcode": "20814"
+  },
+  "special_instructions": "Please leave at door"
+}

@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "lib": [ "es6", "dom", "scripthost" ],
+    "moduleResolution" : "node",
+    "types": ["cypress"]
+  },
+  "include" : [
+    "e2e/**/*.ts"
+  ]
+}
