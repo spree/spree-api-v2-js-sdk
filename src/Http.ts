@@ -1,6 +1,5 @@
-import Axios, { AxiosError, AxiosInstance } from 'axios'
+import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, Method } from 'axios'
 import * as qs from 'qs'
-import { DELETE, GET } from './constants'
 import {
   BasicSpreeError, ExpandedSpreeError, MisconfigurationError, NoResponseError, SpreeError, SpreeSDKError
 } from './errors'
@@ -29,20 +28,21 @@ export default class Http {
   }
 
   protected async spreeResponse(
-    method: string, route: string, tokens: IToken = {}, params: any = {}
+    method: Method, url: string, tokens: IToken = {}, params: any = {}
   ): Promise<ResultResponse<JsonApiResponse>> {
     try {
-      let res
-      const reqFunc = this.axios[method]
       const headers = this.spreeOrderHeaders(tokens)
 
-      if (method === GET || method === DELETE) {
-        res = await reqFunc(route, { params, headers })
-      } else {
-        res = await reqFunc(route, params, { headers })
+      const axiosConfig: AxiosRequestConfig = {
+        url,
+        params,
+        method,
+        headers
       }
 
-      return Result.success(res.data)
+      const response = await this.axios(axiosConfig)
+
+      return Result.success(response.data)
     } catch (error) {
       return Result.fail(this.processError(error))
     }
