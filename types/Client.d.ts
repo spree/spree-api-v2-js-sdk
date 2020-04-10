@@ -18,8 +18,16 @@ declare class Client {
     authentication: Authentication;
     account: Account;
     order: Order;
-    private host?;
+    protected host?: string;
     constructor(config?: IClientConfig);
-    private addEndpoints;
+    protected addEndpoints(): void;
+    protected makeAccount(): Account;
+    protected makeAuthentication(): Authentication;
+    protected makeCart(): Cart;
+    protected makeCheckout(): Checkout;
+    protected makeCountries(): Countries;
+    protected makeOrder(): Order;
+    protected makeProducts(): Products;
+    protected makeTaxons(): Taxons;
 }
 export default Client;
