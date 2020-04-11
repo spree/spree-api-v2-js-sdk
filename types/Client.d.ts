@@ -1,11 +1,4 @@
-import Account from './endpoints/Account';
-import Authentication from './endpoints/Authentication';
-import Cart from './endpoints/Cart';
-import Checkout from './endpoints/Checkout';
-import Countries from './endpoints/Countries';
-import Order from './endpoints/Order';
-import Products from './endpoints/Products';
-import Taxons from './endpoints/Taxons';
+import { Account, Products, Taxons, Countries, Cart, Checkout, Authentication, Order } from './endpoints';
 export interface IClientConfig {
     host?: string;
 }
