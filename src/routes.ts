@@ -1,4 +1,4 @@
-const storefrontPath = `api/v2/storefront`
+export const storefrontPath = `api/v2/storefront`
 
 export const Routes = {
   productsPath: () => `${storefrontPath}/products`,

@@ -1,3 +1,4 @@
+export declare const storefrontPath = "api/v2/storefront";
 export declare const Routes: {
     productsPath: () => string;
     productPath: (id: string) => string;
