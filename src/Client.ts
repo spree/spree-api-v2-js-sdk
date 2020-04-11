@@ -13,22 +13,54 @@ class Client {
   public authentication: Authentication
   public account: Account
   public order: Order
-  private host?: string
+  protected host?: string
 
   constructor(config: IClientConfig = {}) {
     this.host = config.host || null
     this.addEndpoints()
   }
 
-  private addEndpoints() {
-    this.account = new Account(this.host)
-    this.authentication = new Authentication(this.host)
-    this.cart = new Cart(this.host)
-    this.checkout = new Checkout(this.host)
-    this.countries = new Countries(this.host)
-    this.order = new Order(this.host)
-    this.products = new Products(this.host)
-    this.taxons = new Taxons(this.host)
+  protected addEndpoints() {
+    this.account = this.makeAccount()
+    this.authentication = this.makeAuthentication()
+    this.cart = this.makeCart()
+    this.checkout = this.makeCheckout()
+    this.countries = this.makeCountries()
+    this.order = this.makeOrder()
+    this.products = this.makeProducts()
+    this.taxons = this.makeTaxons()
+  }
+
+  protected makeAccount() {
+    return new Account(this.host)
+  }
+
+  protected makeAuthentication() {
+    return new Authentication(this.host)
+  }
+
+  protected makeCart() {
+    return new Cart(this.host)
+  }
+
+  protected makeCheckout() {
+    return new Checkout(this.host)
+  }
+
+  protected makeCountries() {
+    return new Countries(this.host)
+  }
+
+  protected makeOrder() {
+    return new Order(this.host)
+  }
+
+  protected makeProducts() {
+    return new Products(this.host)
+  }
+
+  protected makeTaxons() {
+    return new Taxons(this.host)
   }
 }
 
