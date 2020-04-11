@@ -7,6 +7,7 @@ export interface IQuery {
     [key: string]: number | string
   }
   page?: number
-  per_page?: number,
+  per_page?: number
   sort?: string
+  [customSpreeExtensionKey: string]: any
 }
