@@ -17,6 +17,7 @@ Developed and maintained by:
     - [getToken](#getToken)
     - [refreshToken](#refreshToken)
   - [Account](#account)
+    - [create](#account.create)
     - [accountInfo](#accountInfo)
     - [creditCardsList](#creditCardsList)
     - [defaultCreditCard](#defaultCreditCard)
@@ -190,6 +191,34 @@ const token = await client.authentication.refreshToken({
 ```
 
 ## [Account](https://guides.spreecommerce.org/api/v2/storefront/#tag/Account)
+
+### `account.create`
+
+Creates new Account and returns it attributes.
+
+__Parameters schema:__
+```ts
+user: {
+  email: string
+  password: string
+  password_confirmation: string
+}
+```
+
+__Success response schema:__ [Success schema](#success-schema)
+
+__Failure response schema:__ [Error schema](#error-schema)
+
+__Example:__
+```ts
+const response = await client.account.create({
+  user: {
+    email: 'john@snow.org',
+    password: 'spree123',
+    password_confirmation: 'spree123'
+  }
+})
+```
 
 ### `accountInfo`
 
