@@ -26,4 +26,8 @@ export default class Account extends Http {
   public async completedOrder(token: IToken, orderNumber: string, params: IQuery = {}): Promise<IOrderResult> {
     return await this.spreeResponse('get', Routes.accountCompletedOrderPath(orderNumber), token, params) as IOrderResult
   }
+
+  public async create(params: IQuery): Promise<IAccountResult> {
+    return await this.spreeResponse('post', Routes.accountPath(), {}, params) as IAccountResult
+  }
 }

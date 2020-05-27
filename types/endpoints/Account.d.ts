@@ -10,4 +10,5 @@ export default class Account extends Http {
     defaultCreditCard(token: IToken, params?: IQuery): Promise<ICreditCardResult>;
     completedOrdersList(token: IToken, params?: IQuery): Promise<IOrdersResult>;
     completedOrder(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>;
+    create(params: IQuery): Promise<IAccountResult>;
 }
