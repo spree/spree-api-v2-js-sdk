@@ -18,6 +18,7 @@ Developed and maintained by:
     - [refreshToken](#refreshToken)
   - [Account](#account)
     - [create](#account.create)
+    - [update](#account.update)
     - [accountInfo](#accountInfo)
     - [creditCardsList](#creditCardsList)
     - [defaultCreditCard](#defaultCreditCard)
@@ -194,7 +195,7 @@ const token = await client.authentication.refreshToken({
 
 ### `account.create`
 
-Creates new Account and returns it attributes.
+Creates new account and returns its attributes.
 
 __Parameters schema:__
 ```ts
@@ -216,6 +217,36 @@ const response = await client.account.create({
     email: 'john@snow.org',
     password: 'spree123',
     password_confirmation: 'spree123'
+  }
+})
+```
+
+### `account.update`
+
+Updates account and returns its attributes.
+
+__Parameters schema:__
+```ts
+user: {
+  email: string
+  password: string
+  password_confirmation: string
+}
+```
+
+__Required token:__ [Bearer token](#bearer-token)
+
+__Success response schema:__ [Success schema](#success-schema)
+
+__Failure response schema:__ [Error schema](#error-schema)
+
+__Example:__
+```ts
+const response = await client.account.update({ bearerToken }, {
+  user: {
+    email: 'john@snow.org',
+    password: 'new_spree123',
+    password_confirmation: 'new_spree123'
   }
 })
 ```

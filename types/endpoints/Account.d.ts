@@ -11,4 +11,5 @@ export default class Account extends Http {
     completedOrdersList(token: IToken, params?: IQuery): Promise<IOrdersResult>;
     completedOrder(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>;
     create(params: IQuery): Promise<IAccountResult>;
+    update(token: IToken, params: IQuery): Promise<IAccountResult>;
 }

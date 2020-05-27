@@ -30,4 +30,8 @@ export default class Account extends Http {
   public async create(params: IQuery): Promise<IAccountResult> {
     return await this.spreeResponse('post', Routes.accountPath(), {}, params) as IAccountResult
   }
+
+  public async update(token: IToken, params: IQuery): Promise<IAccountResult> {
+    return await this.spreeResponse('patch', Routes.accountPath(), token, params) as IAccountResult
+  }
 }
