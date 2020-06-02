@@ -27,9 +27,9 @@ export default class Http {
     })
   }
 
-  protected async spreeResponse(
+  protected async spreeResponse<ResponseType = JsonApiResponse>(
     method: Method, url: string, tokens: IToken = {}, params: any = {}
-  ): Promise<ResultResponse<JsonApiResponse>> {
+  ): Promise<ResultResponse<ResponseType>> {
     try {
       const headers = this.spreeOrderHeaders(tokens)
 

@@ -21,3 +21,11 @@ export interface IAccount extends JsonApiSingleResponse {
 }
 
 export interface IAccountResult extends ResultResponse<IAccount> {}
+
+export interface IAccountConfirmation {
+  data: {
+    state: string
+  }
+}
+
+export interface IAccountConfirmationResult extends ResultResponse<IAccountConfirmation> {}
