@@ -24,6 +24,7 @@ export declare const Routes: {
     checkoutShippingMethodsPath: () => string;
     oauthTokenPath: () => string;
     accountPath: () => string;
+    accountConfirmPath: (confirmationToken: string) => string;
     accountCreditCardsPath: () => string;
     accountDefaultCreditCardPath: () => string;
     accountCompletedOrdersPath: () => string;

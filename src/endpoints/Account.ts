@@ -1,5 +1,5 @@
 import Http from '../Http'
-import { IAccountResult } from '../interfaces/Account'
+import { IAccountResult, IAccountConfirmationResult, IAccountConfirmation } from '../interfaces/Account'
 import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard'
 import { IOrderResult, IOrdersResult } from '../interfaces/Order'
 import { IQuery } from '../interfaces/Query'
@@ -29,6 +29,10 @@ export default class Account extends Http {
 
   public async create(params: IQuery): Promise<IAccountResult> {
     return await this.spreeResponse('post', Routes.accountPath(), {}, params) as IAccountResult
+  }
+
+  public async confirm(confirmationToken: string): Promise<IAccountConfirmationResult> {
+    return await this.spreeResponse<IAccountConfirmation>('get', Routes.accountConfirmPath(confirmationToken)) as IAccountConfirmationResult
   }
 
   public async update(token: IToken, params: IQuery): Promise<IAccountResult> {

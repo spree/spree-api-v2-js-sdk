@@ -6,7 +6,7 @@ export default class Http {
     host: string;
     axios: AxiosInstance;
     constructor(host?: string);
-    protected spreeResponse(method: Method, url: string, tokens?: IToken, params?: any): Promise<ResultResponse<JsonApiResponse>>;
+    protected spreeResponse<ResponseType = JsonApiResponse>(method: Method, url: string, tokens?: IToken, params?: any): Promise<ResultResponse<ResponseType>>;
     /**
      * HTTP error code returned by Spree is not indicative of its response shape. This function attempts to figure out the
      * information provided from Spree and use whatever is available.

@@ -221,6 +221,32 @@ const response = await client.account.create({
 })
 ```
 
+### `account.confirm`
+
+Confirms new account e-mail and returns account registration status.
+
+__Parameters schema:__
+
+```ts
+confirmationToken: string
+```
+
+__Success response schema:__ [Success schema]
+
+```ts
+data: {
+  state: string
+}
+```
+
+__Failure response schema:__ [Error schema](#error-schema)
+
+__Example:__
+
+```ts
+const response = await client.account.confirm('2xssfC9Hzf8DJXyRZGmB')
+```
+
 ### `account.update`
 
 Updates account and returns its attributes.
