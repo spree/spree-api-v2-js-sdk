@@ -231,7 +231,7 @@ __Parameters schema:__
 confirmationToken: string
 ```
 
-__Success response schema:__ [Success schema]
+__Success response schema:__
 
 ```ts
 data: {
