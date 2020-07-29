@@ -12,6 +12,8 @@ export interface JsonApiListResponse extends JsonApiResponse {
   data: JsonApiDocument[],
   meta?: {
     total_pages: number
+    total_count: number
+    count: number
   }
 }
 export interface JsonApiSingleResponse extends JsonApiResponse {
