@@ -17,17 +17,20 @@ Developed and maintained by:
     - [getToken](#getToken)
     - [refreshToken](#refreshToken)
   - [Account](#account)
-    - [create](#account.create)
-    - [update](#account.update)
+    - [create](#create)
+    - [update](#update)
     - [accountInfo](#accountInfo)
     - [creditCardsList](#creditCardsList)
     - [defaultCreditCard](#defaultCreditCard)
     - [completedOrdersList](#completedOrdersList)
     - [completedOrder](#completedOrder)
+    - [addressesList](#addressesList)
+    - [createAddress](#createaddress)
+    - [updateAddress](#updateaddress)
   - [Order](#order)
     - [status](#status)
   - [Cart](#cart)
-    - [create](#create)
+    - [create](#create-1)
     - [show](#show)
     - [addItem](#addItem)
     - [setQuantity](#setQuantity)
@@ -46,10 +49,10 @@ Developed and maintained by:
     - [shippingMethods](#shippingMethods)
   - [Products](#products)
     - [list](#list)
-    - [show](#show)
+    - [show](#show-1)
   - [Taxons](#taxons)
-    - [list](#list)
-    - [show](#show)
+    - [list](#list-1)
+    - [show](#show-2)
   - [Checkout Flow](#checkout-flow)
     - [One step](#one-step)
     - [Three steps](#three-steps)
@@ -193,7 +196,7 @@ const token = await client.authentication.refreshToken({
 
 ## [Account](https://guides.spreecommerce.org/api/v2/storefront/#tag/Account)
 
-### `account.create`
+### `create`
 
 Creates new account and returns its attributes.
 
@@ -221,7 +224,7 @@ const response = await client.account.create({
 })
 ```
 
-### `account.confirm`
+### `confirm`
 
 Confirms new account e-mail and returns account registration status.
 
@@ -247,7 +250,7 @@ __Example:__
 const response = await client.account.confirm('2xssfC9Hzf8DJXyRZGmB')
 ```
 
-### `account.update`
+### `update`
 
 Updates account and returns its attributes.
 
@@ -353,6 +356,105 @@ __Failure response schema:__ [Error schema](#error-schema)
 __Example:__
 ```ts
 const response = await client.account.completedOrder({ bearerToken }, 'R653163382')
+```
+
+### `addressesList`
+
+Returns a list of Addresses for the signed in User
+
+__Required token:__ [Bearer token](#bearer-token)
+
+__Success response schema:__ [Success schema](#success-schema)
+
+__Failure response schema:__ [Error schema](#error-schema)
+
+__Example:__
+```ts
+const response = await client.account.addressesList({ bearerToken })
+```
+
+### `createAddress`
+
+Create a new Address for the signed in User.
+
+__Required token:__ [Bearer token](#bearer-token)
+
+__Parameters schema:__
+```ts
+address: {
+  firstname: string
+  lastname: string
+  address1: string
+  address2?: string
+  city: string
+  phone?: string
+  zipcode: string
+  state_name: string // State Abbreviations
+  country_iso: string // Country ISO (2-chars) or ISO3 (3-chars)
+}
+```
+
+__Success response schema:__ [Success schema](#success-schema)
+
+__Failure response schema:__ [Error schema](#error-schema)
+
+__Example:__
+```ts
+const response = await client.account.createAddress({ bearerToken }, {
+  address: {
+    firstname: 'John',
+    lastname: 'Snow',
+    address1: '7735 Old Georgetown Road',
+    address2: '2nd Floor',
+    city: 'Bethesda',
+    phone: '3014445002',
+    zipcode: '20814',
+    state_name: 'MD',
+    country_iso: 'US'
+  }
+})
+```
+
+### `updateAddress`
+
+Update selected Address for the signed in User.
+
+__Required token:__ [Bearer token](#bearer-token)
+
+__Parameters schema:__
+```ts
+address: {
+  firstname: string
+  lastname: string
+  address1: string
+  address2?: string
+  city: string
+  phone?: string
+  zipcode: string
+  state_name: string // State Abbreviations
+  country_iso: string // Country ISO (2-chars) or ISO3 (3-chars)
+}
+```
+
+__Success response schema:__ [Success schema](#success-schema)
+
+__Failure response schema:__ [Error schema](#error-schema)
+
+__Example:__
+```ts
+const response = await client.account.updateAddress({ bearerToken }, '1', {
+  address: {
+    firstname: 'John',
+    lastname: 'Snow',
+    address1: '7735 Old Georgetown Road',
+    address2: '2nd Floor',
+    city: 'Bethesda',
+    phone: '3014445002',
+    zipcode: '20814',
+    state_name: 'MD',
+    country_iso: 'US'
+  }
+})
 ```
 
 ## [Order](https://guides.spreecommerce.org/api/v2/storefront/#tag/Order-Status)

@@ -1,5 +1,5 @@
 import Http from '../Http'
-import { IAccountResult, IAccountConfirmationResult, IAccountConfirmation } from '../interfaces/Account'
+import { IAccountResult, IAccountConfirmationResult, IAccountConfirmation, AccountAddressesResult, AccountAddressResult, AccountAddressParams } from '../interfaces/Account'
 import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard'
 import { IOrderResult, IOrdersResult } from '../interfaces/Order'
 import { IQuery } from '../interfaces/Query'
@@ -37,5 +37,17 @@ export default class Account extends Http {
 
   public async update(token: IToken, params: IQuery): Promise<IAccountResult> {
     return await this.spreeResponse('patch', Routes.accountPath(), token, params) as IAccountResult
+  }
+
+  public async addressesList(token: IToken): Promise<AccountAddressesResult> {
+    return (await this.spreeResponse('get', Routes.accountAddressesPath(), token)) as AccountAddressesResult
+  }
+
+  public async createAddress(token: IToken, params: AccountAddressParams): Promise<AccountAddressResult> {
+    return (await this.spreeResponse('post', Routes.accountAddressesPath(), token, params)) as AccountAddressResult
+  }
+
+  public async updateAddress(token: IToken, addressId: string, params: AccountAddressParams): Promise<AccountAddressResult> {
+    return (await this.spreeResponse('patch', Routes.accountAddressPath(addressId), token, params)) as AccountAddressResult
   }
 }

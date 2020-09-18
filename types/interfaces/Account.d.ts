@@ -1,4 +1,6 @@
-import { JsonApiDocument, JsonApiSingleResponse } from './JsonApi';
+import { IAddress } from './attributes/Address';
+import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi';
+import { IQuery } from './Query';
 import { IRelationships } from './Relationships';
 import { ResultResponse } from './ResultResponse';
 export interface AccountAttr extends JsonApiDocument {
@@ -24,4 +26,20 @@ export interface IAccountConfirmation {
     };
 }
 export interface IAccountConfirmationResult extends ResultResponse<IAccountConfirmation> {
+}
+export interface AccountAddressParams extends IQuery {
+    address: IAddress;
+}
+export interface AccountAddressAttr extends JsonApiDocument {
+    attributes: IAddress;
+}
+export interface AccountAddressResponse extends JsonApiSingleResponse {
+    data: AccountAddressAttr;
+}
+export interface AccountAddressesResponse extends JsonApiListResponse {
+    data: AccountAddressAttr[];
+}
+export interface AccountAddressResult extends ResultResponse<AccountAddressResponse> {
+}
+export interface AccountAddressesResult extends ResultResponse<AccountAddressesResponse> {
 }
