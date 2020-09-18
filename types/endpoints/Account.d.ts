@@ -1,5 +1,5 @@
 import Http from '../Http';
-import { IAccountResult, IAccountConfirmationResult } from '../interfaces/Account';
+import { IAccountResult, IAccountConfirmationResult, AccountAddressesResult, AccountAddressResult, AccountAddressParams } from '../interfaces/Account';
 import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard';
 import { IOrderResult, IOrdersResult } from '../interfaces/Order';
 import { IQuery } from '../interfaces/Query';
@@ -13,4 +13,7 @@ export default class Account extends Http {
     create(params: IQuery): Promise<IAccountResult>;
     confirm(confirmationToken: string): Promise<IAccountConfirmationResult>;
     update(token: IToken, params: IQuery): Promise<IAccountResult>;
+    addressesList(token: IToken): Promise<AccountAddressesResult>;
+    createAddress(token: IToken, params: AccountAddressParams): Promise<AccountAddressResult>;
+    updateAddress(token: IToken, addressId: string, params: AccountAddressParams): Promise<AccountAddressResult>;
 }
