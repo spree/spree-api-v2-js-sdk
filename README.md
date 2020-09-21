@@ -391,6 +391,7 @@ address: {
   zipcode: string
   state_name: string // State Abbreviations
   country_iso: string // Country ISO (2-chars) or ISO3 (3-chars)
+  company?: string
 }
 ```
 
@@ -410,7 +411,8 @@ const response = await client.account.createAddress({ bearerToken }, {
     phone: '3014445002',
     zipcode: '20814',
     state_name: 'MD',
-    country_iso: 'US'
+    country_iso: 'US',
+    company: 'Spark'
   }
 })
 ```
@@ -433,6 +435,7 @@ address: {
   zipcode: string
   state_name: string // State Abbreviations
   country_iso: string // Country ISO (2-chars) or ISO3 (3-chars)
+  company?: string
 }
 ```
 
@@ -452,7 +455,8 @@ const response = await client.account.updateAddress({ bearerToken }, '1', {
     phone: '3014445002',
     zipcode: '20814',
     state_name: 'MD',
-    country_iso: 'US'
+    country_iso: 'US',
+    company: 'Spark'
   }
 })
 ```
