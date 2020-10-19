@@ -926,12 +926,12 @@ __Example:__
 ```ts
 // Logged in user
 const response = await client.checkout.shippingMethods({ bearerToken }, {
-  include: 'shipping_rates'
+  include: 'shipping_rates,stock_location'
 })
 
 // or guest user
 const response = await client.checkout.shippingMethods({ orderToken }, {
-  include: 'shipping_rates'
+  include: 'shipping_rates,stock_location'
 })
 ```
 
