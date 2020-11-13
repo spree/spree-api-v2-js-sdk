@@ -1,6 +1,6 @@
 # Source: https://github.com/spree/spree/blob/master/Dockerfile
 
-# Builds Spree at v4.1.0.rc2 tag and allows CORS requests
+# Builds Spree at v4.1.12 tag and allows CORS requests
 
 FROM ruby:2.5.1
 RUN apt-get update -qq && \
@@ -10,7 +10,7 @@ WORKDIR /spree
 
 RUN apt-get install -y git
 RUN git clone https://github.com/spree/spree.git .
-RUN git checkout tags/v4.1.0.rc2
+RUN git checkout tags/v4.1.12
 
 RUN bundle install
 RUN bundle exec rake sandbox

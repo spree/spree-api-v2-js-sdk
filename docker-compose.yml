@@ -3,7 +3,7 @@ version: "3.2"
 services:
   spree:
     container_name: spree_storefront_sdk_spree
-    image: sparksolutionstom/spree-storefront-api-v2-js-sdk:v4.1.0.rc2
+    image: sparksolutionstom/spree-storefront-api-v2-js-sdk:v4.1.12
     build:
       context: docker/spree
       dockerfile: Dockerfile-spree
