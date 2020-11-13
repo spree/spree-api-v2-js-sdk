@@ -3,7 +3,7 @@
   "version": "4.4.1",
   "description": "Node module to easily integrate your JavaScript or TypeScript application with Spree API V2. You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on",
   "engines": {
-    "node": ">=8",
+    "node": ">=12",
     "yarn": ">=1.13.0"
   },
   "main": "dist/server/index.js",
@@ -47,13 +47,13 @@
     "tslint": "^5.12.1",
     "typescript": "^3.2.4",
     "webpack": "^4.29.0",
-    "webpack-cli": "^3.2.1",
+    "webpack-cli": "^4.2.0",
     "webpack-merge": "^4.2.1",
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.20",
     "qs": "^6.6.0"
   }
 }
