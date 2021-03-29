@@ -1,5 +1,5 @@
 const { resolve } = require('path')
-const merge = require('webpack-merge')
+const { mergeWithRules } = require('webpack-merge')
 const commonConfigMaker = require('./webpack.common.maker')
 const baseDirectoryPath = __dirname
 const distDirectoryPath = resolve(baseDirectoryPath, 'dist')
@@ -10,7 +10,7 @@ const config = {
   name: 'server',
   externals: [
     nodeExternals({
-      whitelist: [/^@babel\/runtime/, /^regenerator-runtime/]
+      allowlist: [/^@babel\/runtime/, /^regenerator-runtime/]
     })
   ],
   target: 'node',
@@ -19,11 +19,13 @@ const config = {
   }
 }
 
-const merged = merge.strategy({ entry: 'prepend' })(
+const merged = mergeWithRules({
+  entry: 'prepend'
+})(
   commonConfigMaker({
     babelPresetEnvConfig: {
       targets: {
-        node: '8'
+        node: '14'
       }
     }
   }),

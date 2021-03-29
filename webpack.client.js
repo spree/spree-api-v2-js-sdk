@@ -1,5 +1,5 @@
 const { resolve } = require('path')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const commonConfigMaker = require('./webpack.common.maker')
 const baseDirectoryPath = __dirname
 const distDirectoryPath = resolve(baseDirectoryPath, 'dist')
