@@ -11,11 +11,11 @@ export interface AddStoreCredit extends IQuery {
 export interface NestedAttributes extends IQuery {
   order?: {
     email?: string
-    special_instructions? :string
+    special_instructions?: string
     bill_address_attributes?: IAddress
     ship_address_attributes?: IAddress
     payments_attributes?: IPayment[]
     shipments_attributes?: IShipment[]
-  },
+  }
   payment_source?: IPaymentSource
 }
