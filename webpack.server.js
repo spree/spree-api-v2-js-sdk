@@ -1,5 +1,5 @@
 const { resolve } = require('path')
-const { mergeWithRules } = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const commonConfigMaker = require('./webpack.common.maker')
 const baseDirectoryPath = __dirname
 const distDirectoryPath = resolve(baseDirectoryPath, 'dist')
@@ -19,9 +19,7 @@ const config = {
   }
 }
 
-const merged = mergeWithRules({
-  entry: 'prepend'
-})(
+const merged = merge(
   commonConfigMaker({
     babelPresetEnvConfig: {
       targets: {
