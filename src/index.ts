@@ -5,6 +5,6 @@ import Http from './Http'
 import * as routes from './routes'
 import * as endpoints from './endpoints'
 
-const makeClient = (config: IClientConfig = {}) => new Client(config)
+const makeClient = (config: IClientConfig = {}): Client => new Client(config)
 
 export { Client, Http, Result, errors, makeClient, endpoints, routes }
