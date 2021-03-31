@@ -7,20 +7,13 @@ const clientDistDirectoryPath = resolve(distDirectoryPath, 'client')
 
 const config = {
   name: 'client',
-  target: 'web',
+  target: ['web', 'es6'],
   output: {
     library: 'SpreeSDK',
     path: clientDistDirectoryPath
   }
 }
 
-const merged = merge(
-  commonConfigMaker({
-    babelPresetEnvConfig: {
-      targets: '> 0.25%, not dead'
-    }
-  }),
-  config
-)
+const typeScriptConfigFilePath = resolve(baseDirectoryPath, 'tsconfig-client.json')
 
-module.exports = merged
+module.exports = merge(commonConfigMaker({ typeScriptConfigFilePath }), config)

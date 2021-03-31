@@ -4,16 +4,11 @@ const srcDirectoryPath = resolve(baseDirectoryPath, 'src')
 const ProgressBar = require('./webpack-plugins/ProgressBar')
 const DeleteBeforeEmit = require('./webpack-plugins/DeleteBeforeEmit')
 
-module.exports = ({ babelPresetEnvConfig }) => ({
+module.exports = ({ typeScriptConfigFilePath }) => ({
   context: baseDirectoryPath,
-  plugins: [
-    new ProgressBar(),
-    new DeleteBeforeEmit(resolve(baseDirectoryPath, 'types'))
-  ],
+  plugins: [new ProgressBar(), new DeleteBeforeEmit(resolve(baseDirectoryPath, 'types'))],
   entry: {
-    index: [
-      resolve(srcDirectoryPath, 'index.ts')
-    ]
+    index: [resolve(srcDirectoryPath, 'index.ts')]
   },
   output: {
     filename: '[name].js',
@@ -24,45 +19,25 @@ module.exports = ({ babelPresetEnvConfig }) => ({
   module: {
     rules: [
       {
-        test: /\.(tsx?|js)$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [['@babel/preset-env', babelPresetEnvConfig]],
-              plugins: [
-                '@babel/plugin-proposal-class-properties',
-                '@babel/plugin-proposal-object-rest-spread',
-                '@babel/plugin-transform-runtime',
-                '@babel/plugin-transform-classes'
-              ]
-            }
-          },
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: false,
-              onlyCompileBundledFiles: true
-            }
-          }
-        ],
-        include: srcDirectoryPath
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        include: srcDirectoryPath,
+        options: {
+          configFile: typeScriptConfigFilePath,
+          onlyCompileBundledFiles: true
+        }
       },
       {
         test: /\.js$/,
-        use: [
-          'source-map-loader'
-        ],
+        loader: 'source-map-loader',
         include: /node_modules/,
         enforce: 'pre'
       }
     ]
   },
   resolveLoader: {
-    modules: [
-      srcDirectoryPath,
-      'node_modules'
-    ]
+    modules: [srcDirectoryPath, 'node_modules']
   },
   resolve: {
     symlinks: false,

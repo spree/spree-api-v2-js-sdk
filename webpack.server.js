@@ -13,21 +13,12 @@ const config = {
       allowlist: [/^@babel\/runtime/, /^regenerator-runtime/]
     })
   ],
-  target: 'node',
+  target: 'node14',
   output: {
     path: serverDistDirectoryPath
   }
 }
 
-const merged = merge(
-  commonConfigMaker({
-    babelPresetEnvConfig: {
-      targets: {
-        node: '14'
-      }
-    }
-  }),
-  config
-)
+const typeScriptConfigFilePath = resolve(baseDirectoryPath, 'tsconfig-server.json')
 
-module.exports = merged
+module.exports = merge(commonConfigMaker({ typeScriptConfigFilePath }), config)
