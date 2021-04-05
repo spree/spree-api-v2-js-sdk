@@ -1,7 +1,7 @@
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const chalk = require('chalk')
+import ProgressBarPlugin from 'progress-bar-webpack-plugin'
+import chalk from 'chalk'
 
-module.exports = function ProgressBar() {
+export default function ProgressBar() {
   return new ProgressBarPlugin({
     format: `Building [:bar] ${chalk.green.bold(':percent')} (:elapsed seconds)`,
     clear: false

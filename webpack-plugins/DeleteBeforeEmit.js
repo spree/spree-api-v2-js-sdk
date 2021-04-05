@@ -1,4 +1,4 @@
-const del = require('del')
+import del from 'del'
 
 class ClearBeforeEmit {
   constructor(path) {
@@ -12,5 +12,4 @@ class ClearBeforeEmit {
   }
 }
 
-module.exports = ClearBeforeEmit
-
+export default ClearBeforeEmit

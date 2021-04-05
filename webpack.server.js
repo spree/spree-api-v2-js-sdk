@@ -1,10 +1,14 @@
-const { resolve } = require('path')
-const { merge } = require('webpack-merge')
-const commonConfigMaker = require('./webpack.common.maker')
+import { resolve, dirname } from 'path'
+import { merge } from 'webpack-merge'
+import { fileURLToPath } from 'url'
+import commonConfigMaker from './webpack.common.maker.js'
+import nodeExternals from 'webpack-node-externals'
+
+// Redefining __dirname is a temporary solution, due to https://github.com/nodejs/help/issues/2907
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const baseDirectoryPath = __dirname
 const distDirectoryPath = resolve(baseDirectoryPath, 'dist')
 const serverDistDirectoryPath = resolve(distDirectoryPath, 'server')
-const nodeExternals = require('webpack-node-externals')
 
 const config = {
   name: 'server',
@@ -21,4 +25,4 @@ const config = {
 
 const typeScriptConfigFilePath = resolve(baseDirectoryPath, 'tsconfig-server.json')
 
-module.exports = merge(commonConfigMaker({ typeScriptConfigFilePath }), config)
+export default merge(commonConfigMaker({ typeScriptConfigFilePath }), config)

@@ -1,12 +1,22 @@
-const { resolve } = require('path')
+import webpack from 'webpack'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
+import ProgressBar from './webpack-plugins/ProgressBar.js'
+import DeleteBeforeEmit from './webpack-plugins/DeleteBeforeEmit.js'
+
+// Redefining __dirname is a temporary solution, due to https://github.com/nodejs/help/issues/2907
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const baseDirectoryPath = __dirname
 const srcDirectoryPath = resolve(baseDirectoryPath, 'src')
-const ProgressBar = require('./webpack-plugins/ProgressBar')
-const DeleteBeforeEmit = require('./webpack-plugins/DeleteBeforeEmit')
+const { WatchIgnorePlugin } = webpack
 
-module.exports = ({ typeScriptConfigFilePath }) => ({
+export default ({ typeScriptConfigFilePath }) => ({
   context: baseDirectoryPath,
-  plugins: [new ProgressBar(), new DeleteBeforeEmit(resolve(baseDirectoryPath, 'types'))],
+  plugins: [
+    new ProgressBar(),
+    new DeleteBeforeEmit(resolve(baseDirectoryPath, 'types')),
+    new WatchIgnorePlugin({ paths: [resolve(baseDirectoryPath, 'types')] })
+  ],
   entry: {
     index: [resolve(srcDirectoryPath, 'index.ts')]
   },
