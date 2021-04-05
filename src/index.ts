@@ -1,10 +1,9 @@
-import Client, { IClientConfig } from './Client'
+import Client from './Client'
 import * as errors from './errors'
-import Result from './helpers/Result'
+import * as result from './helpers/result'
 import Http from './Http'
 import * as routes from './routes'
 import * as endpoints from './endpoints'
+import makeClient from './makeClient'
 
-const makeClient = (config: IClientConfig = {}): Client => new Client(config)
-
-export { Client, Http, Result, errors, makeClient, endpoints, routes }
+export { Client, Http, result, errors, makeClient, endpoints, routes }
