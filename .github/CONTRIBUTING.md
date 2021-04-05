@@ -6,7 +6,7 @@ Here's a quick guide:
 
 1. Fork the repo (=**base**).
 1. Clone the fork to your local machine.
-1. Run `npm install` (`yarn install`)
+1. Run `npm install` (`yarn install`).
 1. Run `npm run build` (`yarn run build`) to generate the package. Alternatively, to have Webpack rebuild on every change in sources (/src), run `npm run watch` (`yarn run watch`).
 1. Create a new git branch and apply the necessary changes. When updating source files, make sure to follow the [ESLint][1] rules for the project. Also, please update the README if necessary.
 1. Commit and push to your fork.
