@@ -1,8 +1,8 @@
 import webpack from 'webpack'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
-import ProgressBar from './webpack-plugins/ProgressBar.js'
-import DeleteBeforeEmit from './webpack-plugins/DeleteBeforeEmit.js'
+import ProgressBar from './webpack-plugins/ProgressBar.mjs'
+import DeleteBeforeEmit from './webpack-plugins/DeleteBeforeEmit.mjs'
 
 // Redefining __dirname is a temporary solution, due to https://github.com/nodejs/help/issues/2907
 const __dirname = dirname(fileURLToPath(import.meta.url))

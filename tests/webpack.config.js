@@ -1,6 +1,6 @@
 // Source: https://github.com/cypress-io/cypress-example-recipes/blob/master/examples/preprocessors__typescript-webpack/webpack.config.js
 
-module.exports = {
+export default {
   mode: 'development',
   devtool: 'eval-source-map',
   resolve: {
