@@ -25,5 +25,4 @@ services:
       - .:/sdk
       - /sdk/node_modules
       - /sdk/tests/node_modules
-    working_dir: /sdk
     entrypoint: ["/sdk/tests/cypress-docker-entrypoint.sh"]
