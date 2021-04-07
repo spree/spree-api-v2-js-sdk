@@ -1,5 +1,5 @@
 export declare const storefrontPath = "api/v2/storefront";
-export declare const Routes: {
+export declare const routes: {
     productsPath: () => string;
     productPath: (id: string) => string;
     taxonsPath: () => string;
