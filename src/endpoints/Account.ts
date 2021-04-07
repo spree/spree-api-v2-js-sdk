@@ -11,55 +11,55 @@ import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard'
 import { IOrderResult, IOrdersResult } from '../interfaces/Order'
 import { IQuery } from '../interfaces/Query'
 import { IToken } from '../interfaces/Token'
-import { Routes } from '../routes'
+import { routes } from '../routes'
 
 export default class Account extends Http {
   public async accountInfo(token: IToken, params: IQuery = {}): Promise<IAccountResult> {
-    return (await this.spreeResponse('get', Routes.accountPath(), token, params)) as IAccountResult
+    return (await this.spreeResponse('get', routes.accountPath(), token, params)) as IAccountResult
   }
 
   public async creditCardsList(token: IToken, params: IQuery = {}): Promise<ICreditCardsResult> {
-    return (await this.spreeResponse('get', Routes.accountCreditCardsPath(), token, params)) as ICreditCardsResult
+    return (await this.spreeResponse('get', routes.accountCreditCardsPath(), token, params)) as ICreditCardsResult
   }
 
   public async defaultCreditCard(token: IToken, params: IQuery = {}): Promise<ICreditCardResult> {
-    return (await this.spreeResponse('get', Routes.accountDefaultCreditCardPath(), token, params)) as ICreditCardResult
+    return (await this.spreeResponse('get', routes.accountDefaultCreditCardPath(), token, params)) as ICreditCardResult
   }
 
   public async completedOrdersList(token: IToken, params: IQuery = {}): Promise<IOrdersResult> {
-    return (await this.spreeResponse('get', Routes.accountCompletedOrdersPath(), token, params)) as IOrdersResult
+    return (await this.spreeResponse('get', routes.accountCompletedOrdersPath(), token, params)) as IOrdersResult
   }
 
   public async completedOrder(token: IToken, orderNumber: string, params: IQuery = {}): Promise<IOrderResult> {
     return (await this.spreeResponse(
       'get',
-      Routes.accountCompletedOrderPath(orderNumber),
+      routes.accountCompletedOrderPath(orderNumber),
       token,
       params
     )) as IOrderResult
   }
 
   public async create(params: IQuery): Promise<IAccountResult> {
-    return (await this.spreeResponse('post', Routes.accountPath(), {}, params)) as IAccountResult
+    return (await this.spreeResponse('post', routes.accountPath(), {}, params)) as IAccountResult
   }
 
   public async confirm(confirmationToken: string): Promise<IAccountConfirmationResult> {
     return (await this.spreeResponse<IAccountConfirmation>(
       'get',
-      Routes.accountConfirmPath(confirmationToken)
+      routes.accountConfirmPath(confirmationToken)
     )) as IAccountConfirmationResult
   }
 
   public async update(token: IToken, params: IQuery): Promise<IAccountResult> {
-    return (await this.spreeResponse('patch', Routes.accountPath(), token, params)) as IAccountResult
+    return (await this.spreeResponse('patch', routes.accountPath(), token, params)) as IAccountResult
   }
 
   public async addressesList(token: IToken): Promise<AccountAddressesResult> {
-    return (await this.spreeResponse('get', Routes.accountAddressesPath(), token)) as AccountAddressesResult
+    return (await this.spreeResponse('get', routes.accountAddressesPath(), token)) as AccountAddressesResult
   }
 
   public async createAddress(token: IToken, params: AccountAddressParams): Promise<AccountAddressResult> {
-    return (await this.spreeResponse('post', Routes.accountAddressesPath(), token, params)) as AccountAddressResult
+    return (await this.spreeResponse('post', routes.accountAddressesPath(), token, params)) as AccountAddressResult
   }
 
   public async updateAddress(
@@ -69,7 +69,7 @@ export default class Account extends Http {
   ): Promise<AccountAddressResult> {
     return (await this.spreeResponse(
       'patch',
-      Routes.accountAddressPath(addressId),
+      routes.accountAddressPath(addressId),
       token,
       params
     )) as AccountAddressResult
