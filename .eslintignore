@@ -1,0 +1,5 @@
+dist
+webpack.*
+types
+webpack-plugins
+tests/plugins

@@ -1,9 +1,14 @@
 import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, Method } from 'axios'
 import * as qs from 'qs'
 import {
-  BasicSpreeError, ExpandedSpreeError, MisconfigurationError, NoResponseError, SpreeError, SpreeSDKError
+  BasicSpreeError,
+  ExpandedSpreeError,
+  MisconfigurationError,
+  NoResponseError,
+  SpreeError,
+  SpreeSDKError
 } from './errors'
-import Result from './helpers/Result'
+import * as result from './helpers/result'
 import { ErrorClass } from './interfaces/errors/ErrorClass'
 import { JsonApiResponse } from './interfaces/JsonApi'
 import { ResultResponse } from './interfaces/ResultResponse'
@@ -28,7 +33,10 @@ export default class Http {
   }
 
   protected async spreeResponse<ResponseType = JsonApiResponse>(
-    method: Method, url: string, tokens: IToken = {}, params: any = {}
+    method: Method,
+    url: string,
+    tokens: IToken = {},
+    params: any = {}
   ): Promise<ResultResponse<ResponseType>> {
     try {
       const headers = this.spreeOrderHeaders(tokens)
@@ -42,17 +50,17 @@ export default class Http {
 
       const response = await this.axios(axiosConfig)
 
-      return Result.success(response.data)
+      return result.makeSuccess(response.data)
     } catch (error) {
-      return Result.fail(this.processError(error))
+      return result.makeFail(this.processError(error))
     }
   }
 
   /**
-   * HTTP error code returned by Spree is not indicative of its response shape. This function attempts to figure out the
-   * information provided from Spree and use whatever is available.
+   * The HTTP error code returned by Spree is not indicative of its response shape.
+   * This function determines the information provided by Spree and uses everything available.
    */
-  private classifyError(error: AxiosError): ErrorClass {
+  private classifySpreeError(error: AxiosError): ErrorClass {
     const { error: errorSummary, errors } = error.response.data
 
     if (typeof errorSummary === 'string') {
@@ -79,7 +87,7 @@ export default class Http {
 
   private processSpreeError(error: AxiosError): SpreeError {
     const { error: errorSummary, errors } = error.response.data
-    const errorClass = this.classifyError(error)
+    const errorClass = this.classifySpreeError(error)
 
     if (errorClass === ErrorClass.FULL) {
       return new ExpandedSpreeError(error.response, errorSummary, errors)

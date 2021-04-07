@@ -7,14 +7,22 @@ services:
     build:
       context: docker/spree
       dockerfile: Dockerfile-spree
+  express:
+    container_name: spree_storefront_sdk_express
+    image: node:14.15.4
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/docker/express/node_modules
+    entrypoint: ["/app/docker/express/express-docker-entrypoint.sh"]
   cypress:
     container_name: spree_storefront_sdk_cypress
-    image: cypress/included:5.6.0
+    image: cypress/included:6.8.0
     depends_on:
       - spree
+      - express
     volumes:
       - .:/sdk
       - /sdk/node_modules
       - /sdk/tests/node_modules
-    working_dir: /sdk
     entrypoint: ["/sdk/tests/cypress-docker-entrypoint.sh"]

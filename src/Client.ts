@@ -20,7 +20,7 @@ class Client {
     this.addEndpoints()
   }
 
-  protected addEndpoints() {
+  protected addEndpoints(): void {
     this.account = this.makeAccount()
     this.authentication = this.makeAuthentication()
     this.cart = this.makeCart()
@@ -31,35 +31,35 @@ class Client {
     this.taxons = this.makeTaxons()
   }
 
-  protected makeAccount() {
+  protected makeAccount(): Account {
     return new Account(this.host)
   }
 
-  protected makeAuthentication() {
+  protected makeAuthentication(): Authentication {
     return new Authentication(this.host)
   }
 
-  protected makeCart() {
+  protected makeCart(): Cart {
     return new Cart(this.host)
   }
 
-  protected makeCheckout() {
+  protected makeCheckout(): Checkout {
     return new Checkout(this.host)
   }
 
-  protected makeCountries() {
+  protected makeCountries(): Countries {
     return new Countries(this.host)
   }
 
-  protected makeOrder() {
+  protected makeOrder(): Order {
     return new Order(this.host)
   }
 
-  protected makeProducts() {
+  protected makeProducts(): Products {
     return new Products(this.host)
   }
 
-  protected makeTaxons() {
+  protected makeTaxons(): Taxons {
     return new Taxons(this.host)
   }
 }

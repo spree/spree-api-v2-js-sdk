@@ -1,14 +1,3 @@
-export declare const authParams: ({ username, password }: {
-    username: any;
-    password: any;
-}) => {
-    username: any;
-    password: any;
-    grant_type: string;
-};
-export declare const refreshParams: ({ refresh_token }: {
-    refresh_token: any;
-}) => {
-    refresh_token: any;
-    grant_type: string;
-};
+import { AuthTokenAttr, AuthTokenParams, RefreshTokenAttr, RefreshTokenParams } from '../interfaces/Authentication';
+export declare const authParams: ({ username, password }: AuthTokenAttr) => AuthTokenParams;
+export declare const refreshParams: ({ refresh_token }: RefreshTokenAttr) => RefreshTokenParams;

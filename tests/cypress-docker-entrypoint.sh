@@ -13,4 +13,7 @@ npm install
 npm link @spree/storefront-api-v2-sdk
 
 # Source: https://github.com/vishnubob/wait-for-it
-./wait-for-it.sh spree:3000 -s -- cypress run --project /sdk/tests
+./wait-for-it.sh -s express:3000
+./wait-for-it.sh -s spree:3000
+
+cypress run --browser chrome:stable --project /sdk/tests

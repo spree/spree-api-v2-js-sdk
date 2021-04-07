@@ -8,10 +8,10 @@ export default class Http {
     constructor(host?: string);
     protected spreeResponse<ResponseType = JsonApiResponse>(method: Method, url: string, tokens?: IToken, params?: any): Promise<ResultResponse<ResponseType>>;
     /**
-     * HTTP error code returned by Spree is not indicative of its response shape. This function attempts to figure out the
-     * information provided from Spree and use whatever is available.
+     * The HTTP error code returned by Spree is not indicative of its response shape.
+     * This function determines the information provided by Spree and uses everything available.
      */
-    private classifyError;
+    private classifySpreeError;
     private processError;
     private processSpreeError;
     private spreeOrderHeaders;

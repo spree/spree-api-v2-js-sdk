@@ -4,7 +4,7 @@ import { ResultResponse } from './ResultResponse'
 
 export interface TaxonAttr extends JsonApiDocument {
   type: string
-  id: string,
+  id: string
   attributes: {
     name: string
     pretty_name: string
@@ -34,6 +34,6 @@ export interface ITaxons extends JsonApiListResponse {
   data: TaxonAttr[]
 }
 
-export interface ITaxonResult extends ResultResponse<ITaxon> { }
+export interface ITaxonResult extends ResultResponse<ITaxon> {}
 
-export interface ITaxonsResult extends ResultResponse<ITaxons> { }
+export interface ITaxonsResult extends ResultResponse<ITaxons> {}

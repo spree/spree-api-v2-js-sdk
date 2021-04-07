@@ -1,4 +1,4 @@
 export interface IShipment {
-  id: number
-  selected_shipping_rate_id: number
+  id: string
+  selected_shipping_rate_id: string
 }
