@@ -4,7 +4,7 @@ import { IEstimatedShippingMethodsResult } from '../interfaces/EstimatedShipping
 import { IOrderResult } from '../interfaces/Order'
 import { IQuery } from '../interfaces/Query'
 import { IToken } from '../interfaces/Token'
-import { routes } from '../routes'
+import routes from '../routes'
 
 export default class Cart extends Http {
   public async show(token: IToken, params: IQuery = {}): Promise<IOrderResult> {

@@ -5,7 +5,7 @@ import { IPaymentMethodsResult } from '../interfaces/PaymentMethod'
 import { IQuery } from '../interfaces/Query'
 import { IShippingMethodsResult } from '../interfaces/ShippingMethod'
 import { IToken } from '../interfaces/Token'
-import { routes } from '../routes'
+import routes from '../routes'
 
 export default class Checkout extends Http {
   public async orderNext(token: IToken, params: IQuery = {}): Promise<IOrderResult> {

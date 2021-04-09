@@ -11,7 +11,7 @@ import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard'
 import { IOrderResult, IOrdersResult } from '../interfaces/Order'
 import { IQuery } from '../interfaces/Query'
 import { IToken } from '../interfaces/Token'
-import { routes } from '../routes'
+import routes from '../routes'
 
 export default class Account extends Http {
   public async accountInfo(token: IToken, params: IQuery = {}): Promise<IAccountResult> {

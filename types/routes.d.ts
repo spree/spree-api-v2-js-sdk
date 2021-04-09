@@ -1,5 +1,5 @@
 export declare const storefrontPath = "api/v2/storefront";
-export declare const routes: {
+declare const endpoints: {
     productsPath: () => string;
     productPath: (id: string) => string;
     taxonsPath: () => string;
@@ -33,3 +33,4 @@ export declare const routes: {
     accountCompletedOrderPath: (orderNumber: string) => string;
     orderStatusPath: (orderNumber: string) => string;
 };
+export default endpoints;

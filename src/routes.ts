@@ -1,6 +1,6 @@
 export const storefrontPath = `api/v2/storefront`
 
-export const routes = {
+const endpoints = {
   productsPath: (): string => `${storefrontPath}/products`,
   productPath: (id: string): string => `${storefrontPath}/products/${id}`,
   taxonsPath: (): string => `${storefrontPath}/taxons`,
@@ -35,3 +35,5 @@ export const routes = {
   accountCompletedOrderPath: (orderNumber: string): string => `${storefrontPath}/account/orders/${orderNumber}`,
   orderStatusPath: (orderNumber: string): string => `${storefrontPath}/order_status/${orderNumber}`
 }
+
+export default endpoints

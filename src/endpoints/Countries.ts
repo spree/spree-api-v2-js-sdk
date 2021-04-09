@@ -1,7 +1,7 @@
 import Http from '../Http'
 import { ICountriesResult, ICountryResult } from '../interfaces/Country'
 import { IQuery } from '../interfaces/Query'
-import { routes } from '../routes'
+import routes from '../routes'
 
 export default class Countries extends Http {
   public async list(): Promise<ICountriesResult> {
