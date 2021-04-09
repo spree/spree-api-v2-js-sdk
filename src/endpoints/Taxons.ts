@@ -1,7 +1,7 @@
 import Http from '../Http'
 import { IQuery } from '../interfaces/Query'
 import { ITaxonResult, ITaxonsResult } from '../interfaces/Taxon'
-import { routes } from '../routes'
+import routes from '../routes'
 
 export default class Taxons extends Http {
   public async list(params: IQuery = {}): Promise<ITaxonsResult> {

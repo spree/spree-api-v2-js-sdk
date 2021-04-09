@@ -2,7 +2,7 @@ import { authParams, refreshParams } from '../helpers/auth'
 import Http from '../Http'
 import { AuthTokenAttr, RefreshTokenAttr } from '../interfaces/Authentication'
 import { IOAuthTokenResult } from '../interfaces/Token'
-import { routes } from '../routes'
+import routes from '../routes'
 
 export default class Authentication extends Http {
   public async getToken(params: AuthTokenAttr): Promise<IOAuthTokenResult> {

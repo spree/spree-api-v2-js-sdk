@@ -1,7 +1,7 @@
 import Http from '../Http'
 import { IProductResult, IProductsResult } from '../interfaces/Product'
 import { IQuery } from '../interfaces/Query'
-import { routes } from '../routes'
+import routes from '../routes'
 
 export default class Products extends Http {
   public async list(params: IQuery = {}): Promise<IProductsResult> {
