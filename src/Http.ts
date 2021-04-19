@@ -98,7 +98,7 @@ export default class Http {
     }
   }
 
-  protected spreeOrderHeaders(tokens) {
+  protected spreeOrderHeaders(tokens: IToken): { [headerName: string]: string } {
     const header = {}
 
     if (tokens.orderToken) {

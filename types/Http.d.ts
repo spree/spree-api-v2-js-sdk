@@ -16,5 +16,7 @@ export default class Http {
     protected classifySpreeError(error: AxiosError): ErrorClass;
     protected processError(error: AxiosError): SpreeSDKError;
     protected processSpreeError(error: AxiosError): SpreeError;
-    protected spreeOrderHeaders(tokens: any): {};
+    protected spreeOrderHeaders(tokens: IToken): {
+        [headerName: string]: string;
+    };
 }
