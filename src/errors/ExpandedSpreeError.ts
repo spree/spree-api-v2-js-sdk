@@ -1,9 +1,10 @@
 import { AxiosResponse } from 'axios'
 import get from 'lodash/get'
+import Errors from '../interfaces/errors/Errors'
 import BasicSpreeError from './BasicSpreeError'
 
 export default class ExpandedSpreeError extends BasicSpreeError {
-  public errors: any
+  public errors: Errors
 
   constructor(serverResponse: AxiosResponse, errorsSummary: string, errors: { [fieldPath: string]: string[] }) {
     super(serverResponse, errorsSummary)
