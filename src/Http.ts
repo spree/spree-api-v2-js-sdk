@@ -60,7 +60,7 @@ export default class Http {
    * The HTTP error code returned by Spree is not indicative of its response shape.
    * This function determines the information provided by Spree and uses everything available.
    */
-  private classifySpreeError(error: AxiosError): ErrorClass {
+  protected classifySpreeError(error: AxiosError): ErrorClass {
     const { error: errorSummary, errors } = error.response.data
 
     if (typeof errorSummary === 'string') {
@@ -72,7 +72,7 @@ export default class Http {
     return ErrorClass.LIMITED
   }
 
-  private processError(error: AxiosError): SpreeSDKError {
+  protected processError(error: AxiosError): SpreeSDKError {
     if (error.response) {
       // Error from Spree outside HTTP 2xx codes
       return this.processSpreeError(error)
@@ -85,7 +85,7 @@ export default class Http {
     }
   }
 
-  private processSpreeError(error: AxiosError): SpreeError {
+  protected processSpreeError(error: AxiosError): SpreeError {
     const { error: errorSummary, errors } = error.response.data
     const errorClass = this.classifySpreeError(error)
 
@@ -98,7 +98,7 @@ export default class Http {
     }
   }
 
-  private spreeOrderHeaders(tokens) {
+  protected spreeOrderHeaders(tokens: IToken): { [headerName: string]: string } {
     const header = {}
 
     if (tokens.orderToken) {

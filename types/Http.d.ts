@@ -1,4 +1,6 @@
-import { AxiosInstance, Method } from 'axios';
+import { AxiosError, AxiosInstance, Method } from 'axios';
+import { SpreeError, SpreeSDKError } from './errors';
+import { ErrorClass } from './interfaces/errors/ErrorClass';
 import { JsonApiResponse } from './interfaces/JsonApi';
 import { ResultResponse } from './interfaces/ResultResponse';
 import { IToken } from './interfaces/Token';
@@ -11,8 +13,10 @@ export default class Http {
      * The HTTP error code returned by Spree is not indicative of its response shape.
      * This function determines the information provided by Spree and uses everything available.
      */
-    private classifySpreeError;
-    private processError;
-    private processSpreeError;
-    private spreeOrderHeaders;
+    protected classifySpreeError(error: AxiosError): ErrorClass;
+    protected processError(error: AxiosError): SpreeSDKError;
+    protected processSpreeError(error: AxiosError): SpreeError;
+    protected spreeOrderHeaders(tokens: IToken): {
+        [headerName: string]: string;
+    };
 }

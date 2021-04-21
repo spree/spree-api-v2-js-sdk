@@ -1,9 +1,10 @@
 import { AxiosResponse } from 'axios';
+import { Errors, FieldErrors } from '../interfaces/errors/Errors';
 import BasicSpreeError from './BasicSpreeError';
 export default class ExpandedSpreeError extends BasicSpreeError {
-    errors: any;
+    errors: Errors;
     constructor(serverResponse: AxiosResponse, errorsSummary: string, errors: {
-        [fieldPath: string]: string[];
+        [fieldPath: string]: FieldErrors;
     });
-    getErrors(path: string[]): string[] | null;
+    getErrors(path: string[]): Errors | FieldErrors | null;
 }
