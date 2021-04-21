@@ -1164,5 +1164,8 @@ We are [available for hire][spark].
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 [4]: https://jsonapi.org/format/
+[5]: https://unpkg.com/@spree/storefront-api-v2-sdk@4.5.1/dist/client/index.js
+[6]: https://unpkg.com/@spree/storefront-api-v2-sdk/dist/client/index.js
+[7]: https://unpkg.com/
 
 [spark]: http://sparksolutions.co?utm_source=github
