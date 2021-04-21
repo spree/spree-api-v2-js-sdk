@@ -79,11 +79,25 @@ const client = makeClient({
 TypeScript definitions are included in the module and should be automatically used by any editor that supports them.
 
 `client` allows calling Spree methods, ex.:
+
 ```js
 client.products.list({
   include: 'default_variant',
   page: 1
 })
+```
+
+The SDK is also hosted by the [UNPKG][7] CDN. [Follow this link to download version 4.5.1][5] and [this link to download the newest version][6]. Include the CDN version of the SDK on a website like so:
+
+```html
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@4.5.1/dist/client/index.js"></script>
+
+<script>
+  const client = window.SpreeSDK.makeClient({
+    host: 'http://localhost:3000'
+  })
+  // ...
+</script>
 ```
 
 ## Response schema
