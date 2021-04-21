@@ -1,3 +1,5 @@
-export default interface Errors {
-  [key: string]: Errors | string[]
+export type FieldErrors = unknown[]
+
+export interface Errors {
+  [key: string]: Errors | FieldErrors
 }
