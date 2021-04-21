@@ -87,7 +87,7 @@ client.products.list({
 })
 ```
 
-The SDK is also hosted by the [UNPKG][7] CDN. [Follow this link to download version 4.5.1][5] and [this link to download the newest version][6]. Include the CDN version of the SDK on a website like so:
+The SDK is also hosted by the [UNPKG][7] CDN. [Follow this link to download version 4.5.1][5] and [this link to download the newest version][6]. Include the SDK on a website like so:
 
 ```html
 <script src="https://unpkg.com/@spree/storefront-api-v2-sdk@4.5.1/dist/client/index.js"></script>
