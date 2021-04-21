@@ -59,11 +59,13 @@ Developed and maintained by:
 
 ## Quick start
 
-### Installation
+Install the NPM package:
 
-`npm install @spree/storefront-api-v2-sdk --save`
+```
+npm install @spree/storefront-api-v2-sdk --save
+```
 
-### Creating a Spree client
+Create a client:
 
 ```js
 import { makeClient } from '@spree/storefront-api-v2-sdk'
