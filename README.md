@@ -59,11 +59,13 @@ Developed and maintained by:
 
 ## Quick start
 
-### Installation
+Install the NPM package:
 
-`npm install @spree/storefront-api-v2-sdk --save`
+```
+npm install @spree/storefront-api-v2-sdk --save
+```
 
-### Creating a Spree client
+Create a client:
 
 ```js
 import { makeClient } from '@spree/storefront-api-v2-sdk'
@@ -79,11 +81,25 @@ const client = makeClient({
 TypeScript definitions are included in the module and should be automatically used by any editor that supports them.
 
 `client` allows calling Spree methods, ex.:
+
 ```js
 client.products.list({
   include: 'default_variant',
   page: 1
 })
+```
+
+The SDK is also hosted by the [UNPKG][7] CDN. [Follow this link to download version 4.5.1][5] and [this link to download the newest version][6]. Include the SDK on a website like so:
+
+```html
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@4.5.1/dist/client/index.js"></script>
+
+<script>
+  const client = window.SpreeSDK.makeClient({
+    host: 'http://localhost:3000'
+  })
+  // ...
+</script>
 ```
 
 ## Response schema
@@ -1150,5 +1166,8 @@ We are [available for hire][spark].
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 [4]: https://jsonapi.org/format/
+[5]: https://unpkg.com/@spree/storefront-api-v2-sdk@4.5.1/dist/client/index.js
+[6]: https://unpkg.com/@spree/storefront-api-v2-sdk/dist/client/index.js
+[7]: https://unpkg.com/
 
 [spark]: http://sparksolutions.co?utm_source=github
