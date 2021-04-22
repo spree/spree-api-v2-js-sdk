@@ -27,6 +27,7 @@ Developed and maintained by:
     - [addressesList](#addressesList)
     - [createAddress](#createaddress)
     - [updateAddress](#updateaddress)
+    - [removeAddress](#removeaddress)
   - [Order](#order)
     - [status](#status)
   - [Cart](#cart)
@@ -475,6 +476,26 @@ const response = await client.account.updateAddress({ bearerToken }, '1', {
     company: 'Spark'
   }
 })
+```
+
+### `removeAddress`
+Removes selected Address for the signed in User.
+
+__Required token:__ [Bearer token](#bearer-token)
+
+__Parameters schema:__
+```ts
+address_id: string
+```
+
+__Success response schema:__ [Success schema](#success-schema)
+
+__Failure response schema:__ [Error schema](#error-schema)
+
+__Example:__
+
+```ts
+const response = await client.account.removeAddress({ bearerToken }, '1')
 ```
 
 ## [Order](https://guides.spreecommerce.org/api/v2/storefront/#tag/Order-Status)

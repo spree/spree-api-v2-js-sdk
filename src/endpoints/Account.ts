@@ -62,6 +62,15 @@ export default class Account extends Http {
     return (await this.spreeResponse('post', routes.accountAddressesPath(), token, params)) as AccountAddressResult
   }
 
+  public async removeAddress(token: IToken, id: string, params: IQuery = {}): Promise<AccountAddressesResult> {
+    return (await this.spreeResponse(
+      'delete',
+      routes.accountAddressRemovePath(id),
+      token,
+      params
+    )) as AccountAddressesResult
+  }
+
   public async updateAddress(
     token: IToken,
     addressId: string,

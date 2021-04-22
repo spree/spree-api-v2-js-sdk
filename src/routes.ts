@@ -27,6 +27,7 @@ const endpoints = {
   accountPath: (): string => `${storefrontPath}/account`,
   accountAddressPath: (id: string): string => `${storefrontPath}/account/addresses/${id}`,
   accountAddressesPath: (): string => `${storefrontPath}/account/addresses`,
+  accountAddressRemovePath: (id: string): string => `${storefrontPath}/account/addresses/${id}`,
   accountConfirmPath: (confirmationToken: string): string =>
     `${storefrontPath}/account_confirmations/${confirmationToken}`,
   accountCreditCardsPath: (): string => `${storefrontPath}/account/credit_cards`,
