@@ -5,4 +5,4 @@ services:
   - docker
 before_install:
   - docker pull sparksolutionstom/spree-storefront-api-v2-js-sdk:v4.1.12
-script: npm test
+script: ./travis-run.sh
