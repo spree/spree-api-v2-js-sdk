@@ -26,6 +26,7 @@ declare const endpoints: {
     accountPath: () => string;
     accountAddressPath: (id: string) => string;
     accountAddressesPath: () => string;
+    accountAddressRemovePath: (id: string) => string;
     accountConfirmPath: (confirmationToken: string) => string;
     accountCreditCardsPath: () => string;
     accountDefaultCreditCardPath: () => string;
