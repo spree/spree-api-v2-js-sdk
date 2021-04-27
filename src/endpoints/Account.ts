@@ -8,6 +8,7 @@ import {
   AccountAddressParams
 } from '../interfaces/Account'
 import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard'
+import { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import { IOrderResult, IOrdersResult } from '../interfaces/Order'
 import { IQuery } from '../interfaces/Query'
 import { IToken } from '../interfaces/Token'
@@ -62,13 +63,8 @@ export default class Account extends Http {
     return (await this.spreeResponse('post', routes.accountAddressesPath(), token, params)) as AccountAddressResult
   }
 
-  public async removeAddress(token: IToken, id: string, params: IQuery = {}): Promise<AccountAddressesResult> {
-    return (await this.spreeResponse(
-      'delete',
-      routes.accountAddressRemovePath(id),
-      token,
-      params
-    )) as AccountAddressesResult
+  public async removeAddress(token: IToken, id: string, params: IQuery = {}): Promise<NoContentResult> {
+    return await this.spreeResponse<NoContentResponse>('delete', routes.accountAddressRemovePath(id), token, params)
   }
 
   public async updateAddress(
