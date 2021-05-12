@@ -15,6 +15,7 @@ export default class Account extends Http {
     confirm(confirmationToken: string): Promise<IAccountConfirmationResult>;
     update(token: IToken, params: IQuery): Promise<IAccountResult>;
     addressesList(token: IToken): Promise<AccountAddressesResult>;
+    showAddress(token: IToken, addressId: string, params?: IQuery): Promise<AccountAddressResult>;
     createAddress(token: IToken, params: AccountAddressParams): Promise<AccountAddressResult>;
     removeAddress(token: IToken, id: string, params?: IQuery): Promise<NoContentResult>;
     updateAddress(token: IToken, addressId: string, params: AccountAddressParams): Promise<AccountAddressResult>;

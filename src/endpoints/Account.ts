@@ -5,7 +5,8 @@ import {
   IAccountConfirmation,
   AccountAddressesResult,
   AccountAddressResult,
-  AccountAddressParams
+  AccountAddressParams,
+  AccountAddressResponse
 } from '../interfaces/Account'
 import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard'
 import { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
@@ -57,6 +58,10 @@ export default class Account extends Http {
 
   public async addressesList(token: IToken): Promise<AccountAddressesResult> {
     return (await this.spreeResponse('get', routes.accountAddressesPath(), token)) as AccountAddressesResult
+  }
+
+  public async showAddress(token: IToken, addressId: string, params: IQuery = {}): Promise<AccountAddressResult> {
+    return await this.spreeResponse<AccountAddressResponse>('get', routes.accountAddressPath(addressId), token, params)
   }
 
   public async createAddress(token: IToken, params: AccountAddressParams): Promise<AccountAddressResult> {
