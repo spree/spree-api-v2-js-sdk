@@ -25,6 +25,7 @@ Developed and maintained by:
     - [completedOrdersList](#completedOrdersList)
     - [completedOrder](#completedOrder)
     - [addressesList](#addressesList)
+    - [showAddress](#showAddress)
     - [createAddress](#createaddress)
     - [updateAddress](#updateaddress)
     - [removeAddress](#removeaddress)
@@ -117,21 +118,24 @@ To determine whether a call was successful, use `isSuccess()` or `isFail()` meth
 
 Available `SpreeSDKError` subtypes:
 
-|Class Name|Purpose|
-|---|---|
-|`MisconfigurationError`|Signifies the SDK's `Client` was created with improper options. Make sure the values of `host` and other options (if any) provided to `Client` have the correct format.|
-|`NoResponseError`|Spree store could not be reached. Ensure it's running and available under the `host` address provided to the `Client` instance.|
-|`SpreeError`|Spree responded with an error. To debug the issue, check the error's `serverResponse` field. It contains details about the response from Spree, such as the HTTP status code and headers.|
-|`BasicSpreeError`|Extends `SpreeError` with a `summary` field provided by Spree and containing a summary of the issue.|
-|`ExpandedSpreeError`|Extends `BasicSpreeError` with a `errors` field. `errors` contains a detailed explanation of the issue, ex. all the validation errors when trying to add shipping details to a Spree order. The `getErrors` method can be used to retrieve a concrete value inside `errors`, ex. `expSpreeError.getErrors(['bill_address', 'firstname'])`.|
+| Class Name              | Purpose                                                                                                                                                                                                                                                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `MisconfigurationError` | Signifies the SDK's `Client` was created with improper options. Make sure the values of `host` and other options (if any) provided to `Client` have the correct format.                                                                                                                                                                    |
+| `NoResponseError`       | Spree store could not be reached. Ensure it's running and available under the `host` address provided to the `Client` instance.                                                                                                                                                                                                            |
+| `SpreeError`            | Spree responded with an error. To debug the issue, check the error's `serverResponse` field. It contains details about the response from Spree, such as the HTTP status code and headers.                                                                                                                                                  |
+| `BasicSpreeError`       | Extends `SpreeError` with a `summary` field provided by Spree and containing a summary of the issue.                                                                                                                                                                                                                                       |
+| `ExpandedSpreeError`    | Extends `BasicSpreeError` with a `errors` field. `errors` contains a detailed explanation of the issue, ex. all the validation errors when trying to add shipping details to a Spree order. The `getErrors` method can be used to retrieve a concrete value inside `errors`, ex. `expSpreeError.getErrors(['bill_address', 'firstname'])`. |
 
 The specific type of error returned by `fail()` can be determined using [`instanceof`][3], ex. `if(response.fail() instanceof BasicSpreeError){...}`.
 
 ## Tokens
+
 Most endpoints require a token for authentication. It can be either an Order Token or Bearer Token.
 
 ### Order token
+
 Identifies a guest user's cart and order.
+
 ```ts
 const response = await client.cart.create()
 
@@ -139,7 +143,9 @@ const orderToken: string = response.success().data.attributes.token
 ```
 
 ### Bearer token
+
 Identifies a logged in user.
+
 ```ts
 const response = await client.authentication.getToken({
   username: 'spree@example.com',
@@ -159,13 +165,15 @@ Spree Storefront API SDK contains each endpoint according to [Spree Guides](http
 
 Creates a [Bearer token](#bearer-token) required to authorize OAuth API calls.
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 username: string
 password: string
 ```
 
-__Success response schema:__
+**Success response schema:**
+
 ```ts
 access_token: string
 token_type: string = 'Bearer'
@@ -174,9 +182,10 @@ refresh_token: string
 created_at: number
 ```
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const token = await client.authentication.getToken({
   username: 'spree@example.com',
@@ -188,12 +197,14 @@ const token = await client.authentication.getToken({
 
 Method `refreshToken` refreshes a [Bearer token](#bearer-token) required to authorize OAuth API calls.
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 refresh_token: string
 ```
 
-__Success response schema:__
+**Success response schema:**
+
 ```ts
 access_token: string
 token_type: string = 'Bearer'
@@ -202,9 +213,10 @@ refresh_token: string
 created_at: number
 ```
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const token = await client.authentication.refreshToken({
   refresh_token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
@@ -217,7 +229,8 @@ const token = await client.authentication.refreshToken({
 
 Creates new account and returns its attributes.
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 user: {
   email: string
@@ -226,11 +239,12 @@ user: {
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const response = await client.account.create({
   user: {
@@ -245,13 +259,13 @@ const response = await client.account.create({
 
 Confirms new account e-mail and returns account registration status.
 
-__Parameters schema:__
+**Parameters schema:**
 
 ```ts
 confirmationToken: string
 ```
 
-__Success response schema:__
+**Success response schema:**
 
 ```ts
 data: {
@@ -259,9 +273,9 @@ data: {
 }
 ```
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 const response = await client.account.confirm('2xssfC9Hzf8DJXyRZGmB')
@@ -271,7 +285,8 @@ const response = await client.account.confirm('2xssfC9Hzf8DJXyRZGmB')
 
 Updates account and returns its attributes.
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 user: {
   email: string
@@ -280,97 +295,109 @@ user: {
 }
 ```
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
-const response = await client.account.update({ bearerToken }, {
-  user: {
-    email: 'john@snow.org',
-    password: 'new_spree123',
-    password_confirmation: 'new_spree123'
+const response = await client.account.update(
+  { bearerToken },
+  {
+    user: {
+      email: 'john@snow.org',
+      password: 'new_spree123',
+      password_confirmation: 'new_spree123'
+    }
   }
-})
+)
 ```
 
 ### `accountInfo`
 
 Returns current user information.
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const response = await client.account.accountInfo({ bearerToken })
 ```
 
 ### `creditCardsList`
+
 Returns a list of Credit Cards for the signed in User.
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const response = await client.account.creditCardsList({ bearerToken })
 ```
 
 ### `defaultCreditCard`
+
 Return the User's default Credit Card.
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 const response = await client.account.defaultCreditCard({ bearerToken })
 ```
 
 ### `completedOrdersList`
+
 Returns Orders placed by the User. Only completed ones.
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 const response = await client.account.completedOrdersList({ bearerToken })
 ```
 
 ### `completedOrder`
+
 Return the User's completed Order.
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 orderNumber: string
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const response = await client.account.completedOrder({ bearerToken }, 'R653163382')
 ```
@@ -379,24 +406,48 @@ const response = await client.account.completedOrder({ bearerToken }, 'R65316338
 
 Returns a list of Addresses for the signed in User
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const response = await client.account.addressesList({ bearerToken })
+```
+
+### `showAddress`
+
+Create a new Address for the signed in User.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+addressId: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.account.showAddress({ bearerToken }, '1')
 ```
 
 ### `createAddress`
 
 Create a new Address for the signed in User.
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 address: {
   firstname: string
@@ -412,35 +463,40 @@ address: {
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
-const response = await client.account.createAddress({ bearerToken }, {
-  address: {
-    firstname: 'John',
-    lastname: 'Snow',
-    address1: '7735 Old Georgetown Road',
-    address2: '2nd Floor',
-    city: 'Bethesda',
-    phone: '3014445002',
-    zipcode: '20814',
-    state_name: 'MD',
-    country_iso: 'US',
-    company: 'Spark'
+const response = await client.account.createAddress(
+  { bearerToken },
+  {
+    address: {
+      firstname: 'John',
+      lastname: 'Snow',
+      address1: '7735 Old Georgetown Road',
+      address2: '2nd Floor',
+      city: 'Bethesda',
+      phone: '3014445002',
+      zipcode: '20814',
+      state_name: 'MD',
+      country_iso: 'US',
+      company: 'Spark'
+    }
   }
-})
+)
 ```
 
 ### `updateAddress`
 
 Update selected Address for the signed in User.
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 address: {
   firstname: string
@@ -456,11 +512,12 @@ address: {
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const response = await client.account.updateAddress({ bearerToken }, '1', {
   address: {
@@ -479,20 +536,22 @@ const response = await client.account.updateAddress({ bearerToken }, '1', {
 ```
 
 ### `removeAddress`
+
 Removes selected Address for the signed in User.
 
-__Required token:__ [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
-address_id: string
+addressId: string
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 const response = await client.account.removeAddress({ bearerToken }, '1')
@@ -504,18 +563,20 @@ const response = await client.account.removeAddress({ bearerToken }, '1')
 
 Returns placed Order.
 
-__Required token:__ [Order token](#order-token)
+**Required token:** [Order token](#order-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 orderNumber: string
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 const response = await client.order.status({ orderToken }, 'R653163382')
 ```
@@ -523,15 +584,17 @@ const response = await client.order.status({ orderToken }, 'R653163382')
 ## [Cart](https://guides.spreecommerce.org/api/v2/storefront/#tag/Cart)
 
 ### `create`
+
 Creates new Cart and returns it attributes.
 
-__Required token:__ [Bearer token](#bearer-token) if logged in user
+**Required token:** [Bearer token](#bearer-token) if logged in user
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 // Logged in user
 const response = await client.cart.create({ bearerToken })
@@ -541,15 +604,16 @@ const response = await client.cart.create()
 ```
 
 ### `show`
+
 Returns contents of the cart.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -560,11 +624,12 @@ const response = await client.cart.show({ orderToken })
 ```
 
 ### `addItem`
+
 Adds a Product Variant to the Cart.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Parameters schema:__
+**Parameters schema:**
 
 ```ts
 {
@@ -576,32 +641,40 @@ __Parameters schema:__
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
-const response = await client.cart.addItem({ bearerToken }, {
-  variant_id: '1',
-  quantity: 1
-})
+const response = await client.cart.addItem(
+  { bearerToken },
+  {
+    variant_id: '1',
+    quantity: 1
+  }
+)
 
 // or guest user
-const response = await client.cart.addItem({ orderToken }, {
-  variant_id: '1',
-  quantity: 1
-})
+const response = await client.cart.addItem(
+  { orderToken },
+  {
+    variant_id: '1',
+    quantity: 1
+  }
+)
 ```
 
 ### `setQuantity`
+
 Sets the quantity of a given line item. It has to be a positive integer greater than 0.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 {
   line_item_id: string
@@ -609,40 +682,49 @@ __Parameters schema:__
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 // Logged in user
-const response = await client.cart.setQuantity({ bearerToken }, {
-  line_item_id: '9',
-  quantity: 100
-})
+const response = await client.cart.setQuantity(
+  { bearerToken },
+  {
+    line_item_id: '9',
+    quantity: 100
+  }
+)
 
 // or guest user
-const response = await client.cart.setQuantity({ orderToken }, {
-  line_item_id: '9',
-  quantity: 100
-})
+const response = await client.cart.setQuantity(
+  { orderToken },
+  {
+    line_item_id: '9',
+    quantity: 100
+  }
+)
 ```
 
 ### `removeItem`
+
 Removes Line Item from Cart.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 line_item_id: string
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -653,15 +735,16 @@ const response = await client.cart.removeItem({ orderToken }, '1')
 ```
 
 ### `emptyCart`
+
 Empties the Cart.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -672,50 +755,60 @@ const response = await client.cart.emptyCart({ orderToken })
 ```
 
 ### `applyCouponCode`
+
 Applies a coupon code to the Cart.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 {
   coupon_code: string
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Loged in user
-const response = await client.cart.applyCouponCode({ bearerToken }, {
-  coupon_code: 'promo_test'
-})
+const response = await client.cart.applyCouponCode(
+  { bearerToken },
+  {
+    coupon_code: 'promo_test'
+  }
+)
 
 // or guest user
-const response = await client.cart.applyCouponCode({ orderToken  }, {
-  coupon_code: 'promo_test'
-})
+const response = await client.cart.applyCouponCode(
+  { orderToken },
+  {
+    coupon_code: 'promo_test'
+  }
+)
 ```
 
 ### `removeCouponCode`
+
 Removes a coupon code from the Cart.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Optional parameters schema:__
+**Optional parameters schema:**
+
 ```ts
 coupon_code?: string
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Filed response schema:__ [Error schema](#error-schema)
+**Filed response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -726,20 +819,22 @@ const response = await client.cart.removeCouponCode({ orderToken }, 'promo_test'
 ```
 
 ### `estimateShippingMethods`
+
 Returns a list of Estimated Shipping Rates for Cart.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 country_iso: string
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -752,12 +847,14 @@ const response = await client.cart.estimateShippingMethods({ orderToken }, 'USA'
 ## [Checkout](https://guides.spreecommerce.org/api/v2/storefront/#tag/Checkout)
 
 ### `orderUpdate`
+
 Updates the Checkout
 You can run multiple Checkout updates with different data types.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 order: {
   email: string
@@ -804,11 +901,12 @@ payment_source?: {
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
+
 ```ts
 // Logged in user
 const response = await client.checkout.orderUpdate({ bearerToken }, { order: {...} })
@@ -821,13 +919,13 @@ const response = await client.checkout.orderUpdate({ orderToken }, { order: {...
 
 Goes to the next Checkout step.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -841,13 +939,13 @@ const response = await client.checkout.orderNext({ orderToken })
 
 Advances Checkout to the furthest Checkout step validation allows, until the Complete step.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -858,15 +956,16 @@ const response = await client.checkout.advance({ orderToken })
 ```
 
 ### `complete`
+
 Completes the Checkout.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -877,22 +976,24 @@ const response = await client.checkout.complete({ orderToken })
 ```
 
 ### `addStoreCredits`
+
 Adds Store Credit payments if a user has any.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Parameters schema:__
+**Parameters schema:**
+
 ```ts
 {
   amount: number
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -903,15 +1004,16 @@ const response = await client.checkout.addStoreCredits({ orderToken }, { amount:
 ```
 
 ### `removeStoreCredits`
+
 Remove Store Credit payments if any applied.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -922,15 +1024,16 @@ const response = await client.checkout.removeStoreCredits({ orderToken })
 ```
 
 ### `paymentMethods`
+
 Returns a list of available Payment Methods.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
@@ -941,11 +1044,13 @@ const response = await client.checkout.paymentMethods({ orderToken })
 ```
 
 ### `shippingMethods`
+
 Returns a list of available Shipping Rates for Checkout. Shipping Rates are grouped against Shipments. Each checkout cna have multiple Shipments eg. some products are available in stock and will be send out instantly and some needs to be backordered.
 
-__Required token:__ [Bearer token](#bearer-token) or [Order token](#order-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-__Optional parameters schema:__
+**Optional parameters schema:**
+
 ```ts
 {
   params?: {
@@ -954,30 +1059,38 @@ __Optional parameters schema:__
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 // Logged in user
-const response = await client.checkout.shippingMethods({ bearerToken }, {
-  include: 'shipping_rates,stock_location'
-})
+const response = await client.checkout.shippingMethods(
+  { bearerToken },
+  {
+    include: 'shipping_rates,stock_location'
+  }
+)
 
 // or guest user
-const response = await client.checkout.shippingMethods({ orderToken }, {
-  include: 'shipping_rates,stock_location'
-})
+const response = await client.checkout.shippingMethods(
+  { orderToken },
+  {
+    include: 'shipping_rates,stock_location'
+  }
+)
 ```
 
 ## [Products](https://guides.spreecommerce.org/api/v2/storefront/#tag/Products)
+
 Returns a list of Products.
 
 ### `list`
 
-__Optional parameters schema:__
+**Optional parameters schema:**
+
 ```ts
 {
   include?: string
@@ -992,11 +1105,12 @@ __Optional parameters schema:__
   per_page?: number
 }
 ```
-__Success response schema:__ [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Example:__
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
 
 ```ts
 const response = await client.products.list()
@@ -1004,7 +1118,8 @@ const response = await client.products.list()
 
 ### `show`
 
-__Optional parameters schema:__
+**Optional parameters schema:**
+
 ```ts
 {
   id: string
@@ -1017,11 +1132,11 @@ __Optional parameters schema:__
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 const response = = await client.products.show('123')
@@ -1030,9 +1145,10 @@ const response = = await client.products.show('123')
 ## [Taxons](https://guides.spreecommerce.org/api/v2/storefront/#tag/Taxons)
 
 ### `list`
+
 Returns a list of Taxons.
 
-__Optional parameters schema:__
+**Optional parameters schema:**
 
 ```ts
 {
@@ -1048,20 +1164,21 @@ __Optional parameters schema:__
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 const response = await client.taxons.list()
 ```
 
 ### `show`
+
 Returns a single Taxon.
 
-__Optional parameters schema:__
+**Optional parameters schema:**
 
 ```ts
 {
@@ -1075,11 +1192,11 @@ __Optional parameters schema:__
 }
 ```
 
-__Success response schema:__ [Success schema](#success-schema)
+**Success response schema:** [Success schema](#success-schema)
 
-__Failure response schema:__ [Error schema](#error-schema)
+**Failure response schema:** [Error schema](#error-schema)
 
-__Example:__
+**Example:**
 
 ```ts
 const products = await client.taxons.show('1')
@@ -1174,8 +1291,8 @@ await client.checkout.orderNext({ orderToken })
 await client.checkout.complete({ orderToken })
 ```
 
-About Spark Solutions
-----------------------
+## About Spark Solutions
+
 [![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
 
 Spree is maintained by [Spark Solutions Sp. z o.o.][spark].
@@ -1183,12 +1300,10 @@ Spree is maintained by [Spark Solutions Sp. z o.o.][spark].
 We are passionate about open source software.
 We are [available for hire][spark].
 
-
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 [4]: https://jsonapi.org/format/
 [5]: https://unpkg.com/@spree/storefront-api-v2-sdk@4.5.1/dist/client/index.js
 [6]: https://unpkg.com/@spree/storefront-api-v2-sdk/dist/client/index.js
 [7]: https://unpkg.com/
-
 [spark]: http://sparksolutions.co?utm_source=github
