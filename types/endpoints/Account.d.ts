@@ -13,6 +13,8 @@ export default class Account extends Http {
     completedOrder(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>;
     create(params: IQuery): Promise<IAccountResult>;
     confirm(confirmationToken: string): Promise<IAccountConfirmationResult>;
+    forgotPassword(params: IQuery): Promise<NoContentResult>;
+    resetPassword(resetPasswordToken: string, params: IQuery): Promise<NoContentResult>;
     update(token: IToken, params: IQuery): Promise<IAccountResult>;
     addressesList(token: IToken): Promise<AccountAddressesResult>;
     showAddress(token: IToken, addressId: string, params?: IQuery): Promise<AccountAddressResult>;

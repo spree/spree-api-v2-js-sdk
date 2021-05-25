@@ -52,6 +52,14 @@ export default class Account extends Http {
     )) as IAccountConfirmationResult
   }
 
+  public async forgotPassword(params: IQuery): Promise<NoContentResult> {
+    return await this.spreeResponse<NoContentResponse>('post', routes.forgotPasswordPath(), {}, params)
+  }
+
+  public async resetPassword(resetPasswordToken: string, params: IQuery): Promise<NoContentResult> {
+    return await this.spreeResponse<NoContentResponse>('patch', routes.resetPasswordPath(resetPasswordToken), {}, params)
+  }
+
   public async update(token: IToken, params: IQuery): Promise<IAccountResult> {
     return (await this.spreeResponse('patch', routes.accountPath(), token, params)) as IAccountResult
   }
