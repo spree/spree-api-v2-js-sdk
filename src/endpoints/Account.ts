@@ -6,7 +6,9 @@ import {
   AccountAddressesResult,
   AccountAddressResult,
   AccountAddressParams,
-  AccountAddressResponse
+  AccountAddressResponse,
+  ForgotPasswordParams,
+  ResetPasswordParams
 } from '../interfaces/Account'
 import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard'
 import { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
@@ -52,12 +54,17 @@ export default class Account extends Http {
     )) as IAccountConfirmationResult
   }
 
-  public async forgotPassword(params: IQuery): Promise<NoContentResult> {
+  public async forgotPassword(params: ForgotPasswordParams): Promise<NoContentResult> {
     return await this.spreeResponse<NoContentResponse>('post', routes.forgotPasswordPath(), {}, params)
   }
 
-  public async resetPassword(resetPasswordToken: string, params: IQuery): Promise<NoContentResult> {
-    return await this.spreeResponse<NoContentResponse>('patch', routes.resetPasswordPath(resetPasswordToken), {}, params)
+  public async resetPassword(resetPasswordToken: string, params: ResetPasswordParams): Promise<NoContentResult> {
+    return await this.spreeResponse<NoContentResponse>(
+      'patch', 
+      routes.resetPasswordPath(resetPasswordToken), 
+      {}, 
+      params
+    )
   }
 
   public async update(token: IToken, params: IQuery): Promise<IAccountResult> {
