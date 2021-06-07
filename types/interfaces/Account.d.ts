@@ -27,6 +27,20 @@ export interface IAccountConfirmation {
 }
 export interface IAccountConfirmationResult extends ResultResponse<IAccountConfirmation> {
 }
+
+export interface ForgotPasswordParams extends IQuery {
+    user: {
+      email: string;
+    }
+}
+  
+export interface ResetPasswordParams extends IQuery {
+    user: {
+        password: string;
+        password_confirmation: string;
+    }
+}
+
 export interface AccountAddressParams extends IQuery {
     address: IAddress;
 }

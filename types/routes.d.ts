@@ -32,6 +32,8 @@ declare const endpoints: {
     accountDefaultCreditCardPath: () => string;
     accountCompletedOrdersPath: () => string;
     accountCompletedOrderPath: (orderNumber: string) => string;
+    forgotPasswordPath: () => string;
+    resetPasswordPath: (resetPasswordToken: string) => string;
     orderStatusPath: (orderNumber: string) => string;
 };
 export default endpoints;
