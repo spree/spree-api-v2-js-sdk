@@ -1,6 +1,5 @@
 import Http from '../Http';
-import { IAccountResult, IAccountConfirmationResult, AccountAddressesResult, AccountAddressResult, AccountAddressParams, 
-    ForgotPasswordParams, ResetPasswordParams } from '../interfaces/Account';
+import { IAccountResult, IAccountConfirmationResult, AccountAddressesResult, AccountAddressResult, AccountAddressParams, ForgotPasswordParams, ResetPasswordParams } from '../interfaces/Account';
 import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard';
 import { NoContentResult } from '../interfaces/NoContent';
 import { IOrderResult, IOrdersResult } from '../interfaces/Order';

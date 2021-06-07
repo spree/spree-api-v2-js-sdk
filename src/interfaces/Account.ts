@@ -61,6 +61,6 @@ export interface AccountAddressesResponse extends JsonApiListResponse {
   data: AccountAddressAttr[]
 }
 
-export interface AccountAddressResult extends ResultResponse<AccountAddressResponse> { }
+export interface AccountAddressResult extends ResultResponse<AccountAddressResponse> {}
 
-export interface AccountAddressesResult extends ResultResponse<AccountAddressesResponse> { }
+export interface AccountAddressesResult extends ResultResponse<AccountAddressesResponse> {}
