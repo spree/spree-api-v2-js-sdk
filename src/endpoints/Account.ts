@@ -60,9 +60,9 @@ export default class Account extends Http {
 
   public async resetPassword(resetPasswordToken: string, params: ResetPasswordParams): Promise<NoContentResult> {
     return await this.spreeResponse<NoContentResponse>(
-      'patch', 
-      routes.resetPasswordPath(resetPasswordToken), 
-      {}, 
+      'patch',
+      routes.resetPasswordPath(resetPasswordToken),
+      {},
       params
     )
   }
