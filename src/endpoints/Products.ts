@@ -5,11 +5,11 @@ import { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
 export default class Products extends Http {
-  public async list(token: IToken, params: IQuery = {}): Promise<IProductsResult> {
+  public async list(token: IToken = {}, params: IQuery = {}): Promise<IProductsResult> {
     return (await this.spreeResponse('get', routes.productsPath(), token, params)) as IProductsResult
   }
 
-  public async show(token: IToken, id: string, params: IQuery = {}): Promise<IProductResult> {
+  public async show(id: string, token: IToken = {}, params: IQuery = {}): Promise<IProductResult> {
     return (await this.spreeResponse('get', routes.productPath(id), token, params)) as IProductResult
   }
 }
