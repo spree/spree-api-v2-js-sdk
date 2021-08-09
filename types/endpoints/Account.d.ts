@@ -1,5 +1,5 @@
 import Http from '../Http';
-import { IAccountResult, IAccountConfirmationResult, AccountAddressesResult, AccountAddressResult, AccountAddressParams } from '../interfaces/Account';
+import { IAccountResult, IAccountConfirmationResult, AccountAddressesResult, AccountAddressResult, AccountAddressParams, ForgotPasswordParams, ResetPasswordParams } from '../interfaces/Account';
 import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard';
 import { NoContentResult } from '../interfaces/NoContent';
 import { IOrderResult, IOrdersResult } from '../interfaces/Order';
@@ -13,6 +13,8 @@ export default class Account extends Http {
     completedOrder(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>;
     create(params: IQuery): Promise<IAccountResult>;
     confirm(confirmationToken: string): Promise<IAccountConfirmationResult>;
+    forgotPassword(params: ForgotPasswordParams): Promise<NoContentResult>;
+    resetPassword(resetPasswordToken: string, params: ResetPasswordParams): Promise<NoContentResult>;
     update(token: IToken, params: IQuery): Promise<IAccountResult>;
     addressesList(token: IToken): Promise<AccountAddressesResult>;
     showAddress(token: IToken, addressId: string, params?: IQuery): Promise<AccountAddressResult>;

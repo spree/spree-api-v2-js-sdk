@@ -18,6 +18,8 @@ Developed and maintained by:
     - [refreshToken](#refreshToken)
   - [Account](#account)
     - [create](#create)
+    - [forgotPassword](#forgotPassword)
+    - [resetPassword](#resetPassword)
     - [update](#update)
     - [accountInfo](#accountInfo)
     - [creditCardsList](#creditCardsList)
@@ -130,7 +132,7 @@ The specific type of error returned by `fail()` can be determined using [`instan
 
 ## Tokens
 
-Most endpoints require a token for authentication. It can be either an Order Token or Bearer Token.
+Most endpoints require a token for authentication. It can be an Order Token, Bearer Token or a Confirmation Token.
 
 ### Order token
 
@@ -154,6 +156,10 @@ const response = await client.authentication.getToken({
 
 const bearerToken: string = response.success().access_token
 ```
+
+### Confirmation token
+
+Identifies a user for a single operation. For example, to reset their account's password. Confirmation Tokens are single-use and may have an expiration date.
 
 ## Endpoints
 
@@ -279,6 +285,62 @@ data: {
 
 ```ts
 const response = await client.account.confirm('2xssfC9Hzf8DJXyRZGmB')
+```
+
+### `forgotPassword`
+
+Sends an account recovery link to the provided email address. The link allows resetting the password for the account.
+
+**Parameters schema:**
+
+```ts
+user: {
+  email: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.account.forgotPassword({
+  user: {
+    email: 'spree@example.com'
+  }
+})
+```
+
+### `resetPassword`
+
+Changes the password associated with the account using an account recovery token.
+
+**Parameters schema:**
+
+```ts
+user: {
+  password: string
+  password_confirmation: string
+}
+```
+
+**Required token:** [Confirmation token](#confirmation-token)
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.account.resetPassword('7381273269536713689562374856', {
+  user: {
+    password: '123!@#asdASD',
+    password_confirmation: '123!@#asdASD'
+  }
+})
 ```
 
 ### `update`
