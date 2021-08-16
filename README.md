@@ -647,7 +647,7 @@ const response = await client.order.status({ orderToken }, 'R653163382')
 
 ### `create`
 
-Creates new Cart and returns it attributes.
+Creates a new Cart and returns its attributes.
 
 **Required token:** [Bearer token](#bearer-token) if logged in user
 
