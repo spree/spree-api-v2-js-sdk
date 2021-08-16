@@ -1151,6 +1151,8 @@ Returns a list of Products.
 
 ### `list`
 
+**Required token:** [Bearer token](#bearer-token) if logged in user
+
 **Optional parameters schema:**
 
 ```ts
@@ -1179,6 +1181,8 @@ const response = await client.products.list()
 ```
 
 ### `show`
+
+**Required token:** [Bearer token](#bearer-token) if logged in user
 
 **Optional parameters schema:**
 
