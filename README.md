@@ -860,7 +860,7 @@ Removes a coupon code from the Cart.
 
 **Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-**Optional parameters schema:**
+**Parameters schema:**
 
 ```ts
 coupon_code?: string
@@ -1111,13 +1111,11 @@ Returns a list of available Shipping Rates for Checkout. Shipping Rates are grou
 
 **Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
-**Optional parameters schema:**
+**Parameters schema:**
 
 ```ts
-{
-  params?: {
-    include?: string
-  }
+params?: {
+  include?: string
 }
 ```
 
@@ -1153,10 +1151,11 @@ Returns a list of Products.
 
 **Required token:** [Bearer token](#bearer-token) if logged in user
 
-**Optional parameters schema:**
+**Parameters schema:**
 
 ```ts
-{
+token?: IToken
+params?: {
   include?: string
   fields?: {
     [key: string]: string
@@ -1184,16 +1183,15 @@ const response = await client.products.list()
 
 **Required token:** [Bearer token](#bearer-token) if logged in user
 
-**Optional parameters schema:**
+**Parameters schema:**
 
 ```ts
-{
-  id: string
-  params?: {
-    include: string
-    fields: {
-      [key: string]: string
-    }
+id: string
+token?: IToken
+params?: {
+  include: string
+  fields: {
+    [key: string]: string
   }
 }
 ```
@@ -1214,10 +1212,10 @@ const response = = await client.products.show('123')
 
 Returns a list of Taxons.
 
-**Optional parameters schema:**
+**Parameters schema:**
 
 ```ts
-{
+params?: {
   include?: string
   fields?: {
     [key: string]: string
@@ -1244,10 +1242,11 @@ const response = await client.taxons.list()
 
 Returns a single Taxon.
 
-**Optional parameters schema:**
+**Parameters schema:**
 
 ```ts
-{
+id: string
+params?: {
   id: string
   params?: {
     include: string
