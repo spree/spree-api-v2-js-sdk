@@ -4,6 +4,7 @@ import MisconfigurationError from './MisconfigurationError'
 import NoResponseError from './NoResponseError'
 import SpreeError from './SpreeError'
 import SpreeSDKError from './SpreeSDKError'
+import FetchError from './FetchError'
 
 export {
   BasicSpreeError,
@@ -11,5 +12,6 @@ export {
   MisconfigurationError,
   NoResponseError,
   SpreeError,
-  SpreeSDKError
+  SpreeSDKError,
+  FetchError
 }

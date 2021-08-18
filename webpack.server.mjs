@@ -1,4 +1,5 @@
 import { resolve, dirname } from 'path'
+import webpack from 'webpack'
 import webpackMerge from 'webpack-merge'
 import { fileURLToPath } from 'url'
 import commonConfigMaker from './webpack.common.maker.mjs'
@@ -13,8 +14,13 @@ const { merge } = webpackMerge
 
 const config = {
   name: 'server',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({ modulesFromFile: true })],
   target: 'node14',
+  plugins: [
+    new webpack.DefinePlugin({
+      FETCH_TYPE: 'node-fetch'
+    })
+  ],
   output: {
     path: serverDistDirectoryPath
   }

@@ -1,24 +1,13 @@
-import { AxiosResponse } from 'axios'
+import type { RawFetchResponse } from '../interfaces/RawFetchResponse'
 import SpreeSDKError from './SpreeSDKError'
 
 export default class SpreeError extends SpreeSDKError {
-  public serverResponse: AxiosResponse
+  public serverResponse: RawFetchResponse
 
-  constructor(serverResponse: AxiosResponse) {
+  constructor(serverResponse: RawFetchResponse) {
     super(`Spree returned a HTTP ${serverResponse.status} error code`)
     Object.setPrototypeOf(this, SpreeError.prototype)
     this.name = 'SpreeError'
-    const reducedServerResponse = { ...serverResponse }
-    // Reduce logging by removing the 'enumerable' flag on some keys in AxiosResponse.
-    Object.defineProperties(
-      reducedServerResponse,
-      {
-        config: { enumerable: false },
-        data: { enumerable: false },
-        headers: { enumerable: false },
-        request: { enumerable: false }
-      }
-    )
-    this.serverResponse = reducedServerResponse
+    this.serverResponse = serverResponse
   }
 }

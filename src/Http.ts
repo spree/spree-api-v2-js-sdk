@@ -1,5 +1,3 @@
-import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, Method } from 'axios'
-import * as qs from 'qs'
 import {
   BasicSpreeError,
   ExpandedSpreeError,
@@ -8,32 +6,28 @@ import {
   SpreeError,
   SpreeSDKError
 } from './errors'
+import FetchError from './errors/FetchError'
 import * as result from './helpers/result'
+import type { Fetcher } from './interfaces/ClientConfig'
 import { ErrorClass } from './interfaces/errors/ErrorClass'
-import { JsonApiResponse } from './interfaces/JsonApi'
-import { ResultResponse } from './interfaces/ResultResponse'
-import { IToken } from './interfaces/Token'
+import type { FetchConfig, HttpMethod } from './interfaces/FetchConfig'
+import type { JsonApiResponse } from './interfaces/JsonApi'
+import type { ResultResponse } from './interfaces/ResultResponse'
+import type { IToken } from './interfaces/Token'
+
+export type EndpointOptions = {
+  fetcher: Fetcher
+}
 
 export default class Http {
-  public host: string
-  public axios: AxiosInstance
+  public fetcher: Fetcher
 
-  constructor(host?: string) {
-    this.host = host || process.env.SPREE_HOST || 'http://localhost:3000/'
-
-    this.axios = Axios.create({
-      baseURL: this.host,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      paramsSerializer: (params) => {
-        return qs.stringify(params, { arrayFormat: 'brackets' })
-      }
-    })
+  constructor({ fetcher }: EndpointOptions) {
+    this.fetcher = fetcher
   }
 
   protected async spreeResponse<ResponseType = JsonApiResponse>(
-    method: Method,
+    method: HttpMethod,
     url: string,
     tokens: IToken = {},
     params: any = {}
@@ -41,14 +35,14 @@ export default class Http {
     try {
       const headers = this.spreeOrderHeaders(tokens)
 
-      const axiosConfig: AxiosRequestConfig = {
+      const fetchOptions: FetchConfig = {
         url,
         params,
         method,
         headers
       }
 
-      const response = await this.axios(axiosConfig)
+      const response = await this.fetcher.fetch(fetchOptions)
 
       return result.makeSuccess(response.data)
     } catch (error) {
@@ -60,8 +54,8 @@ export default class Http {
    * The HTTP error code returned by Spree is not indicative of its response shape.
    * This function determines the information provided by Spree and uses everything available.
    */
-  protected classifySpreeError(error: AxiosError): ErrorClass {
-    const { error: errorSummary, errors } = error.response.data
+  protected classifySpreeError(error: FetchError): ErrorClass {
+    const { error: errorSummary, errors } = error.data
 
     if (typeof errorSummary === 'string') {
       if (typeof errors === 'object') {
@@ -72,21 +66,27 @@ export default class Http {
     return ErrorClass.LIMITED
   }
 
-  protected processError(error: AxiosError): SpreeSDKError {
-    if (error.response) {
-      // Error from Spree outside HTTP 2xx codes
-      return this.processSpreeError(error)
-    } else if (error.request) {
-      // No response received from Spree
-      return new NoResponseError()
-    } else {
+  protected processError(error: Error): SpreeSDKError {
+    if (error instanceof FetchError) {
+      if (error.response) {
+        // Error from Spree outside HTTP 2xx codes
+        return this.processSpreeError(error)
+      }
+
+      if (error.request) {
+        // No response received from Spree
+        return new NoResponseError()
+      }
+
       // Incorrect request setup
       return new MisconfigurationError(error.message)
     }
+
+    return new SpreeSDKError(error.message)
   }
 
-  protected processSpreeError(error: AxiosError): SpreeError {
-    const { error: errorSummary, errors } = error.response.data
+  protected processSpreeError(error: FetchError): SpreeError {
+    const { error: errorSummary, errors } = error.data
     const errorClass = this.classifySpreeError(error)
 
     if (errorClass === ErrorClass.FULL) {

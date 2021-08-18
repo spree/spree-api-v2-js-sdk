@@ -1,12 +1,12 @@
-import { AxiosResponse } from 'axios'
 import get from 'lodash/get'
 import { Errors, FieldErrors } from '../interfaces/errors/Errors'
+import type { RawFetchResponse } from '../interfaces/RawFetchResponse'
 import BasicSpreeError from './BasicSpreeError'
 
 export default class ExpandedSpreeError extends BasicSpreeError {
   public errors: Errors
 
-  constructor(serverResponse: AxiosResponse, errorsSummary: string, errors: { [fieldPath: string]: FieldErrors }) {
+  constructor(serverResponse: RawFetchResponse, errorsSummary: string, errors: { [fieldPath: string]: FieldErrors }) {
     super(serverResponse, errorsSummary)
     Object.setPrototypeOf(this, ExpandedSpreeError.prototype)
     this.name = 'ExpandedSpreeError'

@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios';
+import type { RawFetchResponse } from '../interfaces/RawFetchResponse';
 import SpreeSDKError from './SpreeSDKError';
 export default class SpreeError extends SpreeSDKError {
-    serverResponse: AxiosResponse;
-    constructor(serverResponse: AxiosResponse);
+    serverResponse: RawFetchResponse;
+    constructor(serverResponse: RawFetchResponse);
 }

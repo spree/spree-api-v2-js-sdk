@@ -1,7 +1,5 @@
 import { Account, Products, Taxons, Countries, Cart, Checkout, Authentication, Order } from './endpoints';
-export interface IClientConfig {
-    host?: string;
-}
+import type { Fetcher, OptionalIClientConfig } from './interfaces/ClientConfig';
 declare class Client {
     products: Products;
     taxons: Taxons;
@@ -11,8 +9,9 @@ declare class Client {
     authentication: Authentication;
     account: Account;
     order: Order;
-    protected host?: string;
-    constructor(config?: IClientConfig);
+    protected host: string;
+    protected fetcher: Fetcher;
+    constructor(customOptions?: OptionalIClientConfig);
     protected addEndpoints(): void;
     protected makeAccount(): Account;
     protected makeAuthentication(): Authentication;
