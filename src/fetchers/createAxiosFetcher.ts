@@ -44,7 +44,23 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
         return { data: response.data }
       } catch (error) {
         if (Axios.isAxiosError(error)) {
-          throw new FetchError(error?.response, error?.request, error?.response?.data, error.message)
+          const { response } = error
+
+          if (!response) {
+            throw new FetchError(null, error.request, null, error.message)
+          }
+
+          const reducedResponse = { ...response }
+
+          // Reduce logging by removing the 'enumerable' flag on some keys in AxiosResponse.
+          Object.defineProperties(reducedResponse, {
+            config: { enumerable: false },
+            data: { enumerable: false },
+            headers: { enumerable: false },
+            request: { enumerable: false }
+          })
+
+          throw new FetchError(reducedResponse, error.request, reducedResponse.data, error.message)
         }
 
         throw new FetchError(null, null, null, error.message)
