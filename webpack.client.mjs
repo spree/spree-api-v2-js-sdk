@@ -16,7 +16,7 @@ const config = {
   target: ['web', 'es6'],
   plugins: [
     new webpack.DefinePlugin({
-      FETCH_TYPE: 'browser-native'
+      FETCH_TYPE: JSON.stringify('browser-native')
     })
   ],
   output: {

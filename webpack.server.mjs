@@ -18,7 +18,7 @@ const config = {
   target: 'node14',
   plugins: [
     new webpack.DefinePlugin({
-      FETCH_TYPE: 'node-fetch'
+      FETCH_TYPE: JSON.stringify('node-fetch')
     })
   ],
   output: {
