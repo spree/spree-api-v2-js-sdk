@@ -44,7 +44,7 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
         return { data: response.data }
       } catch (error) {
         if (Axios.isAxiosError(error)) {
-          throw new FetchError(error?.response, error?.request, error.response?.data)
+          throw new FetchError(error?.response, error?.request, error?.response?.data)
         }
 
         throw new FetchError(null, null, null, error.message)
