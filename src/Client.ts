@@ -17,7 +17,7 @@ class Client {
 
   constructor(customOptions?: OptionalIClientConfig) {
     const defaultOptions: IClientConfig = {
-      host: process.env.SPREE_HOST || 'http://localhost:3000/',
+      host: globalThis.process?.env.SPREE_HOST || 'http://localhost:3000/',
       fetcherType: 'axios'
     }
 
