@@ -28,7 +28,7 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
           case 'POST':
           case 'DELETE':
           case 'PATCH':
-            payload = { body: params }
+            payload = { data: params }
             break
           default:
             payload = { params }
