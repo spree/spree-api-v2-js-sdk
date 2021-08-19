@@ -8,12 +8,11 @@ export default class FetchError extends SpreeSDKError {
   public data?: any
 
   constructor(response?: RawFetchResponse, request?: unknown, data?: unknown, message?: string) {
-    super(`Fetch error`)
+    super(message)
     Object.setPrototypeOf(this, FetchError.prototype)
     this.name = 'FetchError'
     this.response = response
     this.request = request
     this.data = data
-    this.message = message
   }
 }

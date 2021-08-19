@@ -1,6 +1,6 @@
 export default class SpreeSDKError extends Error {
-  constructor(name: string) {
-    super(name)
+  constructor(message: string) {
+    super(message)
     Object.setPrototypeOf(this, SpreeSDKError.prototype)
     this.name = 'SpreeSDKError'
   }
