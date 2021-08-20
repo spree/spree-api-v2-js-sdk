@@ -1,5 +1,4 @@
 import { resolve, dirname } from 'path'
-import webpack from 'webpack'
 import webpackMerge from 'webpack-merge'
 import { fileURLToPath } from 'url'
 import commonConfigMaker from './webpack.common.maker.mjs'
