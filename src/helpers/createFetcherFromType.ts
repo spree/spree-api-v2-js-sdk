@@ -9,9 +9,8 @@ const createFetcherFromType = (options: IClientConfig): Fetcher => {
   switch (options.fetcherType) {
     case 'axios':
       return createAxiosFetcher(fetcherOptions)
-    case 'fetch': {
+    case 'fetch':
       return createFetchFetcher(fetcherOptions)
-    }
     case 'custom':
       return options.createFetcher(fetcherOptions)
     default:
