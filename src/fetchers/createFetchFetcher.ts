@@ -1,15 +1,13 @@
 import * as qs from 'qs'
-import { SpreeSDKError } from '../errors'
 import FetchError from '../errors/FetchError'
 import type { CreateFetcher } from '../interfaces/ClientConfig'
 import type { CreateCustomizedFetchFetcher } from '../interfaces/CreateCustomizedFetchFetcher'
 
-declare const FETCH_TYPE: string
+// declare const FETCH_TYPE: string
+declare const __non_webpack_require__: (module: string) => any
 
 const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptions) => {
-  const sharedHeaders = {
-    'Content-Type': 'application/json'
-  }
+  const sharedHeaders = { 'Content-Type': 'application/json' }
 
   const { host, fetch, requestConstructor } = fetcherOptions
 
@@ -66,17 +64,14 @@ const createFetchFetcher: CreateFetcher = (fetcherOptions) => {
   let fetch
   let Request
 
-  if (FETCH_TYPE === 'node-fetch') {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const nodeFetch = require('node-fetch')
-
-    fetch = nodeFetch.default
-    Request = fetch.Request
-  } else if (FETCH_TYPE === 'browser-native') {
+  if (globalThis.fetch && globalThis.Request) {
     fetch = globalThis.fetch
     Request = globalThis.Request
   } else {
-    throw new SpreeSDKError(`FETCH_TYPE equal ${FETCH_TYPE} not recognized.`)
+    const nodeFetch = __non_webpack_require__('node-fetch')
+
+    fetch = nodeFetch.default
+    Request = nodeFetch.Request
   }
 
   return createCustomizedFetchFetcher({ fetch, requestConstructor: Request, ...fetcherOptions })

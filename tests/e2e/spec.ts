@@ -103,22 +103,20 @@ const createTests = function () {
   })
 }
 
-describe('using Spree SDK', function () {
-  before(function () {
-    cy.fixture('order-full-address').as('orderFullAddress')
-  })
-
-  describe('server version (i.e. CJS module) in the browser', function () {
+const createServerVersionInTheBrowserTests = ({ host, fetcherType }: { host: string; fetcherType: string }) => {
+  describe(`server version (i.e. CJS module) in the browser using ${fetcherType}`, function () {
     beforeEach(function () {
-      const client = makeClient({ host: 'http://spree:3000' })
+      const client = makeClient({ host, fetcherType })
 
       cy.wrap(client).as('client')
     })
 
     createTests()
   })
+}
 
-  describe('client version (window global) in the browser', function () {
+const createClientVersionInTheBrowserTests = ({ host, fetcherType }: { host: string; fetcherType: string }) => {
+  describe(`client version (window global) in the browser using ${fetcherType}`, function () {
     beforeEach(function () {
       cy.readFile('/sdk/dist/client/index.js').then(function (spreeClientScript) {
         cy.intercept('/SpreeClientSpecialPath', spreeClientScript)
@@ -131,7 +129,7 @@ describe('using Spree SDK', function () {
           cy.window()
             .its('SpreeSDK.makeClient')
             .then(function (makeClient) {
-              const client = makeClient({ host: 'http://spree:3000' })
+              const client = makeClient({ host, fetcherType })
 
               cy.wrap(client).as('client')
             })
@@ -141,14 +139,16 @@ describe('using Spree SDK', function () {
 
     createTests()
   })
+}
 
-  describe('server (i.e. CJS module) in the server', function () {
+const createServerVersionInTheServerTests = ({ host, fetcherType }: { host: string; fetcherType: string }) => {
+  describe(`server (i.e. CJS module) in the server using ${fetcherType}`, function () {
     beforeEach(function () {
-      const localClient = makeClient({ host: 'http://spree:3000' })
+      const localClient = makeClient({ host, fetcherType })
       const createSubProxy = function (target: any, clientMethodPath: string[]): any {
         return new Proxy(target, {
           apply: function (_target, _thisArg, argumentsList) {
-            const payload = { argumentsList, clientMethodPath }
+            const payload = { argumentsList, clientMethodPath, fetcherType }
 
             // Send call to a mini Express server which calls Spree.
             return cy.request('http://express:3000', payload).then(function (response) {
@@ -174,4 +174,22 @@ describe('using Spree SDK', function () {
 
     createTests()
   })
+}
+
+describe('using Spree SDK', function () {
+  before(function () {
+    cy.fixture('order-full-address').as('orderFullAddress')
+  })
+
+  createServerVersionInTheBrowserTests({ host: 'http://spree:3000', fetcherType: 'axios' })
+
+  createServerVersionInTheBrowserTests({ host: 'http://spree:3000', fetcherType: 'fetch' })
+
+  createClientVersionInTheBrowserTests({ host: 'http://spree:3000', fetcherType: 'axios' })
+
+  createClientVersionInTheBrowserTests({ host: 'http://spree:3000', fetcherType: 'fetch' })
+
+  createServerVersionInTheServerTests({ host: 'http://spree:3000', fetcherType: 'axios' })
+
+  createServerVersionInTheServerTests({ host: 'http://spree:3000', fetcherType: 'fetch' })
 })

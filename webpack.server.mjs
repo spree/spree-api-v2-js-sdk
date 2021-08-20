@@ -16,11 +16,6 @@ const config = {
   name: 'server',
   externals: [nodeExternals({ modulesFromFile: true })],
   target: 'node14',
-  plugins: [
-    new webpack.DefinePlugin({
-      FETCH_TYPE: JSON.stringify('node-fetch')
-    })
-  ],
   output: {
     path: serverDistDirectoryPath
   }

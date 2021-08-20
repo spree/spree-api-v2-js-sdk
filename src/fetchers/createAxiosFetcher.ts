@@ -9,9 +9,7 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
 
   const axios: AxiosInstance = Axios.create({
     baseURL: fetcherOptions.host,
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: 'brackets' })
     }

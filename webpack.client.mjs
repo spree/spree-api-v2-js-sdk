@@ -14,11 +14,6 @@ const { merge } = webpackMerge
 const config = {
   name: 'client',
   target: ['web', 'es6'],
-  plugins: [
-    new webpack.DefinePlugin({
-      FETCH_TYPE: JSON.stringify('browser-native')
-    })
-  ],
   output: {
     library: 'SpreeSDK',
     path: clientDistDirectoryPath
