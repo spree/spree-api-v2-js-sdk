@@ -8,10 +8,11 @@ Developed and maintained by:
 
 Сontents:
 
-- [Quick Start](#quick-start)
+- [Quick start](#quick-start)
 - [Response schema](#response-schema)
   - [Success schema](#success-schema)
   - [Error schema](#error-schema)
+- [Switching the fetcher](#switching-the-fetcher)
 - [Endpoints](#endpoints)
   - [Authentication](#authentication)
     - [getToken](#getToken)
@@ -160,6 +161,24 @@ const bearerToken: string = response.success().access_token
 ### Confirmation token
 
 Identifies a user for a single operation. For example, to reset their account's password. Confirmation Tokens are single-use and may have an expiration date.
+
+## Switching the fetcher
+
+By default, the Spree SDK uses [Axios][8] to communicate with Spree. Another built-in option is [fetch][9]. It can be set as follows:
+
+```js
+createClient({ fetcherType: 'fetch', host: ... })
+```
+
+The `'fetch'` option will look for global `fetch` and `Request` values and fallback to `node-fetch` during runtime.
+
+A custom fetcher can be used like so:
+
+```js
+createClient({ fetcherType: 'custom', createFetcher: ... })
+```
+
+To create a custom fetcher which uses a fetch-compatible interface, use the `createCustomizedFetchFetcher` function.
 
 ## Endpoints
 
@@ -1372,3 +1391,6 @@ We are [available for hire][spark].
 [6]: https://unpkg.com/@spree/storefront-api-v2-sdk/dist/client/index.js
 [7]: https://unpkg.com/
 [spark]: http://sparksolutions.co?utm_source=github
+[8]: https://github.com/axios/axios
+[9]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+[10]: https://github.com/node-fetch/node-fetch

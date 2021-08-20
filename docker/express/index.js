@@ -12,8 +12,8 @@ app.all('/', async (request, response, next) => {
   try {
     console.log('The Express server received a new request. Arguments: ', request.body)
 
-    const localClient = makeClient({ host: 'http://spree:3000' })
-    const { clientMethodPath, argumentsList } = request.body
+    const { clientMethodPath, argumentsList, fetcherType } = request.body
+    const localClient = makeClient({ host: 'http://spree:3000', fetcherType })
     const finalNode = clientMethodPath.reduce((node, pathPart) => {
       if (typeof node[pathPart] === 'function') {
         return node[pathPart].bind(node)

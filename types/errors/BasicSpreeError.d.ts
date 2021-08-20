@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
+import type { RawFetchResponse } from '../interfaces/RawFetchResponse';
 import SpreeError from './SpreeError';
 declare class BasicSpreeError extends SpreeError {
     summary: string;
-    constructor(serverResponse: AxiosResponse, errorsSummary: string);
+    constructor(serverResponse: RawFetchResponse, errorsSummary: string);
 }
 export default BasicSpreeError;

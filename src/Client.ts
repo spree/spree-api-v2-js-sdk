@@ -1,8 +1,6 @@
 import { Account, Products, Taxons, Countries, Cart, Checkout, Authentication, Order } from './endpoints'
-
-export interface IClientConfig {
-  host?: string
-}
+import createFetcherFromType from './helpers/createFetcherFromType'
+import type { Fetcher, IClientConfig, OptionalIClientConfig } from './interfaces/ClientConfig'
 
 class Client {
   public products: Products
@@ -13,10 +11,27 @@ class Client {
   public authentication: Authentication
   public account: Account
   public order: Order
-  protected host?: string
 
-  constructor(config: IClientConfig = {}) {
-    this.host = config.host || null
+  protected host: string
+  protected fetcher: Fetcher
+
+  constructor(customOptions?: OptionalIClientConfig) {
+    const defaultOptions: IClientConfig = {
+      host: globalThis.process?.env.SPREE_HOST || 'http://localhost:3000/',
+      fetcherType: 'axios'
+    }
+
+    const options: IClientConfig = {
+      ...defaultOptions,
+      ...customOptions
+    }
+
+    this.fetcher = createFetcherFromType({
+      host: options.host,
+      fetcherType: options.fetcherType,
+      createFetcher: options['createFetcher']
+    })
+
     this.addEndpoints()
   }
 
@@ -32,35 +47,35 @@ class Client {
   }
 
   protected makeAccount(): Account {
-    return new Account(this.host)
+    return new Account({ fetcher: this.fetcher })
   }
 
   protected makeAuthentication(): Authentication {
-    return new Authentication(this.host)
+    return new Authentication({ fetcher: this.fetcher })
   }
 
   protected makeCart(): Cart {
-    return new Cart(this.host)
+    return new Cart({ fetcher: this.fetcher })
   }
 
   protected makeCheckout(): Checkout {
-    return new Checkout(this.host)
+    return new Checkout({ fetcher: this.fetcher })
   }
 
   protected makeCountries(): Countries {
-    return new Countries(this.host)
+    return new Countries({ fetcher: this.fetcher })
   }
 
   protected makeOrder(): Order {
-    return new Order(this.host)
+    return new Order({ fetcher: this.fetcher })
   }
 
   protected makeProducts(): Products {
-    return new Products(this.host)
+    return new Products({ fetcher: this.fetcher })
   }
 
   protected makeTaxons(): Taxons {
-    return new Taxons(this.host)
+    return new Taxons({ fetcher: this.fetcher })
   }
 }
 

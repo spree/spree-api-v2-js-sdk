@@ -1,3 +1,4 @@
-import Client, { IClientConfig } from './Client';
-declare const makeClient: (config?: IClientConfig) => Client;
+import Client from './Client';
+import type { OptionalIClientConfig } from './interfaces/ClientConfig';
+declare const makeClient: (config: OptionalIClientConfig) => Client;
 export default makeClient;

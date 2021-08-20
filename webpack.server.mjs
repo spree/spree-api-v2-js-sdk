@@ -13,7 +13,7 @@ const { merge } = webpackMerge
 
 const config = {
   name: 'server',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({ modulesFromFile: true })],
   target: 'node14',
   output: {
     path: serverDistDirectoryPath
