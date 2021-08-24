@@ -32,6 +32,8 @@ services:
       DISABLE_SPRING: 1
       BROWSER: /dev/null
       SECRET_KEY_BASE: skb
+      ALLOWED_ORIGIN_HOSTS: '*'
+      RACK_CORS_DEBUG: 'true'
   worker:
     depends_on:
       - 'postgres'

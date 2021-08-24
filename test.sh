@@ -24,21 +24,6 @@ production:
   port: <%= ENV.fetch('DB_PORT', '5432') %>
 \" >> config/database.yml
 
-bundle add rack-cors --version '~> 1.1.1'
-
-echo \"
-module SpreeStarter
-  class Application < Rails::Application
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource '*', headers: :any, methods: :any
-      end
-    end
-  end
-end
-\" >> config/application.rb
-
 # Install dependencies.
 
 bundle install --without test
