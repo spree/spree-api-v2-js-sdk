@@ -13,11 +13,12 @@ app.all('/', async (request, response, next) => {
     console.log('The Express server received a new request. Arguments: ', request.body)
 
     const { clientMethodPath, argumentsList, fetcherType } = request.body
-    const localClient = makeClient({ host: 'http://spree:3000', fetcherType })
+    const localClient = makeClient({ host: 'http://docker-host:3000', fetcherType })
     const finalNode = clientMethodPath.reduce((node, pathPart) => {
       if (typeof node[pathPart] === 'function') {
         return node[pathPart].bind(node)
       }
+
       return node[pathPart]
     }, localClient)
 
@@ -29,6 +30,6 @@ app.all('/', async (request, response, next) => {
   }
 })
 
-app.listen(3000, '0.0.0.0', () => {
-  console.log('Listening at localhost and port 3000.')
+app.listen(5000, '0.0.0.0', () => {
+  console.log('Listening at localhost and port 5000.')
 })

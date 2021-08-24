@@ -17,7 +17,7 @@
     "watch:client": "webpack --watch --config-name client",
     "lint": "eslint --ext .ts .",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "test": "docker-compose down && docker-compose up --exit-code-from cypress"
+    "test": "./test.sh"
   },
   "repository": {
     "type": "git",

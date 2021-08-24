@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  express:
+    image: node:14.15.4
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/docker/express/node_modules
+    entrypoint: ['/app/docker/express/express-docker-entrypoint.sh']
+  cypress:
+    image: cypress/included:8.3.0
+    depends_on:
+      - express
+    volumes:
+      - .:/sdk
+      - /sdk/node_modules
+      - /sdk/tests/node_modules
+    entrypoint: ['/sdk/tests/cypress-docker-entrypoint.sh']
+  docker-host:
+    image: qoomon/docker-host:3.0.3
+    cap_add: ['NET_ADMIN', 'NET_RAW']
+    deploy:
+      resources:
+        limits:
+          memory: 8M
+    restart: on-failure
