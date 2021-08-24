@@ -18,6 +18,7 @@ services:
       - 'postgres'
       - 'redis'
     image: sparksolutions/spree-commerce:latest
+    entrypoint: ['/usr/bin/env']
     command: bash -c "rm -rf tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0 -p 3000"
     ports:
       - '3000:3000'
