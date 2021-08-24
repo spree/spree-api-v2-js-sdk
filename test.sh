@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 docker-compose -f docker-compose-spree.yml -f docker-compose-cypress.yml down -v
 
 docker-compose -f docker-compose-spree.yml pull
