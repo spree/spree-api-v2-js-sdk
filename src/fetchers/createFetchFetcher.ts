@@ -47,6 +47,10 @@ const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptio
 
           return { data }
         } catch (error) {
+          if (error instanceof FetchError) {
+            throw error
+          }
+
           throw new FetchError(null, request, null, error.message)
         }
       } catch (error) {
