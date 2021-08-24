@@ -3,10 +3,11 @@
 import { Client, makeClient, result } from '@spree/storefront-api-v2-sdk'
 import { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
 
+// eslint-disable-next-line max-lines-per-function
 const createTests = function () {
   it('completes guest order', function () {
     const { orderFullAddress } = this
-    const client: Client = this.client
+    const client: Client = this.clientRef.value
 
     cy.wrap(null)
       .then(function () {
@@ -18,7 +19,14 @@ const createTests = function () {
         return cy
           .wrap(null)
           .then(function () {
-            return client.cart.addItem({ orderToken }, { variant_id: '1', quantity: 1 })
+            return client.products.list({}, { include: 'variants' })
+          })
+          .then(function (variantsResponse) {
+            const variantId = variantsResponse
+              .success()
+              .included.find((variant) => variant.type === 'variant' && variant.attributes.in_stock).id
+
+            return client.cart.addItem({ orderToken }, { variant_id: variantId, quantity: 1 })
           })
           .then(function () {
             return client.checkout.orderUpdate({ orderToken }, { order: orderFullAddress })
@@ -28,6 +36,29 @@ const createTests = function () {
           })
           .then(function (shippingResponse) {
             const firstShipment = shippingResponse.success().data[0]
+            const shippingRateId = (firstShipment.relationships.shipping_rates.data as RelationType[])[0].id
+
+            return client.checkout.orderUpdate(
+              { orderToken },
+              {
+                order: {
+                  shipments_attributes: [
+                    {
+                      id: firstShipment.id,
+                      selected_shipping_rate_id: shippingRateId
+                    }
+                  ]
+                }
+              }
+            )
+          })
+          .then(function () {
+            return client.checkout.paymentMethods({ orderToken })
+          })
+          .then(function (paymentsResponse) {
+            const checkPaymentId = paymentsResponse
+              .success()
+              .data.find((paymentMethod) => paymentMethod.attributes.type === 'Spree::PaymentMethod::Check').id
 
             return client.checkout.orderUpdate(
               { orderToken },
@@ -35,14 +66,7 @@ const createTests = function () {
                 order: {
                   payments_attributes: [
                     {
-                      payment_method_id: '3'
-                    }
-                  ],
-                  shipments_attributes: [
-                    {
-                      id: firstShipment.id,
-                      selected_shipping_rate_id: (firstShipment.relationships.shipping_rates.data as RelationType[])[0]
-                        .id
+                      payment_method_id: checkPaymentId
                     }
                   ]
                 }
@@ -65,7 +89,7 @@ const createTests = function () {
   })
 
   it('shows cart', function () {
-    const client: Client = this.client
+    const client: Client = this.clientRef.value
 
     cy.wrap(null)
       .then(function () {
@@ -82,7 +106,7 @@ const createTests = function () {
   })
 
   it('lists payment methods', function () {
-    const client: Client = this.client
+    const client: Client = this.clientRef.value
 
     cy.wrap(null)
       .then(function () {
@@ -108,7 +132,7 @@ const createServerVersionInTheBrowserTests = ({ host, fetcherType }: { host: str
     beforeEach(function () {
       const client = makeClient({ host, fetcherType })
 
-      cy.wrap(client).as('client')
+      cy.wrap({ value: client }).as('clientRef')
     })
 
     createTests()
@@ -131,7 +155,7 @@ const createClientVersionInTheBrowserTests = ({ host, fetcherType }: { host: str
             .then(function (makeClient) {
               const client = makeClient({ host, fetcherType })
 
-              cy.wrap(client).as('client')
+              cy.wrap({ value: client }).as('clientRef')
             })
         })
       })
@@ -144,32 +168,27 @@ const createClientVersionInTheBrowserTests = ({ host, fetcherType }: { host: str
 const createServerVersionInTheServerTests = ({ host, fetcherType }: { host: string; fetcherType: string }) => {
   describe(`server (i.e. CJS module) in the server using ${fetcherType}`, function () {
     beforeEach(function () {
-      const localClient = makeClient({ host, fetcherType })
+      const noop = function () {
+        // no-op
+      }
       const createSubProxy = function (target: any, clientMethodPath: string[]): any {
         return new Proxy(target, {
           apply: function (_target, _thisArg, argumentsList) {
             const payload = { argumentsList, clientMethodPath, fetcherType }
 
             // Send call to a mini Express server which calls Spree.
-            return cy.request('http://express:3000', payload).then(function (response) {
+            return cy.request(host, payload).then(function (response) {
               return result.fromJson(response.body)
             })
           },
-          get: function (target: any, property: string | symbol, receiver: any) {
-            if (
-              typeof property === 'string' &&
-              (typeof target[property] === 'object' || typeof target[property] === 'function')
-            ) {
-              return createSubProxy(target[property], [...clientMethodPath, property])
-            }
-
-            return Reflect.get(target, property, receiver)
+          get: function (_target: any, property: string | symbol, _receiver: any) {
+            return createSubProxy(noop, [...clientMethodPath, property.toString()])
           }
         })
       }
-      const client = createSubProxy(localClient, [])
+      const client = createSubProxy(noop, [])
 
-      cy.wrap(client).as('client')
+      cy.wrap({ value: client }).as('clientRef')
     })
 
     createTests()
@@ -181,15 +200,15 @@ describe('using Spree SDK', function () {
     cy.fixture('order-full-address').as('orderFullAddress')
   })
 
-  createServerVersionInTheBrowserTests({ host: 'http://spree:3000', fetcherType: 'axios' })
+  createServerVersionInTheBrowserTests({ host: 'http://docker-host:3000', fetcherType: 'axios' })
 
-  createServerVersionInTheBrowserTests({ host: 'http://spree:3000', fetcherType: 'fetch' })
+  createServerVersionInTheBrowserTests({ host: 'http://docker-host:3000', fetcherType: 'fetch' })
 
-  createClientVersionInTheBrowserTests({ host: 'http://spree:3000', fetcherType: 'axios' })
+  createClientVersionInTheBrowserTests({ host: 'http://docker-host:3000', fetcherType: 'axios' })
 
-  createClientVersionInTheBrowserTests({ host: 'http://spree:3000', fetcherType: 'fetch' })
+  createClientVersionInTheBrowserTests({ host: 'http://docker-host:3000', fetcherType: 'fetch' })
 
-  createServerVersionInTheServerTests({ host: 'http://spree:3000', fetcherType: 'axios' })
+  createServerVersionInTheServerTests({ host: 'http://express:5000', fetcherType: 'axios' })
 
-  createServerVersionInTheServerTests({ host: 'http://spree:3000', fetcherType: 'fetch' })
+  createServerVersionInTheServerTests({ host: 'http://express:5000', fetcherType: 'fetch' })
 })

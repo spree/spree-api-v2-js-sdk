@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+  redis:
+    image: redis:6.2-alpine
+    volumes:
+      - 'redis:/data'
+  spree: # Runs production Spree
+    depends_on:
+      - 'postgres'
+      - 'redis'
+    image: sparksolutions/spree-commerce:latest
+    entrypoint: ['/usr/bin/env']
+    command: bash -c "rm -rf tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0 -p 3000"
+    ports:
+      - '3000:3000'
+    volumes:
+      - 'spree:/app/'
+      - 'bundle_cache:/bundle'
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DISABLE_SPRING: 1
+      BROWSER: /dev/null
+      SECRET_KEY_BASE: skb
+      ALLOWED_ORIGIN_HOSTS: '*'
+      RACK_CORS_DEBUG: 'true'
+  worker:
+    depends_on:
+      - 'postgres'
+      - 'redis'
+    image: sparksolutions/spree-commerce:latest
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    volumes:
+      - 'spree:/app/'
+      - 'bundle_cache:/bundle'
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DISABLE_SPRING: 1
+      BROWSER: /dev/null
+      SECRET_KEY_BASE: skb
+
+volumes:
+  spree:
+  bundle_cache:
+  redis:
+  postgres:
