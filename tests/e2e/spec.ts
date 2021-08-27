@@ -105,6 +105,23 @@ const createTests = function () {
       })
   })
 
+  it('removes cart', function () {
+    const client: Client = this.clientRef.value
+
+    cy.wrap(null)
+      .then(function () {
+        return client.cart.create()
+      })
+      .then(function (cartCreateResponse) {
+        const orderToken = cartCreateResponse.success().data.attributes.token
+
+        return client.cart.remove({ orderToken })
+      })
+      .then(function (cartRemoveResponse) {
+        expect(cartRemoveResponse.isSuccess()).to.be.true
+      })
+  })
+
   it('lists payment methods', function () {
     const client: Client = this.clientRef.value
 
