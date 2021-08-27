@@ -38,7 +38,18 @@ const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptio
 
         try {
           const response = await fetch(request)
-          const data = await response.json()
+          const responseContentType = response.headers.get('content-type')
+          let data
+
+          if (
+            !responseContentType ||
+            (!responseContentType.includes('application/json') &&
+              !responseContentType.includes('application/vnd.api+json'))
+          ) {
+            data = await response.text()
+          } else {
+            data = await response.json()
+          }
 
           if (!response.ok) {
             // Use the "traditional" approach and reject non 2xx responses.
