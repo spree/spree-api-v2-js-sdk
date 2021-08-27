@@ -1,6 +1,6 @@
 {
   "name": "@spree/storefront-api-v2-sdk",
-  "version": "4.7.1",
+  "version": "4.7.2",
   "description": "Node module to easily integrate your JavaScript or TypeScript application with Spree API V2. You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on",
   "engines": {
     "node": ">=14.15.4"
