@@ -36,6 +36,7 @@ Developed and maintained by:
     - [status](#status)
   - [Cart](#cart)
     - [create](#create-1)
+    - [remove](#remove)
     - [show](#show)
     - [addItem](#addItem)
     - [setQuantity](#setQuantity)
@@ -833,6 +834,26 @@ const response = await client.cart.emptyCart({ bearerToken })
 
 // or guest user
 const response = await client.cart.emptyCart({ orderToken })
+```
+
+### `remove`
+
+Removes the Cart.
+
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+// Logged in user
+const response = await client.cart.remove({ bearerToken })
+
+// or guest user
+const response = await client.cart.remove({ orderToken })
 ```
 
 ### `applyCouponCode`

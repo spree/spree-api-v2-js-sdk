@@ -2,6 +2,7 @@ import Http from '../Http'
 import { AddItem, CouponCode, EstimateShippingMethods, SetQuantity } from '../interfaces/endpoints/CartClass'
 import { IEstimatedShippingMethodsResult } from '../interfaces/EstimatedShippingMethod'
 import { IOrderResult } from '../interfaces/Order'
+import { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import { IQuery } from '../interfaces/Query'
 import { IToken } from '../interfaces/Token'
 import routes from '../routes'
@@ -25,6 +26,10 @@ export default class Cart extends Http {
 
   public async emptyCart(token: IToken, params: IQuery = {}): Promise<IOrderResult> {
     return (await this.spreeResponse('patch', routes.cartEmptyPath(), token, params)) as IOrderResult
+  }
+
+  public async remove(token: IToken, params: IQuery = {}): Promise<NoContentResult> {
+    return (await this.spreeResponse<NoContentResponse>('delete', routes.cartPath(), token, params))
   }
 
   public async setQuantity(token: IToken, params: SetQuantity): Promise<IOrderResult> {
