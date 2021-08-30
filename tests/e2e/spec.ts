@@ -132,14 +132,10 @@ const createTests = function () {
       .then(function (cartCreateResponse) {
         const orderToken = cartCreateResponse.success().data.attributes.token
 
-        return cy
-          .wrap(null)
-          .then(function () {
-            return client.checkout.paymentMethods({ orderToken })
-          })
-          .then(function (paymentMethodsResponse) {
-            expect(paymentMethodsResponse.isSuccess()).to.be.true
-          })
+        return client.checkout.paymentMethods({ orderToken })
+      })
+      .then(function (paymentMethodsResponse) {
+        expect(paymentMethodsResponse.isSuccess()).to.be.true
       })
   })
 }
