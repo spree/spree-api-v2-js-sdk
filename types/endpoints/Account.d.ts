@@ -1,10 +1,10 @@
 import Http from '../Http';
-import { IAccountResult, IAccountConfirmationResult, AccountAddressesResult, AccountAddressResult, AccountAddressParams, ForgotPasswordParams, ResetPasswordParams } from '../interfaces/Account';
-import { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard';
-import { NoContentResult } from '../interfaces/NoContent';
-import { IOrderResult, IOrdersResult } from '../interfaces/Order';
-import { IQuery } from '../interfaces/Query';
-import { IToken } from '../interfaces/Token';
+import type { IAccountResult, IAccountConfirmationResult, AccountAddressesResult, AccountAddressResult, AccountAddressParams, ForgotPasswordParams, ResetPasswordParams } from '../interfaces/Account';
+import type { ICreditCardResult, ICreditCardsResult } from '../interfaces/CreditCard';
+import type { NoContentResult } from '../interfaces/NoContent';
+import type { IOrderResult, IOrdersResult } from '../interfaces/Order';
+import type { IQuery } from '../interfaces/Query';
+import type { IToken } from '../interfaces/Token';
 export default class Account extends Http {
     accountInfo(token: IToken, params?: IQuery): Promise<IAccountResult>;
     creditCardsList(token: IToken, params?: IQuery): Promise<ICreditCardsResult>;

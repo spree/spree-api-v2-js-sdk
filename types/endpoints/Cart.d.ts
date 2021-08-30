@@ -1,10 +1,10 @@
 import Http from '../Http';
-import { AddItem, CouponCode, EstimateShippingMethods, SetQuantity } from '../interfaces/endpoints/CartClass';
-import { IEstimatedShippingMethodsResult } from '../interfaces/EstimatedShippingMethod';
-import { IOrderResult } from '../interfaces/Order';
-import { NoContentResult } from '../interfaces/NoContent';
-import { IQuery } from '../interfaces/Query';
-import { IToken } from '../interfaces/Token';
+import type { AddItem, CouponCode, EstimateShippingMethods, SetQuantity } from '../interfaces/endpoints/CartClass';
+import type { IEstimatedShippingMethodsResult } from '../interfaces/EstimatedShippingMethod';
+import type { IOrderResult } from '../interfaces/Order';
+import type { NoContentResult } from '../interfaces/NoContent';
+import type { IQuery } from '../interfaces/Query';
+import type { IToken } from '../interfaces/Token';
 export default class Cart extends Http {
     show(token: IToken, params?: IQuery): Promise<IOrderResult>;
     create(token?: IToken, params?: IQuery): Promise<IOrderResult>;
