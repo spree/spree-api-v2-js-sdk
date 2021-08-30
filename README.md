@@ -838,9 +838,9 @@ const response = await client.cart.emptyCart({ orderToken })
 
 ### `remove`
 
-Removes the Cart for the signed in User.
+Removes the Cart.
 
-**Required token:** [Bearer token](#bearer-token)
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
 **Success response schema:** [Success schema](#success-schema)
 
@@ -851,6 +851,9 @@ Removes the Cart for the signed in User.
 ```ts
 // Logged in user
 const response = await client.cart.remove({ bearerToken })
+
+// or guest user
+const response = await client.cart.remove({ orderToken })
 ```
 
 ### `applyCouponCode`
