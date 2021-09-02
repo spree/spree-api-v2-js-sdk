@@ -16,8 +16,10 @@ class Client {
   protected fetcher: Fetcher
 
   constructor(customOptions?: OptionalIClientConfig) {
+    const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
+
     const defaultOptions: IClientConfig = {
-      host: globalThis.process?.env.SPREE_HOST || 'http://localhost:3000/',
+      host: spreeHostEnvironmentValue || 'http://localhost:3000/',
       fetcherType: 'axios'
     }
 
