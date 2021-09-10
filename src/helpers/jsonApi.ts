@@ -29,7 +29,7 @@ const findRelationshipDocuments = <DocumentType extends JsonApiDocument>(
   const oneOrManyDocumentReferences = sourceDocument.relationships[relationshipName]?.data
   let documentReferences: RelationType[]
 
-  if (!documentReferences) {
+  if (!oneOrManyDocumentReferences) {
     throw new SpreeSDKError(`Incorrect relationship ${relationshipName}.`)
   }
 
@@ -40,7 +40,7 @@ const findRelationshipDocuments = <DocumentType extends JsonApiDocument>(
   }
 
   return documentReferences
-    .map<DocumentType>((typeObject: JsonApiDocument) => findDocument(spreeSuccessResponse, typeObject))
+    .map<DocumentType>((relationType: RelationType) => findDocument<DocumentType>(spreeSuccessResponse, relationType))
     .filter(Boolean)
 }
 

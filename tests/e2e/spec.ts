@@ -1,11 +1,9 @@
 // To import @spree/storefront-api-v2-sdk, run 'npm link' and 'npm link @spree/storefront-api-v2-sdk'
 // in the project's root directory.
-import { Client, makeClient, result } from '@spree/storefront-api-v2-sdk'
+import { Client, makeClient, result, jsonApi } from '@spree/storefront-api-v2-sdk'
 import type { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
-import { findRelationshipDocuments } from '@spree/storefront-api-v2-sdk/types/helpers/jsonApi'
 import type { FetcherStrategies } from '@spree/storefront-api-v2-sdk/types/interfaces/ClientConfig'
 
-// eslint-disable-next-line max-lines-per-function
 const createTests = function () {
   it('completes guest order', function () {
     const { orderFullAddress } = this
@@ -21,10 +19,10 @@ const createTests = function () {
         return cy
           .wrap(null)
           .then(function () {
-            return client.products.list({}, { include: 'variants' })
+            return client.products.list({}, { include: 'default_variant' })
           })
           .then(function (variantsResponse) {
-            const variantId = findRelationshipDocuments(
+            const variantId = jsonApi.findRelationshipDocuments(
               variantsResponse.success(),
               variantsResponse.success().data[0],
               'default_variant'
