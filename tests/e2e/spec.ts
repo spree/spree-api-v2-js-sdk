@@ -2,8 +2,8 @@
 // in the project's root directory.
 import { Client, makeClient, result } from '@spree/storefront-api-v2-sdk'
 import type { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
-import { findRelationshipDocuments } from '../../types/helpers/jsonApi'
-import type { FetcherStrategies } from '../../types/interfaces/ClientConfig'
+import { findRelationshipDocuments } from '@spree/storefront-api-v2-sdk/types/helpers/jsonApi'
+import type { FetcherStrategies } from '@spree/storefront-api-v2-sdk/types/interfaces/ClientConfig'
 
 // eslint-disable-next-line max-lines-per-function
 const createTests = function () {
