@@ -1,9 +1,9 @@
 // To import @spree/storefront-api-v2-sdk, run 'npm link' and 'npm link @spree/storefront-api-v2-sdk'
 // in the project's root directory.
-import { Client, makeClient, result } from '@spree/storefront-api-v2-sdk'
-import { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
+import { Client, makeClient, result, jsonApi } from '@spree/storefront-api-v2-sdk'
+import type { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
+import type { FetcherStrategies } from '@spree/storefront-api-v2-sdk/types/interfaces/ClientConfig'
 
-// eslint-disable-next-line max-lines-per-function
 const createTests = function () {
   it('completes guest order', function () {
     const { orderFullAddress } = this
@@ -19,12 +19,14 @@ const createTests = function () {
         return cy
           .wrap(null)
           .then(function () {
-            return client.products.list({}, { include: 'variants' })
+            return client.products.list({}, { include: 'default_variant' })
           })
           .then(function (variantsResponse) {
-            const variantId = variantsResponse
-              .success()
-              .included.find((variant) => variant.type === 'variant' && variant.attributes.in_stock).id
+            const variantId = jsonApi.findSingleRelationshipDocument(
+              variantsResponse.success(),
+              variantsResponse.success().data[0],
+              'default_variant'
+            ).id
 
             return client.cart.addItem({ orderToken }, { variant_id: variantId, quantity: 1 })
           })
@@ -58,7 +60,7 @@ const createTests = function () {
           .then(function (paymentsResponse) {
             const checkPaymentId = paymentsResponse
               .success()
-              .data.find((paymentMethod) => paymentMethod.attributes.type === 'Spree::PaymentMethod::Check').id
+              .data.find((paymentMethod) => paymentMethod.attributes.type === 'Spree::PaymentMethod::Check')!.id
 
             return client.checkout.orderUpdate(
               { orderToken },
@@ -140,7 +142,13 @@ const createTests = function () {
   })
 }
 
-const createServerVersionInTheBrowserTests = ({ host, fetcherType }: { host: string; fetcherType: string }) => {
+const createServerVersionInTheBrowserTests = ({
+  host,
+  fetcherType
+}: {
+  host: string
+  fetcherType: FetcherStrategies
+}) => {
   describe(`server version (i.e. CJS module) in the browser using ${fetcherType}`, function () {
     beforeEach(function () {
       const client = makeClient({ host, fetcherType })
@@ -152,7 +160,13 @@ const createServerVersionInTheBrowserTests = ({ host, fetcherType }: { host: str
   })
 }
 
-const createClientVersionInTheBrowserTests = ({ host, fetcherType }: { host: string; fetcherType: string }) => {
+const createClientVersionInTheBrowserTests = ({
+  host,
+  fetcherType
+}: {
+  host: string
+  fetcherType: FetcherStrategies
+}) => {
   describe(`client version (window global) in the browser using ${fetcherType}`, function () {
     beforeEach(function () {
       cy.readFile('/sdk/dist/client/index.js').then(function (spreeClientScript) {
