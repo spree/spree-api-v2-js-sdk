@@ -22,11 +22,11 @@ const createTests = function () {
             return client.products.list({}, { include: 'default_variant' })
           })
           .then(function (variantsResponse) {
-            const variantId = jsonApi.findRelationshipDocuments(
+            const variantId = jsonApi.findSingleRelationshipDocument(
               variantsResponse.success(),
               variantsResponse.success().data[0],
               'default_variant'
-            )[0].id
+            ).id
 
             return client.cart.addItem({ orderToken }, { variant_id: variantId, quantity: 1 })
           })

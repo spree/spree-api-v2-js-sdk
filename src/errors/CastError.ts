@@ -1,8 +1,8 @@
 import SpreeSDKError from './SpreeSDKError'
 
 export default class CastError extends SpreeSDKError {
-  constructor(name: string) {
-    super(name)
+  constructor(message: string) {
+    super(message)
     Object.setPrototypeOf(this, CastError.prototype)
     this.name = 'CastError'
   }

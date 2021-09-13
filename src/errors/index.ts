@@ -5,6 +5,7 @@ import NoResponseError from './NoResponseError'
 import SpreeError from './SpreeError'
 import SpreeSDKError from './SpreeSDKError'
 import FetchError from './FetchError'
+import DocumentRelationshipError from './DocumentRelationshipError'
 
 export {
   BasicSpreeError,
@@ -13,5 +14,6 @@ export {
   NoResponseError,
   SpreeError,
   SpreeSDKError,
-  FetchError
+  FetchError,
+  DocumentRelationshipError
 }

@@ -1,6 +1,6 @@
 import type { JsonApiDocument, JsonApiResponse } from '../interfaces/JsonApi'
 import type { RelationType } from '../interfaces/Relationships'
-import { SpreeSDKError } from '../errors'
+import { DocumentRelationshipError } from '../errors'
 
 const findDocument = <DocumentType extends JsonApiDocument>(
   spreeSuccessResponse: JsonApiResponse,
@@ -30,7 +30,7 @@ const findRelationshipDocuments = <DocumentType extends JsonApiDocument>(
   let documentReferences: RelationType[]
 
   if (!oneOrManyDocumentReferences) {
-    throw new SpreeSDKError(`Incorrect relationship ${relationshipName}.`)
+    throw new DocumentRelationshipError(`Incorrect relationship ${relationshipName}.`)
   }
 
   if (Array.isArray(oneOrManyDocumentReferences)) {
@@ -44,4 +44,18 @@ const findRelationshipDocuments = <DocumentType extends JsonApiDocument>(
     .filter(Boolean)
 }
 
-export { findDocument, findRelationshipDocuments }
+const findSingleRelationshipDocument = <DocumentType extends JsonApiDocument>(
+  spreeSuccessResponse: JsonApiResponse,
+  sourceDocument: JsonApiDocument,
+  relationshipName: string
+): DocumentType | null => {
+  const documents = findRelationshipDocuments<DocumentType>(spreeSuccessResponse, sourceDocument, relationshipName)
+
+  if (documents.length === 0) {
+    return null
+  }
+
+  return documents[0]
+}
+
+export { findDocument, findRelationshipDocuments, findSingleRelationshipDocument }
