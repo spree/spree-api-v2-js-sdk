@@ -89,10 +89,13 @@ TypeScript definitions are included in the module and should be automatically us
 `client` allows calling Spree methods, ex.:
 
 ```js
-client.products.list({
-  include: 'default_variant',
-  page: 1
-})
+client.products.list(
+  {},
+  {
+    include: 'default_variant',
+    page: 1
+  }
+)
 ```
 
 The SDK is also hosted by the [UNPKG][7] CDN. [Follow this link to download version 4.5.1][5] and [this link to download the newest version][6]. Include the SDK on a website like so:
