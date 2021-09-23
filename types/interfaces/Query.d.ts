@@ -11,3 +11,9 @@ export interface IQuery {
     sort?: string;
     [customSpreeExtensionKey: string]: any;
 }
+export interface IProductsQuery extends IQuery {
+    image_transformation?: {
+        size?: string;
+        quality?: number;
+    };
+}
