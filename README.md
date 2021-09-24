@@ -17,6 +17,7 @@ Developed and maintained by:
   - [Authentication](#authentication)
     - [getToken](#getToken)
     - [refreshToken](#refreshToken)
+    - [revokeToken](#revokeToken)
   - [Account](#account)
     - [create](#create)
     - [forgotPassword](#forgotPassword)
@@ -249,6 +250,28 @@ created_at: number
 ```ts
 const token = await client.authentication.refreshToken({
   refresh_token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
+})
+```
+
+### `revokeToken`
+
+Method `revokeToken` revokes a [Bearer token](#bearer-token).
+
+**Parameters schema:**
+
+```ts
+token: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.authentication.revokeToken({
+  token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
 })
 ```
 
