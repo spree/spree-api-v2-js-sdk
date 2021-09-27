@@ -255,7 +255,7 @@ const token = await client.authentication.refreshToken({
 
 ### `revokeToken`
 
-Method `revokeToken` revokes a [Bearer token](#bearer-token).
+Method `revokeToken` revokes a [Bearer token (access token)](#bearer-token) or a refresh token.
 
 **Parameters schema:**
 
