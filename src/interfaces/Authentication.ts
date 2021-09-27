@@ -7,6 +7,10 @@ export interface RefreshTokenAttr {
   refresh_token: string
 }
 
+export interface RevokeTokenAttr {
+  token: string
+}
+
 export interface AuthTokenParams {
   username: string
   password: string
@@ -16,4 +20,8 @@ export interface AuthTokenParams {
 export interface RefreshTokenParams {
   refresh_token: string
   grant_type: 'refresh_token'
+}
+
+export interface RevokeTokenParams {
+  token: string
 }

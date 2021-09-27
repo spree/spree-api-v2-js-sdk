@@ -23,6 +23,7 @@ declare const endpoints: {
     checkoutPaymentMethodsPath: () => string;
     checkoutShippingMethodsPath: () => string;
     oauthTokenPath: () => string;
+    oauthRevokePath: () => string;
     accountPath: () => string;
     accountAddressPath: (id: string) => string;
     accountAddressesPath: () => string;

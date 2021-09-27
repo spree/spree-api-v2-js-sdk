@@ -24,6 +24,7 @@ const endpoints = {
   checkoutPaymentMethodsPath: (): string => `${storefrontPath}/checkout/payment_methods`,
   checkoutShippingMethodsPath: (): string => `${storefrontPath}/checkout/shipping_rates`,
   oauthTokenPath: (): string => `spree_oauth/token`,
+  oauthRevokePath: (): string => `spree_oauth/revoke`,
   accountPath: (): string => `${storefrontPath}/account`,
   accountAddressPath: (id: string): string => `${storefrontPath}/account/addresses/${id}`,
   accountAddressesPath: (): string => `${storefrontPath}/account/addresses`,
