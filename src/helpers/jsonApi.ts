@@ -26,12 +26,13 @@ const findRelationshipDocuments = <DocumentType extends JsonApiDocument>(
     return []
   }
 
-  const oneOrManyDocumentReferences = sourceDocument.relationships[relationshipName]?.data
-  let documentReferences: RelationType[]
+  const oneOrManyDocumentReferences = (sourceDocument.relationships[relationshipName] || {}).data
 
   if (!oneOrManyDocumentReferences) {
     throw new DocumentRelationshipError(`Incorrect relationship ${relationshipName}.`)
   }
+
+  let documentReferences: RelationType[]
 
   if (Array.isArray(oneOrManyDocumentReferences)) {
     documentReferences = oneOrManyDocumentReferences
