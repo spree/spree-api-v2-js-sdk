@@ -36,5 +36,7 @@ declare const endpoints: {
     forgotPasswordPath: () => string;
     resetPasswordPath: (resetPasswordToken: string) => string;
     orderStatusPath: (orderNumber: string) => string;
+    pagesPath: () => string;
+    pagePath: (id: string) => string;
 };
 export default endpoints;
