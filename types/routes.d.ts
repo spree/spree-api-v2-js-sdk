@@ -14,6 +14,7 @@ declare const endpoints: {
     cartApplyCodePath: () => string;
     cartRemoveCodePath: (code?: string) => string;
     cartEstimateShippingMethodsPath: () => string;
+    cartAssociatePath: () => string;
     checkoutPath: () => string;
     checkoutNextPath: () => string;
     checkoutAdvancePath: () => string;
