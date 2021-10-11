@@ -9,12 +9,11 @@ export interface PageAttr extends JsonApiDocument {
     title: string
     content: string
     locale: string
-    meta_description: string
-    meta_title: string
+    meta_description: string | null
+    meta_title: string | null
     slug: string
     type: string
   }
-
   relationships: IRelationships
 }
 
@@ -26,6 +25,6 @@ export interface IPages extends JsonApiListResponse {
   data: PageAttr[]
 }
 
-export interface IPageResult extends ResultResponse<IPage> { }
+export interface IPageResult extends ResultResponse<IPage> {}
 
-export interface IPagesResult extends ResultResponse<IPages> { }
+export interface IPagesResult extends ResultResponse<IPages> {}
