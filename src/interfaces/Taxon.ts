@@ -10,9 +10,9 @@ export interface TaxonAttr extends JsonApiDocument {
     pretty_name: string
     permalink: string
     seo_title: string
-    meta_title: string
-    meta_description: string
-    meta_keywords: string
+    meta_title: string | null
+    meta_description: string | null
+    meta_keywords: string | null
     left: number
     right: number
     position: number

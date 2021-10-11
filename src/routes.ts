@@ -37,7 +37,9 @@ const endpoints = {
   accountCompletedOrderPath: (orderNumber: string): string => `${storefrontPath}/account/orders/${orderNumber}`,
   forgotPasswordPath: (): string => `${storefrontPath}/passwords`,
   resetPasswordPath: (resetPasswordToken: string): string => `${storefrontPath}/passwords/${resetPasswordToken}`,
-  orderStatusPath: (orderNumber: string): string => `${storefrontPath}/order_status/${orderNumber}`
+  orderStatusPath: (orderNumber: string): string => `${storefrontPath}/order_status/${orderNumber}`,
+  pagesPath: (): string => `${storefrontPath}/cms_pages`,
+  pagePath: (id: string): string => `${storefrontPath}/cms_pages/${id}`
 }
 
 export default endpoints

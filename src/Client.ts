@@ -1,4 +1,4 @@
-import { Account, Products, Taxons, Countries, Cart, Checkout, Authentication, Order } from './endpoints'
+import { Account, Products, Taxons, Countries, Cart, Checkout, Authentication, Order, Pages } from './endpoints'
 import createFetcherFromType from './helpers/createFetcherFromType'
 import type { Fetcher, IClientConfig, OptionalIClientConfig } from './interfaces/ClientConfig'
 
@@ -11,6 +11,7 @@ class Client {
   public authentication: Authentication
   public account: Account
   public order: Order
+  public pages: Pages
 
   protected host: string
   protected fetcher: Fetcher
@@ -44,6 +45,7 @@ class Client {
     this.checkout = this.makeCheckout()
     this.countries = this.makeCountries()
     this.order = this.makeOrder()
+    this.pages = this.makePages()
     this.products = this.makeProducts()
     this.taxons = this.makeTaxons()
   }
@@ -70,6 +72,10 @@ class Client {
 
   protected makeOrder(): Order {
     return new Order({ fetcher: this.fetcher })
+  }
+
+  protected makePages(): Pages {
+    return new Pages({ fetcher: this.fetcher })
   }
 
   protected makeProducts(): Products {
