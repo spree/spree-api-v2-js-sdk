@@ -968,10 +968,20 @@ country_iso: string
 
 ```ts
 // Logged in user
-const response = await client.cart.estimateShippingMethods({ bearerToken }, 'USA')
+const response = await client.cart.estimateShippingMethods(
+  { bearerToken },
+  {
+    country_iso: 'USA'
+  }
+)
 
 // or guest user
-const response = await client.cart.estimateShippingMethods({ orderToken }, 'USA')
+const response = await client.cart.estimateShippingMethods(
+  { orderToken },
+  {
+    country_iso: 'USA'
+  }
+)
 ```
 
 ### `associateGuestCart`
