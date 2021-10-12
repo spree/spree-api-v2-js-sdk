@@ -45,6 +45,8 @@ Developed and maintained by:
     - [emptyCart](#emptyCart)
     - [applyCouponCode](#applyCouponCode)
     - [removeCouponCode](#removeCouponCode)
+    - [estimateShippingMethods](#estimateShippingMethods)
+    - [associateGuestCart](#associateGuestCart)
   - [Checkout](#checkout)
     - [orderUpdate](#orderUpdate)
     - [orderNext](#orderNext)
@@ -966,10 +968,48 @@ country_iso: string
 
 ```ts
 // Logged in user
-const response = await client.cart.estimateShippingMethods({ bearerToken }, 'USA')
+const response = await client.cart.estimateShippingMethods(
+  { bearerToken },
+  {
+    country_iso: 'USA'
+  }
+)
 
 // or guest user
-const response = await client.cart.estimateShippingMethods({ orderToken }, 'USA')
+const response = await client.cart.estimateShippingMethods(
+  { orderToken },
+  {
+    country_iso: 'USA'
+  }
+)
+```
+
+### `associateGuestCart`
+
+Associates a guest cart with the currently signed in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+guest_order_token: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+// Logged in user
+const response = await client.cart.associateGuestCart(
+  { bearerToken },
+  {
+    guest_order_token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
+  }
+)
 ```
 
 ## [Checkout](https://guides.spreecommerce.org/api/v2/storefront/#tag/Checkout)

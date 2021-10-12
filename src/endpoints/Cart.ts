@@ -1,5 +1,5 @@
 import Http from '../Http'
-import type { AddItem, CouponCode, EstimateShippingMethods, SetQuantity } from '../interfaces/endpoints/CartClass'
+import type { AddItem, CouponCode, EstimateShippingMethods, SetQuantity, AssociateCart } from '../interfaces/endpoints/CartClass'
 import type { IEstimatedShippingMethods, IEstimatedShippingMethodsResult } from '../interfaces/EstimatedShippingMethod'
 import type { IOrder, IOrderResult } from '../interfaces/Order'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
@@ -62,5 +62,9 @@ export default class Cart extends Http {
       token,
       params
     )
+  }
+
+  public async associateGuestCart(token: IToken, params: AssociateCart): Promise<IOrderResult> {
+    return await this.spreeResponse<IOrder>('patch', routes.cartAssociatePath(), token, params)
   }
 }

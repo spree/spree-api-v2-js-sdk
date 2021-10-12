@@ -15,6 +15,7 @@ const endpoints = {
   cartApplyCodePath: (): string => `${storefrontPath}/cart/apply_coupon_code`,
   cartRemoveCodePath: (code?: string): string => `${storefrontPath}/cart/remove_coupon_code/${code}`,
   cartEstimateShippingMethodsPath: (): string => `${storefrontPath}/cart/estimate_shipping_rates`,
+  cartAssociatePath: (): string => `${storefrontPath}/cart/associate`,
   checkoutPath: (): string => `${storefrontPath}/checkout`,
   checkoutNextPath: (): string => `${storefrontPath}/checkout/next`,
   checkoutAdvancePath: (): string => `${storefrontPath}/checkout/advance`,

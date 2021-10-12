@@ -20,3 +20,7 @@ export interface CouponCode extends IQuery {
 export interface EstimateShippingMethods extends IQuery {
   country_iso: string
 }
+
+export interface AssociateCart extends IQuery {
+  guest_order_token: string
+}
