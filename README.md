@@ -62,6 +62,9 @@ Developed and maintained by:
   - [Taxons](#taxons)
     - [list](#list-1)
     - [show](#show-2)
+  - [Pages](#pages)
+    - [list](#list-2)
+    - [show](#show-3)
   - [Checkout Flow](#checkout-flow)
     - [One step](#one-step)
     - [Three steps](#three-steps)
@@ -1371,6 +1374,57 @@ params?: {
 
 ```ts
 const products = await client.taxons.show('1')
+```
+
+## [Pages](https://guides.spreecommerce.org/api/v2/storefront/#tag/Pages)
+
+### `list`
+
+Returns a list of all CMS Pages available in the current store.
+
+**Parameters schema:**
+
+```ts
+params?: {
+  include: string
+  per_page: number
+  filter?: {
+    [key: string]: string
+  }
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const pages = await client.pages.list()
+```
+
+### `show`
+
+Returns a single CMS Page. You can use either a CMS Page slug or ID.
+
+**Parameters schema:**
+
+```ts
+slugOrId: string
+params?: {
+  include: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const page = await client.pages.show('about-us')
 ```
 
 ## Checkout Flow
