@@ -1406,13 +1406,12 @@ const pages = await client.pages.list()
 
 ### `show`
 
-Returns a single CMS Page.
-(You can use either CMS Page slug or CMS Page ID)
+Returns a single CMS Page. You can use either a CMS Page slug or ID.
 
 **Parameters schema:**
 
 ```ts
-cms_page_slug: string
+slugOrId: string
 params?: {
   include: string
 }
