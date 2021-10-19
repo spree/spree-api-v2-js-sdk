@@ -65,6 +65,9 @@ Developed and maintained by:
   - [Pages](#pages)
     - [list](#list-2)
     - [show](#show-3)
+  - [Countries](#countries)
+    - [list](#list-3)
+    - [show](#show-4)
   - [Checkout Flow](#checkout-flow)
     - [One step](#one-step)
     - [Three steps](#three-steps)
@@ -1425,6 +1428,48 @@ params?: {
 
 ```ts
 const page = await client.pages.show('about-us')
+```
+
+## [Countries](https://guides.spreecommerce.org/api/v2/storefront/#tag/Countries)
+
+### `list`
+
+Returns a list of all countries.
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const countries = await client.countries.list()
+```
+
+### `show`
+
+Returns the details of a specific country.
+
+**Parameters schema:**
+
+```ts
+iso: string
+params?: {
+  include: string
+  fields: {
+    [key: string]: string
+  }
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const country = await client.countries.show('USA')
 ```
 
 ## Checkout Flow
