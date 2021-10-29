@@ -11,4 +11,8 @@ export default class Countries extends Http {
   public async show(iso: string, params: IQuery = {}): Promise<ICountryResult> {
     return await this.spreeResponse<ICountry>('get', routes.countryPath(iso), {}, params)
   }
+
+  public async default(params: IQuery = {}): Promise<ICountryResult> {
+    return await this.spreeResponse<ICountry>('get', routes.defaultCountryPath(), {}, params)
+  }
 }

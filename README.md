@@ -68,6 +68,7 @@ Developed and maintained by:
   - [Countries](#countries)
     - [list](#list-3)
     - [show](#show-4)
+    - [default](#default)
   - [Checkout Flow](#checkout-flow)
     - [One step](#one-step)
     - [Three steps](#three-steps)
@@ -1470,6 +1471,31 @@ params?: {
 
 ```ts
 const country = await client.countries.show('USA')
+```
+
+### `default`
+
+Returns the default country for the current store. By default this will be the US.
+
+**Parameters schema:**
+
+```ts
+params?: {
+  include: string
+  fields: {
+    [key: string]: string
+  }
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const countries = await client.countries.default()
 ```
 
 ## Checkout Flow
