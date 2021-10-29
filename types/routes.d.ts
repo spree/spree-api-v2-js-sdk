@@ -39,5 +39,6 @@ declare const endpoints: {
     orderStatusPath: (orderNumber: string) => string;
     pagesPath: () => string;
     pagePath: (id: string) => string;
+    defaultCountryPath: () => string;
 };
 export default endpoints;

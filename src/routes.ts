@@ -40,7 +40,8 @@ const endpoints = {
   resetPasswordPath: (resetPasswordToken: string): string => `${storefrontPath}/passwords/${resetPasswordToken}`,
   orderStatusPath: (orderNumber: string): string => `${storefrontPath}/order_status/${orderNumber}`,
   pagesPath: (): string => `${storefrontPath}/cms_pages`,
-  pagePath: (id: string): string => `${storefrontPath}/cms_pages/${id}`
+  pagePath: (id: string): string => `${storefrontPath}/cms_pages/${id}`,
+  defaultCountryPath: (): string => `${storefrontPath}/countries/default`
 }
 
 export default endpoints
