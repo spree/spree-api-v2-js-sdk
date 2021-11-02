@@ -58,6 +58,7 @@ Developed and maintained by:
     - [removeStoreCredits](#removeStoreCredits)
     - [paymentMethods](#paymentMethods)
     - [shippingMethods](#shippingMethods)
+    - [addPayment](#addPayment)
   - [Products](#products)
     - [list](#list)
     - [show](#show-1)
@@ -72,8 +73,6 @@ Developed and maintained by:
     - [show](#show-4)
     - [default](#default)
   - [Checkout Flow](#checkout-flow)
-    - [One step](#one-step)
-    - [Three steps](#three-steps)
 
 ## Quick start
 
@@ -1101,20 +1100,6 @@ order: {
       id: number
     }
   ]
-  payments_attributes?: [
-    {
-      payment_method_id: number
-    }
-  ]
-}
-payment_source?: {
-  [payment_method_id: number]: {
-    number: string
-    month: string
-    year: string
-    verification_value: string
-    name: string
-  }
 }
 ```
 
@@ -1331,24 +1316,45 @@ params?: {
 
 ```ts
 // Logged in user
+
+// Create new credit card
 const response = await client.checkout.addPayment(
   { bearerToken },
   {
-    payment_method_id: 2,
+    payment_method_id: "1",
     source_attributes: {
       gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
+      cc_type: "visa",
+      last_digits: "1111",
+      month: "10",
+      year: "2026",
       name: "John Snow"
     }
   }
 )
 
+// Use existing credit card
+const response = await client.checkout.addPayment(
+  { bearerToken },
+  {
+    payment_method_id: "1",
+    source_id: "1"
+  }
+)
+
 // or guest user
+
+// Create new credit card
 const response = await client.checkout.addPayment(
   { orderToken },
   {
-    payment_method_id: 2,
+    payment_method_id: "1",
     source_attributes: {
       gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
+      cc_type: "visa",
+      last_digits: "1111",
+      month: "10",
+      year: "2026",
       name: "John Snow"
     }
   }
@@ -1599,35 +1605,6 @@ const countries = await client.countries.default()
 
 ## Checkout Flow
 
-### One step
-
-```ts
-const cartCreateResponse = await client.cart.create()
-
-const orderToken = cartCreateResponse.success().data.attributes.token
-
-await client.cart.addItem({ orderToken }, { variant_id: '1' })
-
-// Save a shipping address for shipping methods
-await client.checkout.orderUpdate({ orderToken }, {
-  order: {
-    ship_address_attributes: {...}
-  }
-})
-
-const shipping = (await client.checkout.shippingMethods({ orderToken })).success()
-
-const payment = (await client.checkout.paymentMethods({ orderToken })).success()
-
-// Pick a shipping and payment method
-
-await client.checkout.orderUpdate({ orderToken }, { order: {...} })
-
-await client.checkout.complete({ orderToken })
-```
-
-### Three steps
-
 ```ts
 const cartCreateResponse = await client.cart.create()
 
@@ -1663,20 +1640,15 @@ await client.checkout.orderNext({ orderToken })
 // Step three - pick a payment method
 const payment = (await client.checkout.paymentMethods({ orderToken })).success()
 
-await client.checkout.orderUpdate({ orderToken }, {
-  order: {
-    payments_attributes: [{
-      payment_method_id: payment.data[0].id
-    }]
-  },
-  payment_source: {
-    [payment.data[0].id]: {
-      number: '4111111111111111',
-      month: '1',
-      year: '2022',
-      verification_value: '123',
-      name: 'John Doe'
-    }
+await client.checkout.addPayment({ orderToken }, {
+  payment_method_id: payment.data[0].id,
+  source_attributes: {
+    gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
+    cc_type: "visa",
+    last_digits: "1111",
+    month: "10",
+    year: "2026",
+    name: "John Snow"
   }
 })
 
