@@ -6,7 +6,7 @@ import { IQuery } from '../Query';
 export interface AddStoreCredit extends IQuery {
     amount: number;
 }
-export interface NestedAttributes extends IQuery {
+export interface OrderUpdate extends IQuery {
     order?: {
         email?: string;
         special_instructions?: string;
@@ -18,6 +18,7 @@ export interface NestedAttributes extends IQuery {
     payment_source?: IPaymentSource;
 }
 export interface AddPayment extends IQuery {
+    payment_method_id: string;
     source_id?: string;
     amount?: number;
     source_attributes: {

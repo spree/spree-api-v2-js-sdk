@@ -8,7 +8,7 @@ export interface AddStoreCredit extends IQuery {
   amount: number
 }
 
-export interface NestedAttributes extends IQuery {
+export interface OrderUpdate extends IQuery {
   order?: {
     email?: string
     special_instructions?: string
