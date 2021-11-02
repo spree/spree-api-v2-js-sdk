@@ -1298,6 +1298,63 @@ const response = await client.checkout.shippingMethods(
 )
 ```
 
+### `addPayment`
+
+Creates new Payment for the current checkout.
+
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
+
+**Parameters schema:**
+
+```ts
+payment_method_id: string
+source_id?: string
+amount?: number
+source_attributes: {
+  gateway_payment_profile_id: string
+  cc_type?: string
+  last_digits?: string
+  month?: string
+  year?: string
+  name: string
+}
+params?: {
+  include?: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+// Logged in user
+const response = await client.checkout.addPayment(
+  { bearerToken },
+  {
+    payment_method_id: 2,
+    source_attributes: {
+      gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
+      name: "John Snow"
+    }
+  }
+)
+
+// or guest user
+const response = await client.checkout.addPayment(
+  { orderToken },
+  {
+    payment_method_id: 2,
+    source_attributes: {
+      gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
+      name: "John Snow"
+    }
+  }
+)
+```
+
 ## [Products](https://guides.spreecommerce.org/api/v2/storefront/#tag/Products)
 
 Returns a list of Products.

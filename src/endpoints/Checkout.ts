@@ -1,5 +1,5 @@
 import Http from '../Http'
-import type { AddStoreCredit, NestedAttributes } from '../interfaces/endpoints/CheckoutClass'
+import type { AddStoreCredit, NestedAttributes, AddPayment } from '../interfaces/endpoints/CheckoutClass'
 import type { IOrder, IOrderResult } from '../interfaces/Order'
 import type { IPaymentMethods, IPaymentMethodsResult } from '../interfaces/PaymentMethod'
 import type { IQuery } from '../interfaces/Query'
@@ -38,5 +38,9 @@ export default class Checkout extends Http {
 
   public async shippingMethods(token: IToken, params: IQuery = {}): Promise<IShippingMethodsResult> {
     return await this.spreeResponse<IShippingMethods>('get', routes.checkoutShippingMethodsPath(), token, params)
+  }
+
+  public async addPayment(token: IToken, addPaymentParams: AddPayment): Promise<IOrderResult> {
+    return await this.spreeResponse<IOrder>('post', routes.checkoutAddPaymentPath(), token, addPaymentParams)
   }
 }

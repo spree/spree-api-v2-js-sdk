@@ -17,3 +17,15 @@ export interface NestedAttributes extends IQuery {
     };
     payment_source?: IPaymentSource;
 }
+export interface AddPayment extends IQuery {
+    source_id?: string;
+    amount?: number;
+    source_attributes: {
+        gateway_payment_profile_id: string;
+        cc_type?: string;
+        last_digits?: string;
+        month?: string;
+        year?: string;
+        name: string;
+    };
+}

@@ -42,5 +42,6 @@ declare const endpoints: {
     pagesPath: () => string;
     pagePath: (id: string) => string;
     defaultCountryPath: () => string;
+    checkoutAddPaymentPath: () => string;
 };
 export default endpoints;

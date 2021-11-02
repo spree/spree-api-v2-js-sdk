@@ -1,5 +1,5 @@
 import Http from '../Http';
-import type { AddStoreCredit, NestedAttributes } from '../interfaces/endpoints/CheckoutClass';
+import type { AddStoreCredit, NestedAttributes, AddPayment } from '../interfaces/endpoints/CheckoutClass';
 import type { IOrderResult } from '../interfaces/Order';
 import type { IPaymentMethodsResult } from '../interfaces/PaymentMethod';
 import type { IQuery } from '../interfaces/Query';
@@ -14,4 +14,5 @@ export default class Checkout extends Http {
     removeStoreCredits(token: IToken, params?: IQuery): Promise<IOrderResult>;
     paymentMethods(token: IToken): Promise<IPaymentMethodsResult>;
     shippingMethods(token: IToken, params?: IQuery): Promise<IShippingMethodsResult>;
+    addPayment(token: IToken, addPaymentParams: AddPayment): Promise<IOrderResult>;
 }
