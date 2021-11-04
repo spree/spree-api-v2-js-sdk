@@ -1295,7 +1295,7 @@ Creates new Payment for the current checkout.
 payment_method_id: string
 source_id?: string
 amount?: number
-source_attributes: {
+source_attributes?: {
   gateway_payment_profile_id: string
   cc_type?: string
   last_digits?: string

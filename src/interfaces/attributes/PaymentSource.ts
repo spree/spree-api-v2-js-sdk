@@ -1,3 +1,7 @@
+/**
+ * @deprecated This type is no longer used
+ */
+
 export interface IPaymentSource {
   [key: string]: {
     gateway_payment_profile_id?: string
