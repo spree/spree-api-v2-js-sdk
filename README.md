@@ -537,7 +537,7 @@ const response = await client.account.addressesList({ bearerToken })
 
 ### `showAddress`
 
-Create a new Address for the signed in User.
+Returns a single address for the signed in User.
 
 **Required token:** [Bearer token](#bearer-token)
 
