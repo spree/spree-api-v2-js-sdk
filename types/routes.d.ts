@@ -14,7 +14,11 @@ declare const endpoints: {
     cartApplyCodePath: () => string;
     cartRemoveCodePath: (code?: string) => string;
     cartRemoveAllCoupons: () => string;
+    /**
+     * @deprecated Use {@link cartEstimateShippingRatesPath} instead.
+     */
     cartEstimateShippingMethodsPath: () => string;
+    cartEstimateShippingRatesPath: () => string;
     cartAssociatePath: () => string;
     cartChangeCurrencyPath: () => string;
     checkoutPath: () => string;
@@ -24,7 +28,13 @@ declare const endpoints: {
     checkoutAddStoreCreditsPath: () => string;
     checkoutRemoveStoreCreditsPath: () => string;
     checkoutPaymentMethodsPath: () => string;
+    /**
+     * @deprecated Use {@link checkoutShippingRatesPath} instead.
+     */
     checkoutShippingMethodsPath: () => string;
+    checkoutShippingRatesPath: () => string;
+    checkoutSelectShippingMethodPath: () => string;
+    checkoutAddPaymentPath: () => string;
     oauthTokenPath: () => string;
     oauthRevokePath: () => string;
     accountPath: () => string;
@@ -43,6 +53,5 @@ declare const endpoints: {
     pagesPath: () => string;
     pagePath: (id: string) => string;
     defaultCountryPath: () => string;
-    checkoutAddPaymentPath: () => string;
 };
 export default endpoints;

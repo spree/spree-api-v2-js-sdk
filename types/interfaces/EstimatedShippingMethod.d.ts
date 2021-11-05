@@ -16,8 +16,19 @@ export interface EstimatedShippingMethodAttr extends JsonApiDocument {
         free: boolean;
     };
 }
+/**
+ * @deprecated Use {@link EstimatedShippingRates} instead.
+ */
 export interface IEstimatedShippingMethods extends JsonApiListResponse {
     data: EstimatedShippingMethodAttr[];
 }
+/**
+ * @deprecated Use {@link EstimatedShippingRatesResult} instead.
+ */
 export interface IEstimatedShippingMethodsResult extends ResultResponse<IEstimatedShippingMethods> {
+}
+export interface EstimatedShippingRates extends JsonApiListResponse {
+    data: EstimatedShippingMethodAttr[];
+}
+export interface EstimatedShippingRatesResult extends ResultResponse<EstimatedShippingRates> {
 }

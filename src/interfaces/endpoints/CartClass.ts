@@ -17,7 +17,14 @@ export interface CouponCode extends IQuery {
   coupon_code: string
 }
 
+/**
+ * @deprecated Use {@link EstimateShippingRates} instead.
+ */
 export interface EstimateShippingMethods extends IQuery {
+  country_iso: string
+}
+
+export interface EstimateShippingRates extends IQuery {
   country_iso: string
 }
 

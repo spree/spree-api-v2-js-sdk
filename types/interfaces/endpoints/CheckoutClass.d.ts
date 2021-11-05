@@ -41,6 +41,10 @@ export interface AddFullPayment {
         name: string;
     };
 }
+export interface SelectShippingMethod extends IQuery {
+    shipping_method_id: string;
+    shipment_id?: string;
+}
 export interface AddPayment extends AddFullPayment, IQuery {
     source_id?: string;
     amount?: number;

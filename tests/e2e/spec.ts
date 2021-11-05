@@ -34,7 +34,7 @@ const createTests = function () {
             return client.checkout.orderUpdate({ orderToken }, { order: orderFullAddress })
           })
           .then(function () {
-            return client.checkout.shippingMethods({ orderToken })
+            return client.checkout.shippingRates({ orderToken })
           })
           .then(function (shippingResponse) {
             const firstShipment = shippingResponse.success().data[0]
