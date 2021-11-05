@@ -1,6 +1,7 @@
 import { resolve, dirname } from 'path'
 import webpackMerge from 'webpack-merge'
 import { fileURLToPath } from 'url'
+import webpack from 'webpack'
 import commonConfigMaker from './webpack.common.maker.mjs'
 
 // Redefining __dirname is a temporary solution, due to https://github.com/nodejs/help/issues/2907
@@ -16,7 +17,12 @@ const config = {
   output: {
     library: 'SpreeSDK',
     path: clientDistDirectoryPath
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      RUNTIME_TYPE: "'browser'"
+    })
+  ]
 }
 
 const typeScriptConfigFilePath = resolve(baseDirectoryPath, 'tsconfig-client.json')

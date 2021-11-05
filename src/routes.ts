@@ -54,7 +54,8 @@ const endpoints = {
   orderStatusPath: (orderNumber: string): string => `${storefrontPath}/order_status/${orderNumber}`,
   pagesPath: (): string => `${storefrontPath}/cms_pages`,
   pagePath: (id: string): string => `${storefrontPath}/cms_pages/${id}`,
-  defaultCountryPath: (): string => `${storefrontPath}/countries/default`
+  defaultCountryPath: (): string => `${storefrontPath}/countries/default`,
+  digitalAssetsDownloadPath: (token: string): string => `${storefrontPath}/digitals/${token}`
 }
 
 export default endpoints
