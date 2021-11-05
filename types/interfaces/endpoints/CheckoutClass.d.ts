@@ -1,4 +1,6 @@
 import { IAddress } from '../attributes/Address';
+import { IPayment } from '../attributes/Payment';
+import { IPaymentSource } from '../attributes/PaymentSource';
 import { IShipment } from '../attributes/Shipment';
 import { IQuery } from '../Query';
 export interface AddStoreCredit extends IQuery {
@@ -13,6 +15,20 @@ export interface OrderUpdate extends IQuery {
         payments_attributes?: AddFullPayment[];
         shipments_attributes?: IShipment[];
     };
+}
+/**
+ * @deprecated This type is no longer used
+ */
+export interface NestedAttributes extends IQuery {
+    order?: {
+        email?: string;
+        special_instructions?: string;
+        bill_address_attributes?: IAddress;
+        ship_address_attributes?: IAddress;
+        payments_attributes?: IPayment[];
+        shipments_attributes?: IShipment[];
+    };
+    payment_source?: IPaymentSource;
 }
 export interface AddFullPayment {
     payment_method_id: string;
