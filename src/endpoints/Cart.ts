@@ -4,7 +4,8 @@ import type {
   CouponCode,
   EstimateShippingMethods,
   SetQuantity,
-  AssociateCart
+  AssociateCart,
+  ChangeCurrency
 } from '../interfaces/endpoints/CartClass'
 import type { IEstimatedShippingMethods, IEstimatedShippingMethodsResult } from '../interfaces/EstimatedShippingMethod'
 import type { IOrder, IOrderResult } from '../interfaces/Order'
@@ -76,5 +77,9 @@ export default class Cart extends Http {
 
   public async associateGuestCart(token: IToken, params: AssociateCart): Promise<IOrderResult> {
     return await this.spreeResponse<IOrder>('patch', routes.cartAssociatePath(), token, params)
+  }
+
+  public async changeCurrency(token: IToken, params: ChangeCurrency): Promise<IOrderResult> {
+    return await this.spreeResponse<IOrder>('patch', routes.cartChangeCurrencyPath(), token, params)
   }
 }
