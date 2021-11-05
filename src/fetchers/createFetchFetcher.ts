@@ -14,7 +14,7 @@ const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptio
   return {
     fetch: async (fetchOptions) => {
       try {
-        const { url, params, method, headers } = fetchOptions
+        const { url, params, method, headers, responseParsing } = fetchOptions
         const absoluteUrl = new URL(url, host)
         let payload
 
@@ -41,14 +41,22 @@ const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptio
           const responseContentType = response.headers.get('content-type')
           let data
 
-          if (
-            !responseContentType ||
-            (!responseContentType.includes('application/json') &&
-              !responseContentType.includes('application/vnd.api+json'))
-          ) {
+          if (responseParsing === 'automatic') {
+            if (
+              !responseContentType ||
+              (!responseContentType.includes('application/json') &&
+                !responseContentType.includes('application/vnd.api+json'))
+            ) {
+              data = await response.text()
+            } else {
+              data = await response.json()
+            }
+          } else if (responseParsing === 'text') {
             data = await response.text()
-          } else {
+          } else if (responseParsing === 'json') {
             data = await response.json()
+          } else if (responseParsing === 'stream') {
+            data = await response.body
           }
 
           if (!response.ok) {

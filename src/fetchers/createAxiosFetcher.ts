@@ -18,7 +18,7 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
   return {
     fetch: async (fetchOptions) => {
       try {
-        const { url, params, method, headers } = fetchOptions
+        const { url, params, method, headers, responseParsing } = fetchOptions
         let payload
 
         switch (method.toUpperCase()) {
@@ -32,12 +32,33 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
             payload = { params }
         }
 
+        let responseType: string
+
+        const isBrowser = RUNTIME_TYPE === 'browser'
+
+        switch (responseParsing) {
+          case 'json':
+          case 'text':
+            responseType = responseParsing
+            break
+          case 'stream':
+            responseType = isBrowser ? 'blob' : 'stream'
+            break
+          default:
+            responseType = undefined
+        }
+
         const response = await axios({
           url,
           method: method.toUpperCase(),
           headers,
+          responseType,
           ...payload
         })
+
+        if (responseParsing === 'stream' && isBrowser) {
+          return { data: response.data.stream() }
+        }
 
         return { data: response.data }
       } catch (error) {

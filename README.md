@@ -74,6 +74,8 @@ Developed and maintained by:
     - [list](#list-3)
     - [show](#show-4)
     - [default](#default)
+  - [Digital Assets](#digital-assets)
+    - [download](#download)
   - [Checkout Flow](#checkout-flow)
 
 ## Quick start
@@ -1667,6 +1669,49 @@ params?: {
 const countries = await client.countries.default()
 ```
 
+## [Digital Assets](https://spark-solutions.stoplight.io/docs/api-v2/b3A6MjQxNjA3ODY-download-a-digital-asset)
+
+### `download`
+
+Returns a stream for downloading a purchased digital product.
+
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
+
+**Parameters schema:**
+
+```ts
+assetToken: string
+```
+
+**Success response schema:** [ReadableStream][11]
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+// Many NodeJS servers allow piping a stream as the response (`digitalAssetStream.pipe(serverResponse);`).
+
+// The below example assumes a logged in user using SpreeSDK in the browser and downloading an image asset.
+
+// A digital token can be retrieved from a digital link associated to a line item in a completed order.
+const digitalToken = '1YjXK36ZRj2w4nxtMkJutTGX'
+
+const response = await client.digitalAssets.download({ bearerToken }, digitalToken)
+
+const digitalAssetStream = response.success()
+
+// Append an <img> tag to the page to show the asset on the page.
+const image = new Image()
+
+document.body.appendChild(image)
+
+// Convert a stream to a Blob for easier processing.
+const digitalAssetBlob = await new Response(digitalAssetStream).blob()
+
+image.src = URL.createObjectURL(digitalAssetBlob)
+```
+
 ## Checkout Flow
 
 ```ts
@@ -1741,3 +1786,4 @@ We are [available for hire][spark].
 [8]: https://github.com/axios/axios
 [9]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 [10]: https://github.com/node-fetch/node-fetch
+[11]: https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream

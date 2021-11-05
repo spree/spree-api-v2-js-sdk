@@ -1,4 +1,4 @@
-import { Account, Products, Taxons, Countries, Cart, Checkout, Authentication, Order, Pages } from './endpoints';
+import { Account, Products, Taxons, Countries, Cart, Checkout, Authentication, Order, Pages, DigitalAssets } from './endpoints';
 import type { Fetcher, OptionalIClientConfig } from './interfaces/ClientConfig';
 declare class Client {
     products: Products;
@@ -10,6 +10,7 @@ declare class Client {
     account: Account;
     order: Order;
     pages: Pages;
+    digitalAssets: DigitalAssets;
     protected host: string;
     protected fetcher: Fetcher;
     constructor(customOptions?: OptionalIClientConfig);
@@ -23,5 +24,6 @@ declare class Client {
     protected makePages(): Pages;
     protected makeProducts(): Products;
     protected makeTaxons(): Taxons;
+    protected makeDigitalAssets(): DigitalAssets;
 }
 export default Client;

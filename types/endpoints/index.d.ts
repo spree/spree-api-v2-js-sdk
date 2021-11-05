@@ -7,4 +7,5 @@ import Order from './Order';
 import Pages from './Pages';
 import Products from './Products';
 import Taxons from './Taxons';
-export { Account, Authentication, Cart, Checkout, Countries, Order, Products, Pages, Taxons };
+import DigitalAssets from './DigitalAssets';
+export { Account, Authentication, Cart, Checkout, Countries, Order, Products, Pages, Taxons, DigitalAssets };

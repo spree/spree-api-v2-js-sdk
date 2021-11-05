@@ -10,7 +10,7 @@ import FetchError from './errors/FetchError'
 import * as result from './helpers/result'
 import type { Fetcher } from './interfaces/ClientConfig'
 import { ErrorClass } from './interfaces/errors/ErrorClass'
-import type { FetchConfig, HttpMethod } from './interfaces/FetchConfig'
+import type { FetchConfig, HttpMethod, ResponseParsing } from './interfaces/FetchConfig'
 import type { JsonApiResponse } from './interfaces/JsonApi'
 import type { ResultResponse } from './interfaces/ResultResponse'
 import type { IToken } from './interfaces/Token'
@@ -30,7 +30,8 @@ export default class Http {
     method: HttpMethod,
     url: string,
     tokens: IToken = {},
-    params: any = {}
+    params: any = {},
+    responseParsing: ResponseParsing = 'automatic'
   ): Promise<ResultResponse<ResponseType>> {
     try {
       const headers = this.spreeOrderHeaders(tokens)
@@ -39,7 +40,8 @@ export default class Http {
         url,
         params,
         method,
-        headers
+        headers,
+        responseParsing
       }
 
       const response = await this.fetcher.fetch(fetchOptions)
