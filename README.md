@@ -49,6 +49,7 @@ Developed and maintained by:
     - [removeAllCoupons](#removeAllCoupons)
     - [estimateShippingMethods](#estimateShippingMethods)
     - [associateGuestCart](#associateGuestCart)
+    - [changeCurrency](#changeCurrency)
   - [Checkout](#checkout)
     - [orderUpdate](#orderUpdate)
     - [orderNext](#orderNext)
@@ -1041,7 +1042,9 @@ Associates a guest cart with the currently signed in user.
 **Parameters schema:**
 
 ```ts
-guest_order_token: string
+{
+  guest_order_token: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -1056,6 +1059,36 @@ const response = await client.cart.associateGuestCart(
   { bearerToken },
   {
     guest_order_token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
+  }
+)
+```
+
+### `changeCurrency`
+
+Changes the Cart's currency.
+
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
+
+**Parameters schema:**
+
+```ts
+{
+  new_currency: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+// Logged in user
+const response = await client.cart.changeCurrency(
+  { bearerToken },
+  {
+    new_currency: 'CAD'
   }
 )
 ```
@@ -1321,14 +1354,14 @@ params?: {
 const response = await client.checkout.addPayment(
   { bearerToken },
   {
-    payment_method_id: "1",
+    payment_method_id: '1',
     source_attributes: {
-      gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
-      cc_type: "visa",
-      last_digits: "1111",
-      month: "10",
-      year: "2026",
-      name: "John Snow"
+      gateway_payment_profile_id: 'card_1JqvNB2eZvKYlo2C5OlqLV7S',
+      cc_type: 'visa',
+      last_digits: '1111',
+      month: '10',
+      year: '2026',
+      name: 'John Snow'
     }
   }
 )
@@ -1337,8 +1370,8 @@ const response = await client.checkout.addPayment(
 const response = await client.checkout.addPayment(
   { bearerToken },
   {
-    payment_method_id: "1",
-    source_id: "1"
+    payment_method_id: '1',
+    source_id: '1'
   }
 )
 
@@ -1348,14 +1381,14 @@ const response = await client.checkout.addPayment(
 const response = await client.checkout.addPayment(
   { orderToken },
   {
-    payment_method_id: "1",
+    payment_method_id: '1',
     source_attributes: {
-      gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
-      cc_type: "visa",
-      last_digits: "1111",
-      month: "10",
-      year: "2026",
-      name: "John Snow"
+      gateway_payment_profile_id: 'card_1JqvNB2eZvKYlo2C5OlqLV7S',
+      cc_type: 'visa',
+      last_digits: '1111',
+      month: '10',
+      year: '2026',
+      name: 'John Snow'
     }
   }
 )

@@ -19,3 +19,6 @@ export interface EstimateShippingMethods extends IQuery {
 export interface AssociateCart extends IQuery {
     guest_order_token: string;
 }
+export interface ChangeCurrency extends IQuery {
+    new_currency: string;
+}
