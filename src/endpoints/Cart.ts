@@ -5,9 +5,15 @@ import type {
   EstimateShippingMethods,
   SetQuantity,
   AssociateCart,
-  ChangeCurrency
+  ChangeCurrency,
+  EstimateShippingRates
 } from '../interfaces/endpoints/CartClass'
-import type { IEstimatedShippingMethods, IEstimatedShippingMethodsResult } from '../interfaces/EstimatedShippingMethod'
+import type {
+  EstimatedShippingRates,
+  EstimatedShippingRatesResult,
+  IEstimatedShippingMethods,
+  IEstimatedShippingMethodsResult
+} from '../interfaces/EstimatedShippingMethod'
 import type { IOrder, IOrderResult } from '../interfaces/Order'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import type { IQuery } from '../interfaces/Query'
@@ -63,6 +69,9 @@ export default class Cart extends Http {
     return await this.spreeResponse<IOrder>('delete', routes.cartRemoveAllCoupons(), token, params)
   }
 
+  /**
+   * @deprecated Use {@link estimateShippingRates} instead.
+   */
   public async estimateShippingMethods(
     token: IToken,
     params: EstimateShippingMethods
@@ -70,6 +79,18 @@ export default class Cart extends Http {
     return await this.spreeResponse<IEstimatedShippingMethods>(
       'get',
       routes.cartEstimateShippingMethodsPath(),
+      token,
+      params
+    )
+  }
+
+  public async estimateShippingRates(
+    token: IToken,
+    params: EstimateShippingRates
+  ): Promise<EstimatedShippingRatesResult> {
+    return await this.spreeResponse<EstimatedShippingRates>(
+      'get',
+      routes.cartEstimateShippingRatesPath(),
       token,
       params
     )

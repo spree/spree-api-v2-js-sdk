@@ -15,7 +15,11 @@ const endpoints = {
   cartApplyCodePath: (): string => `${storefrontPath}/cart/apply_coupon_code`,
   cartRemoveCodePath: (code?: string): string => `${storefrontPath}/cart/remove_coupon_code/${code}`,
   cartRemoveAllCoupons: (): string => `${storefrontPath}/cart/remove_coupon_code`,
+  /**
+   * @deprecated Use {@link cartEstimateShippingRatesPath} instead.
+   */
   cartEstimateShippingMethodsPath: (): string => `${storefrontPath}/cart/estimate_shipping_rates`,
+  cartEstimateShippingRatesPath: (): string => `${storefrontPath}/cart/estimate_shipping_rates`,
   cartAssociatePath: (): string => `${storefrontPath}/cart/associate`,
   cartChangeCurrencyPath: (): string => `${storefrontPath}/cart/change_currency`,
   checkoutPath: (): string => `${storefrontPath}/checkout`,
@@ -25,7 +29,13 @@ const endpoints = {
   checkoutAddStoreCreditsPath: (): string => `${storefrontPath}/checkout/add_store_credit`,
   checkoutRemoveStoreCreditsPath: (): string => `${storefrontPath}/checkout/remove_store_credit`,
   checkoutPaymentMethodsPath: (): string => `${storefrontPath}/checkout/payment_methods`,
+  /**
+   * @deprecated Use {@link checkoutShippingRatesPath} instead.
+   */
   checkoutShippingMethodsPath: (): string => `${storefrontPath}/checkout/shipping_rates`,
+  checkoutShippingRatesPath: (): string => `${storefrontPath}/checkout/shipping_rates`,
+  checkoutSelectShippingMethodPath: (): string => `${storefrontPath}/checkout/select_shipping_method`,
+  checkoutAddPaymentPath: (): string => `${storefrontPath}/checkout/create_payment`,
   oauthTokenPath: (): string => `spree_oauth/token`,
   oauthRevokePath: (): string => `spree_oauth/revoke`,
   accountPath: (): string => `${storefrontPath}/account`,
@@ -44,8 +54,7 @@ const endpoints = {
   orderStatusPath: (orderNumber: string): string => `${storefrontPath}/order_status/${orderNumber}`,
   pagesPath: (): string => `${storefrontPath}/cms_pages`,
   pagePath: (id: string): string => `${storefrontPath}/cms_pages/${id}`,
-  defaultCountryPath: (): string => `${storefrontPath}/countries/default`,
-  checkoutAddPaymentPath: (): string => `${storefrontPath}/checkout/create_payment`
+  defaultCountryPath: (): string => `${storefrontPath}/countries/default`
 }
 
 export default endpoints

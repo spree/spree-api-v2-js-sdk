@@ -47,7 +47,7 @@ Developed and maintained by:
     - [applyCouponCode](#applyCouponCode)
     - [removeCouponCode](#removeCouponCode)
     - [removeAllCoupons](#removeAllCoupons)
-    - [estimateShippingMethods](#estimateShippingMethods)
+    - [estimateShippingRates](#estimateShippingRates)
     - [associateGuestCart](#associateGuestCart)
     - [changeCurrency](#changeCurrency)
   - [Checkout](#checkout)
@@ -58,7 +58,8 @@ Developed and maintained by:
     - [addStoreCredits](#addStoreCredits)
     - [removeStoreCredits](#removeStoreCredits)
     - [paymentMethods](#paymentMethods)
-    - [shippingMethods](#shippingMethods)
+    - [shippingRates](#shippingRates)
+    - [selectShippingMethod](#selectShippingMethod)
     - [addPayment](#addPayment)
   - [Products](#products)
     - [list](#list)
@@ -997,7 +998,7 @@ const response = await client.cart.removeAllCoupons({ bearerToken })
 const response = await client.cart.removeAllCoupons({ orderToken })
 ```
 
-### `estimateShippingMethods`
+### `estimateShippingRates`
 
 Returns a list of Estimated Shipping Rates for Cart.
 
@@ -1017,7 +1018,7 @@ country_iso: string
 
 ```ts
 // Logged in user
-const response = await client.cart.estimateShippingMethods(
+const response = await client.cart.estimateShippingRates(
   { bearerToken },
   {
     country_iso: 'USA'
@@ -1025,7 +1026,7 @@ const response = await client.cart.estimateShippingMethods(
 )
 
 // or guest user
-const response = await client.cart.estimateShippingMethods(
+const response = await client.cart.estimateShippingRates(
   { orderToken },
   {
     country_iso: 'USA'
@@ -1278,7 +1279,7 @@ const response = await client.checkout.paymentMethods({ bearerToken })
 const response = await client.checkout.paymentMethods({ orderToken })
 ```
 
-### `shippingMethods`
+### `shippingRates`
 
 Returns a list of available Shipping Rates for Checkout. Shipping Rates are grouped against Shipments. Each checkout cna have multiple Shipments eg. some products are available in stock and will be send out instantly and some needs to be backordered.
 
@@ -1300,7 +1301,7 @@ params?: {
 
 ```ts
 // Logged in user
-const response = await client.checkout.shippingMethods(
+const response = await client.checkout.shippingRates(
   { bearerToken },
   {
     include: 'shipping_rates,stock_location'
@@ -1308,10 +1309,40 @@ const response = await client.checkout.shippingMethods(
 )
 
 // or guest user
-const response = await client.checkout.shippingMethods(
+const response = await client.checkout.shippingRates(
   { orderToken },
   {
     include: 'shipping_rates,stock_location'
+  }
+)
+```
+
+### `selectShippingMethod`
+
+Selects a Shipping Method for Shipment(s).
+
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
+
+**Parameters schema:**
+
+```ts
+params?: {
+  shipping_method_id: string
+  shipment_id?: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.checkout.selectShippingMethod(
+  { bearerToken },
+  {
+    shipping_method_id: '42'
   }
 )
 ```
@@ -1657,7 +1688,7 @@ await client.checkout.orderUpdate({ orderToken }, {
 await client.checkout.orderNext({ bearerToken })
 
 // Step two - pick a shipping method
-const shipping = (await client.checkout.shippingMethods({ orderToken })).success()
+const shipping = (await client.checkout.shippingRates({ orderToken })).success()
 
 await client.checkout.orderUpdate({ orderToken }, {
   order: {

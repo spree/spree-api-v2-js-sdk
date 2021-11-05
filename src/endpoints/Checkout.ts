@@ -1,9 +1,20 @@
 import Http from '../Http'
-import type { AddStoreCredit, OrderUpdate, AddPayment, NestedAttributes } from '../interfaces/endpoints/CheckoutClass'
+import type {
+  AddStoreCredit,
+  OrderUpdate,
+  AddPayment,
+  NestedAttributes,
+  SelectShippingMethod
+} from '../interfaces/endpoints/CheckoutClass'
 import type { IOrder, IOrderResult } from '../interfaces/Order'
 import type { IPaymentMethods, IPaymentMethodsResult } from '../interfaces/PaymentMethod'
 import type { IQuery } from '../interfaces/Query'
-import type { IShippingMethods, IShippingMethodsResult } from '../interfaces/ShippingMethod'
+import type {
+  IShippingMethods,
+  IShippingMethodsResult,
+  ShippingRates,
+  ShippingRatesResult
+} from '../interfaces/ShippingMethod'
 import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
@@ -36,8 +47,19 @@ export default class Checkout extends Http {
     return await this.spreeResponse<IPaymentMethods>('get', routes.checkoutPaymentMethodsPath(), token)
   }
 
+  /**
+   * @deprecated Use {@link shippingRates} instead.
+   */
   public async shippingMethods(token: IToken, params: IQuery = {}): Promise<IShippingMethodsResult> {
     return await this.spreeResponse<IShippingMethods>('get', routes.checkoutShippingMethodsPath(), token, params)
+  }
+
+  public async shippingRates(token: IToken, params: IQuery = {}): Promise<ShippingRatesResult> {
+    return await this.spreeResponse<ShippingRates>('get', routes.checkoutShippingRatesPath(), token, params)
+  }
+
+  public async selectShippingMethod(token: IToken, params: SelectShippingMethod): Promise<IOrderResult> {
+    return await this.spreeResponse<IOrder>('patch', routes.checkoutSelectShippingMethodPath(), token, params)
   }
 
   public async addPayment(token: IToken, addPaymentParams: AddPayment): Promise<IOrderResult> {
