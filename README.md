@@ -46,6 +46,7 @@ Developed and maintained by:
     - [emptyCart](#emptyCart)
     - [applyCouponCode](#applyCouponCode)
     - [removeCouponCode](#removeCouponCode)
+    - [removeAllCoupons](#removeAllCoupons)
     - [estimateShippingMethods](#estimateShippingMethods)
     - [associateGuestCart](#associateGuestCart)
   - [Checkout](#checkout)
@@ -935,7 +936,7 @@ Applies a coupon code to the Cart.
 **Example:**
 
 ```ts
-// Loged in user
+// Logged in user
 const response = await client.cart.applyCouponCode(
   { bearerToken },
   {
@@ -966,7 +967,7 @@ coupon_code?: string
 
 **Success response schema:** [Success schema](#success-schema)
 
-**Filed response schema:** [Error schema](#error-schema)
+**Failed response schema:** [Error schema](#error-schema)
 
 **Example:**
 
@@ -976,6 +977,24 @@ const response = await client.cart.removeCouponCode({ bearerToken }, 'promo_test
 
 // or guest user
 const response = await client.cart.removeCouponCode({ orderToken }, 'promo_test')
+```
+
+### `removeAllCoupons`
+
+**Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failed response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+// Logged in user
+const response = await client.cart.removeAllCoupons({ bearerToken })
+
+// or guest user
+const response = await client.cart.removeAllCoupons({ orderToken })
 ```
 
 ### `estimateShippingMethods`
