@@ -43,7 +43,8 @@ const endpoints = {
   orderStatusPath: (orderNumber: string): string => `${storefrontPath}/order_status/${orderNumber}`,
   pagesPath: (): string => `${storefrontPath}/cms_pages`,
   pagePath: (id: string): string => `${storefrontPath}/cms_pages/${id}`,
-  defaultCountryPath: (): string => `${storefrontPath}/countries/default`
+  defaultCountryPath: (): string => `${storefrontPath}/countries/default`,
+  checkoutAddPaymentPath: (): string => `${storefrontPath}/checkout/create_payment`
 }
 
 export default endpoints
