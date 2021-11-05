@@ -26,6 +26,7 @@ Developed and maintained by:
     - [accountInfo](#accountInfo)
     - [creditCardsList](#creditCardsList)
     - [defaultCreditCard](#defaultCreditCard)
+    - [removeCreditCard](#removeCreditCard)
     - [completedOrdersList](#completedOrdersList)
     - [completedOrder](#completedOrder)
     - [addressesList](#addressesList)
@@ -479,6 +480,28 @@ Return the User's default Credit Card.
 
 ```ts
 const response = await client.account.defaultCreditCard({ bearerToken })
+```
+
+### `removeCreditCard`
+
+Remove a User's Credit Card.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+creditCardId: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.account.removeCreditCard({ bearerToken }, '14')
 ```
 
 ### `completedOrdersList`
