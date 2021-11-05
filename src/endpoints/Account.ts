@@ -32,6 +32,10 @@ export default class Account extends Http {
     return await this.spreeResponse<ICreditCard>('get', routes.accountDefaultCreditCardPath(), token, params)
   }
 
+  public async removeCreditCard(token: IToken, id: string, params: IQuery = {}): Promise<NoContentResult> {
+    return await this.spreeResponse<NoContentResponse>('delete', routes.accountCreditCardRemovePath(id), token, params)
+  }
+
   public async completedOrdersList(token: IToken, params: IQuery = {}): Promise<IOrdersResult> {
     return await this.spreeResponse<IOrders>('get', routes.accountCompletedOrdersPath(), token, params)
   }

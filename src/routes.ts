@@ -34,6 +34,7 @@ const endpoints = {
     `${storefrontPath}/account_confirmations/${confirmationToken}`,
   accountCreditCardsPath: (): string => `${storefrontPath}/account/credit_cards`,
   accountDefaultCreditCardPath: (): string => `${storefrontPath}/account/credit_cards/default`,
+  accountCreditCardRemovePath: (id: string): string => `${storefrontPath}/account/credit_cards/${id}`,
   accountCompletedOrdersPath: (): string => `${storefrontPath}/account/orders`,
   accountCompletedOrderPath: (orderNumber: string): string => `${storefrontPath}/account/orders/${orderNumber}`,
   forgotPasswordPath: (): string => `${storefrontPath}/passwords`,
