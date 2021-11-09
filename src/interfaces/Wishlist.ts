@@ -39,3 +39,9 @@ export interface WishlistsShow extends IQuery {
 export interface WishlistsDefault extends IQuery {
   is_variant_included?: string
 }
+
+export interface WishlistsCreate extends IQuery {
+  name: string
+  is_private?: boolean
+  is_default?: boolean
+}

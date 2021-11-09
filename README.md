@@ -71,6 +71,7 @@ Developed and maintained by:
     - [list](#list-2)
     - [show](#show-3)
     - [default](#default)
+    - [create](#create-2)
   - [Pages](#pages)
     - [list](#list-3)
     - [show](#show-4)
@@ -1631,6 +1632,32 @@ params?: {
 
 ```ts
 const response = = await client.wishlists.default({ bearerToken }, { is_variant_included: '456' })
+```
+
+### `create`
+
+Creates a new Wishlist for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+params: {
+  name: string
+  is_private?: boolean
+  is_default?: boolean
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = = await client.wishlists.create({ bearerToken }, { name: 'My wishlist' })
 ```
 
 ## [Pages](https://guides.spreecommerce.org/api/v2/storefront/#tag/Pages)
