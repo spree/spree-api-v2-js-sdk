@@ -59,7 +59,8 @@ const endpoints = {
   menusPath: (): string => `${storefrontPath}/menus`,
   menuPath: (id: string): string => `${storefrontPath}/menus/${id}`,
   wishlistsPath: (): string => `${storefrontPath}/wishlists`,
-  wishlistPath: (token: string): string => `${storefrontPath}/wishlists/${token}`
+  wishlistPath: (token: string): string => `${storefrontPath}/wishlists/${token}`,
+  defaultWishlistPath: (): string => `${storefrontPath}/wishlists/default`
 }
 
 export default endpoints

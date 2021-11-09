@@ -6,7 +6,8 @@ import type {
   Wishlists as WishlistsResponse,
   Wishlist as WishlistResponse,
   WishlistsShow,
-  WishlistResult
+  WishlistResult,
+  WishlistsDefault
 } from '../interfaces/Wishlist'
 import routes from '../routes'
 
@@ -17,5 +18,9 @@ export default class Wishlists extends Http {
 
   public async show(token: IToken, wishlistToken: string, params: WishlistsShow = {}): Promise<WishlistResult> {
     return await this.spreeResponse<WishlistResponse>('get', routes.wishlistPath(wishlistToken), token, params)
+  }
+
+  public async default(token: IToken, params: WishlistsDefault = {}): Promise<WishlistResult> {
+    return await this.spreeResponse<WishlistResponse>('get', routes.defaultWishlistPath(), token, params)
   }
 }

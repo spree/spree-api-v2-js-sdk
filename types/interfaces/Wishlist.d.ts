@@ -30,3 +30,6 @@ export interface WishlistsList extends IQuery {
 export interface WishlistsShow extends IQuery {
     is_variant_included?: string;
 }
+export interface WishlistsDefault extends IQuery {
+    is_variant_included?: string;
+}

@@ -58,5 +58,6 @@ declare const endpoints: {
     menuPath: (id: string) => string;
     wishlistsPath: () => string;
     wishlistPath: (token: string) => string;
+    defaultWishlistPath: () => string;
 };
 export default endpoints;

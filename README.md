@@ -70,13 +70,14 @@ Developed and maintained by:
   - [Wishlists](#wishlists)
     - [list](#list-2)
     - [show](#show-3)
+    - [default](#default)
   - [Pages](#pages)
     - [list](#list-3)
     - [show](#show-4)
   - [Countries](#countries)
     - [list](#list-4)
     - [show](#show-5)
-    - [default](#default)
+    - [default](#default-1)
   - [Digital Assets](#digital-assets)
     - [download](#download)
   - [Menus](#menus)
@@ -1606,6 +1607,30 @@ params?: {
 
 ```ts
 const response = = await client.wishlists.show({ bearerToken }, '123', { is_variant_included: '456' })
+```
+
+### `default`
+
+Returns the default Wishlist for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+params?: {
+  is_variant_included?: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = = await client.wishlists.default({ bearerToken }, { is_variant_included: '456' })
 ```
 
 ## [Pages](https://guides.spreecommerce.org/api/v2/storefront/#tag/Pages)
