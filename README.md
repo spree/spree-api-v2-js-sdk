@@ -1616,7 +1616,7 @@ const response = await client.wishlists.show({ bearerToken }, '123', { is_varian
 
 ### `default`
 
-Returns the default Wishlist for the logged in user.
+Returns the default Wishlist for the logged in user. It will be created, if the user does not have a default Wishlist for the current store.
 
 **Required token:** [Bearer token](#bearer-token)
 
