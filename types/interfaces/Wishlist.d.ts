@@ -38,3 +38,8 @@ export interface WishlistsCreate extends IQuery {
     is_private?: boolean;
     is_default?: boolean;
 }
+export interface WishlistsUpdate extends IQuery {
+    name: string;
+    is_private?: boolean;
+    is_default?: boolean;
+}

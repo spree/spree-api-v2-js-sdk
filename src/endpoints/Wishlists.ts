@@ -8,7 +8,8 @@ import type {
   WishlistsShow,
   WishlistResult,
   WishlistsDefault,
-  WishlistsCreate
+  WishlistsCreate,
+  WishlistsUpdate
 } from '../interfaces/Wishlist'
 import routes from '../routes'
 
@@ -27,5 +28,9 @@ export default class Wishlists extends Http {
 
   public async create(token: IToken, params: WishlistsCreate): Promise<WishlistResult> {
     return await this.spreeResponse<WishlistResponse>('post', routes.wishlistsPath(), token, params)
+  }
+
+  public async update(token: IToken, wishlistToken: string, params: WishlistsUpdate): Promise<WishlistResult> {
+    return await this.spreeResponse<WishlistResponse>('patch', routes.wishlistPath(wishlistToken), token, params)
   }
 }
