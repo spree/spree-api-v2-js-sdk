@@ -57,7 +57,9 @@ const endpoints = {
   defaultCountryPath: (): string => `${storefrontPath}/countries/default`,
   digitalAssetsDownloadPath: (token: string): string => `${storefrontPath}/digitals/${token}`,
   menusPath: (): string => `${storefrontPath}/menus`,
-  menuPath: (id: string): string => `${storefrontPath}/menus/${id}`
+  menuPath: (id: string): string => `${storefrontPath}/menus/${id}`,
+  wishlistsPath: (): string => `${storefrontPath}/wishlists`,
+  wishlistPath: (token: string): string => `${storefrontPath}/wishlists/${token}`
 }
 
 export default endpoints

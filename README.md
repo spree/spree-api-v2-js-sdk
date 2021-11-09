@@ -67,18 +67,21 @@ Developed and maintained by:
   - [Taxons](#taxons)
     - [list](#list-1)
     - [show](#show-2)
-  - [Pages](#pages)
+  - [Wishlists](#wishlists)
     - [list](#list-2)
     - [show](#show-3)
-  - [Countries](#countries)
+  - [Pages](#pages)
     - [list](#list-3)
     - [show](#show-4)
+  - [Countries](#countries)
+    - [list](#list-4)
+    - [show](#show-5)
     - [default](#default)
   - [Digital Assets](#digital-assets)
     - [download](#download)
   - [Menus](#menus)
-    - [list](#list-4)
-    - [show](#show-5)
+    - [list](#list-5)
+    - [show](#show-6)
   - [Checkout Flow](#checkout-flow)
 
 ## Quick start
@@ -1552,6 +1555,57 @@ params?: {
 
 ```ts
 const products = await client.taxons.show('1')
+```
+
+## [Wishlists](https://spark-solutions.stoplight.io/docs/api-v2/b3A6MjE0NTY5Mzg-list-all-wishlists)
+
+### `list`
+
+Returns a list of Wishlists.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+params?: {
+  is_variant_included?: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = = await client.wishlists.list({ bearerToken }, { is_variant_included: '456' })
+```
+
+### `show`
+
+Returns a single Wishlist.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: IToken
+params?: {
+  is_variant_included?: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = = await client.wishlists.show({ bearerToken }, '123', { is_variant_included: '456' })
 ```
 
 ## [Pages](https://guides.spreecommerce.org/api/v2/storefront/#tag/Pages)

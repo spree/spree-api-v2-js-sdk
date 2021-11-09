@@ -9,5 +9,19 @@ import Products from './Products'
 import Taxons from './Taxons'
 import DigitalAssets from './DigitalAssets'
 import Menus from './Menus'
+import Wishlists from './Wishlists'
 
-export { Account, Authentication, Cart, Checkout, Countries, Order, Products, Pages, Taxons, DigitalAssets, Menus }
+export {
+  Account,
+  Authentication,
+  Cart,
+  Checkout,
+  Countries,
+  Order,
+  Products,
+  Pages,
+  Taxons,
+  DigitalAssets,
+  Menus,
+  Wishlists
+}
