@@ -1,7 +1,8 @@
 import * as errors from '../errors'
 import CastError from '../errors/CastError'
 import DeserializeError from '../errors/DeserializeError'
-import { Result } from '../interfaces/Result'
+import type { Result } from '../interfaces/Result'
+import type { ResultResponse } from '../interfaces/ResultResponse'
 
 const makeSuccess = <F extends Error, S>(value: S): Result<F, S> => {
   return {
@@ -72,4 +73,19 @@ const fromJson = (json: { [key: string]: any }): Result<errors.SpreeSDKError, an
   throw new DeserializeError('Unknown signature.')
 }
 
-export { makeSuccess, makeFail, toJson, fromJson }
+/**
+ * If Spree returns a success response, extracts and returns its data.
+ * Otherwise, throws the response's SpreeSDKError. Useful for handling
+ * SpreeSDKErrors inside try..catch blocks.
+ */
+const extractSuccess = <ResponseType, T extends ResponseType>(spreeRequest: Promise<ResultResponse<T>>): Promise<T> => {
+  return spreeRequest.then((spreeResponse) => {
+    if (spreeResponse.isFail()) {
+      throw spreeResponse.fail()
+    }
+
+    return spreeResponse.success()
+  })
+}
+
+export { makeSuccess, makeFail, toJson, fromJson, extractSuccess }
