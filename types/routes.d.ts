@@ -59,5 +59,8 @@ declare const endpoints: {
     wishlistsPath: () => string;
     wishlistPath: (token: string) => string;
     defaultWishlistPath: () => string;
+    wishlistsAddWishedItemPath: (token: string) => string;
+    wishlistsUpdateWishedItemQuantityPath: (token: string, id: string) => string;
+    wishlistsRemoveWishedItemPath: (token: string, id: string) => string;
 };
 export default endpoints;

@@ -73,6 +73,9 @@ Developed and maintained by:
     - [default](#default)
     - [create](#create-2)
     - [update](#update-1)
+    - [remove](#remove-1)
+    - [addWishedItem](#addWishedItem)
+    - [updateWishedItem](#updateWishedItem)
   - [Pages](#pages)
     - [list](#list-3)
     - [show](#show-4)
@@ -1496,7 +1499,7 @@ params?: {
 **Example:**
 
 ```ts
-const response = = await client.products.show('123')
+const response = await client.products.show('123')
 ```
 
 ## [Taxons](https://guides.spreecommerce.org/api/v2/storefront/#tag/Taxons)
@@ -1583,7 +1586,7 @@ params?: {
 **Example:**
 
 ```ts
-const response = = await client.wishlists.list({ bearerToken }, { is_variant_included: '456' })
+const response = await client.wishlists.list({ bearerToken }, { is_variant_included: '456' })
 ```
 
 ### `show`
@@ -1608,7 +1611,7 @@ params?: {
 **Example:**
 
 ```ts
-const response = = await client.wishlists.show({ bearerToken }, '123', { is_variant_included: '456' })
+const response = await client.wishlists.show({ bearerToken }, '123', { is_variant_included: '456' })
 ```
 
 ### `default`
@@ -1632,7 +1635,7 @@ params?: {
 **Example:**
 
 ```ts
-const response = = await client.wishlists.default({ bearerToken }, { is_variant_included: '456' })
+const response = await client.wishlists.default({ bearerToken }, { is_variant_included: '456' })
 ```
 
 ### `create`
@@ -1658,7 +1661,7 @@ params: {
 **Example:**
 
 ```ts
-const response = = await client.wishlists.create({ bearerToken }, { name: 'My wishlist' })
+const response = await client.wishlists.create({ bearerToken }, { name: 'My wishlist' })
 ```
 
 ### `update`
@@ -1711,6 +1714,86 @@ wishlistToken: string
 
 ```ts
 const response = await client.wishlists.remove({ bearerToken }, '123')
+```
+
+### `addWishedItem`
+
+Adds a new Wished Item to a Wishlist for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string,
+params: {
+  variant_id: string
+  quantity: number
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.addWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', {
+  variant_id: '1',
+  quantity: 10
+})
+```
+
+### `updateWishedItem`
+
+Updates a Wished Item for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string,
+wishedItemId: string
+params: {
+  quantity: number
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.updateWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', '2', {
+  quantity: 13
+})
+```
+
+### `removeWishedItem`
+
+Removes a Wished Item for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string,
+wishedItemId: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.removeWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', '2')
 ```
 
 ## [Pages](https://guides.spreecommerce.org/api/v2/storefront/#tag/Pages)
