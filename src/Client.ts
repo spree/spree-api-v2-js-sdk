@@ -8,7 +8,8 @@ import {
   Authentication,
   Order,
   Pages,
-  DigitalAssets
+  DigitalAssets,
+  Menus
 } from './endpoints'
 import createFetcherFromType from './helpers/createFetcherFromType'
 import type { Fetcher, IClientConfig, OptionalIClientConfig } from './interfaces/ClientConfig'
@@ -24,6 +25,7 @@ class Client {
   public order: Order
   public pages: Pages
   public digitalAssets: DigitalAssets
+  public menus: Menus
 
   protected host: string
   protected fetcher: Fetcher
@@ -61,6 +63,7 @@ class Client {
     this.products = this.makeProducts()
     this.taxons = this.makeTaxons()
     this.digitalAssets = this.makeDigitalAssets()
+    this.menus = this.makeMenus()
   }
 
   protected makeAccount(): Account {
@@ -101,6 +104,10 @@ class Client {
 
   protected makeDigitalAssets(): DigitalAssets {
     return new DigitalAssets({ fetcher: this.fetcher })
+  }
+
+  protected makeMenus(): Menus {
+    return new Menus({ fetcher: this.fetcher })
   }
 }
 

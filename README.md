@@ -76,6 +76,9 @@ Developed and maintained by:
     - [default](#default)
   - [Digital Assets](#digital-assets)
     - [download](#download)
+  - [Menus](#menus)
+    - [list](#list-4)
+    - [show](#show-5)
   - [Checkout Flow](#checkout-flow)
 
 ## Quick start
@@ -1710,6 +1713,53 @@ document.body.appendChild(image)
 const digitalAssetBlob = await new Response(digitalAssetStream).blob()
 
 image.src = URL.createObjectURL(digitalAssetBlob)
+```
+
+## [Menus](https://spark-solutions.stoplight.io/docs/api-v2/b3A6MTc2NjI3MTM-list-all-menus)
+
+### `list`
+
+Returns a list of Menus.
+
+**Parameters schema:**
+
+```ts
+params?: {
+  locale?: string
+  filter?: {
+    location?: string
+  }
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.menus.list({ locale: 'fr', filter: { location: 'header' } })
+```
+
+### `show`
+
+Returns a single Menu.
+
+**Parameters schema:**
+
+```ts
+id: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.menus.show('2')
 ```
 
 ## Checkout Flow

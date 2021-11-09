@@ -54,5 +54,7 @@ declare const endpoints: {
     pagePath: (id: string) => string;
     defaultCountryPath: () => string;
     digitalAssetsDownloadPath: (token: string) => string;
+    menusPath: () => string;
+    menuPath: (id: string) => string;
 };
 export default endpoints;
