@@ -67,15 +67,27 @@ Developed and maintained by:
   - [Taxons](#taxons)
     - [list](#list-1)
     - [show](#show-2)
-  - [Pages](#pages)
+  - [Wishlists](#wishlists)
     - [list](#list-2)
     - [show](#show-3)
-  - [Countries](#countries)
+    - [default](#default)
+    - [create](#create-2)
+    - [update](#update-1)
+    - [remove](#remove-1)
+    - [addWishedItem](#addWishedItem)
+    - [updateWishedItem](#updateWishedItem)
+  - [Pages](#pages)
     - [list](#list-3)
     - [show](#show-4)
-    - [default](#default)
+  - [Countries](#countries)
+    - [list](#list-4)
+    - [show](#show-5)
+    - [default](#default-1)
   - [Digital Assets](#digital-assets)
     - [download](#download)
+  - [Menus](#menus)
+    - [list](#list-5)
+    - [show](#show-6)
   - [Checkout Flow](#checkout-flow)
 
 ## Quick start
@@ -1487,7 +1499,7 @@ params?: {
 **Example:**
 
 ```ts
-const response = = await client.products.show('123')
+const response = await client.products.show('123')
 ```
 
 ## [Taxons](https://guides.spreecommerce.org/api/v2/storefront/#tag/Taxons)
@@ -1549,6 +1561,239 @@ params?: {
 
 ```ts
 const products = await client.taxons.show('1')
+```
+
+## [Wishlists](https://spark-solutions.stoplight.io/docs/api-v2/b3A6MjE0NTY5Mzg-list-all-wishlists)
+
+### `list`
+
+Returns a list of Wishlists.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+params?: {
+  is_variant_included?: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.list({ bearerToken }, { is_variant_included: '456' })
+```
+
+### `show`
+
+Returns a single Wishlist.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string
+params?: {
+  is_variant_included?: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.show({ bearerToken }, '123', { is_variant_included: '456' })
+```
+
+### `default`
+
+Returns the default Wishlist for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+params?: {
+  is_variant_included?: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.default({ bearerToken }, { is_variant_included: '456' })
+```
+
+### `create`
+
+Creates a new Wishlist for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+params: {
+  name: string
+  is_private?: boolean
+  is_default?: boolean
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.create({ bearerToken }, { name: 'My wishlist' })
+```
+
+### `update`
+
+Updates an existing Wishlist.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string
+params: {
+  name: string
+  is_private?: boolean
+  is_default?: boolean
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.update({ bearerToken }, '123', {
+  name: 'My updated wishlist',
+  is_private: true
+})
+```
+
+### `remove`
+
+Removes a Wishlist.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.remove({ bearerToken }, '123')
+```
+
+### `addWishedItem`
+
+Adds a new Wished Item to a Wishlist for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string,
+params: {
+  variant_id: string
+  quantity: number
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.addWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', {
+  variant_id: '1',
+  quantity: 10
+})
+```
+
+### `updateWishedItem`
+
+Updates a Wished Item for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string,
+wishedItemId: string
+params: {
+  quantity: number
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.updateWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', '2', {
+  quantity: 13
+})
+```
+
+### `removeWishedItem`
+
+Removes a Wished Item for the logged in user.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string,
+wishedItemId: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.removeWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', '2')
 ```
 
 ## [Pages](https://guides.spreecommerce.org/api/v2/storefront/#tag/Pages)
@@ -1710,6 +1955,53 @@ document.body.appendChild(image)
 const digitalAssetBlob = await new Response(digitalAssetStream).blob()
 
 image.src = URL.createObjectURL(digitalAssetBlob)
+```
+
+## [Menus](https://spark-solutions.stoplight.io/docs/api-v2/b3A6MTc2NjI3MTM-list-all-menus)
+
+### `list`
+
+Returns a list of Menus.
+
+**Parameters schema:**
+
+```ts
+params?: {
+  locale?: string
+  filter?: {
+    location?: string
+  }
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.menus.list({ locale: 'fr', filter: { location: 'header' } })
+```
+
+### `show`
+
+Returns a single Menu.
+
+**Parameters schema:**
+
+```ts
+id: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.menus.show('2')
 ```
 
 ## Checkout Flow

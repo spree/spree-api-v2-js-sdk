@@ -55,7 +55,17 @@ const endpoints = {
   pagesPath: (): string => `${storefrontPath}/cms_pages`,
   pagePath: (id: string): string => `${storefrontPath}/cms_pages/${id}`,
   defaultCountryPath: (): string => `${storefrontPath}/countries/default`,
-  digitalAssetsDownloadPath: (token: string): string => `${storefrontPath}/digitals/${token}`
+  digitalAssetsDownloadPath: (token: string): string => `${storefrontPath}/digitals/${token}`,
+  menusPath: (): string => `${storefrontPath}/menus`,
+  menuPath: (id: string): string => `${storefrontPath}/menus/${id}`,
+  wishlistsPath: (): string => `${storefrontPath}/wishlists`,
+  wishlistPath: (token: string): string => `${storefrontPath}/wishlists/${token}`,
+  defaultWishlistPath: (): string => `${storefrontPath}/wishlists/default`,
+  wishlistsAddWishedItemPath: (token: string): string => `${storefrontPath}/wishlists/${token}/add_item`,
+  wishlistsUpdateWishedItemQuantityPath: (token: string, id: string): string =>
+    `${storefrontPath}/wishlists/${token}/set_item_quantity/${id}`,
+  wishlistsRemoveWishedItemPath: (token: string, id: string): string =>
+    `${storefrontPath}/wishlists/${token}/remove_item/${id}`
 }
 
 export default endpoints

@@ -54,5 +54,13 @@ declare const endpoints: {
     pagePath: (id: string) => string;
     defaultCountryPath: () => string;
     digitalAssetsDownloadPath: (token: string) => string;
+    menusPath: () => string;
+    menuPath: (id: string) => string;
+    wishlistsPath: () => string;
+    wishlistPath: (token: string) => string;
+    defaultWishlistPath: () => string;
+    wishlistsAddWishedItemPath: (token: string) => string;
+    wishlistsUpdateWishedItemQuantityPath: (token: string, id: string) => string;
+    wishlistsRemoveWishedItemPath: (token: string, id: string) => string;
 };
 export default endpoints;

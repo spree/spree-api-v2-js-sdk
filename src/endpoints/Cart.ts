@@ -41,8 +41,8 @@ export default class Cart extends Http {
     return await this.spreeResponse<IOrder>('patch', routes.cartEmptyPath(), token, params)
   }
 
-  public async remove(token: IToken, params: IQuery = {}): Promise<NoContentResult> {
-    return await this.spreeResponse<NoContentResponse>('delete', routes.cartPath(), token, params)
+  public async remove(token: IToken): Promise<NoContentResult> {
+    return await this.spreeResponse<NoContentResponse>('delete', routes.cartPath(), token)
   }
 
   public async setQuantity(token: IToken, params: SetQuantity): Promise<IOrderResult> {
