@@ -1594,7 +1594,7 @@ Returns a single Wishlist.
 **Parameters schema:**
 
 ```ts
-wishlistToken: IToken
+wishlistToken: string
 params?: {
   is_variant_included?: string
 }
