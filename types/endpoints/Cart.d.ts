@@ -11,7 +11,7 @@ export default class Cart extends Http {
     addItem(token: IToken, params: AddItem): Promise<IOrderResult>;
     removeItem(token: IToken, id: string, params?: IQuery): Promise<IOrderResult>;
     emptyCart(token: IToken, params?: IQuery): Promise<IOrderResult>;
-    remove(token: IToken, params?: IQuery): Promise<NoContentResult>;
+    remove(token: IToken): Promise<NoContentResult>;
     setQuantity(token: IToken, params: SetQuantity): Promise<IOrderResult>;
     applyCouponCode(token: IToken, params: CouponCode): Promise<IOrderResult>;
     removeCouponCode(token: IToken, code?: string, params?: IQuery): Promise<IOrderResult>;

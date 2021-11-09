@@ -1685,7 +1685,32 @@ params: {
 **Example:**
 
 ```ts
-const response = = await client.wishlists.update({ bearerToken }, '123', { name: 'My updated wishlist', is_private: true })
+const response = await client.wishlists.update({ bearerToken }, '123', {
+  name: 'My updated wishlist',
+  is_private: true
+})
+```
+
+### `remove`
+
+Removes a Wishlist.
+
+**Required token:** [Bearer token](#bearer-token)
+
+**Parameters schema:**
+
+```ts
+wishlistToken: string
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const response = await client.wishlists.remove({ bearerToken }, '123')
 ```
 
 ## [Pages](https://guides.spreecommerce.org/api/v2/storefront/#tag/Pages)

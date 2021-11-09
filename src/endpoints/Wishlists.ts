@@ -1,4 +1,5 @@
 import Http from '../Http'
+import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import type { IToken } from '../interfaces/Token'
 import type {
   WishlistsList,
@@ -32,5 +33,9 @@ export default class Wishlists extends Http {
 
   public async update(token: IToken, wishlistToken: string, params: WishlistsUpdate): Promise<WishlistResult> {
     return await this.spreeResponse<WishlistResponse>('patch', routes.wishlistPath(wishlistToken), token, params)
+  }
+
+  public async remove(token: IToken, wishlistToken: string): Promise<NoContentResult> {
+    return await this.spreeResponse<NoContentResponse>('delete', routes.wishlistPath(wishlistToken), token)
   }
 }
