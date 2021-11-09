@@ -9,7 +9,7 @@ import {
 import FetchError from './errors/FetchError'
 import * as result from './helpers/result'
 import type { Fetcher } from './interfaces/ClientConfig'
-import { ErrorClass } from './interfaces/errors/ErrorClass'
+import type { ErrorType } from './interfaces/errors/ErrorType'
 import type { FetchConfig, HttpMethod, ResponseParsing } from './interfaces/FetchConfig'
 import type { JsonApiResponse } from './interfaces/JsonApi'
 import type { ResultResponse } from './interfaces/ResultResponse'
@@ -56,16 +56,16 @@ export default class Http {
    * The HTTP error code returned by Spree is not indicative of its response shape.
    * This function determines the information provided by Spree and uses everything available.
    */
-  protected classifySpreeError(error: FetchError): ErrorClass {
+  protected classifySpreeError(error: FetchError): ErrorType {
     const { error: errorSummary, errors } = error.data
 
     if (typeof errorSummary === 'string') {
       if (typeof errors === 'object') {
-        return ErrorClass.FULL
+        return 'full'
       }
-      return ErrorClass.BASIC
+      return 'basic'
     }
-    return ErrorClass.LIMITED
+    return 'limited'
   }
 
   protected processError(error: Error): SpreeSDKError {
@@ -89,11 +89,11 @@ export default class Http {
 
   protected processSpreeError(error: FetchError): SpreeError {
     const { error: errorSummary, errors } = error.data
-    const errorClass = this.classifySpreeError(error)
+    const errorType = this.classifySpreeError(error)
 
-    if (errorClass === ErrorClass.FULL) {
+    if (errorType === 'full') {
       return new ExpandedSpreeError(error.response, errorSummary, errors)
-    } else if (errorClass === ErrorClass.BASIC) {
+    } else if (errorType === 'basic') {
       return new BasicSpreeError(error.response, errorSummary)
     } else {
       return new SpreeError(error.response)
