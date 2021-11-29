@@ -1,7 +1,7 @@
-import * as qs from 'qs'
 import type { AxiosInstance } from 'axios'
 import type { CreateFetcher } from '../interfaces/ClientConfig'
 import FetchError from '../errors/FetchError'
+import { objectToQuerystring } from '../helpers/request'
 
 const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -11,7 +11,7 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
     baseURL: fetcherOptions.host,
     headers: { 'Content-Type': 'application/json' },
     paramsSerializer: (params) => {
-      return qs.stringify(params, { arrayFormat: 'brackets' })
+      return objectToQuerystring(params)
     }
   })
 
