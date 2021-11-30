@@ -5,15 +5,13 @@ set -e
 cd /app
 
 npm install
-
 npm run build
-npm link
+npm pack
 
 cd /app/docker/express
 
 npm install
-
-npm link @spree/storefront-api-v2-sdk
+npm install `find /app/spree-storefront-api-v2-sdk-*.tgz`
 
 /app/wait-for-it.sh -s docker-host:3000
 
