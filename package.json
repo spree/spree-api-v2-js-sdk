@@ -8,7 +8,7 @@
   "main": "dist/server/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "webpack",
     "build:server": "webpack --config-name server",
     "build:client": "webpack --config-name client",
