@@ -5,6 +5,7 @@ set -e
 cd /app
 
 npm install
+npm run build
 npm link
 
 cd /app/docker/express
