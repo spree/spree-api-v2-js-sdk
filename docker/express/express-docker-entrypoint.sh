@@ -5,6 +5,11 @@ set -e
 cd /app
 
 npm install
+
+# Install optional peerDependencies
+npm install axios
+npm install node-fetch
+
 npm run build
 npm link
 
