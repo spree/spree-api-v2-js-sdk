@@ -1,7 +1,5 @@
 .DS_Store
 node_modules
 yarn-error.log
-/dist
 /.vscode
 /.env
-/types
