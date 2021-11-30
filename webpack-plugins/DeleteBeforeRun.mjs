@@ -1,15 +1,16 @@
 import del from 'del'
 
-class ClearBeforeEmit {
+class DeleteBeforeRun {
   constructor(path) {
     this.path = path
   }
   apply(compiler) {
-    compiler.hooks.emit.tapPromise('Clear Types Plugin', () => {
+    compiler.hooks.beforeRun.tapPromise('Clear path', () => {
       console.log(`Removing ${this.path}`)
+
       return del([this.path])
     })
   }
 }
 
-export default ClearBeforeEmit
+export default DeleteBeforeRun
