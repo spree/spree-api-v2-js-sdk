@@ -1,8 +1,0 @@
-language: node_js
-node_js:
-  - 14
-services:
-  - docker
-before_install:
-  - docker pull sparksolutions/spree-commerce:latest
-script: ./travis-run.sh
