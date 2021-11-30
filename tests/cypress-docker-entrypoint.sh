@@ -6,16 +6,13 @@ cd /sdk
 
 npm install
 
-# Install optional peerDependencies
-npm install axios
-npm install node-fetch
-
 npm run build
 npm link
 
 cd /sdk/tests
 
 npm install
+
 npm link @spree/storefront-api-v2-sdk
 
 /sdk/wait-for-it.sh -s express:5000
