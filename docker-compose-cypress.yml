@@ -8,13 +8,8 @@ services:
       - /app/node_modules
       - /app/docker/express/node_modules
     entrypoint: ['/app/docker/express/express-docker-entrypoint.sh']
-    depends_on:
-      - docker-host
   cypress:
     image: cypress/included:8.3.0
-    depends_on:
-      - express
-      - docker-host
     volumes:
       - .:/sdk
       - /sdk/node_modules
