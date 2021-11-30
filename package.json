@@ -34,10 +34,12 @@
     "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
+    "axios": "^0.24.0",
     "del": "^6.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.1",
+    "node-fetch": "^3.1.0",
     "prettier": "^2.3.2",
     "progress-bar-webpack-plugin": "^2.1.0",
     "source-map-loader": "^2.0.2",
@@ -48,10 +50,16 @@
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^2.5.2"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "node-fetch": "^2.6.1",
     "axios": "^0.21.4"
   },
-  "optionalDependencies": {
-    "node-fetch": "^2.6.1"
+  "peerDependenciesMeta": {
+    "node-fetch": {
+      "optional": true
+    },
+    "axios": {
+      "optional": true
+    }
   }
 }

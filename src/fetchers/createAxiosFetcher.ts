@@ -3,9 +3,16 @@ import type { CreateFetcher } from '../interfaces/ClientConfig'
 import FetchError from '../errors/FetchError'
 import { objectToQuerystring } from '../helpers/request'
 
+declare const __non_webpack_require__: (module: string) => any
+
 const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const Axios = require('axios')
+  let Axios
+
+  if (globalThis.Axios) {
+    Axios = globalThis.axios
+  } else {
+    Axios = __non_webpack_require__('axios').default
+  }
 
   const axios: AxiosInstance = Axios.create({
     baseURL: fetcherOptions.host,

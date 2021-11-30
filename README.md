@@ -98,6 +98,14 @@ Install the NPM package:
 npm install @spree/storefront-api-v2-sdk --save
 ```
 
+Install a HTTP client - axios or node-fetch. For example:
+
+```
+npm install axios
+```
+
+<aside><p>For details about HTTP clients, read the <a href="#switching-the-fetcher">Switching the fetcher</a> section.</p></aside>
+
 Create a client:
 
 ```js
@@ -195,21 +203,60 @@ Identifies a user for a single operation. For example, to reset their account's 
 
 ## Switching the fetcher
 
-By default, the Spree SDK uses [Axios][8] to communicate with Spree. Another built-in option is [fetch][9]. It can be set as follows:
+Spree SDK does not come bundled with a HTTP client. A HTTP client may have to be installed before using the library. Out of the box, Spree SDK supports using [Axios][8] and [fetch][9] to communicate with Spree.
 
-```js
-createClient({ fetcherType: 'fetch', host: ... })
+**Option A - RECOMMENDED: Spree SDK in NodeJS using Axios**
+
+To use Spree SDK with Axios in NodeJS, install Axios using NPM:
+
+```
+npm install axios
 ```
 
-The `'fetch'` option will look for global `fetch` and `Request` values and fallback to `node-fetch` during runtime.
+Spree SDK will automatically detect that Axios is available and use it to make requests to Spree.
 
-A custom fetcher can be used like so:
+**Option B - Spree SDK in the browser using Axios**
 
-```js
-createClient({ fetcherType: 'custom', createFetcher: ... })
+To use Spree SDK with Axios in the browser, include axios as a `<script>` tag before using the SDK:
+
+```html
+<script src="https://unpkg.com/axios@0.21.4/dist/axios.min.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
 ```
 
-To create a custom fetcher which uses a fetch-compatible interface, use the `createCustomizedFetchFetcher` function.
+Again, Spree SDK will automatically detect that Axios is available and use it to make requests to Spree.
+
+**Option C - Spree SDK in NodeJS using fetch**
+
+Another supported HTTP client is [fetch][9]. It can be setup in NodeJS as follows:
+
+```
+npm install node-fetch
+```
+
+To have Spree SDK use fetch instead of Axios, set `fetcherType` to `'fetch'` when creating the Spree SDK Client:
+
+```js
+makeClient({ fetcherType: 'fetch', host: ... })
+```
+
+**Option D - Spree SDK in the browser using fetch**
+
+Modern web browsers include fetch natively. To use Spree SDK with native fetch, it's enough to set `fetcherType` to `'fetch'` when creating the Spree SDK Client:
+
+```js
+makeClient({ fetcherType: 'fetch', host: ... })
+```
+
+**Option E - ADVANCED: Supply a custom HTTP client.**
+
+To have full control over requests and responses, a custom fetcher can be used like so:
+
+```js
+makeClient({ fetcherType: 'custom', createFetcher: ... })
+```
+
+<aside><p>To create a custom fetcher which uses a fetch-compatible interface, use the `createCustomizedFetchFetcher` function.</p></aside>
 
 ## Endpoints
 

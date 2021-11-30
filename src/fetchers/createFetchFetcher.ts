@@ -3,7 +3,6 @@ import { objectToQuerystring } from '../helpers/request'
 import type { CreateFetcher } from '../interfaces/ClientConfig'
 import type { CreateCustomizedFetchFetcher } from '../interfaces/CreateCustomizedFetchFetcher'
 
-// declare const FETCH_TYPE: string
 declare const __non_webpack_require__: (module: string) => any
 
 const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptions) => {
