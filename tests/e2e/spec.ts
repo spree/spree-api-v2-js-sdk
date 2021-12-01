@@ -169,7 +169,9 @@ const createClientVersionInTheBrowserTests = ({
 }) => {
   describe(`client version (window global) in the browser using ${fetcherType}`, function () {
     beforeEach(function () {
-      cy.readFile('/sdk/dist/client/index.js').then(function (spreeClientScript) {
+      cy.readFile('/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/index.js').then(function (
+        spreeClientScript
+      ) {
         cy.intercept('/SpreeClientSpecialPath', spreeClientScript)
         cy.document().then((document) => {
           const scriptElement = document.createElement('script')
