@@ -44,7 +44,12 @@ export default ({ typeScriptConfigFilePath }) => ({
         include: /node_modules/,
         enforce: 'pre'
       }
-    ]
+    ],
+    parser: {
+      javascript: {
+        commonjsMagicComments: true
+      }
+    }
   },
   resolveLoader: {
     modules: [srcDirectoryPath, 'node_modules']
