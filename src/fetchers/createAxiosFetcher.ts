@@ -1,17 +1,24 @@
-import * as qs from 'qs'
 import type { AxiosInstance } from 'axios'
 import type { CreateFetcher } from '../interfaces/ClientConfig'
 import FetchError from '../errors/FetchError'
+import { objectToQuerystring } from '../helpers/request'
+
+declare const __non_webpack_require__: (module: string) => any
 
 const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const Axios = require('axios')
+  let Axios
+
+  if (globalThis.axios) {
+    Axios = globalThis.axios
+  } else {
+    Axios = __non_webpack_require__('axios').default
+  }
 
   const axios: AxiosInstance = Axios.create({
     baseURL: fetcherOptions.host,
     headers: { 'Content-Type': 'application/json' },
     paramsSerializer: (params) => {
-      return qs.stringify(params, { arrayFormat: 'brackets' })
+      return objectToQuerystring(params)
     }
   })
 

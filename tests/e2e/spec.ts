@@ -160,6 +160,20 @@ const createServerVersionInTheBrowserTests = ({
   })
 }
 
+const includeFileAsScript = (path: string) => {
+  return cy.readFile(path).then(function (fileAtPath) {
+    cy.intercept(path, fileAtPath)
+
+    return cy.document().then((document) => {
+      const scriptElement = document.createElement('script')
+
+      scriptElement.src = path
+
+      document.head.appendChild(scriptElement)
+    })
+  })
+}
+
 const createClientVersionInTheBrowserTests = ({
   host,
   fetcherType
@@ -169,15 +183,13 @@ const createClientVersionInTheBrowserTests = ({
 }) => {
   describe(`client version (window global) in the browser using ${fetcherType}`, function () {
     beforeEach(function () {
-      cy.readFile('/sdk/dist/client/index.js').then(function (spreeClientScript) {
-        cy.intercept('/SpreeClientSpecialPath', spreeClientScript)
-        cy.document().then((document) => {
-          const scriptElement = document.createElement('script')
-
-          scriptElement.src = '/SpreeClientSpecialPath'
-          document.head.appendChild(scriptElement)
-
-          cy.window()
+      includeFileAsScript('/app/node_modules/axios/dist/axios.min.js')
+        .then(() => {
+          return includeFileAsScript('/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/index.js')
+        })
+        .then(() => {
+          return cy
+            .window()
             .its('SpreeSDK.makeClient')
             .then(function (makeClient) {
               const client = makeClient({ host, fetcherType })
@@ -185,7 +197,6 @@ const createClientVersionInTheBrowserTests = ({
               cy.wrap({ value: client }).as('clientRef')
             })
         })
-      })
     })
 
     createTests()

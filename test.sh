@@ -41,6 +41,8 @@ bundle exec rails spree_sample:load
 rm -rf tmp/latest.dump
 "
 
-docker-compose -f docker-compose-cypress.yml pull
+docker-compose -f docker-compose-test-runtime.yml build --no-cache
+
+docker-compose -f docker-compose-spree.yml -f docker-compose-cypress.yml build --no-cache
 
 docker-compose -f docker-compose-spree.yml -f docker-compose-cypress.yml up --exit-code-from cypress

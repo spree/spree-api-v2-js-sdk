@@ -1,13 +1,14 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "noUnusedParameters": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
     "strict": true,
-    "lib": [ "es6", "dom", "scripthost" ],
-    "moduleResolution" : "node",
+    "lib": ["es6", "dom", "scripthost"],
+    "moduleResolution": "node",
     "types": ["cypress"],
     "importsNotUsedAsValues": "remove"
   },
-  "include" : [
-    "e2e/**/*.ts"
-  ]
+  "include": ["e2e/**/*.ts"]
 }

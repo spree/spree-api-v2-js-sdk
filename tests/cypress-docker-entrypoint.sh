@@ -2,17 +2,7 @@
 
 set -e
 
-cd /sdk
+/sdk/wait-for-it.sh http://express:5000/ping -t 300
+/sdk/wait-for-it.sh http://docker-host:3000/api/v2/storefront/products?per_page=1 -t 300
 
-npm install
-npm link
-
-cd /sdk/tests
-
-npm install
-npm link @spree/storefront-api-v2-sdk
-
-/sdk/wait-for-it.sh -s express:5000
-/sdk/wait-for-it.sh -s docker-host:3000
-
-cypress run --browser chrome:stable --project /sdk/tests
+cypress run --browser chrome:stable --project /app

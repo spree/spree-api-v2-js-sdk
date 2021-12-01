@@ -2,7 +2,7 @@ import webpack from 'webpack'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import ProgressBar from './webpack-plugins/ProgressBar.mjs'
-import DeleteBeforeEmit from './webpack-plugins/DeleteBeforeEmit.mjs'
+import DeleteBeforeRun from './webpack-plugins/DeleteBeforeRun.mjs'
 
 // Redefining __dirname is a temporary solution, due to https://github.com/nodejs/help/issues/2907
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -14,7 +14,7 @@ export default ({ typeScriptConfigFilePath }) => ({
   context: baseDirectoryPath,
   plugins: [
     new ProgressBar(),
-    new DeleteBeforeEmit(resolve(baseDirectoryPath, 'types')),
+    new DeleteBeforeRun(resolve(baseDirectoryPath, 'types')),
     new WatchIgnorePlugin({ paths: [resolve(baseDirectoryPath, 'types')] })
   ],
   entry: {

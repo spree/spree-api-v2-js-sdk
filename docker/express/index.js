@@ -8,6 +8,10 @@ const { makeClient, result } = sdk
 
 app.use(bodyParser.json())
 
+app.get('/ping', (_request, response) => {
+  response.send('up')
+})
+
 app.all('/', async (request, response, next) => {
   try {
     console.log('The Express server received a new request. Arguments: ', request.body)

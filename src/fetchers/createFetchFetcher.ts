@@ -1,9 +1,8 @@
-import * as qs from 'qs'
 import FetchError from '../errors/FetchError'
+import { objectToQuerystring } from '../helpers/request'
 import type { CreateFetcher } from '../interfaces/ClientConfig'
 import type { CreateCustomizedFetchFetcher } from '../interfaces/CreateCustomizedFetchFetcher'
 
-// declare const FETCH_TYPE: string
 declare const __non_webpack_require__: (module: string) => any
 
 const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptions) => {
@@ -27,7 +26,7 @@ const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptio
             break
           default:
             payload = null
-            absoluteUrl.search = qs.stringify(params, { arrayFormat: 'brackets' })
+            absoluteUrl.search = objectToQuerystring(params)
         }
 
         const request = new requestConstructor(absoluteUrl.toString(), {

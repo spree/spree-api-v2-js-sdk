@@ -1,4 +1,11 @@
-import { AuthTokenAttr, AuthTokenParams, RefreshTokenAttr, RefreshTokenParams, RevokeTokenAttr, RevokeTokenParams } from '../interfaces/Authentication'
+import {
+  AuthTokenAttr,
+  AuthTokenParams,
+  RefreshTokenAttr,
+  RefreshTokenParams,
+  RevokeTokenAttr,
+  RevokeTokenParams
+} from '../interfaces/Authentication'
 
 export const authParams = ({ username, password }: AuthTokenAttr): AuthTokenParams => ({
   username,

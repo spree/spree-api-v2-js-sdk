@@ -2,17 +2,6 @@
 
 set -e
 
-cd /app
+/sdk/wait-for-it.sh http://docker-host:3000/api/v2/storefront/products?per_page=1 -t 300
 
-npm install
-npm run build
-npm link
-
-cd /app/docker/express
-
-npm install
-npm link @spree/storefront-api-v2-sdk
-
-/app/wait-for-it.sh -s docker-host:3000
-
-node ./index.js
+node /app/index.js
