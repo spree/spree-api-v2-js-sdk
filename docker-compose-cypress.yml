@@ -12,8 +12,4 @@ services:
   docker-host:
     image: qoomon/docker-host:3.0.3
     cap_add: ['NET_ADMIN', 'NET_RAW']
-    deploy:
-      resources:
-        limits:
-          memory: 8M
     restart: on-failure
