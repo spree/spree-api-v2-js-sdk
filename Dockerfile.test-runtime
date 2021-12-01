@@ -15,6 +15,3 @@ WORKDIR /sdk
 COPY --from=0 /sdk/spree-storefront-api-v2-sdk-*.tgz /sdk/storefront-api-v2-sdk.tgz
 
 COPY ./wait-for-it.sh /sdk/
-
-# Set default ENTRYPOINT to avoid sending exit codes and stopping other services.
-ENTRYPOINT [ "tail", "-f", "/dev/null" ]

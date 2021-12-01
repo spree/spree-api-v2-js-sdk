@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  test-runtime:
+    image: spree/test-runtime
+    build:
+      context: .
+      dockerfile: ./Dockerfile.test-runtime
