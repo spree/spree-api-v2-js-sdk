@@ -98,7 +98,7 @@ Install the NPM package:
 npm install @spree/storefront-api-v2-sdk --save
 ```
 
-Install a HTTP client - axios or node-fetch. For example:
+Install the [Axios][8] HTTP client:
 
 ```
 npm install axios
