@@ -8,7 +8,7 @@ declare const __non_webpack_require__: (module: string) => any
 const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
   let Axios
 
-  if (globalThis.Axios) {
+  if (globalThis.axios) {
     Axios = globalThis.axios
   } else {
     Axios = __non_webpack_require__('axios').default

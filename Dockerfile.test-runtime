@@ -1,0 +1,20 @@
+FROM node:14.15.4
+
+WORKDIR /sdk
+
+COPY . /sdk
+
+RUN npm install
+RUN npm run build
+RUN npm pack
+
+FROM alpine
+
+WORKDIR /sdk
+
+COPY --from=0 /sdk/spree-storefront-api-v2-sdk-*.tgz /sdk/storefront-api-v2-sdk.tgz
+
+COPY ./wait-for-it.sh /sdk/
+
+# Set default ENTRYPOINT to avoid sending exit codes and stopping other services.
+ENTRYPOINT [ "tail", "-f", "/dev/null" ]
