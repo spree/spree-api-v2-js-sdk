@@ -6,6 +6,16 @@
     "node": ">=14.17.0"
   },
   "main": "dist/server/index.js",
+  "typesVersions": {
+    "*": {
+      "dist/server/createFetchFetcher": [
+        "types/fetchers/createFetchFetcher.d.ts"
+      ],
+      "dist/server/createAxiosFetcher": [
+        "types/fetchers/createAxiosFetcher.d.ts"
+      ]
+    }
+  },
   "types": "types/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
