@@ -89,7 +89,7 @@ const createFetchFetcher: CreateFetcher = (fetcherOptions) => {
     Request = globalThis.Request
   } else {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const nodeFetch = require(/* webpackIgnore: true */ 'node-fetch')
+    const nodeFetch = require('node-fetch')
 
     fetch = nodeFetch.default
     Request = nodeFetch.Request

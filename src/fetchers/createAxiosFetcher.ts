@@ -10,15 +10,13 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
     Axios = globalThis.axios
   } else {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    Axios = require(/* webpackIgnore: true */ 'axios').default
+    Axios = require('axios').default
   }
 
   const axios: AxiosInstance = Axios.create({
     baseURL: fetcherOptions.host,
     headers: { 'Content-Type': 'application/json' },
-    paramsSerializer: (params) => {
-      return objectToQuerystring(params)
-    }
+    paramsSerializer: (params) => objectToQuerystring(params)
   })
 
   return {

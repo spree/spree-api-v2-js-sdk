@@ -1,6 +1,7 @@
 import webpack from 'webpack'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import nodeExternals from 'webpack-node-externals'
 import ProgressBar from './webpack-plugins/ProgressBar.mjs'
 import DeleteBeforeRun from './webpack-plugins/DeleteBeforeRun.mjs'
 
@@ -18,11 +19,30 @@ export default ({ typeScriptConfigFilePath }) => ({
     new WatchIgnorePlugin({ paths: [resolve(baseDirectoryPath, 'types')] })
   ],
   entry: {
-    index: [resolve(srcDirectoryPath, 'index.ts')]
+    index: {
+      import: resolve(srcDirectoryPath, 'index.ts'),
+      library: {
+        name: 'SpreeSDK',
+        type: 'umd'
+      }
+    },
+    createFetchFetcher: {
+      import: resolve(srcDirectoryPath, 'fetchers/createFetchFetcher.ts'),
+      library: {
+        name: ['SpreeSDK', 'createFetchFetcher'],
+        type: 'umd'
+      }
+    },
+    createAxiosFetcher: {
+      import: resolve(srcDirectoryPath, 'fetchers/createAxiosFetcher.ts'),
+      library: {
+        name: ['SpreeSDK', 'createAxiosFetcher'],
+        type: 'umd'
+      }
+    }
   },
   output: {
-    filename: '[name].js',
-    libraryTarget: 'umd'
+    filename: '[name].js'
   },
   mode: 'production',
   devtool: 'source-map',
@@ -44,12 +64,7 @@ export default ({ typeScriptConfigFilePath }) => ({
         include: /node_modules/,
         enforce: 'pre'
       }
-    ],
-    parser: {
-      javascript: {
-        commonjsMagicComments: true
-      }
-    }
+    ]
   },
   resolveLoader: {
     modules: [srcDirectoryPath, 'node_modules']
@@ -57,5 +72,6 @@ export default ({ typeScriptConfigFilePath }) => ({
   resolve: {
     symlinks: false,
     extensions: ['.tsx', '.ts', '.js']
-  }
+  },
+  externals: [nodeExternals({ modulesFromFile: true })]
 })

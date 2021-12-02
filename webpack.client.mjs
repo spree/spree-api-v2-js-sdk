@@ -15,7 +15,6 @@ const config = {
   name: 'client',
   target: ['web', 'es6'],
   output: {
-    library: 'SpreeSDK',
     path: clientDistDirectoryPath
   },
   plugins: [
