@@ -2,7 +2,8 @@
 // in the project's root directory.
 import { Client, makeClient, result, jsonApi } from '@spree/storefront-api-v2-sdk'
 import type { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
-import type { FetcherStrategies } from '@spree/storefront-api-v2-sdk/types/interfaces/ClientConfig'
+import createAxiosFetcher from '@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher'
+import createFetchFetcher from '@spree/storefront-api-v2-sdk/dist/server/createFetchFetcher'
 
 const createTests = function () {
   it('completes guest order', function () {
@@ -147,11 +148,24 @@ const createServerVersionInTheBrowserTests = ({
   fetcherType
 }: {
   host: string
-  fetcherType: FetcherStrategies
+  fetcherType: 'axios' | 'fetch'
 }) => {
   describe(`server version (i.e. CJS module) in the browser using ${fetcherType}`, function () {
     beforeEach(function () {
-      const client = makeClient({ host, fetcherType })
+      let createFetcher
+
+      switch (fetcherType) {
+        case 'axios':
+          createFetcher = createAxiosFetcher
+          break
+        case 'fetch':
+          createFetcher = createFetchFetcher
+          break
+        default:
+          throw new Error(`${fetcherType} not recognized.`)
+      }
+
+      const client = makeClient({ host, createFetcher })
 
       cy.wrap({ value: client }).as('clientRef')
     })
@@ -179,22 +193,59 @@ const createClientVersionInTheBrowserTests = ({
   fetcherType
 }: {
   host: string
-  fetcherType: FetcherStrategies
+  fetcherType: 'axios' | 'fetch'
 }) => {
   describe(`client version (window global) in the browser using ${fetcherType}`, function () {
     beforeEach(function () {
-      includeFileAsScript('/app/node_modules/axios/dist/axios.min.js')
+      cy.wrap(null)
         .then(() => {
           return includeFileAsScript('/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/index.js')
+        })
+        .then(() => {
+          return includeFileAsScript('/app/node_modules/axios/dist/axios.min.js')
+        })
+        .then(() => {
+          let fetcherPath
+
+          switch (fetcherType) {
+            case 'axios':
+              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/createAxiosFetcher.js'
+              break
+            case 'fetch':
+              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/createFetchFetcher.js'
+              break
+            default:
+              throw new Error(`${fetcherType} not recognized.`)
+          }
+
+          return includeFileAsScript(fetcherPath)
         })
         .then(() => {
           return cy
             .window()
             .its('SpreeSDK.makeClient')
             .then(function (makeClient) {
-              const client = makeClient({ host, fetcherType })
+              let globalKey
 
-              cy.wrap({ value: client }).as('clientRef')
+              switch (fetcherType) {
+                case 'axios':
+                  globalKey = 'createAxiosFetcher'
+                  break
+                case 'fetch':
+                  globalKey = 'createFetchFetcher'
+                  break
+                default:
+                  throw new Error(`${fetcherType} not recognized.`)
+              }
+
+              return cy
+                .window()
+                .its(`SpreeSDK.${globalKey}.default`)
+                .then(function (createFetcher) {
+                  const client = makeClient({ host, createFetcher })
+
+                  return cy.wrap({ value: client }).as('clientRef')
+                })
             })
         })
     })
@@ -203,7 +254,13 @@ const createClientVersionInTheBrowserTests = ({
   })
 }
 
-const createServerVersionInTheServerTests = ({ host, fetcherType }: { host: string; fetcherType: string }) => {
+const createServerVersionInTheServerTests = ({
+  host,
+  fetcherType
+}: {
+  host: string
+  fetcherType: 'axios' | 'fetch'
+}) => {
   describe(`server (i.e. CJS module) in the server using ${fetcherType}`, function () {
     beforeEach(function () {
       const noop = function () {

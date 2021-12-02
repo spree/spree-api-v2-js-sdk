@@ -3,8 +3,6 @@ import { objectToQuerystring } from '../helpers/request'
 import type { CreateFetcher } from '../interfaces/ClientConfig'
 import type { CreateCustomizedFetchFetcher } from '../interfaces/CreateCustomizedFetchFetcher'
 
-declare const __non_webpack_require__: (module: string) => any
-
 const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptions) => {
   const sharedHeaders = { 'Content-Type': 'application/json' }
 
@@ -90,7 +88,8 @@ const createFetchFetcher: CreateFetcher = (fetcherOptions) => {
     fetch = globalThis.fetch
     Request = globalThis.Request
   } else {
-    const nodeFetch = __non_webpack_require__('node-fetch')
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const nodeFetch = require('node-fetch')
 
     fetch = nodeFetch.default
     Request = nodeFetch.Request

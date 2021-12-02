@@ -2,7 +2,6 @@ import { resolve, dirname } from 'path'
 import webpackMerge from 'webpack-merge'
 import { fileURLToPath } from 'url'
 import webpack from 'webpack'
-import nodeExternals from 'webpack-node-externals'
 import commonConfigMaker from './webpack.common.maker.mjs'
 
 // Redefining __dirname is a temporary solution, due to https://github.com/nodejs/help/issues/2907
@@ -14,7 +13,6 @@ const { merge } = webpackMerge
 
 const config = {
   name: 'server',
-  externals: [nodeExternals({ modulesFromFile: true })],
   target: 'node14',
   output: {
     path: serverDistDirectoryPath

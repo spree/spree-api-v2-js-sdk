@@ -12,8 +12,7 @@ import {
   Menus,
   Wishlists
 } from './endpoints'
-import createFetcherFromType from './helpers/createFetcherFromType'
-import type { Fetcher, IClientConfig, OptionalIClientConfig } from './interfaces/ClientConfig'
+import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/ClientConfig'
 
 class Client {
   public products: Products
@@ -32,12 +31,11 @@ class Client {
   protected host: string
   protected fetcher: Fetcher
 
-  constructor(customOptions?: OptionalIClientConfig) {
+  constructor(customOptions: IClientConfig) {
     const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
 
-    const defaultOptions: IClientConfig = {
-      host: spreeHostEnvironmentValue || 'http://localhost:3000/',
-      fetcherType: 'axios'
+    const defaultOptions: Partial<IClientConfig> = {
+      host: spreeHostEnvironmentValue || 'http://localhost:3000/'
     }
 
     const options: IClientConfig = {
@@ -45,11 +43,9 @@ class Client {
       ...customOptions
     }
 
-    this.fetcher = createFetcherFromType({
-      host: options.host,
-      fetcherType: options.fetcherType,
-      createFetcher: options['createFetcher']
-    })
+    const fetcherOptions: CreateFetcherConfig = { host: options.host }
+
+    this.fetcher = options.createFetcher(fetcherOptions)
 
     this.addEndpoints()
   }

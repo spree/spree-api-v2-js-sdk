@@ -95,13 +95,13 @@ Developed and maintained by:
 Install the NPM package:
 
 ```
-npm install @spree/storefront-api-v2-sdk --save
+npm install --save @spree/storefront-api-v2-sdk
 ```
 
 Install the [Axios][8] HTTP client:
 
 ```
-npm install axios
+npm install --save axios
 ```
 
 <aside><p>For details about HTTP clients, read the <a href="#switching-the-fetcher">Switching the fetcher</a> section.</p></aside>

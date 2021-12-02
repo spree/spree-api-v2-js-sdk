@@ -1,10 +1,12 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import sdk from '@spree/storefront-api-v2-sdk'
-
-const app = express()
+import createAxiosFetcher from '@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher.js'
+import createFetchFetcher from '@spree/storefront-api-v2-sdk/dist/server/createFetchFetcher.js'
 
 const { makeClient, result } = sdk
+
+const app = express()
 
 app.use(bodyParser.json())
 
@@ -17,7 +19,21 @@ app.all('/', async (request, response, next) => {
     console.log('The Express server received a new request. Arguments: ', request.body)
 
     const { clientMethodPath, argumentsList, fetcherType } = request.body
-    const localClient = makeClient({ host: 'http://docker-host:3000', fetcherType })
+
+    let createFetcher
+
+    switch (fetcherType) {
+      case 'axios':
+        createFetcher = createAxiosFetcher.default
+        break
+      case 'fetch':
+        createFetcher = createFetchFetcher.default
+        break
+      default:
+        throw new Error(`${fetcherType} not recognized.`)
+    }
+
+    const localClient = makeClient({ host: 'http://docker-host:3000', createFetcher })
     const finalNode = clientMethodPath.reduce((node, pathPart) => {
       if (typeof node[pathPart] === 'function') {
         return node[pathPart].bind(node)
