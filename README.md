@@ -1,6 +1,6 @@
 # Spree Commerce Storefront API v2 JavaScript / TypeScript SDK
 
-Node module to easily integrate your JavaScript or TypeScript application with [Spree API V2](https://guides.spreecommerce.org/api/v2). You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on.
+Node module to easily integrate your JavaScript or TypeScript application with [Spree API](https://api.spreecommerce.org). You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on.
 
 Developed and maintained by:
 
@@ -1537,7 +1537,7 @@ params?: {
 const response = await client.products.show('123')
 ```
 
-## [Taxons](https://guides.spreecommerce.org/api/v2/storefront/#tag/Taxons)
+## [Taxons](https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2NA-list-all-taxons)
 
 ### `list`
 
@@ -1598,7 +1598,7 @@ params?: {
 const products = await client.taxons.show('1')
 ```
 
-## [Wishlists](https://spark-solutions.stoplight.io/docs/api-v2/b3A6MjE0NTY5Mzg-list-all-wishlists)
+## [Wishlists](https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5Mzg-list-all-wishlists)
 
 ### `list`
 
