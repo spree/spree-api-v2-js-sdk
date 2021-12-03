@@ -18,7 +18,7 @@ Developed and maintained by:
   - [Bearer token](#bearer-token)
   - [Confirmation token](#confirmation-token)
 - [Endpoints](#endpoints)
-  - [Authentication](#authentication)
+  - [OAuth Authentication](#oauth-authentication)
     - [getToken](#getToken)
     - [refreshToken](#refreshToken)
     - [revokeToken](#revokeToken)
