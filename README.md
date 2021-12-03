@@ -121,15 +121,17 @@ const client = makeClient({
   createFetcher: createAxiosFetcher
 })
 
-client.products.list(
-  {},
-  {
-    include: 'default_variant',
-    page: 1
-  }
-).then((spreeResponse) => {
-  console.log(spreeResponse.success())
-})
+client.products
+  .list(
+    {},
+    {
+      include: 'default_variant',
+      page: 1
+    }
+  )
+  .then((spreeResponse) => {
+    console.log(spreeResponse.success())
+  })
 ```
 
 _Spree SDK can also be imported using `import` and `<script>` tags in the browser. Check the [Alternative setups](#alternative-setups) section for examples._
@@ -248,9 +250,9 @@ Identifies a user for a single operation. For example, to reset their account's 
 
 ## Endpoints
 
-Spree Storefront API SDK contains each endpoint according to [Spree Guides](https://guides.spreecommerce.org/api/v2/storefront)
+Spree Storefront API SDK contains each endpoint according to [Spree Guides][12]
 
-## [OAuth Authentication](https://guides.spreecommerce.org/api/v2/authentication)
+## [OAuth Authentication][13]
 
 ### `getToken`
 
@@ -336,9 +338,9 @@ const response = await client.authentication.revokeToken({
 })
 ```
 
-## [Account](https://guides.spreecommerce.org/api/v2/storefront/#tag/Account)
+## Account
 
-### `create`
+### [`create`][14]
 
 Creates new account and returns its attributes.
 
@@ -368,7 +370,7 @@ const response = await client.account.create({
 })
 ```
 
-### `confirm`
+### [`confirm`][15]
 
 Confirms new account e-mail and returns account registration status.
 
@@ -394,7 +396,7 @@ data: {
 const response = await client.account.confirm('2xssfC9Hzf8DJXyRZGmB')
 ```
 
-### `forgotPassword`
+### [`forgotPassword`][15]
 
 Sends an account recovery link to the provided email address. The link allows resetting the password for the account.
 
@@ -420,7 +422,7 @@ const response = await client.account.forgotPassword({
 })
 ```
 
-### `resetPassword`
+### [`resetPassword`][15]
 
 Changes the password associated with the account using an account recovery token.
 
@@ -450,7 +452,7 @@ const response = await client.account.resetPassword('738127326953671368956237485
 })
 ```
 
-### `update`
+### [`update`][16]
 
 Updates account and returns its attributes.
 
@@ -485,7 +487,7 @@ const response = await client.account.update(
 )
 ```
 
-### `accountInfo`
+### [`accountInfo`][17]
 
 Returns current user information.
 
@@ -501,7 +503,7 @@ Returns current user information.
 const response = await client.account.accountInfo({ bearerToken })
 ```
 
-### `creditCardsList`
+### [`creditCardsList`][18]
 
 Returns a list of Credit Cards for the signed in User.
 
@@ -517,7 +519,7 @@ Returns a list of Credit Cards for the signed in User.
 const response = await client.account.creditCardsList({ bearerToken })
 ```
 
-### `defaultCreditCard`
+### [`defaultCreditCard`][19]
 
 Return the User's default Credit Card.
 
@@ -533,7 +535,7 @@ Return the User's default Credit Card.
 const response = await client.account.defaultCreditCard({ bearerToken })
 ```
 
-### `removeCreditCard`
+### [`removeCreditCard`][20]
 
 Remove a User's Credit Card.
 
@@ -555,7 +557,7 @@ creditCardId: string
 const response = await client.account.removeCreditCard({ bearerToken }, '14')
 ```
 
-### `completedOrdersList`
+### [`completedOrdersList`][21]
 
 Returns Orders placed by the User. Only completed ones.
 
@@ -571,7 +573,7 @@ Returns Orders placed by the User. Only completed ones.
 const response = await client.account.completedOrdersList({ bearerToken })
 ```
 
-### `completedOrder`
+### [`completedOrder`][22]
 
 Return the User's completed Order.
 
@@ -593,7 +595,7 @@ orderNumber: string
 const response = await client.account.completedOrder({ bearerToken }, 'R653163382')
 ```
 
-### `addressesList`
+### [`addressesList`][23]
 
 Returns a list of Addresses for the signed in User
 
@@ -631,7 +633,7 @@ addressId: string
 const response = await client.account.showAddress({ bearerToken }, '1')
 ```
 
-### `createAddress`
+### [`createAddress`][24]
 
 Create a new Address for the signed in User.
 
@@ -680,7 +682,7 @@ const response = await client.account.createAddress(
 )
 ```
 
-### `updateAddress`
+### [`updateAddress`][25]
 
 Update selected Address for the signed in User.
 
@@ -726,7 +728,7 @@ const response = await client.account.updateAddress({ bearerToken }, '1', {
 })
 ```
 
-### `removeAddress`
+### [`removeAddress`][26]
 
 Removes selected Address for the signed in User.
 
@@ -748,11 +750,11 @@ addressId: string
 const response = await client.account.removeAddress({ bearerToken }, '1')
 ```
 
-## [Order](https://guides.spreecommerce.org/api/v2/storefront/#tag/Order-Status)
+## Order
 
-### `status`
+### [`status`][27]
 
-Returns placed Order.
+Returns a placed Order.
 
 **Required token:** [Order token](#order-token)
 
@@ -772,9 +774,9 @@ orderNumber: string
 const response = await client.order.status({ orderToken }, 'R653163382')
 ```
 
-## [Cart](https://guides.spreecommerce.org/api/v2/storefront/#tag/Cart)
+## Cart
 
-### `create`
+### [`create`][28]
 
 Creates a new Cart and returns its attributes.
 
@@ -794,7 +796,7 @@ const response = await client.cart.create({ bearerToken })
 const response = await client.cart.create()
 ```
 
-### `show`
+### [`show`][29]
 
 Returns contents of the cart.
 
@@ -814,7 +816,7 @@ const response = await client.cart.show({ bearerToken })
 const response = await client.cart.show({ orderToken })
 ```
 
-### `addItem`
+### [`addItem`][30]
 
 Adds a Product Variant to the Cart.
 
@@ -858,7 +860,7 @@ const response = await client.cart.addItem(
 )
 ```
 
-### `setQuantity`
+### [`setQuantity`][31]
 
 Sets the quantity of a given line item. It has to be a positive integer greater than 0.
 
@@ -899,7 +901,7 @@ const response = await client.cart.setQuantity(
 )
 ```
 
-### `removeItem`
+### [`removeItem`][32]
 
 Removes Line Item from Cart.
 
@@ -925,7 +927,7 @@ const response = await client.cart.removeItem({ bearerToken }, '1')
 const response = await client.cart.removeItem({ orderToken }, '1')
 ```
 
-### `emptyCart`
+### [`emptyCart`][33]
 
 Empties the Cart.
 
@@ -945,7 +947,7 @@ const response = await client.cart.emptyCart({ bearerToken })
 const response = await client.cart.emptyCart({ orderToken })
 ```
 
-### `remove`
+### [`remove`][34]
 
 Removes the Cart.
 
@@ -965,7 +967,7 @@ const response = await client.cart.remove({ bearerToken })
 const response = await client.cart.remove({ orderToken })
 ```
 
-### `applyCouponCode`
+### [`applyCouponCode`][35]
 
 Applies a coupon code to the Cart.
 
@@ -1003,7 +1005,7 @@ const response = await client.cart.applyCouponCode(
 )
 ```
 
-### `removeCouponCode`
+### [`removeCouponCode`][36]
 
 Removes a coupon code from the Cart.
 
@@ -1029,7 +1031,7 @@ const response = await client.cart.removeCouponCode({ bearerToken }, 'promo_test
 const response = await client.cart.removeCouponCode({ orderToken }, 'promo_test')
 ```
 
-### `removeAllCoupons`
+### [`removeAllCoupons`][37]
 
 **Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
@@ -1047,7 +1049,7 @@ const response = await client.cart.removeAllCoupons({ bearerToken })
 const response = await client.cart.removeAllCoupons({ orderToken })
 ```
 
-### `estimateShippingRates`
+### [`estimateShippingRates`][38]
 
 Returns a list of Estimated Shipping Rates for Cart.
 
@@ -1083,7 +1085,7 @@ const response = await client.cart.estimateShippingRates(
 )
 ```
 
-### `associateGuestCart`
+### [`associateGuestCart`][39]
 
 Associates a guest cart with the currently signed in user.
 
@@ -1113,7 +1115,7 @@ const response = await client.cart.associateGuestCart(
 )
 ```
 
-### `changeCurrency`
+### [`changeCurrency`][40]
 
 Changes the Cart's currency.
 
@@ -1143,12 +1145,11 @@ const response = await client.cart.changeCurrency(
 )
 ```
 
-## [Checkout](https://guides.spreecommerce.org/api/v2/storefront/#tag/Checkout)
+## Checkout
 
-### `orderUpdate`
+### [`orderUpdate`][41]
 
-Updates the Checkout
-You can run multiple Checkout updates with different data types.
+Updates the Checkout. You can run multiple Checkout updates with different data types.
 
 **Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
 
@@ -1200,7 +1201,7 @@ const response = await client.checkout.orderUpdate({ bearerToken }, { order: {..
 const response = await client.checkout.orderUpdate({ orderToken }, { order: {...} })
 ```
 
-### `orderNext`
+### [`orderNext`][42]
 
 Goes to the next Checkout step.
 
@@ -1220,7 +1221,7 @@ const response = await client.checkout.orderNext({ bearerToken })
 const response = await client.checkout.orderNext({ orderToken })
 ```
 
-### `advance`
+### [`advance`][43]
 
 Advances Checkout to the furthest Checkout step validation allows, until the Complete step.
 
@@ -1240,7 +1241,7 @@ const response = await client.checkout.advance({ bearerToken })
 const response = await client.checkout.advance({ orderToken })
 ```
 
-### `complete`
+### [`complete`][44]
 
 Completes the Checkout.
 
@@ -1260,7 +1261,7 @@ const response = await client.checkout.complete({ bearerToken })
 const response = await client.checkout.complete({ orderToken })
 ```
 
-### `addStoreCredits`
+### [`addStoreCredits`][45]
 
 Adds Store Credit payments if a user has any.
 
@@ -1288,7 +1289,7 @@ const response = await client.checkout.addStoreCredits({ bearerToken }, { amount
 const response = await client.checkout.addStoreCredits({ orderToken }, { amount: 100 })
 ```
 
-### `removeStoreCredits`
+### [`removeStoreCredits`][46]
 
 Remove Store Credit payments if any applied.
 
@@ -1308,7 +1309,7 @@ const response = await client.checkout.removeStoreCredits({ bearerToken })
 const response = await client.checkout.removeStoreCredits({ orderToken })
 ```
 
-### `paymentMethods`
+### [`paymentMethods`][47]
 
 Returns a list of available Payment Methods.
 
@@ -1328,7 +1329,7 @@ const response = await client.checkout.paymentMethods({ bearerToken })
 const response = await client.checkout.paymentMethods({ orderToken })
 ```
 
-### `shippingRates`
+### [`shippingRates`][48]
 
 Returns a list of available Shipping Rates for Checkout. Shipping Rates are grouped against Shipments. Each checkout cna have multiple Shipments eg. some products are available in stock and will be send out instantly and some needs to be backordered.
 
@@ -1366,7 +1367,7 @@ const response = await client.checkout.shippingRates(
 )
 ```
 
-### `selectShippingMethod`
+### [`selectShippingMethod`][49]
 
 Selects a Shipping Method for Shipment(s).
 
@@ -1396,7 +1397,7 @@ const response = await client.checkout.selectShippingMethod(
 )
 ```
 
-### `addPayment`
+### [`addPayment`][50]
 
 Creates new Payment for the current checkout.
 
@@ -1474,11 +1475,11 @@ const response = await client.checkout.addPayment(
 )
 ```
 
-## [Products](https://guides.spreecommerce.org/api/v2/storefront/#tag/Products)
+## Products
 
 Returns a list of Products.
 
-### `list`
+### [`list`][51]
 
 **Required token:** [Bearer token](#bearer-token) if logged in user
 
@@ -1510,7 +1511,7 @@ params?: {
 const response = await client.products.list()
 ```
 
-### `show`
+### [`show`][52]
 
 **Required token:** [Bearer token](#bearer-token) if logged in user
 
@@ -1537,9 +1538,9 @@ params?: {
 const response = await client.products.show('123')
 ```
 
-## [Taxons](https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2NA-list-all-taxons)
+## Taxons
 
-### `list`
+### [`list`][53]
 
 Returns a list of Taxons.
 
@@ -1569,7 +1570,7 @@ params?: {
 const response = await client.taxons.list()
 ```
 
-### `show`
+### [`show`][54]
 
 Returns a single Taxon.
 
@@ -1600,7 +1601,7 @@ const products = await client.taxons.show('1')
 
 ## [Wishlists](https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5Mzg-list-all-wishlists)
 
-### `list`
+### [`list`][55]
 
 Returns a list of Wishlists.
 
@@ -1624,7 +1625,7 @@ params?: {
 const response = await client.wishlists.list({ bearerToken }, { is_variant_included: '456' })
 ```
 
-### `show`
+### [`show`][56]
 
 Returns a single Wishlist.
 
@@ -1649,7 +1650,7 @@ params?: {
 const response = await client.wishlists.show({ bearerToken }, '123', { is_variant_included: '456' })
 ```
 
-### `default`
+### [`default`][57]
 
 Returns the default Wishlist for the logged in user. It will be created, if the user does not have a default Wishlist for the current store.
 
@@ -1673,7 +1674,7 @@ params?: {
 const response = await client.wishlists.default({ bearerToken }, { is_variant_included: '456' })
 ```
 
-### `create`
+### [`create`][58]
 
 Creates a new Wishlist for the logged in user.
 
@@ -1699,7 +1700,7 @@ params: {
 const response = await client.wishlists.create({ bearerToken }, { name: 'My wishlist' })
 ```
 
-### `update`
+### [`update`][59]
 
 Updates an existing Wishlist.
 
@@ -1729,7 +1730,7 @@ const response = await client.wishlists.update({ bearerToken }, '123', {
 })
 ```
 
-### `remove`
+### [`remove`][60]
 
 Removes a Wishlist.
 
@@ -1751,7 +1752,7 @@ wishlistToken: string
 const response = await client.wishlists.remove({ bearerToken }, '123')
 ```
 
-### `addWishedItem`
+### [`addWishedItem`][61]
 
 Adds a new Wished Item to a Wishlist for the logged in user.
 
@@ -1780,7 +1781,7 @@ const response = await client.wishlists.addWishedItem({ bearerToken }, 'WyZxWS2w
 })
 ```
 
-### `updateWishedItem`
+### [`updateWishedItem`][62]
 
 Updates a Wished Item for the logged in user.
 
@@ -1808,7 +1809,7 @@ const response = await client.wishlists.updateWishedItem({ bearerToken }, 'WyZxW
 })
 ```
 
-### `removeWishedItem`
+### [`removeWishedItem`][63]
 
 Removes a Wished Item for the logged in user.
 
@@ -1831,9 +1832,9 @@ wishedItemId: string
 const response = await client.wishlists.removeWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', '2')
 ```
 
-## [Pages](https://guides.spreecommerce.org/api/v2/storefront/#tag/Pages)
+## Pages
 
-### `list`
+### [`list`][64]
 
 Returns a list of all CMS Pages available in the current store.
 
@@ -1859,7 +1860,7 @@ params?: {
 const pages = await client.pages.list()
 ```
 
-### `show`
+### [`show`][65]
 
 Returns a single CMS Page. You can use either a CMS Page slug or ID.
 
@@ -1882,9 +1883,9 @@ params?: {
 const page = await client.pages.show('about-us')
 ```
 
-## [Countries](https://guides.spreecommerce.org/api/v2/storefront/#tag/Countries)
+## Countries
 
-### `list`
+### [`list`][66]
 
 Returns a list of all countries.
 
@@ -1898,7 +1899,7 @@ Returns a list of all countries.
 const countries = await client.countries.list()
 ```
 
-### `show`
+### [`show`][67]
 
 Returns the details of a specific country.
 
@@ -1924,7 +1925,7 @@ params?: {
 const country = await client.countries.show('USA')
 ```
 
-### `default`
+### [`default`][68]
 
 Returns the default country for the current store. By default this will be the US.
 
@@ -1949,9 +1950,9 @@ params?: {
 const countries = await client.countries.default()
 ```
 
-## [Digital Assets](https://spark-solutions.stoplight.io/docs/api-v2/b3A6MjQxNjA3ODY-download-a-digital-asset)
+## Digital Assets
 
-### `download`
+### [`download`][69]
 
 Returns a stream for downloading a purchased digital product.
 
@@ -1992,9 +1993,9 @@ const digitalAssetBlob = await new Response(digitalAssetStream).blob()
 image.src = URL.createObjectURL(digitalAssetBlob)
 ```
 
-## [Menus](https://spark-solutions.stoplight.io/docs/api-v2/b3A6MTc2NjI3MTM-list-all-menus)
+## Menus
 
-### `list`
+### [`list`][70]
 
 Returns a list of Menus.
 
@@ -2019,7 +2020,7 @@ params?: {
 const response = await client.menus.list({ locale: 'fr', filter: { location: 'header' } })
 ```
 
-### `show`
+### [`show`][71]
 
 Returns a single Menu.
 
@@ -2181,3 +2182,63 @@ We are [available for hire][spark].
 [9]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 [10]: https://github.com/node-fetch/node-fetch
 [11]: https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream
+[12]: https://api.spreecommerce.org/docs/api-v2/YXBpOjMxMjQ5NjA-storefront-api
+[13]: https://api.spreecommerce.org/docs/api-v2/YXBpOjMxMjQ5NTg-authentication
+[14]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0MjczNQ-create-an-account
+[15]: https://github.com/spree/spree_auth_devise/blob/db4ccf202f42cdb713931e9915b213ab9c9b2062/config/routes.rb
+[16]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0MjczNg-update-an-account
+[17]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0MjczNA-retrieve-an-account
+[18]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0NTE5OQ-list-all-credit-cards
+[19]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc0MQ-retrieve-the-default-credit-card
+[20]: https://api.spreecommerce.org/docs/api-v2/b3A6MTc1NjU3NDM-remove-a-credit-card
+[21]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc0Mg-list-all-orders
+[22]: https://api.spreecommerce.org/docs/api-v2/b3A6MTgwNTI4NjA-retrieve-an-order
+[23]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0NTE5Ng-list-all-addresses
+[24]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0NTE5Nw-create-an-address
+[25]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0NTE5OA-update-an-address
+[26]: https://api.spreecommerce.org/docs/api-v2/b3A6MTAwNjA3Njg-remove-an-address
+[27]: https://api.spreecommerce.org/docs/api-v2/b3A6MTgwNTI4NjE-retrieve-an-order-status
+[28]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc0NQ-create-a-cart
+[29]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc0Ng-retrieve-a-cart
+[30]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc0Nw-add-an-item-to-cart
+[31]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc0OA-set-line-item-quantity
+[32]: https://api.spreecommerce.org/docs/api-v2/b3A6MTg1MTUyNTg-remove-a-line-item
+[33]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1MA-empty-the-cart
+[34]: https://api.spreecommerce.org/docs/api-v2/b3A6MTcyNTA0NDc-delete-a-cart
+[35]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1MQ-apply-a-coupon-code
+[36]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1Mg-remove-a-coupon
+[37]: https://api.spreecommerce.org/docs/api-v2/b3A6MjM5NTU3NTg-remove-all-coupons
+[38]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1Mw-list-estimated-shipping-rates
+[39]: https://api.spreecommerce.org/docs/api-v2/b3A6MjAxMTAyMzM-associate-a-cart-with-a-user
+[40]: https://api.spreecommerce.org/docs/api-v2/b3A6MjA2OTMwMDM-change-cart-currency
+[41]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1NA-update-checkout
+[42]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1NQ-next-checkout-step
+[43]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1Ng-advance-checkout
+[44]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1Nw-complete-checkout
+[45]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1OA-add-store-credit
+[46]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc1OQ-remove-store-credit
+[47]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2MA-list-payment-methods
+[48]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2MQ-list-shipping-rates
+[49]: https://api.spreecommerce.org/docs/api-v2/b3A6MjY1NTc1NzY-selects-shipping-method-for-shipment-s
+[50]: https://api.spreecommerce.org/docs/api-v2/b3A6MjYyODA2NTY-create-new-payment
+[51]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2Mg-list-all-products
+[52]: https://api.spreecommerce.org/docs/api-v2/b3A6MTgwNTI4ODE-retrieve-a-product
+[53]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2NA-list-all-taxons
+[54]: https://api.spreecommerce.org/docs/api-v2/b3A6MTgwNTI4ODM-retrieve-a-taxon
+[55]: https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5Mzg-list-all-wishlists
+[56]: https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5NDA-retrieve-a-wishlist
+[57]: https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5NDM-retrieve-the-default-wishlist
+[58]: https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5Mzk-create-a-wishlist
+[59]: https://api.spreecommerce.org/docs/api-v2/b3A6MjM5NTU3ODQ-update-a-wishlist
+[60]: https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5NDI-delete-a-wishlist
+[61]: https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5NDQ-add-item-to-wishlist
+[62]: https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5NDU-set-wished-item-quantity
+[63]: https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5NDY-delete-item-from-wishlist
+[64]: https://api.spreecommerce.org/docs/api-v2/b3A6MTc3MzEwMzM-list-all-cms-pages
+[65]: https://api.spreecommerce.org/docs/api-v2/b3A6MTg4MDA4OTk-retrieve-a-cms-page
+[66]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2Ng-list-all-countries
+[67]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2Nw-retrieve-a-country
+[68]: https://api.spreecommerce.org/docs/api-v2/b3A6MzE0Mjc2OA-get-default-country
+[69]: https://api.spreecommerce.org/docs/api-v2/b3A6MjQxNjA3ODY-download-a-digital-asset
+[70]: https://api.spreecommerce.org/docs/api-v2/b3A6MTc2NjI3MTM-list-all-menus
+[71]: https://api.spreecommerce.org/docs/api-v2/b3A6MTc3MzEwMzI-retrieve-a-menu
