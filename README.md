@@ -9,10 +9,14 @@ Developed and maintained by:
 Сontents:
 
 - [Quick start](#quick-start)
+- [Checkout Flow](#checkout-flow)
 - [Response schema](#response-schema)
   - [Success schema](#success-schema)
   - [Error schema](#error-schema)
-- [Switching the fetcher](#switching-the-fetcher)
+- [Tokens](#tokens)
+  - [Order token](#order-token)
+  - [Bearer token](#bearer-token)
+  - [Confirmation token](#confirmation-token)
 - [Endpoints](#endpoints)
   - [Authentication](#authentication)
     - [getToken](#getToken)
@@ -88,7 +92,9 @@ Developed and maintained by:
   - [Menus](#menus)
     - [list](#list-5)
     - [show](#show-6)
-  - [Checkout Flow](#checkout-flow)
+  - [Alternative setups](#alternative-setups)
+  - [Switching the fetcher](#switching-the-fetcher)
+  - [About Spark Solutions](#about-spark-solutions)
 
 ## Quick start
 
@@ -104,46 +110,85 @@ Install the [Axios][8] HTTP client:
 npm install --save axios
 ```
 
-<aside><p>For details about HTTP clients, read the <a href="#switching-the-fetcher">Switching the fetcher</a> section.</p></aside>
-
-Create a client:
+Create a client and use it to call Spree:
 
 ```js
-import { makeClient } from '@spree/storefront-api-v2-sdk'
-// When using the SDK in a <script> tag or as part of a Webpack bundle
-// targeted for the browser, instead use:
-// import { makeClient } from '@spree/storefront-api-v2-sdk/dist/client'
+const createAxiosFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher').default
+const { makeClient } = require('@spree/storefront-api-v2-sdk')
 
 const client = makeClient({
-  host: 'http://localhost:3000'
+  host: 'http://localhost:3000',
+  createFetcher: createAxiosFetcher
 })
-```
 
-TypeScript definitions are included in the module and should be automatically used by any editor that supports them.
-
-`client` allows calling Spree methods, ex.:
-
-```js
 client.products.list(
   {},
   {
     include: 'default_variant',
     page: 1
   }
-)
+).then((spreeResponse) => {
+  console.log(spreeResponse.success())
+})
 ```
 
-The SDK is also hosted by the [UNPKG][7] CDN. [Follow this link to download version 4.5.1][5] and [this link to download the newest version][6]. Include the SDK on a website like so:
+_Spree SDK can also be imported using `import` and `<script>` tags in the browser. Check the [Alternative setups](#alternative-setups) section for examples._
 
-```html
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@4.5.1/dist/client/index.js"></script>
+_For details about HTTP clients, read the <a href="#switching-the-fetcher">Switching the fetcher</a> section._
 
-<script>
-  const client = window.SpreeSDK.makeClient({
-    host: 'http://localhost:3000'
-  })
-  // ...
-</script>
+## Checkout Flow
+
+```ts
+const cartCreateResponse = await client.cart.create()
+
+const orderToken = cartCreateResponse.success().data.attributes.token
+
+await client.cart.addItem({ orderToken }, { variant_id: '1' })
+
+// Step one - save email, billing and shipping addresses
+await client.checkout.orderUpdate({ orderToken }, {
+  order: {
+    email,
+    bill_address_attributes: {...},
+    ship_address_attributes: {...}
+  }
+})
+
+await client.checkout.orderNext({ bearerToken })
+
+// Step two - pick a shipping method
+const shipping = (await client.checkout.shippingRates({ orderToken })).success()
+
+await client.checkout.orderUpdate({ orderToken }, {
+  order: {
+    shipments_attributes: [{
+      id: shipping.data[0].id,
+      selected_shipping_rate_id: shipping.data[0].relationships.shipping_rates.data[0].id
+    }]
+  }
+})
+
+await client.checkout.orderNext({ orderToken })
+
+// Step three - pick a payment method
+const payment = (await client.checkout.paymentMethods({ orderToken })).success()
+
+await client.checkout.addPayment({ orderToken }, {
+  payment_method_id: payment.data[0].id,
+  source_attributes: {
+    gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
+    cc_type: "visa",
+    last_digits: "1111",
+    month: "10",
+    year: "2026",
+    name: "John Snow"
+  }
+})
+
+// Order complete
+await client.checkout.orderNext({ orderToken })
+
+await client.checkout.complete({ orderToken })
 ```
 
 ## Response schema
@@ -200,63 +245,6 @@ const bearerToken: string = response.success().access_token
 ### Confirmation token
 
 Identifies a user for a single operation. For example, to reset their account's password. Confirmation Tokens are single-use and may have an expiration date.
-
-## Switching the fetcher
-
-Spree SDK does not come bundled with a HTTP client. A HTTP client may have to be installed before using the library. Out of the box, Spree SDK supports using [Axios][8] and [fetch][9] to communicate with Spree.
-
-**Option A - RECOMMENDED: Spree SDK in NodeJS using Axios**
-
-To use Spree SDK with Axios in NodeJS, install Axios using NPM:
-
-```
-npm install axios
-```
-
-Spree SDK will automatically detect that Axios is available and use it to make requests to Spree.
-
-**Option B - Spree SDK in the browser using Axios**
-
-To use Spree SDK with Axios in the browser, include axios as a `<script>` tag before using the SDK:
-
-```html
-<script src="https://unpkg.com/axios@0.21.4/dist/axios.min.js"></script>
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
-```
-
-Again, Spree SDK will automatically detect that Axios is available and use it to make requests to Spree.
-
-**Option C - Spree SDK in NodeJS using fetch**
-
-Another supported HTTP client is [fetch][9]. It can be setup in NodeJS as follows:
-
-```
-npm install node-fetch
-```
-
-To have Spree SDK use fetch instead of Axios, set `fetcherType` to `'fetch'` when creating the Spree SDK Client:
-
-```js
-makeClient({ fetcherType: 'fetch', host: ... })
-```
-
-**Option D - Spree SDK in the browser using fetch**
-
-Modern web browsers include fetch natively. To use Spree SDK with native fetch, it's enough to set `fetcherType` to `'fetch'` when creating the Spree SDK Client:
-
-```js
-makeClient({ fetcherType: 'fetch', host: ... })
-```
-
-**Option E - ADVANCED: Supply a custom HTTP client.**
-
-To have full control over requests and responses, a custom fetcher can be used like so:
-
-```js
-makeClient({ fetcherType: 'custom', createFetcher: ... })
-```
-
-<aside><p>To create a custom fetcher which uses a fetch-compatible interface, use the `createCustomizedFetchFetcher` function.</p></aside>
 
 ## Endpoints
 
@@ -2051,60 +2039,127 @@ id: string
 const response = await client.menus.show('2')
 ```
 
-## Checkout Flow
+## Alternative setups
 
-```ts
-const cartCreateResponse = await client.cart.create()
+### TypeScript and `import`
 
-const orderToken = cartCreateResponse.success().data.attributes.token
+In TypeScript, you can import Spree SDK as follows:
 
-await client.cart.addItem({ orderToken }, { variant_id: '1' })
+```js
+// Set `"esModuleInterop": true` in tsconfig.json
 
-// Step one - save email, billing and shipping addresses
-await client.checkout.orderUpdate({ orderToken }, {
-  order: {
-    email,
-    bill_address_attributes: {...},
-    ship_address_attributes: {...}
-  }
-})
-
-await client.checkout.orderNext({ bearerToken })
-
-// Step two - pick a shipping method
-const shipping = (await client.checkout.shippingRates({ orderToken })).success()
-
-await client.checkout.orderUpdate({ orderToken }, {
-  order: {
-    shipments_attributes: [{
-      id: shipping.data[0].id,
-      selected_shipping_rate_id: shipping.data[0].relationships.shipping_rates.data[0].id
-    }]
-  }
-})
-
-await client.checkout.orderNext({ orderToken })
-
-// Step three - pick a payment method
-const payment = (await client.checkout.paymentMethods({ orderToken })).success()
-
-await client.checkout.addPayment({ orderToken }, {
-  payment_method_id: payment.data[0].id,
-  source_attributes: {
-    gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
-    cc_type: "visa",
-    last_digits: "1111",
-    month: "10",
-    year: "2026",
-    name: "John Snow"
-  }
-})
-
-// Order complete
-await client.checkout.orderNext({ orderToken })
-
-await client.checkout.complete({ orderToken })
+import createAxiosFetcher from '@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher'
+import { makeClient } from '@spree/storefront-api-v2-sdk'
 ```
+
+TypeScript definitions are included in the module and should be automatically used by any editor that supports them.
+
+### CDN-hosted Spree SDK
+
+The SDK is hosted by the [UNPKG][7] CDN. [Follow this link to download version 5.0.0][5] and [this link to download the newest version][6]. Include the SDK on a website like so:
+
+```html
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createAxiosFetcher.js"></script>
+
+<script>
+  const client = SpreeSDK.makeClient({
+    host: 'http://localhost:3000',
+    createFetcher: SpreeSDK.createAxiosFetcher.default
+  })
+  // ...
+</script>
+```
+
+## Switching the fetcher
+
+Spree SDK does not come bundled with a HTTP client. A HTTP client may have to be installed before using the library. Out of the box, Spree SDK supports using [Axios][8] and [fetch][9] HTTP clients to communicate with Spree.
+
+**Option A - RECOMMENDED: Spree SDK in NodeJS using Axios**
+
+To use Spree SDK with Axios in NodeJS, install Axios using NPM:
+
+```
+npm install axios
+```
+
+Set the fetcher to axios when creating the Spree SDK client:
+
+```js
+const createAxiosFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher').default
+const { makeClient } = require('@spree/storefront-api-v2-sdk')
+
+const client = makeClient({
+  host: 'http://localhost:3000',
+  createFetcher: createAxiosFetcher
+})
+```
+
+**Option B - Spree SDK in the browser using Axios**
+
+To use Spree SDK with Axios in the browser, include axios as a `<script>` tag before using the SDK:
+
+```html
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createAxiosFetcher.js"></script>
+
+<script>
+  const client = SpreeSDK.makeClient({
+    host: 'http://localhost:3000',
+    createFetcher: SpreeSDK.createAxiosFetcher.default
+  })
+</script>
+```
+
+Again, Spree SDK will automatically detect that Axios is available and use it to make requests to Spree.
+
+**Option C - Spree SDK in NodeJS using fetch**
+
+Another supported HTTP client is [fetch][9]. It can be setup in NodeJS as follows:
+
+```
+npm install node-fetch
+```
+
+Set the fetcher to fetch:
+
+```js
+const createFetchFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createFetchFetcher').default
+const { makeClient } = require('@spree/storefront-api-v2-sdk')
+
+const client = makeClient({
+  host: 'http://localhost:3000',
+  createFetcher: createFetchFetcher
+})
+```
+
+**Option D - Spree SDK in the browser using fetch**
+
+Modern web browsers include fetch natively. To use Spree SDK with native fetch, it's enough to set `fetcherType` to `'fetch'` when creating the Spree SDK Client:
+
+```html
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createFetchFetcher.js"></script>
+
+<script>
+  const client = SpreeSDK.makeClient({
+    host: 'http://localhost:3000',
+    createFetcher: SpreeSDK.createFetchFetcher.default
+  })
+</script>
+```
+
+**Option E - ADVANCED: Supply a custom HTTP client.**
+
+To have full control over requests and responses, a custom fetcher can be supplied during the creation of the Spree SDK client:
+
+```js
+makeClient({ createFetcher: ... })
+```
+
+If you want to use a fetch-compatible interface, use the `createCustomizedFetchFetcher` function.
 
 ## About Spark Solutions
 
@@ -2118,7 +2173,7 @@ We are [available for hire][spark].
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 [4]: https://jsonapi.org/format/
-[5]: https://unpkg.com/@spree/storefront-api-v2-sdk@4.5.1/dist/client/index.js
+[5]: https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js
 [6]: https://unpkg.com/@spree/storefront-api-v2-sdk/dist/client/index.js
 [7]: https://unpkg.com/
 [spark]: http://sparksolutions.co?utm_source=github
