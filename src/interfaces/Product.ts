@@ -1,6 +1,8 @@
-import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import { IRelationships } from './Relationships'
-import { ResultResponse } from './ResultResponse'
+import type { AnyOptions } from './AnyOptions'
+import type { ImageTransformation } from './ImageTransformation'
+import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
+import type { IRelationships } from './Relationships'
+import type { ResultResponse } from './ResultResponse'
 
 export interface ProductAttr extends JsonApiDocument {
   type: string
@@ -34,3 +36,9 @@ export interface IProducts extends JsonApiListResponse {
 export interface IProductResult extends ResultResponse<IProduct> {}
 
 export interface IProductsResult extends ResultResponse<IProducts> {}
+
+export type ListOptions = AnyOptions<true, true, true> & {
+  image_transformation?: ImageTransformation
+}
+
+export type ShowOptions = AnyOptions<true, true, true>
