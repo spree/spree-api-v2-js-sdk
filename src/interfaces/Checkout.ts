@@ -4,36 +4,36 @@ import type * as RestCheckoutTypes from './endpoints/CheckoutClass'
 
 export * from './endpoints/CheckoutClass'
 
-export type CreateStripeSessionOptions = AnyOptions<true> & {
+export type CreateStripeSessionOptions = AnyOptions<{ suggestToken: true }> & {
   success_url: string
   cancel_url: string
 }
 
-export type AddPaymentOptions = AnyOptions<true, true> &
+export type AddPaymentOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }> &
   RestCheckoutTypes.AddFullPayment & {
     source_id?: string
     amount?: number
   }
 
-export type SelectShippingMethodOptions = AnyOptions<true, true> & {
+export type SelectShippingMethodOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }> & {
   shipping_method_id: string
   shipment_id?: string
 }
 
-export type ShippingRatesOptions = AnyOptions<true, true>
+export type ShippingRatesOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }>
 
-export type PaymentMethodsOptions = AnyOptions<true>
+export type PaymentMethodsOptions = AnyOptions<{ suggestToken: true }>
 
-export type RemoveStoreCreditsOptions = AnyOptions<true, true>
+export type RemoveStoreCreditsOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }>
 
-export type AddStoreCreditOptions = AnyOptions<true, true> & {
+export type AddStoreCreditOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }> & {
   amount: number
 }
 
-export type CompleteOptions = AnyOptions<true, true>
+export type CompleteOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }>
 
-export type AdvanceOptions = AnyOptions<true, true>
+export type AdvanceOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }>
 
-export type OrderUpdateOptions = AnyOptions<true, true> & RestCheckoutTypes.OrderUpdate
+export type OrderUpdateOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }> & RestCheckoutTypes.OrderUpdate
 
-export type OrderNextOptions = AnyOptions<true, true>
+export type OrderNextOptions = AnyOptions<{ suggestToken: true; suggestQuery: true }>

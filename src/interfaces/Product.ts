@@ -37,8 +37,8 @@ export interface IProductResult extends ResultResponse<IProduct> {}
 
 export interface IProductsResult extends ResultResponse<IProducts> {}
 
-export type ListOptions = AnyOptions<true, true, true> & {
+export type ListOptions = AnyOptions<{ suggestToken: true; suggestQuery: true; optionalToken: true }> & {
   image_transformation?: ImageTransformation
 }
 
-export type ShowOptions = AnyOptions<true, true, true>
+export type ShowOptions = AnyOptions<{ suggestToken: true; suggestQuery: true; optionalToken: true }>
