@@ -37,6 +37,7 @@ const endpoints = {
   checkoutShippingRatesPath: (): string => `${storefrontPath}/checkout/shipping_rates`,
   checkoutSelectShippingMethodPath: (): string => `${storefrontPath}/checkout/select_shipping_method`,
   checkoutAddPaymentPath: (): string => `${storefrontPath}/checkout/create_payment`,
+  checkoutCreateStripeSessionPath: (): string => `${storefrontPath}/checkout/create_stripe_session`,
   oauthTokenPath: (): string => `spree_oauth/token`,
   oauthRevokePath: (): string => `spree_oauth/revoke`,
   accountPath: (): string => `${storefrontPath}/account`,

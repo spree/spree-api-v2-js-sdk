@@ -1,3 +1,6 @@
+// IMPORTANT: Place all new checkout types inside src/interfaces/Checkout instead of this file.
+// TODO: Transfer all existing types inside this file to src/interfaces/Checkout.
+
 import { IAddress } from '../attributes/Address'
 import { IPayment } from '../attributes/Payment'
 import { IPaymentSource } from '../attributes/PaymentSource'

@@ -1,11 +1,13 @@
+import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type {
-  AddStoreCredit,
+  CreateStripeSessionOptions,
   OrderUpdate,
+  AddStoreCredit,
   AddPayment,
   NestedAttributes,
   SelectShippingMethod
-} from '../interfaces/endpoints/CheckoutClass'
+} from '../interfaces/Checkout'
 import type { IOrder, IOrderResult } from '../interfaces/Order'
 import type { IPaymentMethods, IPaymentMethodsResult } from '../interfaces/PaymentMethod'
 import type { IQuery } from '../interfaces/Query'
@@ -64,5 +66,16 @@ export default class Checkout extends Http {
 
   public async addPayment(token: IToken, addPaymentParams: AddPayment): Promise<IOrderResult> {
     return await this.spreeResponse<IOrder>('post', routes.checkoutAddPaymentPath(), token, addPaymentParams)
+  }
+
+  public async createStripeSession(options: CreateStripeSessionOptions): Promise<StripeCheckoutSessionSummaryResult> {
+    const { token, params } = squashAndPreparePositionalArguments([options], [])
+
+    return await this.spreeResponse<StripeCheckoutSessionSummary>(
+      'patch',
+      routes.checkoutCreateStripeSessionPath(),
+      token,
+      params
+    )
   }
 }
