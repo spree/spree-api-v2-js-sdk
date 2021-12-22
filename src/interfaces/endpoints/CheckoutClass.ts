@@ -7,6 +7,9 @@ import { IPaymentSource } from '../attributes/PaymentSource'
 import { IShipment } from '../attributes/Shipment'
 import { IQuery } from '../Query'
 
+/**
+ * @deprecated Use {@link AddStoreCreditOptions} instead.
+ */
 export interface AddStoreCredit extends IQuery {
   amount: number
 }
@@ -49,11 +52,17 @@ export interface AddFullPayment {
   }
 }
 
+/**
+ * @deprecated Use {@link SelectShippingMethodOptions} instead.
+ */
 export interface SelectShippingMethod extends IQuery {
   shipping_method_id: string
   shipment_id?: string
 }
 
+/**
+ * @deprecated Use {@link AddPaymentOptions} instead.
+ */
 export interface AddPayment extends AddFullPayment, IQuery {
   source_id?: string
   amount?: number
