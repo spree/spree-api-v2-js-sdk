@@ -41,7 +41,7 @@ export default class Checkout extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async orderNext(token: IToken, params: IQuery): Promise<IOrderResult>
+  public async orderNext(token: IToken, params?: IQuery): Promise<IOrderResult>
   public async orderNext(...allArguments: any[]): Promise<IOrderResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
@@ -65,7 +65,7 @@ export default class Checkout extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async advance(token: IToken, params: IQuery): Promise<IOrderResult>
+  public async advance(token: IToken, params?: IQuery): Promise<IOrderResult>
   public async advance(...allArguments: any[]): Promise<IOrderResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
@@ -77,7 +77,7 @@ export default class Checkout extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async complete(token: IToken, params: IQuery): Promise<IOrderResult>
+  public async complete(token: IToken, params?: IQuery): Promise<IOrderResult>
   public async complete(...allArguments: any[]): Promise<IOrderResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
@@ -101,7 +101,7 @@ export default class Checkout extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async removeStoreCredits(token: IToken, params: IQuery): Promise<IOrderResult>
+  public async removeStoreCredits(token: IToken, params?: IQuery): Promise<IOrderResult>
   public async removeStoreCredits(...allArguments: any[]): Promise<IOrderResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
@@ -132,7 +132,7 @@ export default class Checkout extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async shippingRates(token: IToken, params: IQuery): Promise<ShippingRatesResult>
+  public async shippingRates(token: IToken, params?: IQuery): Promise<ShippingRatesResult>
   public async shippingRates(...allArguments: any[]): Promise<ShippingRatesResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])

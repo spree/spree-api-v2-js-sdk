@@ -41,7 +41,7 @@ export default class Account extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async accountInfo(token: IToken, params: IQuery): Promise<IAccountResult>
+  public async accountInfo(token: IToken, params?: IQuery): Promise<IAccountResult>
   public async accountInfo(...allArguments: any[]): Promise<IAccountResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
@@ -53,7 +53,7 @@ export default class Account extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async creditCardsList(token: IToken, params: IQuery): Promise<ICreditCardsResult>
+  public async creditCardsList(token: IToken, params?: IQuery): Promise<ICreditCardsResult>
   public async creditCardsList(...allArguments: any[]): Promise<ICreditCardsResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
@@ -65,7 +65,7 @@ export default class Account extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async defaultCreditCard(token: IToken, params: IQuery): Promise<ICreditCardResult>
+  public async defaultCreditCard(token: IToken, params?: IQuery): Promise<ICreditCardResult>
   public async defaultCreditCard(...allArguments: any[]): Promise<ICreditCardResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
@@ -77,7 +77,7 @@ export default class Account extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async removeCreditCard(token: IToken, id: string, params: IQuery): Promise<NoContentResult>
+  public async removeCreditCard(token: IToken, id: string, params?: IQuery): Promise<NoContentResult>
   public async removeCreditCard(...allArguments: any[]): Promise<NoContentResult> {
     const [tokenOrOptions, positionalId, positionalParams = {}] = allArguments
     const { id, token, params } = squashAndPreparePositionalArguments(
@@ -92,7 +92,7 @@ export default class Account extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async completedOrdersList(token: IToken, params: IQuery): Promise<IOrdersResult>
+  public async completedOrdersList(token: IToken, params?: IQuery): Promise<IOrdersResult>
   public async completedOrdersList(...allArguments: any[]): Promise<IOrdersResult> {
     const [tokenOrOptions, positionalParams = {}] = allArguments
     const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
@@ -104,7 +104,7 @@ export default class Account extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async completedOrder(token: IToken, orderNumber: string, params: IQuery): Promise<IOrderResult>
+  public async completedOrder(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>
   public async completedOrder(...allArguments: any[]): Promise<IOrderResult> {
     const [tokenOrOptions, positionalOrderNumber, positionalParams = {}] = allArguments
     const { orderNumber, token, params } = squashAndPreparePositionalArguments(
@@ -216,7 +216,7 @@ export default class Account extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async showAddress(token: IToken, addressId: string, params: IQuery): Promise<AccountAddressResult>
+  public async showAddress(token: IToken, addressId: string, params?: IQuery): Promise<AccountAddressResult>
   public async showAddress(...allArguments: any[]): Promise<AccountAddressResult> {
     const [tokenOrOptions, positionalId, positionalParams = {}] = allArguments
     const { id, token, params } = squashAndPreparePositionalArguments(
@@ -243,7 +243,7 @@ export default class Account extends Http {
   /**
    * @deprecated Use the combined options signature instead.
    */
-  public async removeAddress(token: IToken, id: string, params: IQuery): Promise<NoContentResult>
+  public async removeAddress(token: IToken, id: string, params?: IQuery): Promise<NoContentResult>
   public async removeAddress(...allArguments: any[]): Promise<NoContentResult> {
     const [tokenOrOptions, positionalId, positionalParams = {}] = allArguments
     const { id, token, params } = squashAndPreparePositionalArguments(
