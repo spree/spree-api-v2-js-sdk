@@ -14,6 +14,9 @@ export interface AddStoreCredit extends IQuery {
   amount: number
 }
 
+/**
+ * @deprecated Use {@link OrderUpdateOptions} instead.
+ */
 export interface OrderUpdate extends IQuery {
   order?: {
     email?: string
