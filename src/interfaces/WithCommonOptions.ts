@@ -15,8 +15,11 @@ export type DefaultCustomizations = AllowedCustomizations & {
 }
 
 export type WithCommonOptions<
-  Customizations extends Partial<AllowedCustomizations> = Partial<AllowedCustomizations>,
+  CustomizationsOrNull extends Partial<AllowedCustomizations> | null = Partial<AllowedCustomizations> | null,
   CustomOptions extends Record<string, any> = Record<string, any>,
+  Customizations extends CustomizationsOrNull extends null
+    ? Record<string, unknown>
+    : CustomizationsOrNull = CustomizationsOrNull extends null ? Record<string, unknown> : CustomizationsOrNull,
   IntersectedCustomizations extends Customizations & DefaultCustomizations = Customizations & DefaultCustomizations,
   FinalCustomizations extends {
     [P in keyof AllowedCustomizations]: IntersectedCustomizations[P] extends never
