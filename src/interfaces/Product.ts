@@ -1,4 +1,4 @@
-import type { AnyOptions } from './AnyOptions'
+import type { WithCommonOptions } from './WithCommonOptions'
 import type { ImageTransformation } from './ImageTransformation'
 import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import type { IRelationships } from './Relationships'
@@ -37,8 +37,11 @@ export interface IProductResult extends ResultResponse<IProduct> {}
 
 export interface IProductsResult extends ResultResponse<IProducts> {}
 
-export type ListOptions = AnyOptions<{ suggestToken: true; suggestQuery: true; optionalToken: true }> & {
-  image_transformation?: ImageTransformation
-}
+export type ListOptions = WithCommonOptions<
+  { suggestToken: true; suggestQuery: true; optionalToken: true },
+  {
+    image_transformation?: ImageTransformation
+  }
+>
 
-export type ShowOptions = AnyOptions<{ suggestToken: true; suggestQuery: true; optionalToken: true }>
+export type ShowOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true; optionalToken: true }>

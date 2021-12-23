@@ -1,3 +1,4 @@
+import type { DeepAnyObject } from './DeepAnyObject'
 import type { IQuery } from './Query'
 import type { OptionalAnyToken, RequiredAnyToken } from './Token'
 
@@ -13,8 +14,9 @@ export type DefaultCustomizations = AllowedCustomizations & {
   optionalToken: false
 }
 
-export type AnyOptions<
+export type WithCommonOptions<
   Customizations extends Partial<AllowedCustomizations> = Partial<AllowedCustomizations>,
+  CustomOptions extends Record<string, any> = Record<string, any>,
   IntersectedCustomizations extends Customizations & DefaultCustomizations = Customizations & DefaultCustomizations,
   FinalCustomizations extends {
     [P in keyof AllowedCustomizations]: IntersectedCustomizations[P] extends never
@@ -25,10 +27,12 @@ export type AnyOptions<
       ? Customizations[P]
       : DefaultCustomizations[P]
   }
-> = Record<string, any> &
-  (FinalCustomizations['suggestToken'] extends true
+> = DeepAnyObject<
+  ((FinalCustomizations['suggestToken'] extends true
     ? FinalCustomizations['optionalToken'] extends true
       ? OptionalAnyToken
       : RequiredAnyToken
-    : Record<string, any>) &
-  (FinalCustomizations['suggestQuery'] extends true ? IQuery : Record<string, any>)
+    : Record<string, unknown>) &
+    (FinalCustomizations['suggestQuery'] extends true ? IQuery : Record<string, unknown>)) &
+    CustomOptions
+>
