@@ -1,3 +1,5 @@
+import { WithCommonOptions } from './WithCommonOptions'
+
 export interface AuthTokenAttr {
   username: string
   password: string
@@ -25,3 +27,9 @@ export interface RefreshTokenParams {
 export interface RevokeTokenParams {
   token: string
 }
+
+export type GetTokenOptions = WithCommonOptions<null, AuthTokenAttr>
+
+export type RefreshTokenOptions = WithCommonOptions<null, RefreshTokenAttr>
+
+export type RevokeTokenOptions = WithCommonOptions<null, RevokeTokenAttr>
