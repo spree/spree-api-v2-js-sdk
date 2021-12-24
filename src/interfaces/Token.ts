@@ -11,6 +11,10 @@ export type OptionalAnyToken =
   | { orderToken?: string; bearerToken?: never }
   | { orderToken?: never; bearerToken?: string }
 
+export type RequiredAccountToken = { bearerToken: string }
+
+export type OptionalAccountToken = { bearerToken?: string }
+
 export interface IOAuthToken {
   access_token: string
   token_type: 'Bearer'

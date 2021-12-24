@@ -1,17 +1,19 @@
 import type { DeepAnyObject } from './DeepAnyObject'
 import type { IQuery } from './Query'
-import type { OptionalAnyToken, RequiredAnyToken } from './Token'
+import type { OptionalAccountToken, OptionalAnyToken, RequiredAccountToken, RequiredAnyToken } from './Token'
 
 export type AllowedCustomizations = {
   suggestToken: boolean
   suggestQuery: boolean
   optionalToken: boolean
+  onlyAccountToken: boolean
 }
 
 export type DefaultCustomizations = AllowedCustomizations & {
   suggestToken: false
   suggestQuery: false
   optionalToken: false
+  onlyAccountToken: false
 }
 
 export type WithCommonOptions<
@@ -32,7 +34,11 @@ export type WithCommonOptions<
   }
 > = DeepAnyObject<
   ((FinalCustomizations['suggestToken'] extends true
-    ? FinalCustomizations['optionalToken'] extends true
+    ? FinalCustomizations['onlyAccountToken'] extends true
+      ? FinalCustomizations['optionalToken'] extends true
+        ? OptionalAccountToken
+        : RequiredAccountToken
+      : FinalCustomizations['optionalToken'] extends true
       ? OptionalAnyToken
       : RequiredAnyToken
     : Record<string, unknown>) &
