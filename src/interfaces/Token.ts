@@ -1,5 +1,14 @@
 import { ResultResponse } from './ResultResponse'
 
+/**
+ * @deprecated Use
+ * {@link RequiredAnyToken},
+ * {@link OptionalAnyToken},
+ * {@link RequiredAccountToken},
+ * {@link OptionalAccountToken} or
+ * {@link WithCommonOptions} specific to the endpoint you're attempting to call
+ * instead.
+ */
 export interface IToken {
   orderToken?: string
   bearerToken?: string
