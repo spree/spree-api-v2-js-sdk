@@ -2,6 +2,7 @@ import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './J
 import { IQuery } from './Query'
 import { IRelationships } from './Relationships'
 import { ResultResponse } from './ResultResponse'
+import { WithCommonOptions } from './WithCommonOptions'
 
 export interface MenuAttr extends JsonApiDocument {
   type: string
@@ -26,9 +27,16 @@ export interface MenuResult extends ResultResponse<Menu> {}
 
 export interface MenusResult extends ResultResponse<Menus> {}
 
+/**
+ * @deprecated Use {@link ListOptions} instead.
+ */
 export interface MenusList extends IQuery {
   locale?: string
   filter?: IQuery['filter'] & {
     location?: string
   }
 }
+
+export type ListOptions = WithCommonOptions<{ suggestQuery: true }, MenusList>
+
+export type ShowOptions = WithCommonOptions<{ suggestQuery: true }, { id: string }>
