@@ -50,12 +50,12 @@ export default class Wishlists extends Http {
   public async show(token: IToken, wishlistToken: string, params?: WishlistsShow): Promise<WishlistResult>
   public async show(...allArguments: any[]): Promise<WishlistResult> {
     const [tokenOrOptions, positionalWishlistToken, positionalParams = {}] = allArguments
-    const { wishlistToken, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { wishlistToken: positionalWishlistToken }, positionalParams],
-      ['wishlistToken']
+    const { wishlist_token, token, params } = squashAndPreparePositionalArguments(
+      [tokenOrOptions, { wishlist_token: positionalWishlistToken }, positionalParams],
+      ['wishlist_token']
     )
 
-    return await this.spreeResponse<WishlistResponse>('get', routes.wishlistPath(wishlistToken), token, params)
+    return await this.spreeResponse<WishlistResponse>('get', routes.wishlistPath(wishlist_token), token, params)
   }
 
   public async default(options: DefaultOptions): Promise<WishlistResult>
@@ -89,12 +89,12 @@ export default class Wishlists extends Http {
   public async update(token: IToken, wishlistToken: string, params: WishlistsUpdate): Promise<WishlistResult>
   public async update(...allArguments: any[]): Promise<WishlistResult> {
     const [tokenOrOptions, positionalWishlistToken, positionalParams] = allArguments
-    const { wishlistToken, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { wishlistToken: positionalWishlistToken }, positionalParams],
-      ['wishlistToken']
+    const { wishlist_token, token, params } = squashAndPreparePositionalArguments(
+      [tokenOrOptions, { wishlist_token: positionalWishlistToken }, positionalParams],
+      ['wishlist_token']
     )
 
-    return await this.spreeResponse<WishlistResponse>('patch', routes.wishlistPath(wishlistToken), token, params)
+    return await this.spreeResponse<WishlistResponse>('patch', routes.wishlistPath(wishlist_token), token, params)
   }
 
   public async remove(options: RemoveOptions): Promise<NoContentResult>
@@ -104,12 +104,12 @@ export default class Wishlists extends Http {
   public async remove(token: IToken, wishlistToken: string): Promise<NoContentResult>
   public async remove(...allArguments: any[]): Promise<NoContentResult> {
     const [tokenOrOptions, positionalWishlistToken] = allArguments
-    const { wishlistToken, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { wishlistToken: positionalWishlistToken }],
-      ['wishlistToken']
+    const { wishlist_token, token, params } = squashAndPreparePositionalArguments(
+      [tokenOrOptions, { wishlist_token: positionalWishlistToken }],
+      ['wishlist_token']
     )
 
-    return await this.spreeResponse<NoContentResponse>('delete', routes.wishlistPath(wishlistToken), token, params)
+    return await this.spreeResponse<NoContentResponse>('delete', routes.wishlistPath(wishlist_token), token, params)
   }
 
   public async addWishedItem(options: AddWishedItemOptions): Promise<WishedItemResult>
@@ -123,12 +123,17 @@ export default class Wishlists extends Http {
   ): Promise<WishedItemResult>
   public async addWishedItem(...allArguments: any[]): Promise<WishedItemResult> {
     const [tokenOrOptions, positionalWishlistToken, positionalParams] = allArguments
-    const { wishlistToken, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { wishlistToken: positionalWishlistToken }, positionalParams],
-      ['wishlistToken']
+    const { wishlist_token, token, params } = squashAndPreparePositionalArguments(
+      [tokenOrOptions, { wishlist_token: positionalWishlistToken }, positionalParams],
+      ['wishlist_token']
     )
 
-    return await this.spreeResponse<WishedItem>('post', routes.wishlistsAddWishedItemPath(wishlistToken), token, params)
+    return await this.spreeResponse<WishedItem>(
+      'post',
+      routes.wishlistsAddWishedItemPath(wishlist_token),
+      token,
+      params
+    )
   }
 
   public async updateWishedItem(options: UpdateWishedItemOptions): Promise<WishedItemResult>
@@ -143,14 +148,14 @@ export default class Wishlists extends Http {
   ): Promise<WishedItemResult>
   public async updateWishedItem(...allArguments: any[]): Promise<WishedItemResult> {
     const [tokenOrOptions, positionalWishlistToken, positionalId, positionalParams] = allArguments
-    const { wishlistToken, id, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { wishlistToken: positionalWishlistToken }, { id: positionalId }, positionalParams],
-      ['wishlistToken', 'id']
+    const { wishlist_token, id, token, params } = squashAndPreparePositionalArguments(
+      [tokenOrOptions, { wishlist_token: positionalWishlistToken }, { id: positionalId }, positionalParams],
+      ['wishlist_token', 'id']
     )
 
     return await this.spreeResponse<WishedItem>(
       'patch',
-      routes.wishlistsUpdateWishedItemQuantityPath(wishlistToken, id),
+      routes.wishlistsUpdateWishedItemQuantityPath(wishlist_token, id),
       token,
       params
     )
@@ -163,14 +168,14 @@ export default class Wishlists extends Http {
   public async removeWishedItem(token: IToken, wishlistToken: string, id: string): Promise<WishedItemResult>
   public async removeWishedItem(...allArguments: any[]): Promise<WishedItemResult> {
     const [tokenOrOptions, positionalWishlistToken, positionalId] = allArguments
-    const { wishlistToken, id, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { wishlistToken: positionalWishlistToken }, { id: positionalId }],
-      ['wishlistToken', 'id']
+    const { wishlist_token, id, token, params } = squashAndPreparePositionalArguments(
+      [tokenOrOptions, { wishlist_token: positionalWishlistToken }, { id: positionalId }],
+      ['wishlist_token', 'id']
     )
 
     return await this.spreeResponse<WishedItem>(
       'delete',
-      routes.wishlistsRemoveWishedItemPath(wishlistToken, id),
+      routes.wishlistsRemoveWishedItemPath(wishlist_token, id),
       token,
       params
     )

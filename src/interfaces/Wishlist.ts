@@ -72,7 +72,7 @@ export type ListOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: 
 
 export type ShowOptions = WithCommonOptions<
   { suggestToken: true; suggestQuery: true },
-  { wishlistToken: string } & WishlistsShow
+  { wishlist_token: string } & WishlistsShow
 >
 
 export type DefaultOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }, WishlistsDefault>
@@ -81,7 +81,7 @@ export type CreateOptions = WithCommonOptions<{ suggestToken: true; suggestQuery
 
 export type UpdateOptions = WithCommonOptions<
   { suggestToken: true; suggestQuery: true },
-  { wishlistToken: string } & WishlistsUpdate
+  { wishlist_token: string } & WishlistsUpdate
 >
 
-export type RemoveOptions = WithCommonOptions<{ suggestToken: true }, { wishlistToken: string }>
+export type RemoveOptions = WithCommonOptions<{ suggestToken: true }, { wishlist_token: string }>

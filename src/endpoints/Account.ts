@@ -107,12 +107,12 @@ export default class Account extends Http {
   public async completedOrder(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>
   public async completedOrder(...allArguments: any[]): Promise<IOrderResult> {
     const [tokenOrOptions, positionalOrderNumber, positionalParams = {}] = allArguments
-    const { orderNumber, token, params } = squashAndPreparePositionalArguments(
-      [{ orderNumber: positionalOrderNumber }, tokenOrOptions, positionalParams],
-      ['orderNumber']
+    const { order_number, token, params } = squashAndPreparePositionalArguments(
+      [{ order_number: positionalOrderNumber }, tokenOrOptions, positionalParams],
+      ['order_number']
     )
 
-    return await this.spreeResponse<IOrder>('get', routes.accountCompletedOrderPath(orderNumber), token, params)
+    return await this.spreeResponse<IOrder>('get', routes.accountCompletedOrderPath(order_number), token, params)
   }
 
   public async create(options: CreateOptions): Promise<IAccountResult>
@@ -134,18 +134,18 @@ export default class Account extends Http {
   public async confirm(confirmationToken: string): Promise<IAccountConfirmationResult>
   public async confirm(...allArguments: any[]): Promise<IAccountConfirmationResult> {
     const [confirmationTokenOrOptions] = allArguments
-    const { confirmationToken, token, params } = squashAndPreparePositionalArguments(
+    const { confirmation_token, token, params } = squashAndPreparePositionalArguments(
       [
         typeof confirmationTokenOrOptions === 'object'
           ? confirmationTokenOrOptions
-          : { confirmationToken: confirmationTokenOrOptions }
+          : { confirmation_token: confirmationTokenOrOptions }
       ],
-      ['confirmationToken']
+      ['confirmation_token']
     )
 
     return await this.spreeResponse<IAccountConfirmation>(
       'get',
-      routes.accountConfirmPath(confirmationToken),
+      routes.accountConfirmPath(confirmation_token),
       token,
       params
     )
@@ -170,19 +170,19 @@ export default class Account extends Http {
   public async resetPassword(resetPasswordToken: string, params: ResetPasswordParams): Promise<NoContentResult>
   public async resetPassword(...allArguments: any[]): Promise<NoContentResult> {
     const [resetPasswordTokenOrOptions, positionalParams] = allArguments
-    const { resetPasswordToken, token, params } = squashAndPreparePositionalArguments(
+    const { reset_password_token, token, params } = squashAndPreparePositionalArguments(
       [
         typeof resetPasswordTokenOrOptions === 'object'
           ? resetPasswordTokenOrOptions
           : { resetPasswordToken: resetPasswordTokenOrOptions },
         positionalParams
       ],
-      ['resetPasswordToken']
+      ['reset_password_token']
     )
 
     return await this.spreeResponse<NoContentResponse>(
       'patch',
-      routes.resetPasswordPath(resetPasswordToken),
+      routes.resetPasswordPath(reset_password_token),
       token,
       params
     )

@@ -13,14 +13,14 @@ export default class DigitalAssets extends Http {
   public async download(token: IToken, assetToken: string, params?: IQuery): Promise<DigitalAssetResult>
   public async download(...allArguments: any[]): Promise<DigitalAssetResult> {
     const [tokenOrOptions, positionalAssetToken, positionalParams = {}] = allArguments
-    const { assetToken, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { assetToken: positionalAssetToken }, positionalParams],
-      ['assetToken']
+    const { asset_token, token, params } = squashAndPreparePositionalArguments(
+      [tokenOrOptions, { asset_token: positionalAssetToken }, positionalParams],
+      ['asset_token']
     )
 
     return await this.spreeResponse<DigitalAsset>(
       'get',
-      routes.digitalAssetsDownloadPath(assetToken),
+      routes.digitalAssetsDownloadPath(asset_token),
       token,
       params,
       'stream'

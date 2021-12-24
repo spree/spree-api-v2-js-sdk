@@ -13,11 +13,11 @@ export default class Order extends Http {
   public async status(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>
   public async status(...allArguments: any[]): Promise<IOrderResult> {
     const [tokenOrOptions, positionalOrderNumber, positionalParams = {}] = allArguments
-    const { orderNumber, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { orderNumber: positionalOrderNumber }, positionalParams],
-      ['orderNumber']
+    const { order_number, token, params } = squashAndPreparePositionalArguments(
+      [tokenOrOptions, { order_number: positionalOrderNumber }, positionalParams],
+      ['order_number']
     )
 
-    return await this.spreeResponse<IOrder>('get', routes.orderStatusPath(orderNumber), token, params)
+    return await this.spreeResponse<IOrder>('get', routes.orderStatusPath(order_number), token, params)
   }
 }

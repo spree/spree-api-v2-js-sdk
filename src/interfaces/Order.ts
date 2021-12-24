@@ -50,4 +50,4 @@ export interface IOrderResult extends ResultResponse<IOrder> {}
 
 export interface IOrdersResult extends ResultResponse<IOrders> {}
 
-export type StatusOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }, { orderNumber: string }>
+export type StatusOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }, { order_number: string }>

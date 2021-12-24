@@ -87,7 +87,7 @@ export type CompletedOrdersListOptions = WithCommonOptions<{ suggestToken: true;
 
 export type CompletedOrderOptions = WithCommonOptions<
   { suggestToken: true; suggestQuery: true },
-  { orderNumber: string }
+  { order_number: string }
 >
 
 export type CreateOptions = WithCommonOptions<
@@ -101,11 +101,11 @@ export type CreateOptions = WithCommonOptions<
   }
 >
 
-export type ConfirmOptions = WithCommonOptions<null, { confirmationToken: string }>
+export type ConfirmOptions = WithCommonOptions<null, { confirmation_token: string }>
 
 export type ForgotPasswordOptions = WithCommonOptions<null, ForgotPasswordParams>
 
-export type ResetPasswordOptions = WithCommonOptions<null, ResetPasswordParams & { resetPasswordToken: string }>
+export type ResetPasswordOptions = WithCommonOptions<null, ResetPasswordParams & { reset_password_token: string }>
 
 export type UpdateOptions = WithCommonOptions<
   { suggestToken: true },

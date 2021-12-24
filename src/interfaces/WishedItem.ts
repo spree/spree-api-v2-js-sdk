@@ -34,12 +34,12 @@ export interface WishlistsUpdateWishedItem extends IQuery {
 
 export type AddWishedItemOptions = WithCommonOptions<
   { suggestToken: true; suggestQuery: true },
-  { wishlistToken: string }
+  { wishlist_token: string }
 >
 
 export type UpdateWishedItemOptions = WithCommonOptions<
   { suggestToken: true; suggestQuery: true },
-  { wishlistToken: string; id: string } & WishlistsUpdateWishedItem
+  { wishlist_token: string; id: string } & WishlistsUpdateWishedItem
 >
 
-export type RemoveWishedItemOptions = WithCommonOptions<{ suggestToken: true }, { wishlistToken: string; id: string }>
+export type RemoveWishedItemOptions = WithCommonOptions<{ suggestToken: true }, { wishlist_token: string; id: string }>
