@@ -49,7 +49,7 @@ export default class Cart extends Http {
     return await this.spreeResponse<IOrder>('get', routes.cartPath(), token, params)
   }
 
-  public async create(options: CreateOptions): Promise<IOrderResult>
+  public async create(options?: CreateOptions): Promise<IOrderResult>
   /**
    * @deprecated Use the combined options signature instead.
    */
