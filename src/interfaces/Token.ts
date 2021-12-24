@@ -5,15 +5,17 @@ export interface IToken {
   bearerToken?: string
 }
 
-export type RequiredAnyToken = { orderToken: string; bearerToken?: never } | { orderToken?: never; bearerToken: string }
+export type RequiredAnyToken =
+  | { order_token: string; bearer_token?: never }
+  | { order_token?: never; bearer_token: string }
 
 export type OptionalAnyToken =
-  | { orderToken?: string; bearerToken?: never }
-  | { orderToken?: never; bearerToken?: string }
+  | { order_token?: string; bearer_token?: never }
+  | { order_token?: never; bearer_token?: string }
 
-export type RequiredAccountToken = { bearerToken: string }
+export type RequiredAccountToken = { bearer_token: string }
 
-export type OptionalAccountToken = { bearerToken?: string }
+export type OptionalAccountToken = { bearer_token?: string }
 
 export interface IOAuthToken {
   access_token: string

@@ -25,20 +25,30 @@ const squashAndPreparePositionalArguments = (
   // Using reverse() ensures we treat the first object with priority.
   // It replicates the order of arguments for endpoints methods.
   const mergedArguments: Record<string, any> = Object.assign({}, ...positionalArguments.filter(Boolean).reverse())
-  const [restArguments, tokensArguments] = split(mergedArguments, ['orderToken', 'bearerToken'])
+  const [restArguments, tokensArguments] = split(mergedArguments, [
+    'order_token',
+    'bearer_token',
+    'orderToken',
+    'bearerToken'
+  ])
   const [params, specialKeysMapping] = split(restArguments, specialKeys)
 
-  // Extract tokens into IToken
+  // Extract tokens into IToken for backwards compatibility.
   let token: IToken
 
-  if ('orderToken' in tokensArguments && 'bearerToken' in tokensArguments) {
-    console.warn('Avoid providing both token types in a request to prevent unexpected results.')
+  if (
+    ('order_token' in tokensArguments && 'bearer_token' in tokensArguments) ||
+    ('orderToken' in tokensArguments && 'bearerToken' in tokensArguments)
+  ) {
+    console.warn(
+      'Avoid providing both token types (order token and bearer token) in a request to prevent unexpected results.'
+    )
   }
 
-  if ('bearerToken' in tokensArguments) {
-    token = { bearerToken: tokensArguments.bearerToken }
-  } else if ('orderToken' in tokensArguments) {
-    token = { orderToken: tokensArguments.orderToken }
+  if ('bearer_token' in tokensArguments || 'bearerToken' in tokensArguments) {
+    token = { bearerToken: tokensArguments.bearer_token || tokensArguments.bearerToken }
+  } else if ('order_token' in tokensArguments || 'orderToken' in tokensArguments) {
+    token = { orderToken: tokensArguments.order_token || tokensArguments.orderToken }
   } else {
     token = {}
   }
