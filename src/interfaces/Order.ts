@@ -1,6 +1,7 @@
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
 import { ResultResponse } from './ResultResponse'
+import { WithCommonOptions } from './WithCommonOptions'
 
 export interface OrderAttr extends JsonApiDocument {
   type: string
@@ -48,3 +49,5 @@ export interface IOrders extends JsonApiListResponse {
 export interface IOrderResult extends ResultResponse<IOrder> {}
 
 export interface IOrdersResult extends ResultResponse<IOrders> {}
+
+export type StatusOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }, { orderNumber: string }>
