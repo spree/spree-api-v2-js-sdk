@@ -110,7 +110,6 @@ export type ResetPasswordOptions = WithCommonOptions<null, ResetPasswordParams &
 export type UpdateOptions = WithCommonOptions<
   { suggestToken: true },
   {
-    resetPasswordToken: string
     user: {
       email: string
       password: string
