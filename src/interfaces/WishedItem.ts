@@ -1,7 +1,8 @@
-import { JsonApiDocument, JsonApiSingleResponse } from './JsonApi'
-import { IQuery } from './Query'
-import { IRelationships } from './Relationships'
-import { ResultResponse } from './ResultResponse'
+import type { JsonApiDocument, JsonApiSingleResponse } from './JsonApi'
+import type { IQuery } from './Query'
+import type { IRelationships } from './Relationships'
+import type { ResultResponse } from './ResultResponse'
+import type { WithCommonOptions } from './WithCommonOptions'
 
 export interface WishedItemAttr extends JsonApiDocument {
   type: string
@@ -24,6 +25,21 @@ export interface WishlistsAddWishedItem extends IQuery {
   quantity: number
 }
 
+/**
+ * @deprecated Use {@link UpdateWishedItemOptions} instead.
+ */
 export interface WishlistsUpdateWishedItem extends IQuery {
   quantity: number
 }
+
+export type AddWishedItemOptions = WithCommonOptions<
+  { suggestToken: true; suggestQuery: true },
+  { wishlistToken: string }
+>
+
+export type UpdateWishedItemOptions = WithCommonOptions<
+  { suggestToken: true; suggestQuery: true },
+  { wishlistToken: string; id: string } & WishlistsUpdateWishedItem
+>
+
+export type RemoveWishedItemOptions = WithCommonOptions<{ suggestToken: true }, { wishlistToken: string; id: string }>
