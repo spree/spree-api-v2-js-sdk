@@ -1,6 +1,8 @@
-import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import { IRelationships } from './Relationships'
-import { ResultResponse } from './ResultResponse'
+import type { WithCommonOptions } from './WithCommonOptions'
+import type { ImageTransformation } from './ImageTransformation'
+import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
+import type { IRelationships } from './Relationships'
+import type { ResultResponse } from './ResultResponse'
 
 export interface ProductAttr extends JsonApiDocument {
   type: string
@@ -34,3 +36,12 @@ export interface IProducts extends JsonApiListResponse {
 export interface IProductResult extends ResultResponse<IProduct> {}
 
 export interface IProductsResult extends ResultResponse<IProducts> {}
+
+export type ListOptions = WithCommonOptions<
+  { suggestToken: true; suggestQuery: true; optionalToken: true },
+  {
+    image_transformation?: ImageTransformation
+  }
+>
+
+export type ShowOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true; optionalToken: true }>

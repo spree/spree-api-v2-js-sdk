@@ -12,6 +12,9 @@ export interface IQuery {
   [customSpreeExtensionKey: string]: any
 }
 
+/**
+ * @deprecated Use {@link ListOptions} instead.
+ */
 export interface IProductsQuery extends IQuery {
   image_transformation?: {
     size?: string

@@ -1,6 +1,7 @@
 import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
 import { IRelationships } from './Relationships'
 import { ResultResponse } from './ResultResponse'
+import { WithCommonOptions } from './WithCommonOptions'
 
 export interface TaxonAttr extends JsonApiDocument {
   type: string
@@ -37,3 +38,7 @@ export interface ITaxons extends JsonApiListResponse {
 export interface ITaxonResult extends ResultResponse<ITaxon> {}
 
 export interface ITaxonsResult extends ResultResponse<ITaxons> {}
+
+export type ListOptions = WithCommonOptions<{ suggestQuery: true }>
+
+export type ShowOptions = WithCommonOptions<{ suggestQuery: true }>

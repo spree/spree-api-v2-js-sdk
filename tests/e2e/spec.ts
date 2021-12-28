@@ -12,78 +12,74 @@ const createTests = function () {
 
     cy.wrap(null)
       .then(function () {
-        return client.cart.create()
+        return result.extractSuccess(client.cart.create())
       })
       .then(function (cartCreateResponse) {
-        const { token: orderToken, number: orderNumber } = cartCreateResponse.success().data.attributes
+        const { token: order_token, number: order_number } = cartCreateResponse.data.attributes
 
         return cy
           .wrap(null)
           .then(function () {
-            return client.products.list({}, { include: 'default_variant' })
+            return result.extractSuccess(client.products.list({ include: 'default_variant' }))
           })
           .then(function (variantsResponse) {
             const variantId = jsonApi.findSingleRelationshipDocument(
-              variantsResponse.success(),
-              variantsResponse.success().data[0],
+              variantsResponse,
+              variantsResponse.data[0],
               'default_variant'
             ).id
 
-            return client.cart.addItem({ orderToken }, { variant_id: variantId, quantity: 1 })
+            return client.cart.addItem({ order_token, variant_id: variantId, quantity: 1 })
           })
           .then(function () {
-            return client.checkout.orderUpdate({ orderToken }, { order: orderFullAddress })
+            return client.checkout.orderUpdate({ order_token, order: orderFullAddress })
           })
           .then(function () {
-            return client.checkout.shippingRates({ orderToken })
+            return result.extractSuccess(client.checkout.shippingRates({ order_token }))
           })
           .then(function (shippingResponse) {
-            const firstShipment = shippingResponse.success().data[0]
+            const firstShipment = shippingResponse.data[0]
             const shippingRateId = (firstShipment.relationships.shipping_rates.data as RelationType[])[0].id
 
-            return client.checkout.orderUpdate(
-              { orderToken },
-              {
-                order: {
-                  shipments_attributes: [
-                    {
-                      id: firstShipment.id,
-                      selected_shipping_rate_id: shippingRateId
-                    }
-                  ]
-                }
+            return client.checkout.orderUpdate({
+              order_token,
+              order: {
+                shipments_attributes: [
+                  {
+                    id: firstShipment.id,
+                    selected_shipping_rate_id: shippingRateId
+                  }
+                ]
               }
-            )
+            })
           })
           .then(function () {
-            return client.checkout.paymentMethods({ orderToken })
+            return result.extractSuccess(client.checkout.paymentMethods({ order_token }))
           })
           .then(function (paymentsResponse) {
-            const checkPaymentId = paymentsResponse
-              .success()
-              .data.find((paymentMethod) => paymentMethod.attributes.type === 'Spree::PaymentMethod::Check')!.id
+            const checkPaymentId = paymentsResponse.data.find(
+              (paymentMethod) => paymentMethod.attributes.type === 'Spree::PaymentMethod::Check'
+            )!.id
 
-            return client.checkout.orderUpdate(
-              { orderToken },
-              {
-                order: {
-                  payments_attributes: [
-                    {
-                      payment_method_id: checkPaymentId
-                    }
-                  ]
-                }
+            return client.checkout.orderUpdate({
+              order_token,
+              order: {
+                payments_attributes: [
+                  {
+                    payment_method_id: checkPaymentId
+                  }
+                ]
               }
-            )
+            })
           })
           .then(function () {
-            return client.checkout.complete({ orderToken })
+            return client.checkout.complete({ order_token })
           })
           .then(function (orderCompleteResponse) {
             expect(orderCompleteResponse.isSuccess()).to.be.true
           })
           .then(function () {
-            return client.order.status({ orderToken }, orderNumber)
+            return client.order.status({ order_token, order_number })
           })
           .then(function (statusResponse) {
             expect(statusResponse.isSuccess()).to.be.true
@@ -96,10 +92,10 @@ const createTests = function () {
 
     cy.wrap(null)
       .then(function () {
-        return client.cart.create()
+        return result.extractSuccess(client.cart.create())
       })
       .then(function (cartCreateResponse) {
-        const orderToken = cartCreateResponse.success().data.attributes.token
+        const orderToken = cartCreateResponse.data.attributes.token
 
         return client.cart.show({ orderToken })
       })
@@ -113,10 +109,10 @@ const createTests = function () {
 
     cy.wrap(null)
       .then(function () {
-        return client.cart.create()
+        return result.extractSuccess(client.cart.create())
       })
       .then(function (cartCreateResponse) {
-        const orderToken = cartCreateResponse.success().data.attributes.token
+        const orderToken = cartCreateResponse.data.attributes.token
 
         return client.cart.remove({ orderToken })
       })
@@ -130,10 +126,10 @@ const createTests = function () {
 
     cy.wrap(null)
       .then(function () {
-        return client.cart.create()
+        return result.extractSuccess(client.cart.create())
       })
       .then(function (cartCreateResponse) {
-        const orderToken = cartCreateResponse.success().data.attributes.token
+        const orderToken = cartCreateResponse.data.attributes.token
 
         return client.checkout.paymentMethods({ orderToken })
       })

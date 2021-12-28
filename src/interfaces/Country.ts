@@ -1,6 +1,7 @@
-import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import { IRelationships } from './Relationships'
-import { ResultResponse } from './ResultResponse'
+import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
+import type { IRelationships } from './Relationships'
+import type { ResultResponse } from './ResultResponse'
+import type { WithCommonOptions } from './WithCommonOptions'
 
 export interface CountryAttr extends JsonApiDocument {
   type: string
@@ -26,6 +27,12 @@ export interface ICountries extends JsonApiListResponse {
   data: CountryAttr[]
 }
 
-export interface ICountryResult extends ResultResponse<ICountry> { }
+export interface ICountryResult extends ResultResponse<ICountry> {}
 
-export interface ICountriesResult extends ResultResponse<ICountries> { }
+export interface ICountriesResult extends ResultResponse<ICountries> {}
+
+export type ListOptions = WithCommonOptions
+
+export type ShowOptions = WithCommonOptions<{ suggestQuery: true }, { iso: string }>
+
+export type DefaultOptions = WithCommonOptions<{ suggestQuery: true }>
