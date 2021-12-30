@@ -156,7 +156,7 @@ await client.checkout.orderUpdate({ orderToken }, {
   }
 })
 
-await client.checkout.orderNext({ bearerToken })
+await client.checkout.orderNext({ orderToken })
 
 // Step two - pick a shipping method
 const shipping = (await client.checkout.shippingRates({ orderToken })).success()
