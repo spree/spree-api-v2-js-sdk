@@ -20,6 +20,9 @@ export interface WishedItem extends JsonApiSingleResponse {
 
 export interface WishedItemResult extends ResultResponse<WishedItem> {}
 
+/**
+ * @deprecated Use {@link AddWishedItemOptions} instead.
+ */
 export interface WishlistsAddWishedItem extends IQuery {
   variant_id: string
   quantity: number
@@ -34,7 +37,7 @@ export interface WishlistsUpdateWishedItem extends IQuery {
 
 export type AddWishedItemOptions = WithCommonOptions<
   { suggestToken: true; suggestQuery: true },
-  { wishlist_token: string }
+  { wishlist_token: string } & WishlistsAddWishedItem
 >
 
 export type UpdateWishedItemOptions = WithCommonOptions<
