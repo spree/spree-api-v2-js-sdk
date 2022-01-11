@@ -77,16 +77,31 @@ export interface AccountAddressesResult extends ResultResponse<AccountAddressesR
 
 export type AccountInfoOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }>
 
-export type CreditCardsListOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }>
+export type CreditCardsListOptions = WithCommonOptions<{
+  suggestToken: true
+  onlyAccountToken: true
+  suggestQuery: true
+}>
 
-export type DefaultCreditCardOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }>
+export type DefaultCreditCardOptions = WithCommonOptions<{
+  suggestToken: true
+  onlyAccountToken: true
+  suggestQuery: true
+}>
 
-export type RemoveCreditCardOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }, { id: string }>
+export type RemoveCreditCardOptions = WithCommonOptions<
+  { suggestToken: true; onlyAccountToken: true; suggestQuery: true },
+  { id: string }
+>
 
-export type CompletedOrdersListOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }>
+export type CompletedOrdersListOptions = WithCommonOptions<{
+  suggestToken: true
+  onlyAccountToken: true
+  suggestQuery: true
+}>
 
 export type CompletedOrderOptions = WithCommonOptions<
-  { suggestToken: true; suggestQuery: true },
+  { suggestToken: true; onlyAccountToken: true; suggestQuery: true },
   { order_number: string }
 >
 
@@ -108,7 +123,7 @@ export type ForgotPasswordOptions = WithCommonOptions<null, ForgotPasswordParams
 export type ResetPasswordOptions = WithCommonOptions<null, ResetPasswordParams & { reset_password_token: string }>
 
 export type UpdateOptions = WithCommonOptions<
-  { suggestToken: true },
+  { suggestToken: true; onlyAccountToken: true },
   {
     user: {
       email: string
@@ -118,12 +133,21 @@ export type UpdateOptions = WithCommonOptions<
   }
 >
 
-export type AddressesListOptions = WithCommonOptions<{ suggestToken: true }>
+export type AddressesListOptions = WithCommonOptions<{ suggestToken: true; onlyAccountToken: true }>
 
-export type ShowAddressOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }, { id: string }>
+export type ShowAddressOptions = WithCommonOptions<
+  { suggestToken: true; onlyAccountToken: true; suggestQuery: true },
+  { id: string }
+>
 
-export type CreateAddressOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }, AccountAddressParams>
+export type CreateAddressOptions = WithCommonOptions<
+  { suggestToken: true; onlyAccountToken: true; suggestQuery: true },
+  AccountAddressParams
+>
 
-export type RemoveAddressOptions = WithCommonOptions<{ suggestToken: true }>
+export type RemoveAddressOptions = WithCommonOptions<{ suggestToken: true; onlyAccountToken: true }, { id: string }>
 
-export type UpdateAddressOptions = WithCommonOptions<{ suggestToken: true }, AccountAddressParams & { id: string }>
+export type UpdateAddressOptions = WithCommonOptions<
+  { suggestToken: true; onlyAccountToken: true },
+  AccountAddressParams & { id: string }
+>

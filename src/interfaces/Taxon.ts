@@ -41,4 +41,4 @@ export interface ITaxonsResult extends ResultResponse<ITaxons> {}
 
 export type ListOptions = WithCommonOptions<{ suggestQuery: true }>
 
-export type ShowOptions = WithCommonOptions<{ suggestQuery: true }>
+export type ShowOptions = WithCommonOptions<{ suggestQuery: true }, { id: string }>

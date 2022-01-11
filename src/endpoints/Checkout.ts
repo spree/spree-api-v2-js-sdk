@@ -34,8 +34,6 @@ import {
 import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
-// TODO: Update readme for endpoints to use the new signatures.
-
 export default class Checkout extends Http {
   public async orderNext(options: OrderNextOptions): Promise<IOrderResult>
   /**

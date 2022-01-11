@@ -16,7 +16,6 @@ Developed and maintained by:
 - [Tokens](#tokens)
   - [Order token](#order-token)
   - [Bearer token](#bearer-token)
-  - [Confirmation token](#confirmation-token)
 - [Endpoints](#endpoints)
   - [OAuth Authentication](#oauth-authentication)
     - [getToken](#getToken)
@@ -92,6 +91,7 @@ Developed and maintained by:
   - [Menus](#menus)
     - [list](#list-5)
     - [show](#show-6)
+  - [Helpers](#helpers)
   - [Alternative setups](#alternative-setups)
   - [Switching the fetcher](#switching-the-fetcher)
   - [About Spark Solutions](#about-spark-solutions)
@@ -122,13 +122,10 @@ const client = makeClient({
 })
 
 client.products
-  .list(
-    {},
-    {
-      include: 'default_variant',
-      page: 1
-    }
-  )
+  .list({
+    include: 'default_variant',
+    page: 1
+  })
   .then((spreeResponse) => {
     console.log(spreeResponse.success())
   })
@@ -145,10 +142,14 @@ const cartCreateResponse = await client.cart.create()
 
 const orderToken = cartCreateResponse.success().data.attributes.token
 
-await client.cart.addItem({ orderToken }, { variant_id: '1' })
+await client.cart.addItem({
+  order_token: orderToken,
+  variant_id: '1'
+})
 
 // Step one - save email, billing and shipping addresses
-await client.checkout.orderUpdate({ orderToken }, {
+await client.checkout.orderUpdate({
+  order_token: orderToken,
   order: {
     email,
     bill_address_attributes: {...},
@@ -156,12 +157,13 @@ await client.checkout.orderUpdate({ orderToken }, {
   }
 })
 
-await client.checkout.orderNext({ orderToken })
+await client.checkout.orderNext({ order_token: orderToken })
 
 // Step two - pick a shipping method
-const shipping = (await client.checkout.shippingRates({ orderToken })).success()
+const shipping = (await client.checkout.shippingRates({ order_token: orderToken })).success()
 
-await client.checkout.orderUpdate({ orderToken }, {
+await client.checkout.orderUpdate({
+  order_token: orderToken,
   order: {
     shipments_attributes: [{
       id: shipping.data[0].id,
@@ -170,12 +172,13 @@ await client.checkout.orderUpdate({ orderToken }, {
   }
 })
 
-await client.checkout.orderNext({ orderToken })
+await client.checkout.orderNext({ order_token: orderToken })
 
 // Step three - pick a payment method
-const payment = (await client.checkout.paymentMethods({ orderToken })).success()
+const payment = (await client.checkout.paymentMethods({ order_token: orderToken })).success()
 
-await client.checkout.addPayment({ orderToken }, {
+await client.checkout.addPayment({
+  order_token: orderToken,
   payment_method_id: payment.data[0].id,
   source_attributes: {
     gateway_payment_profile_id: "card_1JqvNB2eZvKYlo2C5OlqLV7S",
@@ -187,10 +190,10 @@ await client.checkout.addPayment({ orderToken }, {
   }
 })
 
-// Order complete
-await client.checkout.orderNext({ orderToken })
+await client.checkout.orderNext({ order_token: orderToken })
 
-await client.checkout.complete({ orderToken })
+// Place the order
+await client.checkout.complete({ order_token: orderToken })
 ```
 
 ## Response schema
@@ -261,18 +264,22 @@ Creates a [Bearer token](#bearer-token) required to authorize OAuth API calls.
 **Parameters schema:**
 
 ```ts
-username: string
-password: string
+{
+  username: string
+  password: string
+}
 ```
 
 **Success response schema:**
 
 ```ts
-access_token: string
-token_type: string = 'Bearer'
-expires_in: number
-refresh_token: string
-created_at: number
+{
+  access_token: string
+  token_type: string = 'Bearer'
+  expires_in: number
+  refresh_token: string
+  created_at: number
+}
 ```
 
 **Failure response schema:** [Error schema](#error-schema)
@@ -288,22 +295,26 @@ const token = await client.authentication.getToken({
 
 ### `refreshToken`
 
-Method `refreshToken` refreshes a [Bearer token](#bearer-token) required to authorize OAuth API calls.
+Refreshes the [Bearer token](#bearer-token) required to authorize OAuth API calls.
 
 **Parameters schema:**
 
 ```ts
-refresh_token: string
+{
+  refresh_token: string
+}
 ```
 
 **Success response schema:**
 
 ```ts
-access_token: string
-token_type: string = 'Bearer'
-expires_in: number
-refresh_token: string
-created_at: number
+{
+  access_token: string
+  token_type: string = 'Bearer'
+  expires_in: number
+  refresh_token: string
+  created_at: number
+}
 ```
 
 **Failure response schema:** [Error schema](#error-schema)
@@ -323,7 +334,9 @@ Method `revokeToken` revokes a [Bearer token (access token)](#bearer-token) or a
 **Parameters schema:**
 
 ```ts
-token: string
+{
+  token: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -347,10 +360,12 @@ Creates new account and returns its attributes.
 **Parameters schema:**
 
 ```ts
-user: {
-  email: string
-  password: string
-  password_confirmation: string
+{
+  user: {
+    email: string
+    password: string
+    password_confirmation: string
+  }
 }
 ```
 
@@ -377,14 +392,18 @@ Confirms new account e-mail and returns account registration status.
 **Parameters schema:**
 
 ```ts
-confirmationToken: string
+{
+  confirmation_token: string
+}
 ```
 
 **Success response schema:**
 
 ```ts
-data: {
-  state: string
+{
+  data: {
+    state: string
+  }
 }
 ```
 
@@ -393,7 +412,7 @@ data: {
 **Example:**
 
 ```ts
-const response = await client.account.confirm('2xssfC9Hzf8DJXyRZGmB')
+const response = await client.account.confirm({ confirmation_token: '2xssfC9Hzf8DJXyRZGmB' })
 ```
 
 ### [`forgotPassword`][15]
@@ -403,8 +422,10 @@ Sends an account recovery link to the provided email address. The link allows re
 **Parameters schema:**
 
 ```ts
-user: {
-  email: string
+{
+  user: {
+    email: string
+  }
 }
 ```
 
@@ -429,13 +450,14 @@ Changes the password associated with the account using an account recovery token
 **Parameters schema:**
 
 ```ts
-user: {
-  password: string
-  password_confirmation: string
+{
+  reset_password_token: string
+  user: {
+    password: string
+    password_confirmation: string
+  }
 }
 ```
-
-**Required token:** [Confirmation token](#confirmation-token)
 
 **Success response schema:** [Success schema](#success-schema)
 
@@ -444,7 +466,8 @@ user: {
 **Example:**
 
 ```ts
-const response = await client.account.resetPassword('7381273269536713689562374856', {
+const response = await client.account.resetPassword({
+  reset_password_token: '7381273269536713689562374856',
   user: {
     password: '123!@#asdASD',
     password_confirmation: '123!@#asdASD'
@@ -459,10 +482,12 @@ Updates account and returns its attributes.
 **Parameters schema:**
 
 ```ts
-user: {
-  email: string
-  password: string
-  password_confirmation: string
+{
+  user: {
+    email: string
+    password: string
+    password_confirmation: string
+  }
 }
 ```
 
@@ -475,16 +500,14 @@ user: {
 **Example:**
 
 ```ts
-const response = await client.account.update(
-  { bearerToken },
-  {
-    user: {
-      email: 'john@snow.org',
-      password: 'new_spree123',
-      password_confirmation: 'new_spree123'
-    }
+const response = await client.account.update({
+  bearer_token: '7381273269536713689562374856',
+  user: {
+    email: 'john@snow.org',
+    password: 'new_spree123',
+    password_confirmation: 'new_spree123'
   }
-)
+})
 ```
 
 ### [`accountInfo`][17]
@@ -500,7 +523,7 @@ Returns current user information.
 **Example:**
 
 ```ts
-const response = await client.account.accountInfo({ bearerToken })
+const response = await client.account.accountInfo({ bearer_token: '7381273269536713689562374856' })
 ```
 
 ### [`creditCardsList`][18]
@@ -516,7 +539,7 @@ Returns a list of Credit Cards for the signed in User.
 **Example:**
 
 ```ts
-const response = await client.account.creditCardsList({ bearerToken })
+const response = await client.account.creditCardsList({ bearer_token: '7381273269536713689562374856' })
 ```
 
 ### [`defaultCreditCard`][19]
@@ -532,7 +555,7 @@ Return the User's default Credit Card.
 **Example:**
 
 ```ts
-const response = await client.account.defaultCreditCard({ bearerToken })
+const response = await client.account.defaultCreditCard({ bearer_token: '7381273269536713689562374856' })
 ```
 
 ### [`removeCreditCard`][20]
@@ -544,7 +567,9 @@ Remove a User's Credit Card.
 **Parameters schema:**
 
 ```ts
-creditCardId: string
+{
+  id: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -554,7 +579,10 @@ creditCardId: string
 **Example:**
 
 ```ts
-const response = await client.account.removeCreditCard({ bearerToken }, '14')
+const response = await client.account.removeCreditCard({
+  bearer_token: '7381273269536713689562374856',
+  id: '14'
+})
 ```
 
 ### [`completedOrdersList`][21]
@@ -570,7 +598,9 @@ Returns Orders placed by the User. Only completed ones.
 **Example:**
 
 ```ts
-const response = await client.account.completedOrdersList({ bearerToken })
+const response = await client.account.completedOrdersList({
+  bearer_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`completedOrder`][22]
@@ -582,7 +612,9 @@ Return the User's completed Order.
 **Parameters schema:**
 
 ```ts
-orderNumber: string
+{
+  orderNumber: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -592,7 +624,10 @@ orderNumber: string
 **Example:**
 
 ```ts
-const response = await client.account.completedOrder({ bearerToken }, 'R653163382')
+const response = await client.account.completedOrder({
+  bearer_token: '7381273269536713689562374856',
+  order_number: 'R653163382'
+})
 ```
 
 ### [`addressesList`][23]
@@ -608,7 +643,9 @@ Returns a list of Addresses for the signed in User
 **Example:**
 
 ```ts
-const response = await client.account.addressesList({ bearerToken })
+const response = await client.account.addressesList({
+  bearer_token: '7381273269536713689562374856'
+})
 ```
 
 ### `showAddress`
@@ -620,7 +657,9 @@ Returns a single address for the signed in User.
 **Parameters schema:**
 
 ```ts
-addressId: string
+{
+  id: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -630,7 +669,10 @@ addressId: string
 **Example:**
 
 ```ts
-const response = await client.account.showAddress({ bearerToken }, '1')
+const response = await client.account.showAddress({
+  bearer_token: '7381273269536713689562374856',
+  id: '1'
+})
 ```
 
 ### [`createAddress`][24]
@@ -642,17 +684,19 @@ Create a new Address for the signed in User.
 **Parameters schema:**
 
 ```ts
-address: {
-  firstname: string
-  lastname: string
-  address1: string
-  address2?: string
-  city: string
-  phone?: string
-  zipcode: string
-  state_name: string // State Abbreviations
-  country_iso: string // Country ISO (2-chars) or ISO3 (3-chars)
-  company?: string
+{
+  address: {
+    firstname: string
+    lastname: string
+    address1: string
+    address2?: string
+    city: string
+    phone?: string
+    zipcode: string
+    state_name: string // State Abbreviations
+    country_iso: string // Country ISO (2-chars) or ISO3 (3-chars)
+    company?: string
+  }
 }
 ```
 
@@ -663,23 +707,21 @@ address: {
 **Example:**
 
 ```ts
-const response = await client.account.createAddress(
-  { bearerToken },
-  {
-    address: {
-      firstname: 'John',
-      lastname: 'Snow',
-      address1: '7735 Old Georgetown Road',
-      address2: '2nd Floor',
-      city: 'Bethesda',
-      phone: '3014445002',
-      zipcode: '20814',
-      state_name: 'MD',
-      country_iso: 'US',
-      company: 'Spark'
-    }
+const response = await client.account.createAddress({
+  bearer_token: '7381273269536713689562374856',
+  address: {
+    firstname: 'John',
+    lastname: 'Snow',
+    address1: '7735 Old Georgetown Road',
+    address2: '2nd Floor',
+    city: 'Bethesda',
+    phone: '3014445002',
+    zipcode: '20814',
+    state_name: 'MD',
+    country_iso: 'US',
+    company: 'Spark'
   }
-)
+})
 ```
 
 ### [`updateAddress`][25]
@@ -691,17 +733,20 @@ Update selected Address for the signed in User.
 **Parameters schema:**
 
 ```ts
-address: {
-  firstname: string
-  lastname: string
-  address1: string
-  address2?: string
-  city: string
-  phone?: string
-  zipcode: string
-  state_name: string // State Abbreviations
-  country_iso: string // Country ISO (2-chars) or ISO3 (3-chars)
-  company?: string
+{
+  id: string
+  address: {
+    firstname: string
+    lastname: string
+    address1: string
+    address2?: string
+    city: string
+    phone?: string
+    zipcode: string
+    state_name: string // State Abbreviations
+    country_iso: string // Country ISO (2-chars) or ISO3 (3-chars)
+    company?: string
+  }
 }
 ```
 
@@ -712,7 +757,9 @@ address: {
 **Example:**
 
 ```ts
-const response = await client.account.updateAddress({ bearerToken }, '1', {
+const response = await client.account.updateAddress({
+  bearer_token: '7381273269536713689562374856',
+  id: '1',
   address: {
     firstname: 'John',
     lastname: 'Snow',
@@ -737,7 +784,9 @@ Removes selected Address for the signed in User.
 **Parameters schema:**
 
 ```ts
-addressId: string
+{
+  id: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -747,7 +796,10 @@ addressId: string
 **Example:**
 
 ```ts
-const response = await client.account.removeAddress({ bearerToken }, '1')
+const response = await client.account.removeAddress({
+  bearer_token: '7381273269536713689562374856',
+  id: '1'
+})
 ```
 
 ## Order
@@ -761,7 +813,9 @@ Returns a placed Order.
 **Parameters schema:**
 
 ```ts
-orderNumber: string
+{
+  order_number: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -771,7 +825,10 @@ orderNumber: string
 **Example:**
 
 ```ts
-const response = await client.order.status({ orderToken }, 'R653163382')
+const response = await client.order.status({
+  order_token: '7381273269536713689562374856',
+  order_number: 'R653163382'
+})
 ```
 
 ## Cart
@@ -790,7 +847,9 @@ Creates a new Cart and returns its attributes.
 
 ```ts
 // Logged in user
-const response = await client.cart.create({ bearerToken })
+const response = await client.cart.create({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
 const response = await client.cart.create()
@@ -810,10 +869,14 @@ Returns contents of the cart.
 
 ```ts
 // Logged in user
-const response = await client.cart.show({ bearerToken })
+const response = await client.cart.show({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.cart.show({ orderToken })
+const response = await client.cart.show({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`addItem`][30]
@@ -842,22 +905,18 @@ Adds a Product Variant to the Cart.
 
 ```ts
 // Logged in user
-const response = await client.cart.addItem(
-  { bearerToken },
-  {
-    variant_id: '1',
-    quantity: 1
-  }
-)
+const response = await client.cart.addItem({
+  bearer_token: '7381273269536713689562374856',
+  variant_id: '1',
+  quantity: 1
+})
 
 // or guest user
-const response = await client.cart.addItem(
-  { orderToken },
-  {
-    variant_id: '1',
-    quantity: 1
-  }
-)
+const response = await client.cart.addItem({
+  order_token: '7381273269536713689562374856',
+  variant_id: '1',
+  quantity: 1
+})
 ```
 
 ### [`setQuantity`][31]
@@ -883,22 +942,18 @@ Sets the quantity of a given line item. It has to be a positive integer greater 
 
 ```ts
 // Logged in user
-const response = await client.cart.setQuantity(
-  { bearerToken },
-  {
-    line_item_id: '9',
-    quantity: 100
-  }
-)
+const response = await client.cart.setQuantity({
+  bearer_token: '7381273269536713689562374856',
+  line_item_id: '9',
+  quantity: 100
+})
 
 // or guest user
-const response = await client.cart.setQuantity(
-  { orderToken },
-  {
-    line_item_id: '9',
-    quantity: 100
-  }
-)
+const response = await client.cart.setQuantity({
+  order_token: '7381273269536713689562374856',
+  line_item_id: '9',
+  quantity: 100
+})
 ```
 
 ### [`removeItem`][32]
@@ -910,7 +965,9 @@ Removes Line Item from Cart.
 **Parameters schema:**
 
 ```ts
-line_item_id: string
+{
+  id: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -921,10 +978,16 @@ line_item_id: string
 
 ```ts
 // Logged in user
-const response = await client.cart.removeItem({ bearerToken }, '1')
+const response = await client.cart.removeItem({
+  bearer_token: '7381273269536713689562374856',
+  id: '1'
+})
 
 // or guest user
-const response = await client.cart.removeItem({ orderToken }, '1')
+const response = await client.cart.removeItem({
+  order_token: '7381273269536713689562374856',
+  id: '1'
+})
 ```
 
 ### [`emptyCart`][33]
@@ -941,10 +1004,14 @@ Empties the Cart.
 
 ```ts
 // Logged in user
-const response = await client.cart.emptyCart({ bearerToken })
+const response = await client.cart.emptyCart({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.cart.emptyCart({ orderToken })
+const response = await client.cart.emptyCart({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`remove`][34]
@@ -961,10 +1028,14 @@ Removes the Cart.
 
 ```ts
 // Logged in user
-const response = await client.cart.remove({ bearerToken })
+const response = await client.cart.remove({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.cart.remove({ orderToken })
+const response = await client.cart.remove({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`applyCouponCode`][35]
@@ -989,20 +1060,16 @@ Applies a coupon code to the Cart.
 
 ```ts
 // Logged in user
-const response = await client.cart.applyCouponCode(
-  { bearerToken },
-  {
-    coupon_code: 'promo_test'
-  }
-)
+const response = await client.cart.applyCouponCode({
+  bearer_token: '7381273269536713689562374856',
+  coupon_code: 'promo_test'
+})
 
 // or guest user
-const response = await client.cart.applyCouponCode(
-  { orderToken },
-  {
-    coupon_code: 'promo_test'
-  }
-)
+const response = await client.cart.applyCouponCode({
+  order_token: '7381273269536713689562374856',
+  coupon_code: 'promo_test'
+})
 ```
 
 ### [`removeCouponCode`][36]
@@ -1014,7 +1081,9 @@ Removes a coupon code from the Cart.
 **Parameters schema:**
 
 ```ts
-coupon_code?: string
+{
+  code?: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -1025,10 +1094,16 @@ coupon_code?: string
 
 ```ts
 // Logged in user
-const response = await client.cart.removeCouponCode({ bearerToken }, 'promo_test')
+const response = await client.cart.removeCouponCode({
+  bearer_token: '7381273269536713689562374856',
+  code: 'promo_test'
+})
 
 // or guest user
-const response = await client.cart.removeCouponCode({ orderToken }, 'promo_test')
+const response = await client.cart.removeCouponCode({
+  order_token: '7381273269536713689562374856',
+  code: 'promo_test'
+})
 ```
 
 ### [`removeAllCoupons`][37]
@@ -1043,10 +1118,14 @@ const response = await client.cart.removeCouponCode({ orderToken }, 'promo_test'
 
 ```ts
 // Logged in user
-const response = await client.cart.removeAllCoupons({ bearerToken })
+const response = await client.cart.removeAllCoupons({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.cart.removeAllCoupons({ orderToken })
+const response = await client.cart.removeAllCoupons({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`estimateShippingRates`][38]
@@ -1058,7 +1137,9 @@ Returns a list of Estimated Shipping Rates for Cart.
 **Parameters schema:**
 
 ```ts
-country_iso: string
+{
+  country_iso: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -1069,20 +1150,16 @@ country_iso: string
 
 ```ts
 // Logged in user
-const response = await client.cart.estimateShippingRates(
-  { bearerToken },
-  {
-    country_iso: 'USA'
-  }
-)
+const response = await client.cart.estimateShippingRates({
+  bearer_token: '7381273269536713689562374856',
+  country_iso: 'USA'
+})
 
 // or guest user
-const response = await client.cart.estimateShippingRates(
-  { orderToken },
-  {
-    country_iso: 'USA'
-  }
-)
+const response = await client.cart.estimateShippingRates({
+  order_token: '7381273269536713689562374856',
+  country_iso: 'USA'
+})
 ```
 
 ### [`associateGuestCart`][39]
@@ -1107,12 +1184,10 @@ Associates a guest cart with the currently signed in user.
 
 ```ts
 // Logged in user
-const response = await client.cart.associateGuestCart(
-  { bearerToken },
-  {
-    guest_order_token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
-  }
-)
+const response = await client.cart.associateGuestCart({
+  bearer_token: '7381273269536713689562374856',
+  guest_order_token: 'aebe2886d7dbba6f769e20043e40cfa3447e23ad9d8e82c632f60ed63a2f0df1'
+})
 ```
 
 ### [`changeCurrency`][40]
@@ -1137,12 +1212,10 @@ Changes the Cart's currency.
 
 ```ts
 // Logged in user
-const response = await client.cart.changeCurrency(
-  { bearerToken },
-  {
-    new_currency: 'CAD'
-  }
-)
+const response = await client.cart.changeCurrency({
+  bearer_token: '7381273269536713689562374856',
+  new_currency: 'CAD'
+})
 ```
 
 ## Checkout
@@ -1156,34 +1229,37 @@ Updates the Checkout. You can run multiple Checkout updates with different data 
 **Parameters schema:**
 
 ```ts
-order: {
-  email: string
-  bill_address_attributes?: {
-    firstname: string
-    lastname: string
-    address1: string
-    city: string
-    phone: string
-    zipcode: string
-    state_name: string
-    country_iso: string
-  }
-  ship_address_attributes?: {
-    firstname: string
-    lastname: string
-    address1: string
-    city: string
-    phone: string
-    zipcode: string
-    state_name: string
-    country_iso: string
-  }
-  shipments_attributes?: [
-    {
-      selected_shipping_rate_id: number
-      id: number
+{
+  order: {
+    email?: string
+    special_instructions?: string
+    bill_address_attributes?: {
+      firstname: string
+      lastname: string
+      address1: string
+      city: string
+      phone: string
+      zipcode: string
+      state_name: string
+      country_iso: string
     }
-  ]
+    ship_address_attributes?: {
+      firstname: string
+      lastname: string
+      address1: string
+      city: string
+      phone: string
+      zipcode: string
+      state_name: string
+      country_iso: string
+    }
+    shipments_attributes?: [
+      {
+        selected_shipping_rate_id: number
+        id: number
+      }
+    ]
+  }
 }
 ```
 
@@ -1195,10 +1271,20 @@ order: {
 
 ```ts
 // Logged in user
-const response = await client.checkout.orderUpdate({ bearerToken }, { order: {...} })
+const response = await client.checkout.orderUpdate({
+  bearer_token: '7381273269536713689562374856',
+  order: {
+    email: 'john@snow.org'
+  }
+})
 
 // or guest user
-const response = await client.checkout.orderUpdate({ orderToken }, { order: {...} })
+const response = await client.checkout.orderUpdate({
+  order_token: '7381273269536713689562374856',
+  order: {
+    email: 'john@snow.org'
+  }
+})
 ```
 
 ### [`orderNext`][42]
@@ -1215,10 +1301,14 @@ Goes to the next Checkout step.
 
 ```ts
 // Logged in user
-const response = await client.checkout.orderNext({ bearerToken })
+const response = await client.checkout.orderNext({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.checkout.orderNext({ orderToken })
+const response = await client.checkout.orderNext({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`advance`][43]
@@ -1235,10 +1325,14 @@ Advances Checkout to the furthest Checkout step validation allows, until the Com
 
 ```ts
 // Logged in user
-const response = await client.checkout.advance({ bearerToken })
+const response = await client.checkout.advance({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.checkout.advance({ orderToken })
+const response = await client.checkout.advance({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`complete`][44]
@@ -1255,10 +1349,14 @@ Completes the Checkout.
 
 ```ts
 // Logged in user
-const response = await client.checkout.complete({ bearerToken })
+const response = await client.checkout.complete({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.checkout.complete({ orderToken })
+const response = await client.checkout.complete({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`addStoreCredits`][45]
@@ -1283,10 +1381,16 @@ Adds Store Credit payments if a user has any.
 
 ```ts
 // Logged in user
-const response = await client.checkout.addStoreCredits({ bearerToken }, { amount: 100 })
+const response = await client.checkout.addStoreCredits({
+  bearer_token: '7381273269536713689562374856',
+  amount: 100
+})
 
 // or guest user
-const response = await client.checkout.addStoreCredits({ orderToken }, { amount: 100 })
+const response = await client.checkout.addStoreCredits({
+  order_token: '7381273269536713689562374856',
+  amount: 100
+})
 ```
 
 ### [`removeStoreCredits`][46]
@@ -1303,10 +1407,14 @@ Remove Store Credit payments if any applied.
 
 ```ts
 // Logged in user
-const response = await client.checkout.removeStoreCredits({ bearerToken })
+const response = await client.checkout.removeStoreCredits({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.checkout.removeStoreCredits({ orderToken })
+const response = await client.checkout.removeStoreCredits({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`paymentMethods`][47]
@@ -1323,10 +1431,14 @@ Returns a list of available Payment Methods.
 
 ```ts
 // Logged in user
-const response = await client.checkout.paymentMethods({ bearerToken })
+const response = await client.checkout.paymentMethods({
+  bearer_token: '7381273269536713689562374856'
+})
 
 // or guest user
-const response = await client.checkout.paymentMethods({ orderToken })
+const response = await client.checkout.paymentMethods({
+  order_token: '7381273269536713689562374856'
+})
 ```
 
 ### [`shippingRates`][48]
@@ -1334,14 +1446,6 @@ const response = await client.checkout.paymentMethods({ orderToken })
 Returns a list of available Shipping Rates for Checkout. Shipping Rates are grouped against Shipments. Each checkout cna have multiple Shipments eg. some products are available in stock and will be send out instantly and some needs to be backordered.
 
 **Required token:** [Bearer token](#bearer-token) or [Order token](#order-token)
-
-**Parameters schema:**
-
-```ts
-params?: {
-  include?: string
-}
-```
 
 **Success response schema:** [Success schema](#success-schema)
 
@@ -1351,20 +1455,16 @@ params?: {
 
 ```ts
 // Logged in user
-const response = await client.checkout.shippingRates(
-  { bearerToken },
-  {
-    include: 'shipping_rates,stock_location'
-  }
-)
+const response = await client.checkout.shippingRates({
+  bearer_token: '7381273269536713689562374856',
+  include: 'shipping_rates,stock_location'
+})
 
 // or guest user
-const response = await client.checkout.shippingRates(
-  { orderToken },
-  {
-    include: 'shipping_rates,stock_location'
-  }
-)
+const response = await client.checkout.shippingRates({
+  order_token: '7381273269536713689562374856',
+  include: 'shipping_rates,stock_location'
+})
 ```
 
 ### [`selectShippingMethod`][49]
@@ -1376,7 +1476,7 @@ Selects a Shipping Method for Shipment(s).
 **Parameters schema:**
 
 ```ts
-params?: {
+{
   shipping_method_id: string
   shipment_id?: string
 }
@@ -1389,12 +1489,10 @@ params?: {
 **Example:**
 
 ```ts
-const response = await client.checkout.selectShippingMethod(
-  { bearerToken },
-  {
-    shipping_method_id: '42'
-  }
-)
+const response = await client.checkout.selectShippingMethod({
+  bearer_token: '7381273269536713689562374856',
+  shipping_method_id: '42'
+})
 ```
 
 ### [`addPayment`][50]
@@ -1406,19 +1504,18 @@ Creates new Payment for the current checkout.
 **Parameters schema:**
 
 ```ts
-payment_method_id: string
-source_id?: string
-amount?: number
-source_attributes?: {
-  gateway_payment_profile_id: string
-  cc_type?: string
-  last_digits?: string
-  month?: string
-  year?: string
-  name: string
-}
-params?: {
-  include?: string
+{
+  payment_method_id: string
+  source_id?: string
+  amount?: number
+  source_attributes?: {
+    gateway_payment_profile_id: string
+    cc_type?: string
+    last_digits?: string
+    month?: string
+    year?: string
+    name: string
+  }
 }
 ```
 
@@ -1432,47 +1529,41 @@ params?: {
 // Logged in user
 
 // Create new credit card
-const response = await client.checkout.addPayment(
-  { bearerToken },
-  {
-    payment_method_id: '1',
-    source_attributes: {
-      gateway_payment_profile_id: 'card_1JqvNB2eZvKYlo2C5OlqLV7S',
-      cc_type: 'visa',
-      last_digits: '1111',
-      month: '10',
-      year: '2026',
-      name: 'John Snow'
-    }
+const response = await client.checkout.addPayment({
+  bearer_token: '7381273269536713689562374856',
+  payment_method_id: '1',
+  source_attributes: {
+    gateway_payment_profile_id: 'card_1JqvNB2eZvKYlo2C5OlqLV7S',
+    cc_type: 'visa',
+    last_digits: '1111',
+    month: '10',
+    year: '2026',
+    name: 'John Snow'
   }
-)
+})
 
 // Use existing credit card
-const response = await client.checkout.addPayment(
-  { bearerToken },
-  {
-    payment_method_id: '1',
-    source_id: '1'
-  }
-)
+const response = await client.checkout.addPayment({
+  bearer_token: '7381273269536713689562374856',
+  payment_method_id: '1',
+  source_id: '1'
+})
 
 // or guest user
 
 // Create new credit card
-const response = await client.checkout.addPayment(
-  { orderToken },
-  {
-    payment_method_id: '1',
-    source_attributes: {
-      gateway_payment_profile_id: 'card_1JqvNB2eZvKYlo2C5OlqLV7S',
-      cc_type: 'visa',
-      last_digits: '1111',
-      month: '10',
-      year: '2026',
-      name: 'John Snow'
-    }
+const response = await client.checkout.addPayment({
+  order_token: '7381273269536713689562374856',
+  payment_method_id: '1',
+  source_attributes: {
+    gateway_payment_profile_id: 'card_1JqvNB2eZvKYlo2C5OlqLV7S',
+    cc_type: 'visa',
+    last_digits: '1111',
+    month: '10',
+    year: '2026',
+    name: 'John Snow'
   }
-)
+})
 ```
 
 ## Products
@@ -1486,18 +1577,11 @@ Returns a list of Products.
 **Parameters schema:**
 
 ```ts
-token?: IToken
-params?: {
-  include?: string
-  fields?: {
-    [key: string]: string
+{
+  image_transformation?: {
+    size?: string
+    quality?: number
   }
-  filter?: {
-    [key: string]: number
-  }
-  sort?: string
-  page?: number
-  per_page?: number
 }
 ```
 
@@ -1508,7 +1592,10 @@ params?: {
 **Example:**
 
 ```ts
-const response = await client.products.list()
+const response = await client.products.list({
+  page: 1,
+  per_page: 10
+})
 ```
 
 ### [`show`][52]
@@ -1518,12 +1605,11 @@ const response = await client.products.list()
 **Parameters schema:**
 
 ```ts
-id: string
-token?: IToken
-params?: {
-  include: string
-  fields: {
-    [key: string]: string
+{
+  id: string
+  image_transformation?: {
+    size?: string
+    quality?: number
   }
 }
 ```
@@ -1535,7 +1621,10 @@ params?: {
 **Example:**
 
 ```ts
-const response = await client.products.show('123')
+const response = await client.products.show({
+  id: '123',
+  include: 'variants'
+})
 ```
 
 ## Taxons
@@ -1543,22 +1632,6 @@ const response = await client.products.show('123')
 ### [`list`][53]
 
 Returns a list of Taxons.
-
-**Parameters schema:**
-
-```ts
-params?: {
-  include?: string
-  fields?: {
-    [key: string]: string
-  }
-  filter?: {
-    [key: string]: number
-  }
-  page?: number
-  per_page?: number
-}
-```
 
 **Success response schema:** [Success schema](#success-schema)
 
@@ -1577,15 +1650,8 @@ Returns a single Taxon.
 **Parameters schema:**
 
 ```ts
-id: string
-params?: {
+{
   id: string
-  params?: {
-    include: string
-    fields: {
-      [key: string]: string
-    }
-  }
 }
 ```
 
@@ -1596,10 +1662,10 @@ params?: {
 **Example:**
 
 ```ts
-const products = await client.taxons.show('1')
+const products = await client.taxons.show({ id: '1' })
 ```
 
-## [Wishlists](https://api.spreecommerce.org/docs/api-v2/b3A6MjE0NTY5Mzg-list-all-wishlists)
+## Wishlists
 
 ### [`list`][55]
 
@@ -1610,7 +1676,7 @@ Returns a list of Wishlists.
 **Parameters schema:**
 
 ```ts
-params?: {
+{
   is_variant_included?: string
 }
 ```
@@ -1622,7 +1688,10 @@ params?: {
 **Example:**
 
 ```ts
-const response = await client.wishlists.list({ bearerToken }, { is_variant_included: '456' })
+const response = await client.wishlists.list({
+  bearer_token: '7381273269536713689562374856',
+  is_variant_included: '456'
+})
 ```
 
 ### [`show`][56]
@@ -1634,8 +1703,8 @@ Returns a single Wishlist.
 **Parameters schema:**
 
 ```ts
-wishlistToken: string
-params?: {
+{
+  wishlist_token: string
   is_variant_included?: string
 }
 ```
@@ -1647,7 +1716,11 @@ params?: {
 **Example:**
 
 ```ts
-const response = await client.wishlists.show({ bearerToken }, '123', { is_variant_included: '456' })
+const response = await client.wishlists.show({
+  bearer_token: '7381273269536713689562374856',
+  wishlist_token: '123',
+  is_variant_included: '456'
+})
 ```
 
 ### [`default`][57]
@@ -1659,7 +1732,7 @@ Returns the default Wishlist for the logged in user. It will be created, if the 
 **Parameters schema:**
 
 ```ts
-params?: {
+{
   is_variant_included?: string
 }
 ```
@@ -1671,7 +1744,10 @@ params?: {
 **Example:**
 
 ```ts
-const response = await client.wishlists.default({ bearerToken }, { is_variant_included: '456' })
+const response = await client.wishlists.default({
+  bearer_token: '7381273269536713689562374856',
+  is_variant_included: '456'
+})
 ```
 
 ### [`create`][58]
@@ -1683,7 +1759,7 @@ Creates a new Wishlist for the logged in user.
 **Parameters schema:**
 
 ```ts
-params: {
+{
   name: string
   is_private?: boolean
   is_default?: boolean
@@ -1697,7 +1773,10 @@ params: {
 **Example:**
 
 ```ts
-const response = await client.wishlists.create({ bearerToken }, { name: 'My wishlist' })
+const response = await client.wishlists.create({
+  bearer_token: '7381273269536713689562374856',
+  name: 'My wishlist'
+})
 ```
 
 ### [`update`][59]
@@ -1709,8 +1788,8 @@ Updates an existing Wishlist.
 **Parameters schema:**
 
 ```ts
-wishlistToken: string
-params: {
+{
+  wishlist_token: string
   name: string
   is_private?: boolean
   is_default?: boolean
@@ -1724,7 +1803,9 @@ params: {
 **Example:**
 
 ```ts
-const response = await client.wishlists.update({ bearerToken }, '123', {
+const response = await client.wishlists.update({
+  bearer_token: '7381273269536713689562374856',
+  wishlist_token: '123',
   name: 'My updated wishlist',
   is_private: true
 })
@@ -1739,7 +1820,9 @@ Removes a Wishlist.
 **Parameters schema:**
 
 ```ts
-wishlistToken: string
+{
+  wishlist_token: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -1749,7 +1832,10 @@ wishlistToken: string
 **Example:**
 
 ```ts
-const response = await client.wishlists.remove({ bearerToken }, '123')
+const response = await client.wishlists.remove({
+  bearer_token: '7381273269536713689562374856',
+  wishlist_token: '123'
+})
 ```
 
 ### [`addWishedItem`][61]
@@ -1761,8 +1847,8 @@ Adds a new Wished Item to a Wishlist for the logged in user.
 **Parameters schema:**
 
 ```ts
-wishlistToken: string,
-params: {
+{
+  wishlist_token: string,
   variant_id: string
   quantity: number
 }
@@ -1775,7 +1861,9 @@ params: {
 **Example:**
 
 ```ts
-const response = await client.wishlists.addWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', {
+const response = await client.wishlists.addWishedItem({
+  bearer_token: '7381273269536713689562374856',
+  wishlist_token: 'WyZxWS2w3BdDRHcGgtN1LKiY',
   variant_id: '1',
   quantity: 10
 })
@@ -1790,9 +1878,9 @@ Updates a Wished Item for the logged in user.
 **Parameters schema:**
 
 ```ts
-wishlistToken: string,
-wishedItemId: string
-params: {
+{
+  wishlist_token: string,
+  id: string
   quantity: number
 }
 ```
@@ -1804,7 +1892,10 @@ params: {
 **Example:**
 
 ```ts
-const response = await client.wishlists.updateWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', '2', {
+const response = await client.wishlists.updateWishedItem({
+  bearer_token: '7381273269536713689562374856',
+  wishlist_token: 'WyZxWS2w3BdDRHcGgtN1LKiY',
+  id: '2',
   quantity: 13
 })
 ```
@@ -1818,8 +1909,10 @@ Removes a Wished Item for the logged in user.
 **Parameters schema:**
 
 ```ts
-wishlistToken: string,
-wishedItemId: string
+{
+  wishlist_token: string,
+  id: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -1829,7 +1922,11 @@ wishedItemId: string
 **Example:**
 
 ```ts
-const response = await client.wishlists.removeWishedItem({ bearerToken }, 'WyZxWS2w3BdDRHcGgtN1LKiY', '2')
+const response = await client.wishlists.removeWishedItem({
+  bearer_token: '7381273269536713689562374856',
+  wishlist_token: 'WyZxWS2w3BdDRHcGgtN1LKiY',
+  id: '2'
+})
 ```
 
 ## Pages
@@ -1837,18 +1934,6 @@ const response = await client.wishlists.removeWishedItem({ bearerToken }, 'WyZxW
 ### [`list`][64]
 
 Returns a list of all CMS Pages available in the current store.
-
-**Parameters schema:**
-
-```ts
-params?: {
-  include: string
-  per_page: number
-  filter?: {
-    [key: string]: string
-  }
-}
-```
 
 **Success response schema:** [Success schema](#success-schema)
 
@@ -1867,9 +1952,8 @@ Returns a single CMS Page. You can use either a CMS Page slug or ID.
 **Parameters schema:**
 
 ```ts
-slugOrId: string
-params?: {
-  include: string
+{
+  id: string
 }
 ```
 
@@ -1880,7 +1964,9 @@ params?: {
 **Example:**
 
 ```ts
-const page = await client.pages.show('about-us')
+const page = await client.pages.show({
+  id: 'about-us'
+})
 ```
 
 ## Countries
@@ -1906,12 +1992,8 @@ Returns the details of a specific country.
 **Parameters schema:**
 
 ```ts
-iso: string
-params?: {
-  include: string
-  fields: {
-    [key: string]: string
-  }
+{
+  iso: string
 }
 ```
 
@@ -1922,23 +2004,14 @@ params?: {
 **Example:**
 
 ```ts
-const country = await client.countries.show('USA')
+const country = await client.countries.show({
+  iso: 'USA'
+})
 ```
 
 ### [`default`][68]
 
 Returns the default country for the current store. By default this will be the US.
-
-**Parameters schema:**
-
-```ts
-params?: {
-  include: string
-  fields: {
-    [key: string]: string
-  }
-}
-```
 
 **Success response schema:** [Success schema](#success-schema)
 
@@ -1961,7 +2034,9 @@ Returns a stream for downloading a purchased digital product.
 **Parameters schema:**
 
 ```ts
-assetToken: string
+{
+  asset_token: string
+}
 ```
 
 **Success response schema:** [ReadableStream][11]
@@ -1978,7 +2053,10 @@ assetToken: string
 // A digital token can be retrieved from a digital link associated to a line item in a completed order.
 const digitalToken = '1YjXK36ZRj2w4nxtMkJutTGX'
 
-const response = await client.digitalAssets.download({ bearerToken }, digitalToken)
+const response = await client.digitalAssets.download({
+  bearer_token: '7381273269536713689562374856',
+  asset_token: digitalToken
+})
 
 const digitalAssetStream = response.success()
 
@@ -2002,7 +2080,7 @@ Returns a list of Menus.
 **Parameters schema:**
 
 ```ts
-params?: {
+{
   locale?: string
   filter?: {
     location?: string
@@ -2017,7 +2095,12 @@ params?: {
 **Example:**
 
 ```ts
-const response = await client.menus.list({ locale: 'fr', filter: { location: 'header' } })
+const response = await client.menus.list({
+  locale: 'fr',
+  filter: {
+    location: 'header'
+  }
+})
 ```
 
 ### [`show`][71]
@@ -2027,7 +2110,9 @@ Returns a single Menu.
 **Parameters schema:**
 
 ```ts
-id: string
+{
+  id: string
+}
 ```
 
 **Success response schema:** [Success schema](#success-schema)
@@ -2037,7 +2122,50 @@ id: string
 **Example:**
 
 ```ts
-const response = await client.menus.show('2')
+const response = await client.menus.show({
+  id: '2'
+})
+```
+
+## Helpers
+
+The SDK comes with a number of helper functions making consuming responses from the Spree API easier.
+
+`extractSuccess()` unwraps Spree responses and throws errors.
+
+**Example:**
+
+```ts
+import { result } from '@spree/storefront-api-v2-sdk'
+
+try {
+  const cartResponse = await result.extractSuccess(client.cart.create())
+
+  console.log('Created a new cart having token: ', cartResponse.data.attributes.token)
+} catch (error) {
+  console.error('Creating a cart failed. Reason: ', error)
+}
+```
+
+`findRelationshipDocuments()` finds related records included in a response and `findSingleRelationshipDocument()` finds a single included record.
+
+**Example:**
+
+```ts
+import { jsonApi } from '@spree/storefront-api-v2-sdk'
+
+const productResult = await client.products.show({
+  id: '1',
+  include: 'primary_variant,variants,images'
+})
+
+const productResponse = productResult.success()
+
+const primaryVariant = jsonApi.findSingleRelationshipDocument(productResponse, productResponse.data, 'primary_variant')
+
+const variants = jsonApi.findRelationshipDocuments(productResponse, productResponse.data, 'variants')
+
+const images = jsonApi.findRelationshipDocuments(productResponse, productResponse.data, 'images')
 ```
 
 ## Alternative setups
