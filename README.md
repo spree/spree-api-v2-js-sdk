@@ -70,9 +70,12 @@ Developed and maintained by:
   - [Taxons](#taxons)
     - [list](#list-1)
     - [show](#show-2)
-  - [Wishlists](#wishlists)
+  - [Vendors](#vendors)
     - [list](#list-2)
     - [show](#show-3)
+  - [Wishlists](#wishlists)
+    - [list](#list-3)
+    - [show](#show-4)
     - [default](#default)
     - [create](#create-2)
     - [update](#update-1)
@@ -80,17 +83,17 @@ Developed and maintained by:
     - [addWishedItem](#addWishedItem)
     - [updateWishedItem](#updateWishedItem)
   - [Pages](#pages)
-    - [list](#list-3)
-    - [show](#show-4)
-  - [Countries](#countries)
     - [list](#list-4)
     - [show](#show-5)
+  - [Countries](#countries)
+    - [list](#list-5)
+    - [show](#show-6)
     - [default](#default-1)
   - [Digital Assets](#digital-assets)
     - [download](#download)
   - [Menus](#menus)
-    - [list](#list-5)
-    - [show](#show-6)
+    - [list](#list-6)
+    - [show](#show-7)
   - [Helpers](#helpers)
   - [Alternative setups](#alternative-setups)
   - [Switching the fetcher](#switching-the-fetcher)
@@ -1663,6 +1666,48 @@ Returns a single Taxon.
 
 ```ts
 const products = await client.taxons.show({ id: '1' })
+```
+
+## Vendors
+
+The multi-vendor marketplace feature is only available via [Vendo](https://getvendo.com) - Spree as a Service offering, not in Spree open source. [Contact us](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=github.com) for early access.
+
+### `list`
+
+Returns a list of Vendors in a Spree marketplace.
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const vendors = await client.vendors.list({
+  include: 'products'
+})
+```
+
+### `show`
+
+Returns a single Vendor in a Spree marketplace.
+
+**Parameters schema:**
+
+```ts
+{
+  id: string
+}
+```
+
+**Success response schema:** [Success schema](#success-schema)
+
+**Failure response schema:** [Error schema](#error-schema)
+
+**Example:**
+
+```ts
+const vendor = await client.vendors.show({ id: '123' })
 ```
 
 ## Wishlists

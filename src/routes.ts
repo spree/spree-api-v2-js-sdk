@@ -71,7 +71,9 @@ const endpoints = {
   wishlistsUpdateWishedItemQuantityPath: (token: string, id: string): string =>
     `${storefrontPath}/wishlists/${encodeURIComponent(token)}/set_item_quantity/${encodeURIComponent(id)}`,
   wishlistsRemoveWishedItemPath: (token: string, id: string): string =>
-    `${storefrontPath}/wishlists/${encodeURIComponent(token)}/remove_item/${encodeURIComponent(id)}`
+    `${storefrontPath}/wishlists/${encodeURIComponent(token)}/remove_item/${encodeURIComponent(id)}`,
+  vendorsPath: (): string => `${storefrontPath}/vendors`,
+  vendorPath: (id: string): string => `${storefrontPath}/vendors/${encodeURIComponent(id)}`
 }
 
 export default endpoints

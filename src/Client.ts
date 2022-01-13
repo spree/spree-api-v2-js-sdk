@@ -1,31 +1,33 @@
 import {
   Account,
-  Products,
-  Taxons,
-  Countries,
+  Authentication,
   Cart,
   Checkout,
-  Authentication,
-  Order,
-  Pages,
+  Countries,
   DigitalAssets,
   Menus,
+  Order,
+  Pages,
+  Products,
+  Taxons,
+  Vendors,
   Wishlists
 } from './endpoints'
 import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/ClientConfig'
 
 class Client {
-  public products: Products
-  public taxons: Taxons
-  public countries: Countries
+  public account: Account
+  public authentication: Authentication
   public cart: Cart
   public checkout: Checkout
-  public authentication: Authentication
-  public account: Account
-  public order: Order
-  public pages: Pages
+  public countries: Countries
   public digitalAssets: DigitalAssets
   public menus: Menus
+  public order: Order
+  public pages: Pages
+  public products: Products
+  public taxons: Taxons
+  public vendors: Vendors
   public wishlists: Wishlists
 
   protected host: string
@@ -56,12 +58,13 @@ class Client {
     this.cart = this.makeCart()
     this.checkout = this.makeCheckout()
     this.countries = this.makeCountries()
+    this.digitalAssets = this.makeDigitalAssets()
+    this.menus = this.makeMenus()
     this.order = this.makeOrder()
     this.pages = this.makePages()
     this.products = this.makeProducts()
     this.taxons = this.makeTaxons()
-    this.digitalAssets = this.makeDigitalAssets()
-    this.menus = this.makeMenus()
+    this.vendors = this.makeVendors()
     this.wishlists = this.makeWishlists()
   }
 
@@ -107,6 +110,10 @@ class Client {
 
   protected makeMenus(): Menus {
     return new Menus({ fetcher: this.fetcher })
+  }
+
+  protected makeVendors(): Vendors {
+    return new Vendors({ fetcher: this.fetcher })
   }
 
   protected makeWishlists(): Wishlists {
