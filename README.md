@@ -1670,6 +1670,8 @@ const products = await client.taxons.show({ id: '1' })
 
 ## Vendors
 
+The multi-vendor marketplace feature is only available via [Vendo](https://getvendo.com) - Spree as a Service offering, not in Spree open source. [Contact us](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=github.com) for early access.
+
 ### `list`
 
 Returns a list of Vendors in a Spree marketplace.
