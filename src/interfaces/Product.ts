@@ -10,17 +10,21 @@ export interface ProductAttr extends JsonApiDocument {
   attributes: {
     name: string
     description: string
-    price: string
-    currency: string
-    display_price: string
-    available_on: Date
+    available_on: string
+    slug: string
     meta_description: string | null
     meta_keywords: string | null
-    updated_at: Date
+    updated_at: string
+    sku: string
     purchasable: boolean
     in_stock: boolean
     backorderable: boolean
-    slug: string
+    available: boolean
+    currency: string
+    price: string
+    display_price: string
+    compare_at_price: string | null
+    display_compare_at_price: string | null
   }
   relationships: IRelationships
 }
