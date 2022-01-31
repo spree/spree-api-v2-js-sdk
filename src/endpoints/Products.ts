@@ -31,9 +31,9 @@ export default class Products extends Http {
    */
   public async show(id: string, token: IToken, params: IProductsQuery): Promise<IProductResult>
   public async show(...allArguments: any[]): Promise<IProductResult> {
-    const [positionalId, positionalToken = {}, positionalParams = {}] = allArguments
+    const [idOrOptions, positionalToken = {}, positionalParams = {}] = allArguments
     const { id, token, params } = squashAndPreparePositionalArguments(
-      [{ id: positionalId }, positionalToken, positionalParams],
+      [typeof idOrOptions === 'object' ? idOrOptions : { id: idOrOptions }, positionalToken, positionalParams],
       ['id']
     )
 
