@@ -1,4 +1,4 @@
-import FetchError from '../errors/FetchError'
+import { errors } from '@spree/storefront-api-v2-sdk'
 import { objectToQuerystring } from '../helpers/request'
 import type { CreateFetcher } from '../interfaces/ClientConfig'
 import type { CreateCustomizedFetchFetcher } from '../interfaces/CreateCustomizedFetchFetcher'
@@ -58,23 +58,23 @@ const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptio
 
           if (!response.ok) {
             // Use the "traditional" approach and reject non 2xx responses.
-            throw new FetchError(response, request, data)
+            throw new errors.FetchError(response, request, data)
           }
 
           return { data }
         } catch (error) {
-          if (error instanceof FetchError) {
+          if (error instanceof errors.FetchError) {
             throw error
           }
 
-          throw new FetchError(null, request, null, error.message)
+          throw new errors.FetchError(null, request, null, error.message)
         }
       } catch (error) {
-        if (error instanceof FetchError) {
+        if (error instanceof errors.FetchError) {
           throw error
         }
 
-        throw new FetchError(null, null, null, error.message)
+        throw new errors.FetchError(null, null, null, error.message)
       }
     }
   }

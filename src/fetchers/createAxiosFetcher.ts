@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios'
 import type { CreateFetcher } from '../interfaces/ClientConfig'
-import FetchError from '../errors/FetchError'
+import { errors } from '@spree/storefront-api-v2-sdk'
 import { objectToQuerystring } from '../helpers/request'
 
 const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
@@ -70,7 +70,7 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
           const { response } = error
 
           if (!response) {
-            throw new FetchError(null, error.request, null, error.message)
+            throw new errors.FetchError(null, error.request, null, error.message)
           }
 
           const reducedResponse = { ...response }
@@ -83,10 +83,10 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
             request: { enumerable: false }
           })
 
-          throw new FetchError(reducedResponse, error.request, reducedResponse.data, error.message)
+          throw new errors.FetchError(reducedResponse, error.request, reducedResponse.data, error.message)
         }
 
-        throw new FetchError(null, null, null, error.message)
+        throw new errors.FetchError(null, null, null, error.message)
       }
     }
   }

@@ -19,7 +19,9 @@
   "types": "types/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "webpack",
+    "build-core": "BUILD_TYPE=core webpack",
+    "build-fetchers": "BUILD_TYPE=fetchers webpack",
+    "build": "npm run build-core && npm run build-fetchers",
     "build:server": "webpack --config-name server",
     "build:client": "webpack --config-name client",
     "watch": "webpack --watch",
