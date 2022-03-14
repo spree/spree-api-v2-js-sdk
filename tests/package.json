@@ -12,7 +12,7 @@
     "webpack": "^5.65.0"
   },
   "dependencies": {
-    "@spree/storefront-api-v2-sdk": "file:/sdk/storefront-api-v2-sdk.tgz",
+    "@vendo-dev/js-sdk": "file:/sdk/js-sdk.tgz",
     "axios": "^0.25.0",
     "node-fetch": "^2.6.7"
   }

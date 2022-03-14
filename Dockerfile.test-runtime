@@ -12,6 +12,6 @@ FROM alpine
 
 WORKDIR /sdk
 
-COPY --from=0 /sdk/spree-storefront-api-v2-sdk-*.tgz /sdk/storefront-api-v2-sdk.tgz
+COPY --from=0 /sdk/vendo-dev-js-sdk-*.tgz /sdk/js-sdk.tgz
 
 COPY ./wait-for-it.sh /sdk/

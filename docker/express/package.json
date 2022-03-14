@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@spree/storefront-api-v2-sdk": "file:/sdk/storefront-api-v2-sdk.tgz",
+    "@vendo-dev/js-sdk": "file:/sdk/js-sdk.tgz",
     "axios": "^0.25.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.7"

@@ -1,9 +1,9 @@
-// To import @spree/storefront-api-v2-sdk, run 'npm link' and 'npm link @spree/storefront-api-v2-sdk'
+// To import @vendo-dev/js-sdk, run 'npm link' and 'npm link @vendo-dev/js-sdk'
 // in the project's root directory.
-import { Client, makeClient, result, jsonApi } from '@spree/storefront-api-v2-sdk'
-import type { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
-import createAxiosFetcher from '@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher'
-import createFetchFetcher from '@spree/storefront-api-v2-sdk/dist/server/createFetchFetcher'
+import { Client, makeClient, result, jsonApi } from '@vendo-dev/js-sdk'
+import type { RelationType } from '@vendo-dev/js-sdk/types/interfaces/Relationships'
+import createAxiosFetcher from '@vendo-dev/js-sdk/dist/server/createAxiosFetcher'
+import createFetchFetcher from '@vendo-dev/js-sdk/dist/server/createFetchFetcher'
 
 const createTests = function () {
   it('completes guest order', function () {
@@ -195,7 +195,7 @@ const createClientVersionInTheBrowserTests = ({
     beforeEach(function () {
       cy.wrap(null)
         .then(() => {
-          return includeFileAsScript('/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/index.js')
+          return includeFileAsScript('/app/node_modules/@vendo-dev/js-sdk/dist/client/index.js')
         })
         .then(() => {
           return includeFileAsScript('/app/node_modules/axios/dist/axios.min.js')
@@ -205,10 +205,10 @@ const createClientVersionInTheBrowserTests = ({
 
           switch (fetcherType) {
             case 'axios':
-              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/createAxiosFetcher.js'
+              fetcherPath = '/app/node_modules/@vendo-dev/js-sdk/dist/client/createAxiosFetcher.js'
               break
             case 'fetch':
-              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/createFetchFetcher.js'
+              fetcherPath = '/app/node_modules/@vendo-dev/js-sdk/dist/client/createFetchFetcher.js'
               break
             default:
               throw new Error(`${fetcherType} not recognized.`)

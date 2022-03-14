@@ -104,7 +104,7 @@ Developed and maintained by:
 Install the NPM package:
 
 ```
-npm install --save @spree/storefront-api-v2-sdk
+npm install --save @vendo-dev/js-sdk
 ```
 
 Install the [Axios][8] HTTP client:
@@ -116,8 +116,8 @@ npm install --save axios
 Create a client and use it to call Spree:
 
 ```js
-const createAxiosFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher').default
-const { makeClient } = require('@spree/storefront-api-v2-sdk')
+const createAxiosFetcher = require('@vendo-dev/js-sdk/dist/server/createAxiosFetcher').default
+const { makeClient } = require('@vendo-dev/js-sdk')
 
 const client = makeClient({
   host: 'http://localhost:3000',
@@ -2181,7 +2181,7 @@ The SDK comes with a number of helper functions making consuming responses from 
 **Example:**
 
 ```ts
-import { result } from '@spree/storefront-api-v2-sdk'
+import { result } from '@vendo-dev/js-sdk'
 
 try {
   const cartResponse = await result.extractSuccess(client.cart.create())
@@ -2197,7 +2197,7 @@ try {
 **Example:**
 
 ```ts
-import { jsonApi } from '@spree/storefront-api-v2-sdk'
+import { jsonApi } from '@vendo-dev/js-sdk'
 
 const productResult = await client.products.show({
   id: '1',
@@ -2222,8 +2222,8 @@ In TypeScript, you can import Spree SDK as follows:
 ```js
 // Set `"esModuleInterop": true` in tsconfig.json
 
-import createAxiosFetcher from '@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher'
-import { makeClient } from '@spree/storefront-api-v2-sdk'
+import createAxiosFetcher from '@vendo-dev/js-sdk/dist/server/createAxiosFetcher'
+import { makeClient } from '@vendo-dev/js-sdk'
 ```
 
 TypeScript definitions are included in the module and should be automatically used by any editor that supports them.
@@ -2233,9 +2233,9 @@ TypeScript definitions are included in the module and should be automatically us
 The SDK is hosted by the [UNPKG][7] CDN. [Follow this link to download version 5.0.0][5] and [this link to download the newest version][6]. Include the SDK on a website like so:
 
 ```html
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/@vendo-dev/js-sdk@5.0.0/dist/client/index.js"></script>
 <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createAxiosFetcher.js"></script>
+<script src="https://unpkg.com/@vendo-dev/js-sdk@5.0.0/dist/client/createAxiosFetcher.js"></script>
 
 <script>
   const client = SpreeSDK.makeClient({
@@ -2261,8 +2261,8 @@ npm install axios
 Set the fetcher to axios when creating the Spree SDK client:
 
 ```js
-const createAxiosFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher').default
-const { makeClient } = require('@spree/storefront-api-v2-sdk')
+const createAxiosFetcher = require('@vendo-dev/js-sdk/dist/server/createAxiosFetcher').default
+const { makeClient } = require('@vendo-dev/js-sdk')
 
 const client = makeClient({
   host: 'http://localhost:3000',
@@ -2275,9 +2275,9 @@ const client = makeClient({
 To use Spree SDK with Axios in the browser, include axios as a `<script>` tag before using the SDK:
 
 ```html
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/@vendo-dev/js-sdk@5.0.0/dist/client/index.js"></script>
 <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createAxiosFetcher.js"></script>
+<script src="https://unpkg.com/@vendo-dev/js-sdk@5.0.0/dist/client/createAxiosFetcher.js"></script>
 
 <script>
   const client = SpreeSDK.makeClient({
@@ -2300,8 +2300,8 @@ npm install node-fetch
 Set the fetcher to fetch:
 
 ```js
-const createFetchFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createFetchFetcher').default
-const { makeClient } = require('@spree/storefront-api-v2-sdk')
+const createFetchFetcher = require('@vendo-dev/js-sdk/dist/server/createFetchFetcher').default
+const { makeClient } = require('@vendo-dev/js-sdk')
 
 const client = makeClient({
   host: 'http://localhost:3000',
@@ -2314,8 +2314,8 @@ const client = makeClient({
 Modern web browsers include fetch natively. To use Spree SDK with native fetch, it's enough to set `fetcherType` to `'fetch'` when creating the Spree SDK Client:
 
 ```html
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createFetchFetcher.js"></script>
+<script src="https://unpkg.com/@vendo-dev/js-sdk@5.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/@vendo-dev/js-sdk@5.0.0/dist/client/createFetchFetcher.js"></script>
 
 <script>
   const client = SpreeSDK.makeClient({
@@ -2347,8 +2347,8 @@ We are [available for hire][spark].
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 [4]: https://jsonapi.org/format/
-[5]: https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js
-[6]: https://unpkg.com/@spree/storefront-api-v2-sdk/dist/client/index.js
+[5]: https://unpkg.com/@vendo-dev/js-sdk@5.0.0/dist/client/index.js
+[6]: https://unpkg.com/@vendo-dev/js-sdk/dist/client/index.js
 [7]: https://unpkg.com/
 [spark]: http://sparksolutions.co?utm_source=github
 [8]: https://github.com/axios/axios
