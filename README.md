@@ -4,7 +4,9 @@ Node module to easily integrate your JavaScript or TypeScript application with [
 
 Developed and maintained by:
 
-[![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
+[![Vendo](https://assets-global.website-files.com/6230c485f2c32ea1b0daa438/623372f40a8c54ca9aea34e8_vendo%202.svg)][vendo]
+
+> All-in-one platform for all your Marketplace and B2B eCommerce needs. [Start your 30-day free trial](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=spree_sdk_github)
 
 Сontents:
 
@@ -1670,7 +1672,7 @@ const products = await client.taxons.show({ id: '1' })
 
 ## Vendors
 
-The multi-vendor marketplace feature is only available via [Vendo](https://getvendo.com) - Spree as a Service offering, not in Spree open source. [Contact us](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=github.com) for early access.
+The multi-vendor marketplace feature is only available via [Vendo][vendo]
 
 ### `list`
 
@@ -2335,14 +2337,17 @@ makeClient({ createFetcher: ... })
 
 If you want to use a fetch-compatible interface, use the `createCustomizedFetchFetcher` function.
 
-## About Spark Solutions
+## About Vendo
 
-[![Spark Solutions](http://sparksolutions.co/wp-content/uploads/2015/01/logo-ss-tr-221x100.png)][spark]
+<a href="https://getvendo.com?utm_source=spree_sdk_github">
+  <img src="https://uploads-ssl.webflow.com/6230c485f2c32ea1b0daa438/62386b96518cdcbe111f134a_OG%20Image%20(2).png" style="max-height:400px" />
+</a>
 
-Spree is maintained by [Spark Solutions Sp. z o.o.][spark].
+> [Vendo][vendo] is a great fit for marketplaces of all sizes - either with own fulfillment and multiple warehouses or in a dropshipping model. Vendo **automates everything** from **vendor onboarding**, accepting buyer **payments in over 135 currencies**, to supplier **payouts in 50 countries**. 
 
-We are passionate about open source software.
-We are [available for hire][spark].
+> Vendo ensures excellent buyer experience with smooth product discovery and search, a multitude of payment methods and optimal shipping cost calculation. Vendo keeps suppliers happy with easy onboarding, automated products sync using their preferred method and easy payouts.
+
+> [Start your 30-day free trial](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=spree_sdk_github)
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
@@ -2350,7 +2355,7 @@ We are [available for hire][spark].
 [5]: https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js
 [6]: https://unpkg.com/@spree/storefront-api-v2-sdk/dist/client/index.js
 [7]: https://unpkg.com/
-[spark]: http://sparksolutions.co?utm_source=github
+[vendo]: http://getvendo.com?utm_source=spree_sdk_github
 [8]: https://github.com/axios/axios
 [9]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 [10]: https://github.com/node-fetch/node-fetch
