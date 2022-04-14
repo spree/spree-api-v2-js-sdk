@@ -1,4 +1,5 @@
 export interface IQuery {
+  currency?: string
   include?: string
   fields?: {
     [key: string]: string
