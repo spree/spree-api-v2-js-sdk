@@ -6,3 +6,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.test-runtime
+    networks:
+      - vendo-dev
+
+networks:
+  vendo-dev:

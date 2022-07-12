@@ -9,10 +9,14 @@ services:
       - '5432:5432'
     volumes:
       - 'postgres:/var/lib/postgresql/data'
+    networks:
+      - vendo-dev
   redis:
     image: redis:6.2-alpine
     volumes:
       - 'redis:/data'
+    networks:
+      - vendo-dev
   spree: # Runs production Spree
     depends_on:
       - 'postgres'
@@ -34,9 +38,14 @@ services:
       SECRET_KEY_BASE: skb
       ALLOWED_ORIGIN_HOSTS: '*'
       RACK_CORS_DEBUG: 'true'
+    networks:
+      - vendo-dev
 
 volumes:
   spree:
   bundle_cache:
   redis:
   postgres:
+
+networks:
+  vendo-dev:

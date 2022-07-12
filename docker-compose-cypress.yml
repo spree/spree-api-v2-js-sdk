@@ -5,11 +5,20 @@ services:
     build:
       context: .
       dockerfile: ./docker/express/Dockerfile.express
+    networks:
+      - vendo-dev
   cypress:
     build:
       context: .
       dockerfile: ./tests/Dockerfile.cypress
+    networks:
+      - vendo-dev
   docker-host:
     image: qoomon/docker-host:3.0.3
     cap_add: ['NET_ADMIN', 'NET_RAW']
     restart: on-failure
+    networks:
+      - vendo-dev
+
+networks:
+  vendo-dev:

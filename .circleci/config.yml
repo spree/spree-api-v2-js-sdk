@@ -20,7 +20,6 @@ jobs:
           name: Test
           command: |
             . .circleci/load-nvm.sh
-            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_LOGIN" --password-stdin >/dev/null 2>&1
             npm run test
 
 workflows:

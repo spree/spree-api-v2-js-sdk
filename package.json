@@ -31,12 +31,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/spark-solutions/spree-storefront-api-v2-js-sdk.git"
+    "url": "git+https://github.com/vendo-dev/js-sdk.git"
   },
   "author": "Spark Solutions <we@sparksolutions.co> (https://sparksolutions.co)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/spark-solutions/spree-storefront-api-v2-js-sdk/issues"
+    "url": "https://github.com/vendo-dev/js-sdk/issues"
   },
   "homepage": "https://guides.spreecommerce.org/api/v2",
   "devDependencies": {
