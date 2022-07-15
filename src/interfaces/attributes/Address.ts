@@ -4,9 +4,10 @@ export interface IAddress {
   address1: string
   address2?: string
   city: string
-  zipcode: string
-  state_name: string
+  zipcode?: string
+  state_name?: string
   country_iso: string
   phone?: string
   company?: string
+  label?: string
 }

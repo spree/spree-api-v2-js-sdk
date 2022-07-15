@@ -6,7 +6,6 @@ import type {
   IAccountConfirmation,
   AccountAddressesResult,
   AccountAddressResult,
-  AccountAddressParams,
   AccountAddressResponse,
   ForgotPasswordParams,
   ResetPasswordParams,
@@ -37,96 +36,71 @@ import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
 export default class Account extends Http {
-  public async accountInfo(options: AccountInfoOptions): Promise<IAccountResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async accountInfo(token: IToken, params?: IQuery): Promise<IAccountResult>
-  public async accountInfo(...allArguments: any[]): Promise<IAccountResult> {
-    const [tokenOrOptions, positionalParams = {}] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
+  public async accountInfo(options: AccountInfoOptions): Promise<IAccountResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<IAccount>('get', routes.accountPath(), token, params)
+    return await this.spreeResponse<IAccount>('get', routes.accountPath(), token, {})
   }
 
-  public async creditCardsList(options: CreditCardsListOptions): Promise<ICreditCardsResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async creditCardsList(token: IToken, params?: IQuery): Promise<ICreditCardsResult>
-  public async creditCardsList(...allArguments: any[]): Promise<ICreditCardsResult> {
-    const [tokenOrOptions, positionalParams = {}] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
+  public async creditCardsList(options: CreditCardsListOptions): Promise<ICreditCardsResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<ICreditCards>('get', routes.accountCreditCardsPath(), token, params)
+    return await this.spreeResponse<ICreditCards>('get', routes.accountCreditCardsPath(), token, {})
   }
 
-  public async defaultCreditCard(options: DefaultCreditCardOptions): Promise<ICreditCardResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async defaultCreditCard(token: IToken, params?: IQuery): Promise<ICreditCardResult>
-  public async defaultCreditCard(...allArguments: any[]): Promise<ICreditCardResult> {
-    const [tokenOrOptions, positionalParams = {}] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
+  public async defaultCreditCard(options: DefaultCreditCardOptions): Promise<ICreditCardResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<ICreditCard>('get', routes.accountDefaultCreditCardPath(), token, params)
+    return await this.spreeResponse<ICreditCard>('get', routes.accountDefaultCreditCardPath(), token, {})
   }
 
-  public async removeCreditCard(options: RemoveCreditCardOptions): Promise<NoContentResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async removeCreditCard(token: IToken, id: string, params?: IQuery): Promise<NoContentResult>
-  public async removeCreditCard(...allArguments: any[]): Promise<NoContentResult> {
-    const [tokenOrOptions, positionalId, positionalParams = {}] = allArguments
-    const { id, token, params } = squashAndPreparePositionalArguments(
-      [{ id: positionalId }, tokenOrOptions, positionalParams],
-      ['id']
-    )
+  public async removeCreditCard(options: RemoveCreditCardOptions): Promise<NoContentResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<NoContentResponse>('delete', routes.accountCreditCardRemovePath(id), token, params)
+    return await this.spreeResponse<NoContentResponse>('delete', routes.accountCreditCardRemovePath(options.id), token, {})
   }
 
-  public async completedOrdersList(options: CompletedOrdersListOptions): Promise<IOrdersResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async completedOrdersList(token: IToken, params?: IQuery): Promise<IOrdersResult>
-  public async completedOrdersList(...allArguments: any[]): Promise<IOrdersResult> {
-    const [tokenOrOptions, positionalParams = {}] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
+  public async completedOrdersList(options: CompletedOrdersListOptions): Promise<IOrdersResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<IOrders>('get', routes.accountCompletedOrdersPath(), token, params)
+    return await this.spreeResponse<IOrders>('get', routes.accountCompletedOrdersPath(), token, {})
   }
 
-  public async completedOrder(options: CompletedOrderOptions): Promise<IOrderResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async completedOrder(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>
-  public async completedOrder(...allArguments: any[]): Promise<IOrderResult> {
-    const [tokenOrOptions, positionalOrderNumber, positionalParams = {}] = allArguments
-    const { order_number, token, params } = squashAndPreparePositionalArguments(
-      [{ order_number: positionalOrderNumber }, tokenOrOptions, positionalParams],
-      ['order_number']
-    )
+  public async completedOrder(options: CompletedOrderOptions): Promise<IOrderResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<IOrder>('get', routes.accountCompletedOrderPath(order_number), token, params)
+    return await this.spreeResponse<IOrder>('get', routes.accountCompletedOrderPath(options.order_number), token, {})
   }
 
-  public async create(options: CreateOptions): Promise<IAccountResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async create(params: IQuery): Promise<IAccountResult>
-  public async create(...allArguments: any[]): Promise<IAccountResult> {
-    const [paramsOrOptions = {}] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([paramsOrOptions], [])
+  public async create(options: CreateOptions): Promise<IAccountResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
+    const params = { user: options.user }
 
     return await this.spreeResponse<IAccount>('post', routes.accountPath(), token, params)
   }
 
+  //TODO: Remove this method. It's unavailable in Vendo API
   public async confirm(option: ConfirmOptions): Promise<IAccountConfirmationResult>
   /**
    * @deprecated Use the combined options signature instead.
@@ -151,6 +125,7 @@ export default class Account extends Http {
     )
   }
 
+  //TODO: Remove this method. It's unavailable in Vendo API
   public async forgotPassword(options: ForgotPasswordOptions): Promise<NoContentResult>
   /**
    * @deprecated Use the combined options signature instead.
@@ -163,6 +138,7 @@ export default class Account extends Http {
     return await this.spreeResponse<NoContentResponse>('post', routes.forgotPasswordPath(), token, params)
   }
 
+  //TODO: Remove this method. It's unavailable in Vendo API
   public async resetPassword(options: ResetPasswordOptions): Promise<NoContentResult>
   /**
    * @deprecated Use the combined options signature instead.
@@ -188,88 +164,60 @@ export default class Account extends Http {
     )
   }
 
-  public async update(options: UpdateOptions): Promise<IAccountResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async update(token: IToken, params: IQuery): Promise<IAccountResult>
-  public async update(...allArguments: any[]): Promise<IAccountResult> {
-    const [tokenOrOptions, positionalParams] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
+  public async update(options: UpdateOptions): Promise<IAccountResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
+    const params = { user: options.user }
 
     return await this.spreeResponse<IAccount>('patch', routes.accountPath(), token, params)
   }
 
-  public async addressesList(options: AddressesListOptions): Promise<AccountAddressesResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async addressesList(token: IToken): Promise<AccountAddressesResult>
-  public async addressesList(...allArguments: any[]): Promise<AccountAddressesResult> {
-    const [tokenOrOptions] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions], [])
+  public async addressesList(options: AddressesListOptions): Promise<AccountAddressesResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<AccountAddressesResponse>('get', routes.accountAddressesPath(), token, params)
+    return await this.spreeResponse<AccountAddressesResponse>('get', routes.accountAddressesPath(), token, {})
   }
 
-  public async showAddress(options: ShowAddressOptions): Promise<AccountAddressResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async showAddress(token: IToken, addressId: string, params?: IQuery): Promise<AccountAddressResult>
-  public async showAddress(...allArguments: any[]): Promise<AccountAddressResult> {
-    const [tokenOrOptions, positionalId, positionalParams = {}] = allArguments
-    const { id, token, params } = squashAndPreparePositionalArguments(
-      [{ id: positionalId }, tokenOrOptions, positionalParams],
-      ['id']
-    )
+  public async showAddress(options: ShowAddressOptions): Promise<AccountAddressResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<AccountAddressResponse>('get', routes.accountAddressPath(id), token, params)
+    return await this.spreeResponse<AccountAddressResponse>('get', routes.accountAddressPath(options.id), token, {})
   }
 
-  public async createAddress(options: CreateAddressOptions): Promise<AccountAddressResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async createAddress(token: IToken, params: AccountAddressParams): Promise<AccountAddressResult>
-  public async createAddress(...allArguments: any[]): Promise<AccountAddressResult> {
-    const [tokenOrOptions, positionalParams] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
+  public async createAddress(options: CreateAddressOptions): Promise<AccountAddressResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
+    const params = { address: options.address }
 
     return await this.spreeResponse<AccountAddressResponse>('post', routes.accountAddressesPath(), token, params)
   }
 
-  public async removeAddress(options: RemoveAddressOptions): Promise<NoContentResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async removeAddress(token: IToken, id: string, params?: IQuery): Promise<NoContentResult>
-  public async removeAddress(...allArguments: any[]): Promise<NoContentResult> {
-    const [tokenOrOptions, positionalId, positionalParams = {}] = allArguments
-    const { id, token, params } = squashAndPreparePositionalArguments(
-      [{ id: positionalId }, tokenOrOptions, positionalParams],
-      ['id']
-    )
+  public async removeAddress(options: RemoveAddressOptions): Promise<NoContentResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<NoContentResponse>('delete', routes.accountAddressRemovePath(id), token, params)
+    return await this.spreeResponse<NoContentResponse>('delete', routes.accountAddressRemovePath(options.id), token, {})
   }
 
-  public async updateAddress(options: UpdateAddressOptions): Promise<AccountAddressResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async updateAddress(
-    token: IToken,
-    addressId: string,
-    params: AccountAddressParams
-  ): Promise<AccountAddressResult>
-  public async updateAddress(...allArguments: any[]): Promise<AccountAddressResult> {
-    const [tokenOrOptions, positionalId, positionalParams] = allArguments
-    const { id, token, params } = squashAndPreparePositionalArguments(
-      [{ id: positionalId }, tokenOrOptions, positionalParams],
-      ['id']
-    )
+  public async updateAddress(options: UpdateAddressOptions): Promise<AccountAddressResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
+    const params = { address: options.address }
 
-    return await this.spreeResponse<AccountAddressResponse>('patch', routes.accountAddressPath(id), token, params)
+    return await this.spreeResponse<AccountAddressResponse>('patch', routes.accountAddressPath(options.id), token, params)
   }
 }
