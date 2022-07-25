@@ -1,6 +1,8 @@
 export const storefrontPath = `api/v2/storefront`
 
 const endpoints = {
+  brandsPath: (): string => `${storefrontPath}/brands`,
+  brandPath: (permalink: string): string => `${storefrontPath}/brands/${encodeURIComponent(permalink)}`,
   productsPath: (): string => `${storefrontPath}/products`,
   productPath: (id: string): string => `${storefrontPath}/products/${encodeURIComponent(id)}`,
   taxonsPath: (): string => `${storefrontPath}/taxons`,

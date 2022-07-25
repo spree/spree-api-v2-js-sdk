@@ -1,6 +1,7 @@
 import {
   Account,
   Authentication,
+  Brands,
   Cart,
   Checkout,
   Countries,
@@ -18,6 +19,7 @@ import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/C
 class Client {
   public account: Account
   public authentication: Authentication
+  public brands: Brands
   public cart: Cart
   public checkout: Checkout
   public countries: Countries
@@ -55,6 +57,7 @@ class Client {
   protected addEndpoints(): void {
     this.account = this.makeAccount()
     this.authentication = this.makeAuthentication()
+    this.brands = this.makeBrands()
     this.cart = this.makeCart()
     this.checkout = this.makeCheckout()
     this.countries = this.makeCountries()
@@ -74,6 +77,10 @@ class Client {
 
   protected makeAuthentication(): Authentication {
     return new Authentication({ fetcher: this.fetcher })
+  }
+
+  protected makeBrands(): Brands {
+    return new Brands({ fetcher: this.fetcher })
   }
 
   protected makeCart(): Cart {

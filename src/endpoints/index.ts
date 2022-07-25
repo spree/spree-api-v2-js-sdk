@@ -1,5 +1,6 @@
 import Account from './Account'
 import Authentication from './Authentication'
+import Brands from './Brands'
 import Cart from './Cart'
 import Checkout from './Checkout'
 import Countries from './Countries'
@@ -15,6 +16,7 @@ import Wishlists from './Wishlists'
 export {
   Account,
   Authentication,
+  Brands,
   Cart,
   Checkout,
   Countries,
