@@ -6,23 +6,12 @@ import type { DigitalAsset, DigitalAssetResult, DownloadOptions } from '../inter
 import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 
 export default class DigitalAssets extends Http {
-  public async download(options: DownloadOptions): Promise<DigitalAssetResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async download(token: IToken, assetToken: string, params?: IQuery): Promise<DigitalAssetResult>
-  public async download(...allArguments: any[]): Promise<DigitalAssetResult> {
-    const [tokenOrOptions, positionalAssetToken, positionalParams = {}] = allArguments
-    const { asset_token, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { asset_token: positionalAssetToken }, positionalParams],
-      ['asset_token']
-    )
-
+  public async download(options: DownloadOptions): Promise<DigitalAssetResult> {
     return await this.spreeResponse<DigitalAsset>(
       'get',
-      routes.digitalAssetsDownloadPath(asset_token),
-      token,
-      params,
+      routes.digitalAssetsDownloadPath(options.asset_token),
+      {},
+      {},
       'stream'
     )
   }
