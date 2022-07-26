@@ -6,18 +6,12 @@ import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
 export default class Order extends Http {
-  public async status(options: StatusOptions): Promise<IOrderResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async status(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>
-  public async status(...allArguments: any[]): Promise<IOrderResult> {
-    const [tokenOrOptions, positionalOrderNumber, positionalParams = {}] = allArguments
-    const { order_number, token, params } = squashAndPreparePositionalArguments(
-      [tokenOrOptions, { order_number: positionalOrderNumber }, positionalParams],
-      ['order_number']
-    )
+  public async status(options: StatusOptions): Promise<IOrderResult> {
+    const token = {
+      orderToken: options.order_token,
+      bearerToken: options.bearer_token
+    }
 
-    return await this.spreeResponse<IOrder>('get', routes.orderStatusPath(order_number), token, params)
+    return await this.spreeResponse<IOrder>('get', routes.orderStatusPath(options.order_number), token, {})
   }
 }
