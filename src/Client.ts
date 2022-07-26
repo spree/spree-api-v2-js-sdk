@@ -3,6 +3,7 @@ import {
   Authentication,
   Brands,
   Cart,
+  Categories,
   Checkout,
   Countries,
   DigitalAssets,
@@ -21,6 +22,7 @@ class Client {
   public authentication: Authentication
   public brands: Brands
   public cart: Cart
+  public categories: Categories
   public checkout: Checkout
   public countries: Countries
   public digitalAssets: DigitalAssets
@@ -59,6 +61,7 @@ class Client {
     this.authentication = this.makeAuthentication()
     this.brands = this.makeBrands()
     this.cart = this.makeCart()
+    this.categories = this.makeCategories()
     this.checkout = this.makeCheckout()
     this.countries = this.makeCountries()
     this.digitalAssets = this.makeDigitalAssets()
@@ -85,6 +88,10 @@ class Client {
 
   protected makeCart(): Cart {
     return new Cart({ fetcher: this.fetcher })
+  }
+
+  protected makeCategories(): Categories {
+    return new Categories({ fetcher: this.fetcher })
   }
 
   protected makeCheckout(): Checkout {

@@ -2,6 +2,7 @@ import Account from './Account'
 import Authentication from './Authentication'
 import Brands from './Brands'
 import Cart from './Cart'
+import Categories from './Categories'
 import Checkout from './Checkout'
 import Countries from './Countries'
 import DigitalAssets from './DigitalAssets'
@@ -18,6 +19,7 @@ export {
   Authentication,
   Brands,
   Cart,
+  Categories,
   Checkout,
   Countries,
   DigitalAssets,

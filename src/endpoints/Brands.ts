@@ -5,10 +5,6 @@ import type { IRelationships } from '../Interfaces/Relationships'
 import type { ResultResponse } from '../Interfaces/ResultResponse'
 import routes from '../routes'
 
-export type ListOptions = WithCommonOptions<
-  { suggestQuery: true }
->
-
 export type ShowOptions = WithCommonOptions<
   { suggestQuery: true },
   { brand_permalink: string }
