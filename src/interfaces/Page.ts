@@ -32,4 +32,4 @@ export interface IPagesResult extends ResultResponse<IPages> {}
 
 export type ListOptions = WithCommonOptions<{ suggestQuery: true }>
 
-export type ShowOptions = WithCommonOptions<{ suggestQuery: true }, { id: string }>
+export type ShowOptions = WithCommonOptions<{ suggestQuery: true }, { cms_page_slug: string }>
