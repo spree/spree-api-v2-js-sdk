@@ -1,15 +1,11 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type {
   Menu,
   Menus as MenusResponse,
   MenuResult,
-  MenusList,
   MenusResult,
-  ListOptions,
   ShowOptions
 } from '../interfaces/Menu'
-import type { IQuery } from '../interfaces/Query'
 import routes from '../routes'
 
 export default class Menus extends Http {

@@ -1,8 +1,5 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type { IOrder, IOrderResult, StatusOptions } from '../interfaces/Order'
-import type { IQuery } from '../interfaces/Query'
-import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
 export default class Order extends Http {

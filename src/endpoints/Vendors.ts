@@ -1,7 +1,5 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type {
-  ListOptions,
   ShowOptions,
   VendorResult,
   VendorsResult,

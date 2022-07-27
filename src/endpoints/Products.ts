@@ -1,4 +1,3 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type {
   IProduct,
@@ -8,8 +7,6 @@ import type {
   ListOptions,
   ShowOptions
 } from '../interfaces/Product'
-import type { IProductsQuery } from '../interfaces/Query'
-import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
 export default class Products extends Http {

@@ -1,7 +1,5 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
-import type { IPage, IPageResult, IPages, IPagesResult, ListOptions, ShowOptions } from '../interfaces/Page'
-import type { IQuery } from '../interfaces/Query'
+import type { IPage, IPageResult, IPages, IPagesResult, ShowOptions } from '../interfaces/Page'
 import routes from '../routes'
 
 export default class Pages extends Http {

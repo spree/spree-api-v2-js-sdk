@@ -1,26 +1,17 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
-import type { IToken } from '../interfaces/Token'
 import type {
   WishedItem,
   WishedItemResult,
-  WishlistsAddWishedItem,
-  WishlistsUpdateWishedItem,
   AddWishedItemOptions,
   UpdateWishedItemOptions,
   RemoveWishedItemOptions
 } from '../interfaces/WishedItem'
 import type {
-  WishlistsList,
   WishlistsResult,
   Wishlists as WishlistsResponse,
   Wishlist as WishlistResponse,
-  WishlistsShow,
   WishlistResult,
-  WishlistsDefault,
-  WishlistsCreate,
-  WishlistsUpdate,
   ListOptions,
   ShowOptions,
   DefaultOptions,

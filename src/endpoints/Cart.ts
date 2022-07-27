@@ -1,25 +1,11 @@
 import Http from '../Http'
 import type {
-  AddItem,
-  CouponCode,
-  EstimateShippingMethods,
-  SetQuantity,
-  AssociateCart,
-  ChangeCurrency,
-  EstimateShippingRates
-} from '../interfaces/endpoints/CartClass'
-import type {
   EstimatedShippingRates,
   EstimatedShippingRatesResult,
-  IEstimatedShippingMethods,
-  IEstimatedShippingMethodsResult
 } from '../interfaces/EstimatedShippingMethod'
 import type { IOrder, IOrderResult } from '../interfaces/Order'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
-import type { IQuery } from '../interfaces/Query'
-import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import type {
   AddItemOptions,
   ApplyCouponCodeOptions,

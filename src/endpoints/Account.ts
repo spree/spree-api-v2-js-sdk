@@ -1,14 +1,9 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type {
   IAccountResult,
-  IAccountConfirmationResult,
-  IAccountConfirmation,
   AccountAddressesResult,
   AccountAddressResult,
   AccountAddressResponse,
-  ForgotPasswordParams,
-  ResetPasswordParams,
   IAccount,
   AccountAddressesResponse,
   AccountInfoOptions,
@@ -18,9 +13,6 @@ import type {
   CompletedOrdersListOptions,
   CompletedOrderOptions,
   CreateOptions,
-  ConfirmOptions,
-  ForgotPasswordOptions,
-  ResetPasswordOptions,
   UpdateOptions,
   AddressesListOptions,
   ShowAddressOptions,
@@ -31,8 +23,6 @@ import type {
 import type { ICreditCard, ICreditCardResult, ICreditCards, ICreditCardsResult } from '../interfaces/CreditCard'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import type { IOrder, IOrderResult, IOrders, IOrdersResult } from '../interfaces/Order'
-import type { IQuery } from '../interfaces/Query'
-import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
 export default class Account extends Http {
@@ -98,70 +88,6 @@ export default class Account extends Http {
     const params = { user: options.user }
 
     return await this.spreeResponse<IAccount>('post', routes.accountPath(), token, params)
-  }
-
-  //TODO: Remove this method. It's unavailable in Vendo API
-  public async confirm(option: ConfirmOptions): Promise<IAccountConfirmationResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async confirm(confirmationToken: string): Promise<IAccountConfirmationResult>
-  public async confirm(...allArguments: any[]): Promise<IAccountConfirmationResult> {
-    const [confirmationTokenOrOptions] = allArguments
-    const { confirmation_token, token, params } = squashAndPreparePositionalArguments(
-      [
-        typeof confirmationTokenOrOptions === 'object'
-          ? confirmationTokenOrOptions
-          : { confirmation_token: confirmationTokenOrOptions }
-      ],
-      ['confirmation_token']
-    )
-
-    return await this.spreeResponse<IAccountConfirmation>(
-      'get',
-      routes.accountConfirmPath(confirmation_token),
-      token,
-      params
-    )
-  }
-
-  //TODO: Remove this method. It's unavailable in Vendo API
-  public async forgotPassword(options: ForgotPasswordOptions): Promise<NoContentResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async forgotPassword(params: ForgotPasswordParams): Promise<NoContentResult>
-  public async forgotPassword(...allArguments: any[]): Promise<NoContentResult> {
-    const [paramsOrOptions] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([paramsOrOptions], [])
-
-    return await this.spreeResponse<NoContentResponse>('post', routes.forgotPasswordPath(), token, params)
-  }
-
-  //TODO: Remove this method. It's unavailable in Vendo API
-  public async resetPassword(options: ResetPasswordOptions): Promise<NoContentResult>
-  /**
-   * @deprecated Use the combined options signature instead.
-   */
-  public async resetPassword(resetPasswordToken: string, params: ResetPasswordParams): Promise<NoContentResult>
-  public async resetPassword(...allArguments: any[]): Promise<NoContentResult> {
-    const [resetPasswordTokenOrOptions, positionalParams] = allArguments
-    const { reset_password_token, token, params } = squashAndPreparePositionalArguments(
-      [
-        typeof resetPasswordTokenOrOptions === 'object'
-          ? resetPasswordTokenOrOptions
-          : { resetPasswordToken: resetPasswordTokenOrOptions },
-        positionalParams
-      ],
-      ['reset_password_token']
-    )
-
-    return await this.spreeResponse<NoContentResponse>(
-      'patch',
-      routes.resetPasswordPath(reset_password_token),
-      token,
-      params
-    )
   }
 
   public async update(options: UpdateOptions): Promise<IAccountResult> {
