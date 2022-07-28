@@ -1630,44 +1630,6 @@ const response = await client.products.show({
 })
 ```
 
-## Taxons
-
-### [`list`][53]
-
-Returns a list of Taxons.
-
-**Success response schema:** [Success schema](#success-schema)
-
-**Failure response schema:** [Error schema](#error-schema)
-
-**Example:**
-
-```ts
-const response = await client.taxons.list()
-```
-
-### [`show`][54]
-
-Returns a single Taxon.
-
-**Parameters schema:**
-
-```ts
-{
-  id: string
-}
-```
-
-**Success response schema:** [Success schema](#success-schema)
-
-**Failure response schema:** [Error schema](#error-schema)
-
-**Example:**
-
-```ts
-const products = await client.taxons.show({ id: '1' })
-```
-
 ## Vendors
 
 The multi-vendor marketplace feature is only available via [Vendo](https://getvendo.com) - Spree as a Service offering, not in Spree open source. [Contact us](https://e98esoirr8c.typeform.com/contactvendo?typeform-source=github.com) for early access.

@@ -12,21 +12,21 @@ export interface CategoryAttr extends JsonApiDocument {
   type: string
   id: string
   attributes: {
-    depth: number,
-    description: string | null,
-    is_child: boolean,
-    is_leaf: boolean,
-    is_root: boolean,
-    left: number,
-    meta_description: string | null,
-    meta_keywords: string | null,
-    meta_title: string | null,
-    name: string,
-    permalink: string,
-    position: number,
-    pretty_name: string,
-    right: number,
-    seo_title: string | null,
+    depth: number
+    description: string | null
+    is_child: boolean
+    is_leaf: boolean
+    is_root: boolean
+    left: number
+    meta_description: string | null
+    meta_keywords: string | null
+    meta_title: string | null
+    name: string
+    permalink: string
+    position: number
+    pretty_name: string
+    right: number
+    seo_title: string | null
     updated_at: string
   }
   relationships: IRelationships
