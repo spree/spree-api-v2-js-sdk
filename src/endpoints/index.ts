@@ -10,7 +10,6 @@ import Menus from './Menus'
 import Order from './Order'
 import Pages from './Pages'
 import Products from './Products'
-import Taxons from './Taxons'
 import Vendors from './Vendors'
 import Wishlists from './Wishlists'
 
@@ -27,7 +26,6 @@ export {
   Order,
   Pages,
   Products,
-  Taxons,
   Vendors,
   Wishlists
 }

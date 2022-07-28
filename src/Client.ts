@@ -11,7 +11,6 @@ import {
   Order,
   Pages,
   Products,
-  Taxons,
   Vendors,
   Wishlists
 } from './endpoints'
@@ -30,7 +29,6 @@ class Client {
   public order: Order
   public pages: Pages
   public products: Products
-  public taxons: Taxons
   public vendors: Vendors
   public wishlists: Wishlists
 
@@ -69,7 +67,6 @@ class Client {
     this.order = this.makeOrder()
     this.pages = this.makePages()
     this.products = this.makeProducts()
-    this.taxons = this.makeTaxons()
     this.vendors = this.makeVendors()
     this.wishlists = this.makeWishlists()
   }
@@ -112,10 +109,6 @@ class Client {
 
   protected makeProducts(): Products {
     return new Products({ fetcher: this.fetcher })
-  }
-
-  protected makeTaxons(): Taxons {
-    return new Taxons({ fetcher: this.fetcher })
   }
 
   protected makeDigitalAssets(): DigitalAssets {
