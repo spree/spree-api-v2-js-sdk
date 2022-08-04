@@ -9,7 +9,7 @@ export type CreateFetcher = (options: CreateFetcherConfig) => Fetcher
 
 export type CreateFetcherConfig = {
   host: string
-  beforeRequestFunction?(axios: AxiosInstance): any
+  beforeRequestFunction?(axios?: AxiosInstance): any
 }
 
 export type FetcherConfig = {
