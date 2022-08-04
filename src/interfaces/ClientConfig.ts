@@ -1,5 +1,5 @@
 import type { FetchConfig } from './FetchConfig'
-import { AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios'
 
 export type Fetcher = {
   fetch: (options: FetchConfig) => Promise<{ data: any }>
