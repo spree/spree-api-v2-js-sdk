@@ -17,24 +17,28 @@ import type { IToken } from './interfaces/Token'
 
 export type EndpointOptions = {
   fetcher: Fetcher
+  locale?: string
 }
 
 export default class Http {
   public fetcher: Fetcher
+  public locale: string | undefined
 
-  constructor({ fetcher }: EndpointOptions) {
+  constructor({ fetcher, locale }: EndpointOptions) {
     this.fetcher = fetcher
+    this.locale = locale
   }
 
   protected async spreeResponse<ResponseType = JsonApiResponse>(
     method: HttpMethod,
     url: string,
     tokens: IToken = {},
-    params: any = {},
-    responseParsing: ResponseParsing = 'automatic'
+    userParams: any = {},
+    responseParsing: ResponseParsing = 'automatic',
   ): Promise<ResultResponse<ResponseType>> {
     try {
       const headers = this.spreeOrderHeaders(tokens)
+      const params = this.spreeParams(userParams)
 
       const fetchOptions: FetchConfig = {
         url,
@@ -112,5 +116,14 @@ export default class Http {
     }
 
     return header
+  }
+
+  protected spreeParams(userParams: any): Record<string, any> {
+    const params = {
+      locale: this.locale,
+      ...userParams
+    }
+
+    return params
   }
 }

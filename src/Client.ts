@@ -13,6 +13,7 @@ import {
   Vendors,
   Wishlists
 } from './endpoints'
+import { EndpointOptions } from './Http'
 import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/ClientConfig'
 
 class Client {
@@ -32,6 +33,7 @@ class Client {
 
   protected host: string
   protected fetcher: Fetcher
+  private locale: string | undefined
 
   constructor(customOptions: IClientConfig) {
     const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
@@ -52,6 +54,19 @@ class Client {
     this.addEndpoints()
   }
 
+  public withLocale(locale: string): this {
+    this.locale = locale
+    this.addEndpoints()
+    return this
+  }
+
+  protected endpointOptions(): EndpointOptions {
+    return {
+      fetcher: this.fetcher,
+      locale: this.locale
+    }
+  }
+
   protected addEndpoints(): void {
     this.account = this.makeAccount()
     this.authentication = this.makeAuthentication()
@@ -68,56 +83,57 @@ class Client {
     this.wishlists = this.makeWishlists()
   }
 
+
   protected makeAccount(): Account {
-    return new Account({ fetcher: this.fetcher })
+    return new Account({ ...this.endpointOptions() })
   }
 
   protected makeAuthentication(): Authentication {
-    return new Authentication({ fetcher: this.fetcher })
+    return new Authentication({ ...this.endpointOptions() })
   }
 
   protected makeCart(): Cart {
-    return new Cart({ fetcher: this.fetcher })
+    return new Cart({ ...this.endpointOptions() })
   }
 
   protected makeCheckout(): Checkout {
-    return new Checkout({ fetcher: this.fetcher })
+    return new Checkout({ ...this.endpointOptions() })
   }
 
   protected makeCountries(): Countries {
-    return new Countries({ fetcher: this.fetcher })
+    return new Countries({ ...this.endpointOptions() })
   }
 
   protected makeOrder(): Order {
-    return new Order({ fetcher: this.fetcher })
+    return new Order({ ...this.endpointOptions() })
   }
 
   protected makePages(): Pages {
-    return new Pages({ fetcher: this.fetcher })
+    return new Pages({ ...this.endpointOptions() })
   }
 
   protected makeProducts(): Products {
-    return new Products({ fetcher: this.fetcher })
+    return new Products({ ...this.endpointOptions() })
   }
 
   protected makeTaxons(): Taxons {
-    return new Taxons({ fetcher: this.fetcher })
+    return new Taxons({ ...this.endpointOptions() })
   }
 
   protected makeDigitalAssets(): DigitalAssets {
-    return new DigitalAssets({ fetcher: this.fetcher })
+    return new DigitalAssets({ ...this.endpointOptions() })
   }
 
   protected makeMenus(): Menus {
-    return new Menus({ fetcher: this.fetcher })
+    return new Menus({ ...this.endpointOptions() })
   }
 
   protected makeVendors(): Vendors {
-    return new Vendors({ fetcher: this.fetcher })
+    return new Vendors({ ...this.endpointOptions() })
   }
 
   protected makeWishlists(): Wishlists {
-    return new Wishlists({ fetcher: this.fetcher })
+    return new Wishlists({ ...this.endpointOptions() })
   }
 }
 
