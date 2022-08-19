@@ -17,27 +17,33 @@ import type { IToken } from './interfaces/Token'
 
 export type EndpointOptions = {
   fetcher: Fetcher
+  tokens?: IToken
   locale?: string
+  currency?: string
 }
 
 export default class Http {
   public fetcher: Fetcher
-  public locale: string | undefined
+  public tokens: EndpointOptions['tokens']
+  public locale: EndpointOptions['locale'] | undefined
+  public currency: EndpointOptions['currency'] | undefined
 
-  constructor({ fetcher, locale }: EndpointOptions) {
+  constructor({ fetcher, tokens, locale, currency }: EndpointOptions) {
     this.fetcher = fetcher
+    this.tokens = tokens || {}
     this.locale = locale
+    this.currency = currency
   }
 
   protected async spreeResponse<ResponseType = JsonApiResponse>(
     method: HttpMethod,
     url: string,
-    tokens: IToken = {},
+    userTokens: IToken = {},
     userParams: any = {},
-    responseParsing: ResponseParsing = 'automatic',
+    responseParsing: ResponseParsing = 'automatic'
   ): Promise<ResultResponse<ResponseType>> {
     try {
-      const headers = this.spreeOrderHeaders(tokens)
+      const headers = this.spreeOrderHeaders(userTokens)
       const params = this.spreeParams(userParams)
 
       const fetchOptions: FetchConfig = {
@@ -104,8 +110,12 @@ export default class Http {
     }
   }
 
-  protected spreeOrderHeaders(tokens: IToken): { [headerName: string]: string } {
+  protected spreeOrderHeaders(userTokens: IToken): { [headerName: string]: string } {
     const header = {}
+    const tokens = {
+      ...this.tokens,
+      ...userTokens
+    }
 
     if (tokens.orderToken) {
       header['X-Spree-Order-Token'] = tokens.orderToken
@@ -121,6 +131,7 @@ export default class Http {
   protected spreeParams(userParams: any): Record<string, any> {
     const params = {
       locale: this.locale,
+      currency: this.currency,
       ...userParams
     }
 

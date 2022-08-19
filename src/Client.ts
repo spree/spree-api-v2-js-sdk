@@ -15,7 +15,9 @@ import {
 } from './endpoints'
 import { EndpointOptions } from './Http'
 import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/ClientConfig'
-
+import { Currency } from './interfaces/Currency'
+import { Locale } from './interfaces/Locale'
+import { BearerToken, OrderToken } from './interfaces/Token'
 class Client {
   public account: Account
   public authentication: Authentication
@@ -33,7 +35,10 @@ class Client {
 
   protected host: string
   protected fetcher: Fetcher
-  private locale: string | undefined
+
+  private tokens: EndpointOptions['tokens'] = {}
+  private locale: EndpointOptions['locale'] | undefined
+  private currency: EndpointOptions['currency'] | undefined
 
   constructor(customOptions: IClientConfig) {
     const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
@@ -50,90 +55,115 @@ class Client {
     const fetcherOptions: CreateFetcherConfig = { host: options.host }
 
     this.fetcher = options.createFetcher(fetcherOptions)
-
     this.addEndpoints()
   }
 
-  public withLocale(locale: string): this {
-    this.locale = locale
-    this.addEndpoints()
-    return this
+  public withOrderToken(orderToken: OrderToken): this {
+    return this.withEndpointBuilder(() => {
+      this.tokens.orderToken = orderToken
+    })
   }
 
-  protected endpointOptions(): EndpointOptions {
+  public withBearerToken(bearerToken: BearerToken): this {
+    return this.withEndpointBuilder(() => {
+      this.tokens.bearerToken = bearerToken
+    })
+  }
+
+  public withLocale(locale: Locale): this {
+    return this.withEndpointBuilder(() => {
+      this.locale = locale
+    })
+  }
+
+  public withCurrency(currency: Currency): this {
+    return this.withEndpointBuilder(() => {
+      this.currency = currency
+    })
+  }
+
+  protected getEndpointOptions(): EndpointOptions {
     return {
       fetcher: this.fetcher,
-      locale: this.locale
+      tokens: this.tokens,
+      locale: this.locale,
+      currency: this.currency
     }
   }
 
   protected addEndpoints(): void {
-    this.account = this.makeAccount()
-    this.authentication = this.makeAuthentication()
-    this.cart = this.makeCart()
-    this.checkout = this.makeCheckout()
-    this.countries = this.makeCountries()
-    this.digitalAssets = this.makeDigitalAssets()
-    this.menus = this.makeMenus()
-    this.order = this.makeOrder()
-    this.pages = this.makePages()
-    this.products = this.makeProducts()
-    this.taxons = this.makeTaxons()
-    this.vendors = this.makeVendors()
-    this.wishlists = this.makeWishlists()
+    const options = this.getEndpointOptions()
+    this.account = this.makeAccount(options)
+    this.authentication = this.makeAuthentication(options)
+    this.cart = this.makeCart(options)
+    this.checkout = this.makeCheckout(options)
+    this.countries = this.makeCountries(options)
+    this.digitalAssets = this.makeDigitalAssets(options)
+    this.menus = this.makeMenus(options)
+    this.order = this.makeOrder(options)
+    this.pages = this.makePages(options)
+    this.products = this.makeProducts(options)
+    this.taxons = this.makeTaxons(options)
+    this.vendors = this.makeVendors(options)
+    this.wishlists = this.makeWishlists(options)
   }
 
-
-  protected makeAccount(): Account {
-    return new Account({ ...this.endpointOptions() })
+  protected withEndpointBuilder(fn: () => void): this {
+    fn()
+    this.addEndpoints()
+    return this
   }
 
-  protected makeAuthentication(): Authentication {
-    return new Authentication({ ...this.endpointOptions() })
+  protected makeAccount(options: EndpointOptions): Account {
+    return new Account(options)
   }
 
-  protected makeCart(): Cart {
-    return new Cart({ ...this.endpointOptions() })
+  protected makeAuthentication(options: EndpointOptions): Authentication {
+    return new Authentication(options)
   }
 
-  protected makeCheckout(): Checkout {
-    return new Checkout({ ...this.endpointOptions() })
+  protected makeCart(options: EndpointOptions): Cart {
+    return new Cart(options)
   }
 
-  protected makeCountries(): Countries {
-    return new Countries({ ...this.endpointOptions() })
+  protected makeCheckout(options: EndpointOptions): Checkout {
+    return new Checkout(options)
   }
 
-  protected makeOrder(): Order {
-    return new Order({ ...this.endpointOptions() })
+  protected makeCountries(options: EndpointOptions): Countries {
+    return new Countries(options)
   }
 
-  protected makePages(): Pages {
-    return new Pages({ ...this.endpointOptions() })
+  protected makeOrder(options: EndpointOptions): Order {
+    return new Order(options)
   }
 
-  protected makeProducts(): Products {
-    return new Products({ ...this.endpointOptions() })
+  protected makePages(options: EndpointOptions): Pages {
+    return new Pages(options)
   }
 
-  protected makeTaxons(): Taxons {
-    return new Taxons({ ...this.endpointOptions() })
+  protected makeProducts(options: EndpointOptions): Products {
+    return new Products(options)
   }
 
-  protected makeDigitalAssets(): DigitalAssets {
-    return new DigitalAssets({ ...this.endpointOptions() })
+  protected makeTaxons(options: EndpointOptions): Taxons {
+    return new Taxons(options)
   }
 
-  protected makeMenus(): Menus {
-    return new Menus({ ...this.endpointOptions() })
+  protected makeDigitalAssets(options: EndpointOptions): DigitalAssets {
+    return new DigitalAssets(options)
   }
 
-  protected makeVendors(): Vendors {
-    return new Vendors({ ...this.endpointOptions() })
+  protected makeMenus(options: EndpointOptions): Menus {
+    return new Menus(options)
   }
 
-  protected makeWishlists(): Wishlists {
-    return new Wishlists({ ...this.endpointOptions() })
+  protected makeVendors(options: EndpointOptions): Vendors {
+    return new Vendors(options)
+  }
+
+  protected makeWishlists(options: EndpointOptions): Wishlists {
+    return new Wishlists(options)
   }
 }
 
