@@ -14,12 +14,15 @@ import {
   Wishlists
 } from './endpoints'
 import { EndpointOptions } from './Http'
+import { AllowedClientBuilderOptions, DefaultBuilderOptions } from './interfaces/ClientBuilderOptions'
 import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/ClientConfig'
 import { Currency } from './interfaces/Currency'
 import { Locale } from './interfaces/Locale'
+import { SetProperty } from './interfaces/SetProperty'
 import { BearerToken, OrderToken } from './interfaces/Token'
-class Client {
-  public account: Account
+
+class Client<ClientOptions extends AllowedClientBuilderOptions = DefaultBuilderOptions> {
+  public account: Account<ClientOptions>
   public authentication: Authentication
   public cart: Cart
   public checkout: Checkout
@@ -36,9 +39,7 @@ class Client {
   protected host: string
   protected fetcher: Fetcher
 
-  private tokens: EndpointOptions['tokens'] = {}
-  private locale: EndpointOptions['locale'] | undefined
-  private currency: EndpointOptions['currency'] | undefined
+  private config: IClientConfig
 
   constructor(customOptions: IClientConfig) {
     const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
@@ -47,52 +48,45 @@ class Client {
       host: spreeHostEnvironmentValue || 'http://localhost:3000/'
     }
 
-    const options: IClientConfig = {
-      ...defaultOptions,
-      ...customOptions
-    }
+    this.config = { ...defaultOptions, ...customOptions }
 
-    const fetcherOptions: CreateFetcherConfig = { host: options.host }
+    const fetcherOptions: CreateFetcherConfig = { host: this.config.host }
 
-    this.fetcher = options.createFetcher(fetcherOptions)
-    this.addEndpoints()
-  }
+    this.fetcher = this.config.createFetcher(fetcherOptions)
 
-  public withOrderToken(orderToken: OrderToken): this {
-    return this.withEndpointBuilder(() => {
-      this.tokens.orderToken = orderToken
-    })
-  }
-
-  public withBearerToken(bearerToken: BearerToken): this {
-    return this.withEndpointBuilder(() => {
-      this.tokens.bearerToken = bearerToken
-    })
-  }
-
-  public withLocale(locale: Locale): this {
-    return this.withEndpointBuilder(() => {
-      this.locale = locale
-    })
-  }
-
-  public withCurrency(currency: Currency): this {
-    return this.withEndpointBuilder(() => {
-      this.currency = currency
-    })
-  }
-
-  protected getEndpointOptions(): EndpointOptions {
-    return {
+    const endpointOptions = {
       fetcher: this.fetcher,
-      tokens: this.tokens,
-      locale: this.locale,
-      currency: this.currency
+      bearer_token: this.config.bearer_token,
+      order_token: this.config.order_token,
+      locale: this.config.locale,
+      currency: this.config.currency
     }
+    this.addEndpoints(endpointOptions)
   }
 
-  protected addEndpoints(): void {
-    const options = this.getEndpointOptions()
+  public withOrderToken(order_token: OrderToken) {
+    return this.builderInstance<SetProperty<ClientOptions, 'order_token', true>>({ order_token })
+  }
+
+  public withBearerToken(bearer_token: BearerToken) {
+    return this.builderInstance<SetProperty<ClientOptions, 'bearer_token', true>>({ bearer_token })
+  }
+
+  public withLocale(locale: Locale) {
+    return this.builderInstance<SetProperty<ClientOptions, 'locale', true>>({ locale })
+  }
+
+  public withCurrency(currency: Currency) {
+    return this.builderInstance<SetProperty<ClientOptions, 'currency', true>>({ currency })
+  }
+
+  protected builderInstance<NewClientInstanceType extends AllowedClientBuilderOptions>(
+    config: Partial<IClientConfig> = {}
+  ) {
+    return new Client<NewClientInstanceType>({ ...this.config, ...config })
+  }
+
+  protected addEndpoints(options: EndpointOptions): void {
     this.account = this.makeAccount(options)
     this.authentication = this.makeAuthentication(options)
     this.cart = this.makeCart(options)
@@ -108,14 +102,8 @@ class Client {
     this.wishlists = this.makeWishlists(options)
   }
 
-  protected withEndpointBuilder(fn: () => void): this {
-    fn()
-    this.addEndpoints()
-    return this
-  }
-
-  protected makeAccount(options: EndpointOptions): Account {
-    return new Account(options)
+  protected makeAccount(options: EndpointOptions): Account<ClientOptions> {
+    return new Account<ClientOptions>(options)
   }
 
   protected makeAuthentication(options: EndpointOptions): Authentication {

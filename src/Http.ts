@@ -8,29 +8,29 @@ import {
 } from './errors'
 import FetchError from './errors/FetchError'
 import * as result from './helpers/result'
+import { ClientBuilderOptions } from './interfaces/ClientBuilderOptions'
 import type { Fetcher } from './interfaces/ClientConfig'
 import type { ErrorType } from './interfaces/errors/ErrorType'
 import type { FetchConfig, HttpMethod, ResponseParsing } from './interfaces/FetchConfig'
 import type { JsonApiResponse } from './interfaces/JsonApi'
 import type { ResultResponse } from './interfaces/ResultResponse'
-import type { IToken } from './interfaces/Token'
+import type { BearerToken, IToken } from './interfaces/Token'
 
-export type EndpointOptions = {
+export type EndpointOptions = ClientBuilderOptions & {
   fetcher: Fetcher
-  tokens?: IToken
-  locale?: string
-  currency?: string
 }
 
 export default class Http {
   public fetcher: Fetcher
-  public tokens: EndpointOptions['tokens']
+  public bearerToken: BearerToken | undefined
+  public orderToken: BearerToken | undefined
   public locale: EndpointOptions['locale'] | undefined
   public currency: EndpointOptions['currency'] | undefined
 
-  constructor({ fetcher, tokens, locale, currency }: EndpointOptions) {
+  constructor({ fetcher, bearer_token, order_token, locale, currency }: EndpointOptions) {
     this.fetcher = fetcher
-    this.tokens = tokens || {}
+    this.bearerToken = bearer_token
+    this.orderToken = order_token
     this.locale = locale
     this.currency = currency
   }
@@ -113,7 +113,8 @@ export default class Http {
   protected spreeOrderHeaders(userTokens: IToken): { [headerName: string]: string } {
     const header = {}
     const tokens = {
-      ...this.tokens,
+      orderToken: this.orderToken,
+      bearerToken: this.bearerToken,
       ...userTokens
     }
 
