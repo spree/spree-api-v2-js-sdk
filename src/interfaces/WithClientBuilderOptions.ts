@@ -18,7 +18,7 @@ import { FilterRequiredKeys } from './FilterRequiredKeys'
  * // "locale" MyUserOptions's locale is required, but Options' locale transforms into optional, because MyClientOptions's locale is true
  * // "currency" stays required, because MyClientOptions's locale is false, and MyUserOptions's currency is required.
  */
-export type WithBuilderOptions<
+export type WithClientBuilderOptions<
   ClientOptions extends AllowedClientBuilderOptions,
   UserOptions extends ClientBuilderOptions,
   UserCustomOptionsOnly extends Record<string, unknown> = Omit<UserOptions, keyof ClientBuilderOptions>,
@@ -27,8 +27,7 @@ export type WithBuilderOptions<
   RequiredEndpointOptionsOnly extends ClientBuilderOptions = FilterRequiredKeys<UserEndpointOptionsOnly>
 > = UserCustomOptionsOnly &
   OptionalEndpointOptionsOnly &
-  Partial<RequiredEndpointOptionsOnly> &
-  {
+  Partial<RequiredEndpointOptionsOnly> & {
     [K in keyof Required<ClientBuilderOptions> as RequiredEndpointOptionsOnly extends Pick<
       Required<ClientBuilderOptions>,
       K

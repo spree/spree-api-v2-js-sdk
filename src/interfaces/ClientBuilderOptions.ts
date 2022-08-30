@@ -1,16 +1,12 @@
-import { Currency } from './Currency'
-import { Locale } from './Locale'
-import { BearerToken, OrderToken } from './Token'
-
 export type ClientBuilderOptions = Partial<{
-  order_token: OrderToken
-  bearer_token: BearerToken
-  locale: Locale
-  currency: Currency
+  order_token: string
+  bearer_token: string
+  locale: string
+  currency: string
 }>
 
 export type AllowedClientBuilderOptions = {
-  [K in keyof Required<ClientBuilderOptions>]: boolean
+  [K in keyof ClientBuilderOptions]-?: boolean
 }
 
 export type DefaultBuilderOptions = AllowedClientBuilderOptions & { [K in keyof AllowedClientBuilderOptions]: false }

@@ -7,6 +7,7 @@ import {
   SpreeSDKError
 } from './errors'
 import FetchError from './errors/FetchError'
+import { isFetchError } from './helpers/isFetchError'
 import * as result from './helpers/result'
 import { ClientBuilderOptions } from './interfaces/ClientBuilderOptions'
 import type { Fetcher } from './interfaces/ClientConfig'
@@ -14,6 +15,7 @@ import type { ErrorType } from './interfaces/errors/ErrorType'
 import type { FetchConfig, HttpMethod, ResponseParsing } from './interfaces/FetchConfig'
 import type { JsonApiResponse } from './interfaces/JsonApi'
 import type { ResultResponse } from './interfaces/ResultResponse'
+import { SpreeOrderHeaders } from './interfaces/SpreeOrderHeaders'
 import type { BearerToken, IToken } from './interfaces/Token'
 
 export type EndpointOptions = ClientBuilderOptions & {
@@ -79,7 +81,7 @@ export default class Http {
   }
 
   protected processError(error: Error): SpreeSDKError {
-    if (error instanceof FetchError) {
+    if (isFetchError(error)) {
       if (error.response) {
         // Error from Spree outside HTTP 2xx codes
         return this.processSpreeError(error)
@@ -110,8 +112,8 @@ export default class Http {
     }
   }
 
-  protected spreeOrderHeaders(userTokens: IToken): { [headerName: string]: string } {
-    const header = {}
+  protected spreeOrderHeaders(userTokens: IToken): SpreeOrderHeaders {
+    const header: SpreeOrderHeaders = {}
     const tokens = {
       orderToken: this.orderToken,
       bearerToken: this.bearerToken,

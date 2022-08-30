@@ -1,11 +1,12 @@
 import type { IAddress } from './attributes/Address'
 import { AllowedClientBuilderOptions, ClientBuilderOptions } from './ClientBuilderOptions'
 import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import { PickAsOptional } from './PickAsOptional'
+import { MakeOptional } from './MakeOptional'
+import { MakeRequired } from './MakeRequired'
 import type { IQuery } from './Query'
 import type { IRelationships } from './Relationships'
 import type { ResultResponse } from './ResultResponse'
-import { WithBuilderOptions } from './WithClientBuilderOptions'
+import { WithClientBuilderOptions } from './WithClientBuilderOptions'
 import type { WithCommonOptions } from './WithCommonOptions'
 
 export interface AccountAttr extends JsonApiDocument {
@@ -78,9 +79,14 @@ export interface AccountAddressResult extends ResultResponse<AccountAddressRespo
 
 export interface AccountAddressesResult extends ResultResponse<AccountAddressesResponse> {}
 
-export type AccountInfoOptions<ClientOptions extends AllowedClientBuilderOptions> = WithBuilderOptions<
+export type AccountContractTestOptions<ClientOptions extends AllowedClientBuilderOptions> = WithClientBuilderOptions<
   ClientOptions,
-  ClientBuilderOptions & WithCommonOptions<{ suggestToken: true; suggestQuery: true }>
+  MakeRequired<Partial<ClientBuilderOptions>, 'locale'>
+>
+
+export type AccountInfoOptions<ClientOptions extends AllowedClientBuilderOptions> = WithClientBuilderOptions<
+  ClientOptions,
+  MakeRequired<ClientBuilderOptions, 'bearer_token'>
 >
 
 export type CreditCardsListOptions = WithCommonOptions<{

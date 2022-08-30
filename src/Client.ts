@@ -13,7 +13,6 @@ import {
   Vendors,
   Wishlists
 } from './endpoints'
-import { EndpointOptions } from './Http'
 import { AllowedClientBuilderOptions, DefaultBuilderOptions } from './interfaces/ClientBuilderOptions'
 import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/ClientConfig'
 import { Currency } from './interfaces/Currency'
@@ -38,8 +37,7 @@ class Client<ClientOptions extends AllowedClientBuilderOptions = DefaultBuilderO
 
   protected host: string
   protected fetcher: Fetcher
-
-  private config: IClientConfig
+  protected config: IClientConfig
 
   constructor(customOptions: IClientConfig) {
     const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
@@ -49,6 +47,7 @@ class Client<ClientOptions extends AllowedClientBuilderOptions = DefaultBuilderO
     }
 
     this.config = { ...defaultOptions, ...customOptions }
+    this.host = this.config.host
 
     const fetcherOptions: CreateFetcherConfig = { host: this.config.host }
 
@@ -61,7 +60,20 @@ class Client<ClientOptions extends AllowedClientBuilderOptions = DefaultBuilderO
       locale: this.config.locale,
       currency: this.config.currency
     }
-    this.addEndpoints(endpointOptions)
+
+    this.account = new Account(endpointOptions)
+    this.authentication = new Authentication(endpointOptions)
+    this.cart = new Cart(endpointOptions)
+    this.checkout = new Checkout(endpointOptions)
+    this.countries = new Countries(endpointOptions)
+    this.digitalAssets = new DigitalAssets(endpointOptions)
+    this.menus = new Menus(endpointOptions)
+    this.order = new Order(endpointOptions)
+    this.pages = new Pages(endpointOptions)
+    this.products = new Products(endpointOptions)
+    this.taxons = new Taxons(endpointOptions)
+    this.vendors = new Vendors(endpointOptions)
+    this.wishlists = new Wishlists(endpointOptions)
   }
 
   public withOrderToken(order_token: OrderToken) {
@@ -80,78 +92,10 @@ class Client<ClientOptions extends AllowedClientBuilderOptions = DefaultBuilderO
     return this.builderInstance<SetProperty<ClientOptions, 'currency', true>>({ currency })
   }
 
-  protected builderInstance<NewClientInstanceType extends AllowedClientBuilderOptions>(
+  protected builderInstance<T extends AllowedClientBuilderOptions = ClientOptions>(
     config: Partial<IClientConfig> = {}
-  ) {
-    return new Client<NewClientInstanceType>({ ...this.config, ...config })
-  }
-
-  protected addEndpoints(options: EndpointOptions): void {
-    this.account = this.makeAccount(options)
-    this.authentication = this.makeAuthentication(options)
-    this.cart = this.makeCart(options)
-    this.checkout = this.makeCheckout(options)
-    this.countries = this.makeCountries(options)
-    this.digitalAssets = this.makeDigitalAssets(options)
-    this.menus = this.makeMenus(options)
-    this.order = this.makeOrder(options)
-    this.pages = this.makePages(options)
-    this.products = this.makeProducts(options)
-    this.taxons = this.makeTaxons(options)
-    this.vendors = this.makeVendors(options)
-    this.wishlists = this.makeWishlists(options)
-  }
-
-  protected makeAccount(options: EndpointOptions): Account<ClientOptions> {
-    return new Account<ClientOptions>(options)
-  }
-
-  protected makeAuthentication(options: EndpointOptions): Authentication {
-    return new Authentication(options)
-  }
-
-  protected makeCart(options: EndpointOptions): Cart {
-    return new Cart(options)
-  }
-
-  protected makeCheckout(options: EndpointOptions): Checkout {
-    return new Checkout(options)
-  }
-
-  protected makeCountries(options: EndpointOptions): Countries {
-    return new Countries(options)
-  }
-
-  protected makeOrder(options: EndpointOptions): Order {
-    return new Order(options)
-  }
-
-  protected makePages(options: EndpointOptions): Pages {
-    return new Pages(options)
-  }
-
-  protected makeProducts(options: EndpointOptions): Products {
-    return new Products(options)
-  }
-
-  protected makeTaxons(options: EndpointOptions): Taxons {
-    return new Taxons(options)
-  }
-
-  protected makeDigitalAssets(options: EndpointOptions): DigitalAssets {
-    return new DigitalAssets(options)
-  }
-
-  protected makeMenus(options: EndpointOptions): Menus {
-    return new Menus(options)
-  }
-
-  protected makeVendors(options: EndpointOptions): Vendors {
-    return new Vendors(options)
-  }
-
-  protected makeWishlists(options: EndpointOptions): Wishlists {
-    return new Wishlists(options)
+  ): Client<T> {
+    return new Client<T>({ ...this.config, ...config })
   }
 }
 
