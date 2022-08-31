@@ -13,8 +13,7 @@ const endpoints = {
   cartEmptyPath: (): string => `${storefrontPath}/cart/empty`,
   cartSetItemQuantity: (): string => `${storefrontPath}/cart/set_quantity`,
   cartApplyCodePath: (): string => `${storefrontPath}/cart/apply_coupon_code`,
-  cartRemoveCodePath: (code?: string): string =>
-    `${storefrontPath}/cart/remove_coupon_code/${encodeURIComponent(code)}`,
+  cartRemoveCodePath: (code?: string): string => `${storefrontPath}/cart/remove_coupon_code/${encodeURIComponent(code || '')}`,
   cartRemoveAllCoupons: (): string => `${storefrontPath}/cart/remove_coupon_code`,
   /**
    * @deprecated Use {@link cartEstimateShippingRatesPath} instead.
