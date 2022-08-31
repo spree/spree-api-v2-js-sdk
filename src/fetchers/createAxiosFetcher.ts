@@ -36,7 +36,7 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
             payload = { params }
         }
 
-        let responseType: string
+        let responseType: string | undefined
 
         const isBrowser = RUNTIME_TYPE === 'browser'
 
