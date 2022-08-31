@@ -7,7 +7,7 @@ import {
   SpreeSDKError
 } from './errors'
 import FetchError from './errors/FetchError'
-import { isFetchError } from './helpers/isFetchError'
+import { isFetchError } from './helpers/typeguards/isFetchError'
 import * as result from './helpers/result'
 import { ClientBuilderOptions } from './interfaces/ClientBuilderOptions'
 import type { Fetcher } from './interfaces/ClientConfig'
