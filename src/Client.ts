@@ -13,10 +13,15 @@ import {
   Vendors,
   Wishlists
 } from './endpoints'
+import { AllowedClientBuilderOptions, DefaultBuilderOptions } from './interfaces/ClientBuilderOptions'
 import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/ClientConfig'
+import { Currency } from './interfaces/Currency'
+import { Locale } from './interfaces/Locale'
+import { SetProperty } from './interfaces/SetProperty'
+import { BearerToken, OrderToken } from './interfaces/Token'
 
-class Client {
-  public account: Account
+class Client<ClientOptions extends AllowedClientBuilderOptions = DefaultBuilderOptions> {
+  public account: Account<ClientOptions>
   public authentication: Authentication
   public cart: Cart
   public checkout: Checkout
@@ -32,6 +37,7 @@ class Client {
 
   protected host: string
   protected fetcher: Fetcher
+  protected config: IClientConfig
 
   constructor(customOptions: IClientConfig) {
     const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
@@ -40,84 +46,56 @@ class Client {
       host: spreeHostEnvironmentValue || 'http://localhost:3000/'
     }
 
-    const options: IClientConfig = {
-      ...defaultOptions,
-      ...customOptions
+    this.config = { ...defaultOptions, ...customOptions }
+    this.host = this.config.host
+
+    const fetcherOptions: CreateFetcherConfig = { host: this.config.host }
+
+    this.fetcher = this.config.createFetcher(fetcherOptions)
+
+    const endpointOptions = {
+      fetcher: this.fetcher,
+      bearer_token: this.config.bearer_token,
+      order_token: this.config.order_token,
+      locale: this.config.locale,
+      currency: this.config.currency
     }
 
-    const fetcherOptions: CreateFetcherConfig = { host: options.host }
-
-    this.fetcher = options.createFetcher(fetcherOptions)
-
-    this.addEndpoints()
+    this.account = new Account(endpointOptions)
+    this.authentication = new Authentication(endpointOptions)
+    this.cart = new Cart(endpointOptions)
+    this.checkout = new Checkout(endpointOptions)
+    this.countries = new Countries(endpointOptions)
+    this.digitalAssets = new DigitalAssets(endpointOptions)
+    this.menus = new Menus(endpointOptions)
+    this.order = new Order(endpointOptions)
+    this.pages = new Pages(endpointOptions)
+    this.products = new Products(endpointOptions)
+    this.taxons = new Taxons(endpointOptions)
+    this.vendors = new Vendors(endpointOptions)
+    this.wishlists = new Wishlists(endpointOptions)
   }
 
-  protected addEndpoints(): void {
-    this.account = this.makeAccount()
-    this.authentication = this.makeAuthentication()
-    this.cart = this.makeCart()
-    this.checkout = this.makeCheckout()
-    this.countries = this.makeCountries()
-    this.digitalAssets = this.makeDigitalAssets()
-    this.menus = this.makeMenus()
-    this.order = this.makeOrder()
-    this.pages = this.makePages()
-    this.products = this.makeProducts()
-    this.taxons = this.makeTaxons()
-    this.vendors = this.makeVendors()
-    this.wishlists = this.makeWishlists()
+  public withOrderToken(order_token: OrderToken) {
+    return this.builderInstance<SetProperty<ClientOptions, 'order_token', true>>({ order_token })
   }
 
-  protected makeAccount(): Account {
-    return new Account({ fetcher: this.fetcher })
+  public withBearerToken(bearer_token: BearerToken) {
+    return this.builderInstance<SetProperty<ClientOptions, 'bearer_token', true>>({ bearer_token })
   }
 
-  protected makeAuthentication(): Authentication {
-    return new Authentication({ fetcher: this.fetcher })
+  public withLocale(locale: Locale) {
+    return this.builderInstance<SetProperty<ClientOptions, 'locale', true>>({ locale })
   }
 
-  protected makeCart(): Cart {
-    return new Cart({ fetcher: this.fetcher })
+  public withCurrency(currency: Currency) {
+    return this.builderInstance<SetProperty<ClientOptions, 'currency', true>>({ currency })
   }
 
-  protected makeCheckout(): Checkout {
-    return new Checkout({ fetcher: this.fetcher })
-  }
-
-  protected makeCountries(): Countries {
-    return new Countries({ fetcher: this.fetcher })
-  }
-
-  protected makeOrder(): Order {
-    return new Order({ fetcher: this.fetcher })
-  }
-
-  protected makePages(): Pages {
-    return new Pages({ fetcher: this.fetcher })
-  }
-
-  protected makeProducts(): Products {
-    return new Products({ fetcher: this.fetcher })
-  }
-
-  protected makeTaxons(): Taxons {
-    return new Taxons({ fetcher: this.fetcher })
-  }
-
-  protected makeDigitalAssets(): DigitalAssets {
-    return new DigitalAssets({ fetcher: this.fetcher })
-  }
-
-  protected makeMenus(): Menus {
-    return new Menus({ fetcher: this.fetcher })
-  }
-
-  protected makeVendors(): Vendors {
-    return new Vendors({ fetcher: this.fetcher })
-  }
-
-  protected makeWishlists(): Wishlists {
-    return new Wishlists({ fetcher: this.fetcher })
+  protected builderInstance<T extends AllowedClientBuilderOptions = ClientOptions>(
+    config: Partial<IClientConfig> = {}
+  ): Client<T> {
+    return new Client<T>({ ...this.config, ...config })
   }
 }
 

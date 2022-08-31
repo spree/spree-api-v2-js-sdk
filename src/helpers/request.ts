@@ -10,7 +10,7 @@ const isBuffer = (obj) => {
   return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj))
 }
 
-const isNonNullishPrimitive = (v) =>
+const isNonNullishPrimitive = (v: unknown) =>
   typeof v === 'string' ||
   typeof v === 'number' ||
   typeof v === 'boolean' ||
@@ -18,7 +18,7 @@ const isNonNullishPrimitive = (v) =>
   typeof v === 'bigint'
 
 const hexTable = (() => {
-  const array = []
+  const array: string[] = []
 
   for (let i = 0; i < 256; ++i) {
     array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase())
@@ -125,6 +125,10 @@ const stringify = (source: unknown, prefix: string) => {
   const values = []
 
   if (typeof source === 'undefined') {
+    return values
+  }
+
+  if (source === null || typeof source !== 'object') {
     return values
   }
 

@@ -27,8 +27,10 @@ import type {
   ShowAddressOptions,
   CreateAddressOptions,
   RemoveAddressOptions,
-  UpdateAddressOptions
+  UpdateAddressOptions,
+  AccountContractTestOptions
 } from '../interfaces/Account'
+import { AllowedClientBuilderOptions } from '../interfaces/ClientBuilderOptions'
 import type { ICreditCard, ICreditCardResult, ICreditCards, ICreditCardsResult } from '../interfaces/CreditCard'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import type { IOrder, IOrderResult, IOrders, IOrdersResult } from '../interfaces/Order'
@@ -36,8 +38,12 @@ import type { IQuery } from '../interfaces/Query'
 import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
-export default class Account extends Http {
-  public async accountInfo(options: AccountInfoOptions): Promise<IAccountResult>
+export default class Account<ClientOptions extends AllowedClientBuilderOptions> extends Http {
+  public async contractTest(options: AccountContractTestOptions<ClientOptions>): Promise<string> {
+    return options.locale ?? 'asd'
+  }
+
+  public async accountInfo(options: AccountInfoOptions<ClientOptions>): Promise<IAccountResult>
   /**
    * @deprecated Use the combined options signature instead.
    */
