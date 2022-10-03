@@ -69,13 +69,14 @@ export default class Http {
   }
 
   protected processError(error: Error): SpreeSDKError {
-    if (error instanceof FetchError) {
-      if (error.response) {
+    if ((error as FetchError)?.response) {
+      const fetchError = (error as FetchError)
+      if (fetchError.response) {
         // Error from Spree outside HTTP 2xx codes
         return this.processSpreeError(error)
       }
 
-      if (error.request) {
+      if (fetchError.request) {
         // No response received from Spree
         return new NoResponseError()
       }
