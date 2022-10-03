@@ -18,6 +18,9 @@ const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
     headers: { 'Content-Type': 'application/json' },
     paramsSerializer: (params) => objectToQuerystring(params)
   })
+  if (fetcherOptions.beforeRequestFunction){
+    fetcherOptions?.beforeRequestFunction(axios)
+  }
 
   return {
     fetch: async (fetchOptions) => {

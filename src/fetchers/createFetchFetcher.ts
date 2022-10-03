@@ -8,6 +8,10 @@ const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptio
 
   const { host, fetch, requestConstructor } = fetcherOptions
 
+  if (fetcherOptions.beforeRequestFunction){
+    fetcherOptions?.beforeRequestFunction()
+  }
+
   return {
     fetch: async (fetchOptions) => {
       try {

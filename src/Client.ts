@@ -45,7 +45,7 @@ class Client {
       ...customOptions
     }
 
-    const fetcherOptions: CreateFetcherConfig = { host: options.host }
+    const fetcherOptions: CreateFetcherConfig = { host: options.host, beforeRequestFunction: options?.beforeRequestFunction }
 
     this.fetcher = options.createFetcher(fetcherOptions)
 
