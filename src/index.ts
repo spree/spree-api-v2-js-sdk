@@ -7,5 +7,7 @@ import Http from './Http'
 import routes, { storefrontPath } from './routes'
 import * as endpoints from './endpoints'
 import makeClient from './makeClient'
+import createAxiosFetcher from './fetchers/createAxiosFetcher'
+import createFetchFetcher from './fetchers/createFetchFetcher'
 
-export { Client, Http, result, errors, makeClient, endpoints, routes, storefrontPath, jsonApi, request }
+export { Client, Http, result, errors, makeClient, createAxiosFetcher, createFetchFetcher, endpoints, routes, storefrontPath, jsonApi, request }
