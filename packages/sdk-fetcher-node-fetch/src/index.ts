@@ -1,7 +1,9 @@
-import FetchError from '../errors/FetchError'
-import { objectToQuerystring } from '../helpers/request'
-import type { CreateFetcher } from '../interfaces/ClientConfig'
-import type { CreateCustomizedFetchFetcher } from '../interfaces/CreateCustomizedFetchFetcher'
+import { errors, request } from '@spree/storefront-api-v2-sdk'
+import type { CreateFetcher } from '@spree/storefront-api-v2-sdk'
+import type { CreateCustomizedFetchFetcher } from '@spree/storefront-api-v2-sdk'
+
+const { FetchError } = errors
+const { objectToQuerystring } = request
 
 const createCustomizedFetchFetcher: CreateCustomizedFetchFetcher = (fetcherOptions) => {
   const sharedHeaders = { 'Content-Type': 'application/json' }

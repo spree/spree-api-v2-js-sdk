@@ -6,3 +6,10 @@ yarn-error.log
 /.env
 /types
 *.tgz
+
+/packages/sdk-core/dist
+/packages/sdk-core/types
+/packages/sdk-fetcher-axios/dist
+/packages/sdk-fetcher-axios/types
+/packages/sdk-fetcher-node-fetch/dist
+/packages/sdk-fetcher-node-fetch/types

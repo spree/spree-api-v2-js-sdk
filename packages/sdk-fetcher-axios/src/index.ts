@@ -1,7 +1,9 @@
 import type { AxiosInstance } from 'axios'
-import type { CreateFetcher } from '../interfaces/ClientConfig'
-import FetchError from '../errors/FetchError'
-import { objectToQuerystring } from '../helpers/request'
+import { errors, request } from '@spree/storefront-api-v2-sdk'
+import type { CreateFetcher } from '@spree/storefront-api-v2-sdk'
+
+const { FetchError } = errors
+const { objectToQuerystring } = request
 
 const createAxiosFetcher: CreateFetcher = (fetcherOptions) => {
   let Axios
