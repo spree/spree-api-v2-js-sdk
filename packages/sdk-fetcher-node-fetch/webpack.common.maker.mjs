@@ -2,8 +2,8 @@ import webpack from 'webpack'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import nodeExternals from 'webpack-node-externals'
-import ProgressBar from './webpack-plugins/ProgressBar.mjs'
-import DeleteBeforeRun from './webpack-plugins/DeleteBeforeRun.mjs'
+import ProgressBar from './../../webpack-plugins/ProgressBar.mjs'
+import DeleteBeforeRun from './../../webpack-plugins/DeleteBeforeRun.mjs'
 
 // Redefining __dirname is a temporary solution, due to https://github.com/nodejs/help/issues/2907
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -22,21 +22,7 @@ export default ({ typeScriptConfigFilePath }) => ({
     index: {
       import: resolve(srcDirectoryPath, 'index.ts'),
       library: {
-        name: 'SpreeSDK',
-        type: 'umd'
-      }
-    },
-    createFetchFetcher: {
-      import: resolve(srcDirectoryPath, 'fetchers/createFetchFetcher.ts'),
-      library: {
         name: ['SpreeSDK', 'createFetchFetcher'],
-        type: 'umd'
-      }
-    },
-    createAxiosFetcher: {
-      import: resolve(srcDirectoryPath, 'fetchers/createAxiosFetcher.ts'),
-      library: {
-        name: ['SpreeSDK', 'createAxiosFetcher'],
         type: 'umd'
       }
     }
