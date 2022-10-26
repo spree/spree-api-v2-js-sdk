@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@spree/storefront-api-v2-sdk": "file:/sdk/storefront-api-v2-sdk.tgz",
+    "@spree/storefront-api-v2-sdk-axios": "file:/sdk/storefront-api-v2-sdk-axios.tgz",
+    "@spree/storefront-api-v2-sdk-node-fetch": "file:/sdk/storefront-api-v2-sdk-node-fetch.tgz",
     "axios": "^0.25.0",
     "node-fetch": "^2.6.7"
   }

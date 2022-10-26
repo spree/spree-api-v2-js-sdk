@@ -1,8 +1,8 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import sdk from '@spree/storefront-api-v2-sdk'
-import createAxiosFetcher from '@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher.js'
-import createFetchFetcher from '@spree/storefront-api-v2-sdk/dist/server/createFetchFetcher.js'
+import createAxiosFetcher from '@spree/storefront-api-v2-sdk-axios/dist/server/index.js'
+import createFetchFetcher from '@spree/storefront-api-v2-sdk-node-fetch/dist/server/index.js'
 
 const { makeClient, result } = sdk
 
