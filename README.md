@@ -109,16 +109,19 @@ Install the NPM package:
 npm install --save @spree/storefront-api-v2-sdk
 ```
 
-Install the [Axios][8] HTTP client:
+Install the [Axios][8] HTTP client and the Axios fetcher to be able to use it:
 
 ```
 npm install --save axios
+```
+```
+npm install --save @spree/storefront-api-v2-sdk-axios
 ```
 
 Create a client and use it to call Spree:
 
 ```js
-const createAxiosFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher').default
+const createAxiosFetcher = require('@spree/storefront-api-v2-sdk-axios/dist/server/index').default
 const { makeClient } = require('@spree/storefront-api-v2-sdk')
 
 const client = makeClient({
@@ -2224,7 +2227,7 @@ In TypeScript, you can import Spree SDK as follows:
 ```js
 // Set `"esModuleInterop": true` in tsconfig.json
 
-import createAxiosFetcher from '@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher'
+import createAxiosFetcher from '@spree/storefront-api-v2-sdk-axios/dist/server'
 import { makeClient } from '@spree/storefront-api-v2-sdk'
 ```
 
@@ -2235,9 +2238,9 @@ TypeScript definitions are included in the module and should be automatically us
 The SDK is hosted by the [UNPKG][7] CDN. [Follow this link to download version 5.0.0][5] and [this link to download the newest version][6]. Include the SDK on a website like so:
 
 ```html
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@6.0.0/dist/client/index.js"></script>
 <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createAxiosFetcher.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk-axios@1.0.0/dist/client/index.js"></script>
 
 <script>
   const client = SpreeSDK.makeClient({
@@ -2254,16 +2257,19 @@ Spree SDK does not come bundled with a HTTP client. A HTTP client may have to be
 
 **Option A - RECOMMENDED: Spree SDK in NodeJS using Axios**
 
-To use Spree SDK with Axios in NodeJS, install Axios using NPM:
+To use Spree SDK with Axios in NodeJS, install Axios and Axios fetcher using NPM:
 
 ```
 npm install axios
+```
+```
+npm install @spree/storefront-api-v2-sdk-axios
 ```
 
 Set the fetcher to axios when creating the Spree SDK client:
 
 ```js
-const createAxiosFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher').default
+const createAxiosFetcher = require('@spree/storefront-api-v2-sdk-axios/dist/server/index').default
 const { makeClient } = require('@spree/storefront-api-v2-sdk')
 
 const client = makeClient({
@@ -2277,9 +2283,9 @@ const client = makeClient({
 To use Spree SDK with Axios in the browser, include axios as a `<script>` tag before using the SDK:
 
 ```html
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@6.0.0/dist/client/index.js"></script>
 <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createAxiosFetcher.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk-axios@1.0.0/dist/client/index.js"></script>
 
 <script>
   const client = SpreeSDK.makeClient({
@@ -2298,11 +2304,14 @@ Another supported HTTP client is [fetch][9]. It can be setup in NodeJS as follow
 ```
 npm install node-fetch
 ```
+```
+npm install @spree/storefront-api-v2-sdk-node-fetch
+```
 
 Set the fetcher to fetch:
 
 ```js
-const createFetchFetcher = require('@spree/storefront-api-v2-sdk/dist/server/createFetchFetcher').default
+const createFetchFetcher = require('@spree/storefront-api-v2-sdk-node-fetch/dist/server/index').default
 const { makeClient } = require('@spree/storefront-api-v2-sdk')
 
 const client = makeClient({
@@ -2316,8 +2325,8 @@ const client = makeClient({
 Modern web browsers include fetch natively. To use Spree SDK with native fetch, it's enough to set `fetcherType` to `'fetch'` when creating the Spree SDK Client:
 
 ```html
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/index.js"></script>
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@5.0.0/dist/client/createFetchFetcher.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk@6.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/@spree/storefront-api-v2-sdk-node-fetch@1.0.0/dist/client/index.js"></script>
 
 <script>
   const client = SpreeSDK.makeClient({
