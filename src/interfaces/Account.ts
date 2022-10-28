@@ -115,10 +115,10 @@ export type CreateOptions = WithCommonOptions<
       first_name?: string
       last_name?: string
       public_metadata?: {
-        user_segment?: string
+        [key: string]: string
       }
       private_metadata?: {
-        has_abandoned_cart?: boolean
+        [key: string]: string
       }
     }
   }
@@ -141,6 +141,12 @@ export type UpdateOptions = WithCommonOptions<
       last_name?: string
       bill_address_id?: string
       ship_address_id?: string
+      public_metadata?: {
+        [key: string]: string
+      }
+      private_metadata?: {
+        [key: string]: string
+      }
     }
   }
 >
