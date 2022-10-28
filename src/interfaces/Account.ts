@@ -112,6 +112,14 @@ export type CreateOptions = WithCommonOptions<
       email: string
       password: string
       password_confirmation: string
+      first_name?: string
+      last_name?: string
+      public_metadata?: {
+        [key: string]: string
+      }
+      private_metadata?: {
+        [key: string]: string
+      }
     }
   }
 >
@@ -127,8 +135,18 @@ export type UpdateOptions = WithCommonOptions<
   {
     user: {
       email: string
-      password: string
-      password_confirmation: string
+      password?: string
+      password_confirmation?: string
+      first_name?: string
+      last_name?: string
+      bill_address_id?: string
+      ship_address_id?: string
+      public_metadata?: {
+        [key: string]: string
+      }
+      private_metadata?: {
+        [key: string]: string
+      }
     }
   }
 >
