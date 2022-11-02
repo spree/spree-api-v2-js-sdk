@@ -4,8 +4,11 @@ WORKDIR /sdk
 
 COPY . /sdk
 
-RUN npm install
-RUN npm run build
+RUN npm install --ignore-scripts
+RUN npm run build-core
+RUN npm link
+RUN npm link @spree/storefront-api-v2-sdk
+RUN npm run build-fetchers
 RUN npm pack
 
 FROM alpine

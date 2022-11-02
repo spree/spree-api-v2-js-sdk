@@ -17,6 +17,9 @@ const config = {
   output: {
     path: clientDistDirectoryPath
   },
+  externals: {
+    '@spree/storefront-api-v2-sdk': 'SpreeSDK'
+  },
   plugins: [
     new webpack.DefinePlugin({
       RUNTIME_TYPE: "'browser'"

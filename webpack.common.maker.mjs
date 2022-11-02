@@ -10,6 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const baseDirectoryPath = __dirname
 const srcDirectoryPath = resolve(baseDirectoryPath, 'src')
 const { WatchIgnorePlugin } = webpack
+const buildType = process.env.BUILD_TYPE
 
 export default ({ typeScriptConfigFilePath }) => ({
   context: baseDirectoryPath,
@@ -19,27 +20,35 @@ export default ({ typeScriptConfigFilePath }) => ({
     new WatchIgnorePlugin({ paths: [resolve(baseDirectoryPath, 'types')] })
   ],
   entry: {
-    index: {
-      import: resolve(srcDirectoryPath, 'index.ts'),
-      library: {
-        name: 'SpreeSDK',
-        type: 'umd'
-      }
-    },
-    createFetchFetcher: {
-      import: resolve(srcDirectoryPath, 'fetchers/createFetchFetcher.ts'),
-      library: {
-        name: ['SpreeSDK', 'createFetchFetcher'],
-        type: 'umd'
-      }
-    },
-    createAxiosFetcher: {
-      import: resolve(srcDirectoryPath, 'fetchers/createAxiosFetcher.ts'),
-      library: {
-        name: ['SpreeSDK', 'createAxiosFetcher'],
-        type: 'umd'
-      }
-    }
+    ...(buildType !== 'core'
+      ? null
+      : {
+          index: {
+            import: resolve(srcDirectoryPath, 'index.ts'),
+            library: {
+              name: 'SpreeSDK',
+              type: 'umd'
+            }
+          }
+        }),
+    ...(buildType !== 'fetchers'
+      ? null
+      : {
+          createFetchFetcher: {
+            import: resolve(srcDirectoryPath, 'fetchers/createFetchFetcher.ts'),
+            library: {
+              name: ['SpreeSDK', 'createFetchFetcher'],
+              type: 'umd'
+            }
+          },
+          createAxiosFetcher: {
+            import: resolve(srcDirectoryPath, 'fetchers/createAxiosFetcher.ts'),
+            library: {
+              name: ['SpreeSDK', 'createAxiosFetcher'],
+              type: 'umd'
+            }
+          }
+        })
   },
   output: {
     filename: '[name].js'
@@ -73,5 +82,5 @@ export default ({ typeScriptConfigFilePath }) => ({
     symlinks: false,
     extensions: ['.tsx', '.ts', '.js']
   },
-  externals: [nodeExternals({ modulesFromFile: true })]
+  externals: [nodeExternals()]
 })
