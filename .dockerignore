@@ -1,4 +1,10 @@
 **/node_modules
-dist
 types
 *.tgz
+
+packages/sdk-core/dist
+packages/sdk-core/types
+packages/sdk-fetcher/dist
+packages/sdk-fetcher/types
+packages/sdk-fetcher-node-fetch/dist
+packages/sdk-fetcher-node-fetch/types

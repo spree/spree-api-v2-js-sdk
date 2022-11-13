@@ -2,8 +2,8 @@
 // in the project's root directory.
 import { Client, makeClient, result, jsonApi } from '@spree/storefront-api-v2-sdk'
 import type { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
-import createAxiosFetcher from '@spree/storefront-api-v2-sdk/dist/server/createAxiosFetcher'
-import createFetchFetcher from '@spree/storefront-api-v2-sdk/dist/server/createFetchFetcher'
+import createAxiosFetcher from '@spree/storefront-api-v2-sdk-axios/dist/server'
+import createFetchFetcher from '@spree/storefront-api-v2-sdk-node-fetch/dist/server'
 
 const createTests = function () {
   it('completes guest order', function () {
@@ -205,10 +205,10 @@ const createClientVersionInTheBrowserTests = ({
 
           switch (fetcherType) {
             case 'axios':
-              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/createAxiosFetcher.js'
+              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk-axios/dist/client/index.js'
               break
             case 'fetch':
-              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk/dist/client/createFetchFetcher.js'
+              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk-node-fetch/dist/client/index.js'
               break
             default:
               throw new Error(`${fetcherType} not recognized.`)

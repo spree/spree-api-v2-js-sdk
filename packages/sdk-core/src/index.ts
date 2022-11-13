@@ -9,3 +9,5 @@ import * as endpoints from './endpoints'
 import makeClient from './makeClient'
 
 export { Client, Http, result, errors, makeClient, endpoints, routes, storefrontPath, jsonApi, request }
+
+export * from './interfaces'
