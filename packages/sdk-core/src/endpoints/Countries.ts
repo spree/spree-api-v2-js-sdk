@@ -13,14 +13,48 @@ import type { IQuery } from '../interfaces/Query'
 import routes from '../routes'
 
 export default class Countries extends Http {
+  /**
+   * Returns a list of all countries. See [api docs](https://api.spreecommerce.org/docs/api-v2/ca56911efbaab-list-all-countries).
+   * 
+   * **Success response schema:** [Success schema](../pages/response-schema.html#success-schema)
+   * 
+   * **Failure response schema:** [Error schema](../pages/response-schema.html#error-schema)
+   * 
+   * **Example:**
+   * ```ts
+   * const countries = await client.countries.list()
+   * ```
+   */
   public async list(options?: ListOptions): Promise<ICountriesResult> {
     const { token, params } = squashAndPreparePositionalArguments([options || {}], [])
 
     return await this.spreeResponse<ICountries>('get', routes.countriesPath(), token, params)
   }
 
+  /**
+   * Returns the details of a specific country. See [api docs](https://api.spreecommerce.org/docs/api-v2/5f5116adb3113-retrieve-a-country).
+   * 
+   * **Options schema:**
+   * ```ts
+   * interface options {
+   *   iso: string
+   * }
+   * ```
+   * 
+   * **Success response schema:** [Success schema](../pages/response-schema.html#success-schema)
+   * 
+   * **Failure response schema:** [Error schema](../pages/response-schema.html#error-schema)
+   * 
+   * **Example:**
+   * ```ts
+   * const country = await client.countries.show({
+   *   iso: 'USA'
+   * })
+   * ```
+   */
   public async show(options: ShowOptions): Promise<ICountryResult>
   /**
+   * @hidden
    * @deprecated Use the combined options signature instead.
    */
   public async show(iso: string, params: IQuery): Promise<ICountryResult>
@@ -34,8 +68,21 @@ export default class Countries extends Http {
     return await this.spreeResponse<ICountry>('get', routes.countryPath(iso), token, params)
   }
 
+  /**
+   * Returns the default country for the current store. By default this will be the US. See [api docs](https://api.spreecommerce.org/docs/api-v2/7cf807c85c035-get-default-country).
+   * 
+   * **Success response schema:** [Success schema](../pages/response-schema.html#success-schema)
+   * 
+   * **Failure response schema:** [Error schema](../pages/response-schema.html#error-schema)
+   * 
+   * **Example:**
+   * ```ts
+   * const countries = await client.countries.default()
+   * ```
+   */
   public async default(options?: DefaultOptions): Promise<ICountryResult>
   /**
+   * @hidden
    * @deprecated Use the combined options signature instead.
    */
   public async default(params: IQuery): Promise<ICountryResult>

@@ -27,6 +27,9 @@
   "sideEffects": false,
   "peerDependencies": {
     "node-fetch": "^2.6.6"
+  },
+  "typedoc": {
+    "entryPoint": "./src/index.ts"
   }
 }
   

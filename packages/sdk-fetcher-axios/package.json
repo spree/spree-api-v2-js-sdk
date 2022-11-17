@@ -27,5 +27,8 @@
   "sideEffects": false,
   "peerDependencies": {
     "axios": "^0.25.0"
+  },
+  "typedoc": {
+    "entryPoint": "./src/index.ts"
   }
 }
