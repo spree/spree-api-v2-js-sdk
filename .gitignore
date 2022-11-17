@@ -7,6 +7,7 @@ yarn-error.log
 /types
 *.tgz
 
+/docs
 /packages/sdk-core/dist
 /packages/sdk-core/types
 /packages/sdk-fetcher-axios/dist

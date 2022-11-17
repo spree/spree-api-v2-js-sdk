@@ -6,8 +6,33 @@ import type { IToken } from '../interfaces/Token'
 import routes from '../routes'
 
 export default class Order extends Http {
+  /**
+   * Returns a placed Order.
+   * 
+   * **Required token:** [Order token](../pages/tokens.html#order-token)
+   * 
+   * **Options schema:**
+   * ```ts
+   * interface options {
+   *   order_number: string
+   * }
+   * ```
+   * 
+   * **Success response schema:** [Success schema](../pages/response-schema.html#success-schema)
+   * 
+   * **Failure response schema:** [Error schema](../pages/response-schema.html#error-schema)
+   * 
+   * **Example:**
+   * ```ts
+   * const response = await client.order.status({
+   *   order_token: '7381273269536713689562374856',
+   *   order_number: 'R653163382'
+   * })
+   * ```
+   */
   public async status(options: StatusOptions): Promise<IOrderResult>
   /**
+   * @hidden
    * @deprecated Use the combined options signature instead.
    */
   public async status(token: IToken, orderNumber: string, params?: IQuery): Promise<IOrderResult>

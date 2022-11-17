@@ -1,0 +1,41 @@
+{
+  "name": "Spree SDK packages",
+  "entryPointStrategy": "packages",
+  "entryPoints": [
+    "packages/sdk-core",
+    "packages/sdk-fetcher-node-fetch",
+    "packages/sdk-fetcher-axios"
+  ],
+  "out": "docs",
+  "sort": ["static-first"],
+  "disableSources": true,
+  "pluginPages": {
+    "pages": [
+      {
+        "title": "Spree SDK packages",
+        "moduleRoot": true,
+        "children": [
+          { "title": "Quick start", "source": "quick-start.md" },
+          { "title": "Checkout flow", "source": "checkout-flow.md" },
+          { "title": "Response schema", "source": "response-schema.md" },
+          { "title": "Tokens", "source": "tokens.md" },
+          { "title": "Helpers", "source": "helpers.md" },
+          { "title": "Alternative setups", "source": "alternative-setups.md" },
+          { "title": "Switching the fetcher", "source": "switching-the-fetcher.md" }
+        ]
+      },
+      {
+        "title": "@spree/storefront-api-v2-sdk",
+        "moduleRoot": true
+      },
+      {
+        "title": "@spree/storefront-api-v2-sdk-axios",
+        "moduleRoot": true
+      },
+      {
+        "title": "@spree/storefront-api-v2-sdk-node-fetch",
+        "moduleRoot": true
+      }
+    ]
+  }
+}

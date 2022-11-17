@@ -1,5 +1,5 @@
 {
-  "name": "@spree/storefront-api-sdk",
+  "name": "spree-storefront-api-sdk",
   "private": true,
   "description": "Node module to easily integrate your JavaScript or TypeScript application with Spree API V2. You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on",
   "scripts": {
@@ -12,7 +12,8 @@
     "pack:sdk-fetcher-fetch": "npm pack --workspace=@spree/storefront-api-v2-sdk-node-fetch --pack-destination=packages/sdk-fetcher-node-fetch",
     "pack": "npm run pack:sdk && npm run pack:sdk-fetcher-axios && npm run pack:sdk-fetcher-fetch",
     "lint": "eslint --ext .ts .",
-    "test": "./test.sh"
+    "test": "./test.sh",
+    "docs": "typedoc"
   },
   "repository": {
     "type": "git",
@@ -32,5 +33,9 @@
   ],
   "dependencies": {
     "npm": "^8.19.2"
+  },
+  "devDependencies": {
+    "typedoc": "^0.23.16",
+    "@knodes/typedoc-plugin-pages": "^0.23.1"
   }
 }

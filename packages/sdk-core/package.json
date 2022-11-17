@@ -61,5 +61,8 @@
     "axios": {
       "optional": true
     }
+  },
+  "typedoc": {
+    "entryPoint": "./src/endpoints/index.ts"
   }
 }
