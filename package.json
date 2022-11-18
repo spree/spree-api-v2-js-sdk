@@ -4,10 +4,12 @@
   "description": "Node module to easily integrate your JavaScript or TypeScript application with Spree API V2. You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on",
   "scripts": {
     "build:sdk": "npm run build --workspace=@spree/storefront-api-v2-sdk",
+    "build:sdk-platform": "npm run build --workspace=@spree/platform-api-v2-sdk",
     "build:sdk-fetcher-axios": "npm run build --workspace=@spree/storefront-api-v2-sdk-axios",
     "build:sdk-fetcher-fetch": "npm run build --workspace=@spree/storefront-api-v2-sdk-node-fetch",
     "build": "npm run build:sdk && npm run build:sdk-fetcher-axios && npm run build:sdk-fetcher-fetch",
     "pack:sdk": "npm pack --workspace=@spree/storefront-api-v2-sdk --pack-destination=packages/sdk-core",
+    "pack:sdk-platform": "npm pack --workspace=@spree/platform-api-v2-sdk --pack-destination=packages/sdk-platform",
     "pack:sdk-fetcher-axios": "npm pack --workspace=@spree/storefront-api-v2-sdk-axios --pack-destination=packages/sdk-fetcher-axios",
     "pack:sdk-fetcher-fetch": "npm pack --workspace=@spree/storefront-api-v2-sdk-node-fetch --pack-destination=packages/sdk-fetcher-node-fetch",
     "pack": "npm run pack:sdk && npm run pack:sdk-fetcher-axios && npm run pack:sdk-fetcher-fetch",
@@ -28,6 +30,7 @@
   "sideEffects": false,
   "workspaces": [
     "packages/sdk-core",
+    "packages/sdk-platform",
     "packages/sdk-fetcher-axios",
     "packages/sdk-fetcher-node-fetch"
   ],

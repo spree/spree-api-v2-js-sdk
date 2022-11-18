@@ -3,6 +3,7 @@
   "entryPointStrategy": "packages",
   "entryPoints": [
     "packages/sdk-core",
+    "packages/sdk-platform",
     "packages/sdk-fetcher-node-fetch",
     "packages/sdk-fetcher-axios"
   ],
@@ -26,6 +27,10 @@
       },
       {
         "title": "@spree/storefront-api-v2-sdk",
+        "moduleRoot": true
+      },
+      {
+        "title": "@spree/platform-api-v2-sdk",
         "moduleRoot": true
       },
       {

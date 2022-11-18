@@ -10,6 +10,8 @@ yarn-error.log
 /docs
 /packages/sdk-core/dist
 /packages/sdk-core/types
+/packages/sdk-platform/dist
+/packages/sdk-platform/types
 /packages/sdk-fetcher-axios/dist
 /packages/sdk-fetcher-axios/types
 /packages/sdk-fetcher-node-fetch/dist
