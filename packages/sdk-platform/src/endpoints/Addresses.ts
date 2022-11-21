@@ -16,7 +16,7 @@ import routes from '../routes'
 
 export default class Addresses extends Http {
   /**
-   * Returns a list of addresses.
+   * Returns a list of addresses. See [api docs](https://api.spreecommerce.org/docs/api-v2/23cceb83e0232-return-a-list-of-addresses).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -38,7 +38,7 @@ export default class Addresses extends Http {
   }
 
   /**
-   * Returns a single address.
+   * Returns a single address. See [api docs](https://api.spreecommerce.org/docs/api-v2/458d751a9d816-return-an-address).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -61,7 +61,7 @@ export default class Addresses extends Http {
   }
 
   /**
-   * Creates new address and returns its attributes.
+   * Creates new address and returns its attributes. See [api docs](https://api.spreecommerce.org/docs/api-v2/121085ad184d9-create-an-address).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -99,7 +99,7 @@ export default class Addresses extends Http {
   }
 
   /**
-   * Update selected Address for the signed in User.
+   * Update selected Address for the signed in User. See [api docs](https://api.spreecommerce.org/docs/api-v2/c804b60ec6829-update-an-address).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -138,7 +138,7 @@ export default class Addresses extends Http {
   }
 
   /**
-   * This endpoint removes the specified address for the current user.
+   * This endpoint removes the specified address for the current user. See [api docs](https://api.spreecommerce.org/docs/api-v2/1695ae52cae63-delete-an-address).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 

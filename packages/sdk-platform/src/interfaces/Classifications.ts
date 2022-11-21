@@ -4,51 +4,38 @@ import type { ResultResponse } from './ResultResponse'
 import type { WithCommonOptions } from './WithCommonOptions'
 import type { IQuery } from './Query'
 
-interface AddressAttr {
-  country_id: string
-  state_id: string
-  state_name: string
-  address1: string
-  address2: string
-  city: string
-  zipcode: string
-  phone: string
-  alternative_phone: string
-  firstname: string
-  lastname: string
-  label: string
-  company: string
-  user_id: string
-  public_metadata?: {
-    [key: string]: string
-  }
-  private_metadata?: {
-    [key: string]: string
-  }
+interface ClassificationAttr {
+  position: number
+  created_at: string
+  updated_at: string
 }
 
-export interface AddressData extends JsonApiDocument {
+export interface ClassificationData extends JsonApiDocument {
   type: string
   id: string
-  attributes: AddressAttr
+  attributes: ClassificationAttr
   relationships: IRelationships
 }
 
-export interface AddressParams extends IQuery {
-  address: AddressAttr
+export interface ClassificationParams extends IQuery {
+  classification: {
+    product_id: string
+    taxon_id: string
+    position: number
+  }
 }
 
-export interface IAddress extends JsonApiSingleResponse {
-  data: AddressData
+export interface IClassification extends JsonApiSingleResponse {
+  data: ClassificationData
 }
 
-export interface IAddresses extends JsonApiListResponse {
-  data: AddressData[]
+export interface IClassifications extends JsonApiListResponse {
+  data: ClassificationData[]
 }
 
-export interface IAddressResult extends ResultResponse<IAddress> {}
+export interface IClassificationResult extends ResultResponse<IClassification> {}
 
-export interface IAddressesResult extends ResultResponse<IAddresses> {}
+export interface IClassificationsResult extends ResultResponse<IClassifications> {}
 
 export type ListOptions = WithCommonOptions<
   { suggestToken: true; onlyAccountToken: true; suggestQuery: true }
@@ -61,12 +48,12 @@ export type ShowOptions = WithCommonOptions<
 
 export type CreateOptions = WithCommonOptions<
   { suggestToken: true; onlyAccountToken: true; suggestQuery: true },
-  AddressParams
+  ClassificationParams
 >
 
 export type UpdateOptions = WithCommonOptions<
   { suggestToken: true; onlyAccountToken: true; suggestQuery: true },
-  AddressParams & { id: string }
+  ClassificationParams & { id: string }
 >
 
 export type RemoveOptions = WithCommonOptions<
