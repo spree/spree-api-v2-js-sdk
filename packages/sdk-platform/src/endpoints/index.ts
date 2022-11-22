@@ -10,6 +10,16 @@ import Items from './Items'
 import Menus from './Menus'
 import OptionTypes from './OptionTypes'
 import OptionValues from './OptionValues'
+import Orders from './Orders'
+import Payments from './Payments'
+import PaymentMethods from './PaymentMethods'
+import Products from './Products'
+import Promotions from './Promotions'
+import PromotionActions from './PromotionActions'
+import PromotionCategories from './PromotionCategories'
+import PromotionRules from './PromotionRules'
+import Roles from './Roles'
+import Shipments from './Shipments'
 
 export {
   Addresses,
@@ -23,5 +33,15 @@ export {
   Items,
   Menus,
   OptionTypes,
-  OptionValues
+  OptionValues,
+  Orders,
+  Payments,
+  PaymentMethods,
+  Products,
+  Promotions,
+  PromotionActions,
+  PromotionCategories,
+  PromotionRules,
+  Roles,
+  Shipments
 }

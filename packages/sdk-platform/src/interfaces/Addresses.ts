@@ -4,7 +4,7 @@ import type { ResultResponse } from './ResultResponse'
 import type { WithCommonOptions } from './WithCommonOptions'
 import type { IQuery } from './Query'
 
-interface AddressAttr {
+export interface AddressAttr {
   country_id: string
   state_id: string
   state_name: string

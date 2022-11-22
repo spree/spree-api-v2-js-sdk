@@ -1,22 +1,22 @@
 import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type {
-  IPage,
-  IPageResult,
-  IPages,
-  IPagesResult,
+  IPromotionAction,
+  IPromotionActionResult,
+  IPromotionActions,
+  IPromotionActionsResult,
   ListOptions,
   ShowOptions,
   CreateOptions,
   UpdateOptions,
   RemoveOptions
-} from '../interfaces/Pages'
+} from '../interfaces/PromotionActions'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import routes from '../routes'
 
-export default class Pages extends Http {
+export default class PromotionActions extends Http {
   /**
-   * Returns a list of all CMS Pages. See [api docs](https://api.spreecommerce.org/docs/api-v2/9ee28631b9fa8-return-a-list-of-cms-pages).
+   * Returns a list of all Promotion Actions. See [api docs](https://api.spreecommerce.org/docs/api-v2/8d5d37baa9e53-return-a-list-of-promotion-actions).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -26,19 +26,19 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.list({
+   * const response = await client.promotionActions.list({
    *   bearer_token: '7381273269536713689562374856'
    * })
    * ```
    */
-  public async list(options: ListOptions): Promise<IPagesResult> {
+  public async list(options: ListOptions): Promise<IPromotionActionsResult> {
     const { token, params } = squashAndPreparePositionalArguments([options], [])
 
-    return await this.spreeResponse<IPages>('get', routes.pagesPath(), token, params)
+    return await this.spreeResponse<IPromotionActions>('get', routes.promotionActionsPath(), token, params)
   }
 
   /**
-   * Returns a single CMS Page by its ID. See [api docs](https://api.spreecommerce.org/docs/api-v2/cb1999788ddd8-return-a-cms-page).
+   * Returns a single Promotion Action by its ID. See [api docs](https://api.spreecommerce.org/docs/api-v2/e155c99bd62e3-return-a-promotion-action).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -48,20 +48,20 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.show({
+   * const response = await client.promotionActions.show({
    *   bearer_token: '7381273269536713689562374856'
    *   id: '1'
    * })
    * ```
    */
-  public async show(options: ShowOptions): Promise<IPageResult> {
+  public async show(options: ShowOptions): Promise<IPromotionActionResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<IPage>('get', routes.pagePath(id), token, params)
+    return await this.spreeResponse<IPromotionAction>('get', routes.promotionActionPath(id), token, params)
   }
 
   /**
-   * Creates a new CMS Page and returns its attributes. See [api docs](https://api.spreecommerce.org/docs/api-v2/974134352bb37-create-a-cms-page).
+   * Creates a new Promotion Action and returns its attributes. See [api docs](https://api.spreecommerce.org/docs/api-v2/ea4bb581fc1c5-create-a-promotion-action).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -71,29 +71,23 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.create({
+   * const response = await client.promotionActions.create({
    *   bearer_token: '7381273269536713689562374856',
-   *   cms_page: {
-   *     title: 'About Us',
-   *     type: 'Spree::Cms::Pages::StandardPage',
-   *     meta_title: 'Learn More About Super-Shop',
-   *     content: 'Lot's of text..',
-   *     meta_description: 'Learn more about us on this page here...',
-   *     visible: true,
-   *     slug: 'about-us',
-   *     locale: 'en-US'
+   *   promotion_action: {
+   *     type: 'Spree::Promotion::Actions::CreateAdjustment',
+   *     promotion_id: '22'
    *   }
    * })
    * ```
    */
-  public async create(options: CreateOptions): Promise<IPageResult> {
+  public async create(options: CreateOptions): Promise<IPromotionActionResult> {
     const { token, params } = squashAndPreparePositionalArguments([options], [])
 
-    return await this.spreeResponse<IPage>('post', routes.pagesPath(), token, params)
+    return await this.spreeResponse<IPromotionAction>('post', routes.promotionActionsPath(), token, params)
   }
 
   /**
-   * Update selected CMS Page for the signed in User. See [api docs](https://api.spreecommerce.org/docs/api-v2/51f1f4d927506-update-a-cms-page).
+   * Update selected Promotion Action. See [api docs](https://api.spreecommerce.org/docs/api-v2/a09d1bd89b89a-update-a-promotion-action).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -103,30 +97,23 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.update({
+   * const response = await client.promotionActions.update({
    *   bearer_token: '7381273269536713689562374856',
    *   id: '1',
-   *   cms_page: {
-   *     title: 'About Us',
-   *     type: 'Spree::Cms::Pages::StandardPage',
-   *     meta_title: 'Learn More About Super-Shop',
-   *     content: 'Lots of text..',
-   *     meta_description: 'Learn more about us on this page here...',
-   *     visible: true,
-   *     slug: 'about-us',
-   *     locale: 'en-US'
+   *   promotion_action: {
+   *     type: 'Spree::Promotion::Actions::CreateAdjustment'
    *   }
    * })
    * ```
    */
-  public async update(options: UpdateOptions): Promise<IPageResult> {
+  public async update(options: UpdateOptions): Promise<IPromotionActionResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<IPage>('patch', routes.pagePath(id), token, params)
+    return await this.spreeResponse<IPromotionAction>('patch', routes.promotionActionPath(id), token, params)
   }
 
   /**
-   * This endpoint removes the specified CMS Page for the current user. See [api docs](https://api.spreecommerce.org/docs/api-v2/ed7075128d23d-delete-a-cms-page).
+   * This endpoint removes the specified Promotion Action. See [api docs](https://api.spreecommerce.org/docs/api-v2/782b6e74a007e-delete-a-promotion-action).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -136,7 +123,7 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.remove({
+   * const response = await client.promotionActions.remove({
    *   bearer_token: '7381273269536713689562374856',
    *   id: '1'
    * })
@@ -145,6 +132,6 @@ export default class Pages extends Http {
   public async remove(options: RemoveOptions): Promise<NoContentResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<NoContentResponse>('delete', routes.pagePath(id), token, params)
+    return await this.spreeResponse<NoContentResponse>('delete', routes.promotionActionPath(id), token, params)
   }
 }

@@ -1,22 +1,22 @@
 import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type {
-  IPage,
-  IPageResult,
-  IPages,
-  IPagesResult,
+  IPaymentMethod,
+  IPaymentMethodResult,
+  IPaymentMethods,
+  IPaymentMethodsResult,
   ListOptions,
   ShowOptions,
   CreateOptions,
   UpdateOptions,
   RemoveOptions
-} from '../interfaces/Pages'
+} from '../interfaces/PaymentMethods'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import routes from '../routes'
 
-export default class Pages extends Http {
+export default class PaymentMethods extends Http {
   /**
-   * Returns a list of all CMS Pages. See [api docs](https://api.spreecommerce.org/docs/api-v2/9ee28631b9fa8-return-a-list-of-cms-pages).
+   * Returns a list of Payment Methods. See [api docs](https://api.spreecommerce.org/docs/api-v2/b6c650dd76e6f-return-a-list-of-payment-methods).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -26,19 +26,19 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.list({
+   * const response = await client.paymentMethods.list({
    *   bearer_token: '7381273269536713689562374856'
    * })
    * ```
    */
-  public async list(options: ListOptions): Promise<IPagesResult> {
+  public async list(options: ListOptions): Promise<IPaymentMethodsResult> {
     const { token, params } = squashAndPreparePositionalArguments([options], [])
 
-    return await this.spreeResponse<IPages>('get', routes.pagesPath(), token, params)
+    return await this.spreeResponse<IPaymentMethods>('get', routes.paymentMethodsPath(), token, params)
   }
 
   /**
-   * Returns a single CMS Page by its ID. See [api docs](https://api.spreecommerce.org/docs/api-v2/cb1999788ddd8-return-a-cms-page).
+   * Returns a single Payment Method by its ID. See [api docs](https://api.spreecommerce.org/docs/api-v2/1a31b88534317-return-a-payment-method).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -48,20 +48,20 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.show({
+   * const response = await client.paymentMethods.show({
    *   bearer_token: '7381273269536713689562374856'
    *   id: '1'
    * })
    * ```
    */
-  public async show(options: ShowOptions): Promise<IPageResult> {
+  public async show(options: ShowOptions): Promise<IPaymentMethodResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<IPage>('get', routes.pagePath(id), token, params)
+    return await this.spreeResponse<IPaymentMethod>('get', routes.paymentMethodPath(id), token, params)
   }
 
   /**
-   * Creates a new CMS Page and returns its attributes. See [api docs](https://api.spreecommerce.org/docs/api-v2/974134352bb37-create-a-cms-page).
+   * Creates a new Payment Method and returns its attributes. See [api docs](https://api.spreecommerce.org/docs/api-v2/04952c7820586-create-a-payment-method).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -71,29 +71,30 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.create({
+   * const response = await client.paymentMethods.create({
    *   bearer_token: '7381273269536713689562374856',
-   *   cms_page: {
-   *     title: 'About Us',
-   *     type: 'Spree::Cms::Pages::StandardPage',
-   *     meta_title: 'Learn More About Super-Shop',
-   *     content: 'Lot's of text..',
-   *     meta_description: 'Learn more about us on this page here...',
-   *     visible: true,
-   *     slug: 'about-us',
-   *     locale: 'en-US'
+   *   payment_method: {
+   *     name: 'Test Payment Method',
+   *     active: true,
+   *     auto_capture: true,
+   *     description: 'This is a test payment method',
+   *     type: 'Spree::Gateway::Bogus',
+   *     display_on: 'both',
+   *     store_ids: ['2'],
+   *     public_metadata: {},
+   *     private_metadata: {}
    *   }
    * })
    * ```
    */
-  public async create(options: CreateOptions): Promise<IPageResult> {
+  public async create(options: CreateOptions): Promise<IPaymentMethodResult> {
     const { token, params } = squashAndPreparePositionalArguments([options], [])
 
-    return await this.spreeResponse<IPage>('post', routes.pagesPath(), token, params)
+    return await this.spreeResponse<IPaymentMethod>('post', routes.paymentMethodsPath(), token, params)
   }
 
   /**
-   * Update selected CMS Page for the signed in User. See [api docs](https://api.spreecommerce.org/docs/api-v2/51f1f4d927506-update-a-cms-page).
+   * Update selected Payment Method. See [api docs](https://api.spreecommerce.org/docs/api-v2/0cc572a21151f-update-a-payment-method).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -103,30 +104,31 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.update({
+   * const response = await client.paymentMethods.update({
    *   bearer_token: '7381273269536713689562374856',
    *   id: '1',
-   *   cms_page: {
-   *     title: 'About Us',
-   *     type: 'Spree::Cms::Pages::StandardPage',
-   *     meta_title: 'Learn More About Super-Shop',
-   *     content: 'Lots of text..',
-   *     meta_description: 'Learn more about us on this page here...',
-   *     visible: true,
-   *     slug: 'about-us',
-   *     locale: 'en-US'
+   *   payment_method: {
+   *     name: 'Test Payment Method',
+   *     active: true,
+   *     auto_capture: true,
+   *     description: 'This is a test payment method',
+   *     type: 'Spree::Gateway::Bogus',
+   *     display_on: 'both',
+   *     store_ids: ['2'],
+   *     public_metadata: {},
+   *     private_metadata: {}
    *   }
    * })
    * ```
    */
-  public async update(options: UpdateOptions): Promise<IPageResult> {
+  public async update(options: UpdateOptions): Promise<IPaymentMethodResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<IPage>('patch', routes.pagePath(id), token, params)
+    return await this.spreeResponse<IPaymentMethod>('patch', routes.paymentMethodPath(id), token, params)
   }
 
   /**
-   * This endpoint removes the specified CMS Page for the current user. See [api docs](https://api.spreecommerce.org/docs/api-v2/ed7075128d23d-delete-a-cms-page).
+   * This endpoint removes the specified Payment Method. See [api docs](https://api.spreecommerce.org/docs/api-v2/112c016e5ba86-delete-a-payment-method).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -136,7 +138,7 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.remove({
+   * const response = await client.paymentMethods.remove({
    *   bearer_token: '7381273269536713689562374856',
    *   id: '1'
    * })
@@ -145,6 +147,6 @@ export default class Pages extends Http {
   public async remove(options: RemoveOptions): Promise<NoContentResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<NoContentResponse>('delete', routes.pagePath(id), token, params)
+    return await this.spreeResponse<NoContentResponse>('delete', routes.paymentMethodPath(id), token, params)
   }
 }

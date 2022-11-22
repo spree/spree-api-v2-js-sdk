@@ -1,22 +1,22 @@
 import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
 import Http from '../Http'
 import type {
-  IPage,
-  IPageResult,
-  IPages,
-  IPagesResult,
+  IPromotionCategory,
+  IPromotionCategoryResult,
+  IPromotionCategories,
+  IPromotionCategoriesResult,
   ListOptions,
   ShowOptions,
   CreateOptions,
   UpdateOptions,
   RemoveOptions
-} from '../interfaces/Pages'
+} from '../interfaces/PromotionCategories'
 import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import routes from '../routes'
 
-export default class Pages extends Http {
+export default class PromotionCategories extends Http {
   /**
-   * Returns a list of all CMS Pages. See [api docs](https://api.spreecommerce.org/docs/api-v2/9ee28631b9fa8-return-a-list-of-cms-pages).
+   * Returns a list of all Promotion Categories. See [api docs](https://api.spreecommerce.org/docs/api-v2/4ae0ce7c6e732-return-a-list-of-promotion-categories).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -26,19 +26,19 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.list({
+   * const response = await client.promotionCategories.list({
    *   bearer_token: '7381273269536713689562374856'
    * })
    * ```
    */
-  public async list(options: ListOptions): Promise<IPagesResult> {
+  public async list(options: ListOptions): Promise<IPromotionCategoriesResult> {
     const { token, params } = squashAndPreparePositionalArguments([options], [])
 
-    return await this.spreeResponse<IPages>('get', routes.pagesPath(), token, params)
+    return await this.spreeResponse<IPromotionCategories>('get', routes.promotionCategoriesPath(), token, params)
   }
 
   /**
-   * Returns a single CMS Page by its ID. See [api docs](https://api.spreecommerce.org/docs/api-v2/cb1999788ddd8-return-a-cms-page).
+   * Returns a single Promotion Category by its ID. See [api docs](https://api.spreecommerce.org/docs/api-v2/05695ef7f8996-return-a-promotion-category).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -48,20 +48,20 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.show({
+   * const response = await client.promotionCategories.show({
    *   bearer_token: '7381273269536713689562374856'
    *   id: '1'
    * })
    * ```
    */
-  public async show(options: ShowOptions): Promise<IPageResult> {
+  public async show(options: ShowOptions): Promise<IPromotionCategoryResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<IPage>('get', routes.pagePath(id), token, params)
+    return await this.spreeResponse<IPromotionCategory>('get', routes.promotionCategoryPath(id), token, params)
   }
 
   /**
-   * Creates a new CMS Page and returns its attributes. See [api docs](https://api.spreecommerce.org/docs/api-v2/974134352bb37-create-a-cms-page).
+   * Creates a new Promotion Category and returns its attributes. See [api docs](https://api.spreecommerce.org/docs/api-v2/f9976f0edea37-create-a-promotion-category).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -71,29 +71,23 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.create({
+   * const response = await client.promotionCategories.create({
    *   bearer_token: '7381273269536713689562374856',
-   *   cms_page: {
-   *     title: 'About Us',
-   *     type: 'Spree::Cms::Pages::StandardPage',
-   *     meta_title: 'Learn More About Super-Shop',
-   *     content: 'Lot's of text..',
-   *     meta_description: 'Learn more about us on this page here...',
-   *     visible: true,
-   *     slug: 'about-us',
-   *     locale: 'en-US'
+   *   promotion_category: {
+   *     name: 'Promotions Used in 2021',
+   *     code: '2021-PROMOS'
    *   }
    * })
    * ```
    */
-  public async create(options: CreateOptions): Promise<IPageResult> {
+  public async create(options: CreateOptions): Promise<IPromotionCategoryResult> {
     const { token, params } = squashAndPreparePositionalArguments([options], [])
 
-    return await this.spreeResponse<IPage>('post', routes.pagesPath(), token, params)
+    return await this.spreeResponse<IPromotionCategory>('post', routes.promotionCategoriesPath(), token, params)
   }
 
   /**
-   * Update selected CMS Page for the signed in User. See [api docs](https://api.spreecommerce.org/docs/api-v2/51f1f4d927506-update-a-cms-page).
+   * Update selected Promotion Category. See [api docs](https://api.spreecommerce.org/docs/api-v2/c9b0da12e9c02-update-a-promotion-category).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -103,30 +97,24 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.update({
+   * const response = await client.promotionCategories.update({
    *   bearer_token: '7381273269536713689562374856',
    *   id: '1',
-   *   cms_page: {
-   *     title: 'About Us',
-   *     type: 'Spree::Cms::Pages::StandardPage',
-   *     meta_title: 'Learn More About Super-Shop',
-   *     content: 'Lots of text..',
-   *     meta_description: 'Learn more about us on this page here...',
-   *     visible: true,
-   *     slug: 'about-us',
-   *     locale: 'en-US'
+   *   promotion_category: {
+   *     name: 'Promotions Used in 2021',
+   *     code: '2021-PROMOS'
    *   }
    * })
    * ```
    */
-  public async update(options: UpdateOptions): Promise<IPageResult> {
+  public async update(options: UpdateOptions): Promise<IPromotionCategoryResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<IPage>('patch', routes.pagePath(id), token, params)
+    return await this.spreeResponse<IPromotionCategory>('patch', routes.promotionCategoryPath(id), token, params)
   }
 
   /**
-   * This endpoint removes the specified CMS Page for the current user. See [api docs](https://api.spreecommerce.org/docs/api-v2/ed7075128d23d-delete-a-cms-page).
+   * This endpoint removes the specified Promotion Category. See [api docs](https://api.spreecommerce.org/docs/api-v2/9bc2c667a1d23-delete-a-promotion-category).
    * 
    * **Required token:** [Bearer token](../pages/tokens.html#bearer-token)
    * 
@@ -136,7 +124,7 @@ export default class Pages extends Http {
    * 
    * **Example:**
    * ```ts
-   * const response = await client.pages.remove({
+   * const response = await client.promotionCategories.remove({
    *   bearer_token: '7381273269536713689562374856',
    *   id: '1'
    * })
@@ -145,6 +133,6 @@ export default class Pages extends Http {
   public async remove(options: RemoveOptions): Promise<NoContentResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<NoContentResponse>('delete', routes.pagePath(id), token, params)
+    return await this.spreeResponse<NoContentResponse>('delete', routes.promotionCategoryPath(id), token, params)
   }
 }
