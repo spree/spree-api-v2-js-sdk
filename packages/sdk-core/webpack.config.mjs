@@ -31,7 +31,8 @@ export default {
   },
   output: {
     filename: '[name].js',
-    path: distDirectoryPath
+    path: distDirectoryPath,
+    globalObject: 'this'
   },
   mode: 'production',
   devtool: 'source-map',

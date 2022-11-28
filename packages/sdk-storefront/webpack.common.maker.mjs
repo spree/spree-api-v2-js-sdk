@@ -28,7 +28,8 @@ export default ({ typeScriptConfigFilePath }) => ({
     },
   },
   output: {
-    filename: '[name].js'
+    filename: '[name].js',
+    globalObject: 'this'
   },
   mode: 'production',
   devtool: 'source-map',
@@ -61,6 +62,7 @@ export default ({ typeScriptConfigFilePath }) => ({
   },
   externals: [
     nodeExternals({
+      allowlist: ['@spree/core-api-v2-sdk'],
       modulesFromFile: {
         excludeFromBundle: ['devDependencies'],
         includeInBundle: ['dependencies']

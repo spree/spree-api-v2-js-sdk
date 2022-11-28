@@ -4,7 +4,7 @@ import sdk from '@spree/storefront-api-v2-sdk'
 import createAxiosFetcher from '@spree/storefront-api-v2-sdk-axios/dist/server/index.js'
 import createFetchFetcher from '@spree/storefront-api-v2-sdk-node-fetch/dist/server/index.js'
 
-const { makeClient, result } = sdk
+const { makeClient, toJson } = sdk
 
 const app = express()
 
@@ -44,7 +44,7 @@ app.all('/', async (request, response, next) => {
 
     const spreeResponse = await finalNode(...argumentsList)
 
-    response.json(result.toJson(spreeResponse))
+    response.json(toJson(spreeResponse))
   } catch (error) {
     next(error)
   }

@@ -10,10 +10,9 @@
     "build:sdk-fetcher-fetch": "npm run build --workspace=@spree/storefront-api-v2-sdk-node-fetch",
     "build": "npm run build:sdk-core && npm run build:sdk-storefront && npm run build:sdk-fetcher-axios && npm run build:sdk-fetcher-fetch",
     "pack:sdk-storefront": "npm pack --workspace=@spree/storefront-api-v2-sdk --pack-destination=packages/sdk-storefront",
-    "pack:sdk-platform": "npm pack --workspace=@spree/platform-api-v2-sdk --pack-destination=packages/sdk-platform",
     "pack:sdk-fetcher-axios": "npm pack --workspace=@spree/storefront-api-v2-sdk-axios --pack-destination=packages/sdk-fetcher-axios",
     "pack:sdk-fetcher-fetch": "npm pack --workspace=@spree/storefront-api-v2-sdk-node-fetch --pack-destination=packages/sdk-fetcher-node-fetch",
-    "pack": "npm run pack:sdk-storefront && npm run pack:sdk-platform && npm run pack:sdk-fetcher-axios && npm run pack:sdk-fetcher-fetch",
+    "pack": "npm run pack:sdk-storefront && npm run pack:sdk-fetcher-axios && npm run pack:sdk-fetcher-fetch",
     "lint": "eslint --ext .ts .",
     "test": "./test.sh",
     "docs": "typedoc"

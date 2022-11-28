@@ -27,10 +27,8 @@
     "url": "https://github.com/spark-solutions/spree-storefront-api-v2-js-sdk/issues"
   },
   "homepage": "https://guides.spreecommerce.org/api/v2",
-  "dependencies": {
-    "@spree/core-api-v2-sdk": "^5.1.8"
-  },
   "devDependencies": {
+    "@spree/core-api-v2-sdk": "^5.1.8",
     "@types/node": "^14.17.11",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",

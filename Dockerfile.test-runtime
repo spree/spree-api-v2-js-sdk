@@ -5,6 +5,9 @@ WORKDIR /sdk
 COPY . /sdk
 
 RUN npm install npm@8.19.2 -g
+RUN ls
+RUN ls packages
+RUN ls packages/sdk-core
 RUN npm install
 RUN npm run build
 RUN npm run pack
