@@ -1,5 +1,7 @@
-import { ResultResponse } from './ResultResponse'
-import { WithCommonOptions } from './WithCommonOptions'
+import type {
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface DigitalAsset extends ReadableStream {}
 

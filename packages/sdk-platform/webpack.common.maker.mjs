@@ -59,5 +59,13 @@ export default ({ typeScriptConfigFilePath }) => ({
     symlinks: false,
     extensions: ['.tsx', '.ts', '.js']
   },
-  externals: [nodeExternals({ modulesFromFile: true })]
+  externals: [
+    nodeExternals({
+      allowlist: ['@spree/core-api-v2-sdk'],
+      modulesFromFile: {
+        excludeFromBundle: ['devDependencies'],
+        includeInBundle: ['dependencies']
+      }
+    })
+  ]
 })

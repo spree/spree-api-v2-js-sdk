@@ -1,8 +1,11 @@
-import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import { IRelationships } from './Relationships'
-import { ResultResponse } from './ResultResponse'
-import { WithCommonOptions } from './WithCommonOptions'
-import type { IQuery } from './Query'
+import type {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface LinkAttr {
   token: string
@@ -16,7 +19,7 @@ export interface LinkData extends JsonApiDocument {
   relationships: IRelationships
 }
 
-export interface LinkParams extends IQuery {
+export interface LinkParams {
   digital_link: {
     access_counter: number
     line_item_id: string

@@ -1,7 +1,11 @@
-import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import type { IRelationships } from './Relationships'
-import type { ResultResponse } from './ResultResponse'
-import type { WithCommonOptions } from './WithCommonOptions'
+import type {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface VendorAttr extends JsonApiDocument {
   type: string

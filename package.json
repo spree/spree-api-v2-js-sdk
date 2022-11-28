@@ -31,6 +31,7 @@
   "workspaces": [
     "packages/sdk-core",
     "packages/sdk-storefront",
+    "packages/sdk-platform",
     "packages/sdk-fetcher-axios",
     "packages/sdk-fetcher-node-fetch"
   ],

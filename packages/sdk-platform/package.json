@@ -8,7 +8,6 @@
   "main": "dist/server/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "prepare": "npm run build",
     "build": "webpack",
     "build:server": "webpack --config-name server",
     "build:client": "webpack --config-name client",
@@ -29,6 +28,7 @@
   },
   "homepage": "https://guides.spreecommerce.org/api/v2",
   "devDependencies": {
+    "@spree/core-api-v2-sdk": "^5.1.8",
     "@types/node": "^14.17.11",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",

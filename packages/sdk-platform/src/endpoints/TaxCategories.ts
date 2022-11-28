@@ -1,5 +1,11 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
-import Http from '../Http'
+import {
+  Http,
+  squashAndPreparePositionalArguments
+} from '@spree/core-api-v2-sdk'
+import type {
+  NoContentResponse,
+  NoContentResult
+} from '@spree/core-api-v2-sdk'
 import type {
   ITaxCategory,
   ITaxCategoryResult,
@@ -11,7 +17,6 @@ import type {
   UpdateOptions,
   RemoveOptions
 } from '../interfaces/TaxCategories'
-import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import routes from '../routes'
 
 export default class TaxCategories extends Http {

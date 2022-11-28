@@ -1,8 +1,11 @@
-import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import type { IRelationships } from './Relationships'
-import type { ResultResponse } from './ResultResponse'
-import type { WithCommonOptions } from './WithCommonOptions'
-import type { IQuery } from './Query'
+import type {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 interface AdjustmentAttr {
   source_type: string
@@ -25,7 +28,7 @@ export interface AdjustmentData extends JsonApiDocument {
   relationships: IRelationships
 }
 
-export interface AdjustmentParams extends IQuery {
+export interface AdjustmentParams {
   adjustment: {
     order_id: string
     label: string

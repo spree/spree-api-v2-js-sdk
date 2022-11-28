@@ -1,8 +1,11 @@
-import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import { IRelationships } from './Relationships'
-import { ResultResponse } from './ResultResponse'
-import { WithCommonOptions } from './WithCommonOptions'
-import type { IQuery } from './Query'
+import type {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface OptionTypeAttr {
   name: string
@@ -26,7 +29,7 @@ export interface OptionTypeData extends JsonApiDocument {
   relationships: IRelationships
 }
 
-export interface OptionTypeParams extends IQuery {
+export interface OptionTypeParams {
   option_type: {
     name: 'color',
     presentation: 'Color',

@@ -1,8 +1,11 @@
-import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import type { IRelationships } from './Relationships'
-import type { ResultResponse } from './ResultResponse'
-import type { WithCommonOptions } from './WithCommonOptions'
-import type { IQuery } from './Query'
+import type {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 interface ClassificationAttr {
   position: number
@@ -17,7 +20,7 @@ export interface ClassificationData extends JsonApiDocument {
   relationships: IRelationships
 }
 
-export interface ClassificationParams extends IQuery {
+export interface ClassificationParams {
   classification: {
     product_id: string
     taxon_id: string

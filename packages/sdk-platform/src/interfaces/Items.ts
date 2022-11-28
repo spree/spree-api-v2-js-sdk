@@ -1,8 +1,11 @@
-import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import { IRelationships } from './Relationships'
-import { ResultResponse } from './ResultResponse'
-import { WithCommonOptions } from './WithCommonOptions'
-import type { IQuery } from './Query'
+import type {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface PageAttr {
   quantity: number
@@ -44,7 +47,7 @@ export interface ItemData extends JsonApiDocument {
   relationships: IRelationships
 }
 
-export interface ItemParams extends IQuery {
+export interface ItemParams {
   line_item: {
     order_id: string
     variant_id: string

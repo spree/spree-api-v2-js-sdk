@@ -1,8 +1,11 @@
-import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import { IQuery } from './Query'
-import { IRelationships } from './Relationships'
-import { ResultResponse } from './ResultResponse'
-import { WithCommonOptions } from './WithCommonOptions'
+import type {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface MenuAttr {
   name: string
@@ -19,7 +22,7 @@ export interface MenuData extends JsonApiDocument {
   relationships: IRelationships
 }
 
-export interface MenuParams extends IQuery {
+export interface MenuParams {
   menu: {
     name: string
     location: 'header' | 'footer' | string

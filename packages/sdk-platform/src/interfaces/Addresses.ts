@@ -1,8 +1,11 @@
-import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from './JsonApi'
-import type { IRelationships } from './Relationships'
-import type { ResultResponse } from './ResultResponse'
-import type { WithCommonOptions } from './WithCommonOptions'
-import type { IQuery } from './Query'
+import type {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface AddressAttr {
   country_id: string
@@ -34,7 +37,7 @@ export interface AddressData extends JsonApiDocument {
   relationships: IRelationships
 }
 
-export interface AddressParams extends IQuery {
+export interface AddressParams {
   address: AddressAttr
 }
 

@@ -1,5 +1,11 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
-import Http from '../Http'
+import {
+  Http,
+  squashAndPreparePositionalArguments
+} from '@spree/core-api-v2-sdk'
+import type {
+  NoContentResponse,
+  NoContentResult
+} from '@spree/core-api-v2-sdk'
 import type {
   ILinks,
   ILinksResult,
@@ -12,7 +18,6 @@ import type {
   RemoveOptions,
   ResetOptions
 } from '../interfaces/Links'
-import type { NoContentResponse, NoContentResult } from '../interfaces/NoContent'
 import routes from '../routes'
 
 export default class Links extends Http {

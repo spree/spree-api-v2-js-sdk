@@ -1,5 +1,7 @@
-import squashAndPreparePositionalArguments from '../helpers/squashAndPreparePositionalArguments'
-import Http from '../Http'
+import {
+  Http,
+  squashAndPreparePositionalArguments
+} from '@spree/core-api-v2-sdk'
 import type {
   IDigitals,
   IDigitalsResult,
