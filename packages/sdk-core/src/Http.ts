@@ -9,7 +9,7 @@ import {
 import FetchError from './errors/FetchError'
 import * as result from './helpers/result'
 import type { Fetcher } from './interfaces/ClientConfig'
-import type { ErrorType } from './interfaces/errors/ErrorType'
+import type { ErrorType } from './interfaces/ErrorType'
 import type { FetchConfig, HttpMethod, ResponseParsing } from './interfaces/FetchConfig'
 import type { JsonApiResponse } from './interfaces/JsonApi'
 import type { ResultResponse } from './interfaces/ResultResponse'

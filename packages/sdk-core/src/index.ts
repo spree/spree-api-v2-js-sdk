@@ -1,13 +1,55 @@
 import Client from './Client'
-import * as errors from './errors'
-import * as result from './helpers/result'
-import * as jsonApi from './helpers/jsonApi'
-import * as request from './helpers/request'
 import Http from './Http'
-import routes, { storefrontPath } from './routes'
-import * as endpoints from './endpoints'
-import makeClient from './makeClient'
 
-export { Client, Http, result, errors, makeClient, endpoints, routes, storefrontPath, jsonApi, request }
+export * from './errors'
+export * from './helpers'
 
-export * from './interfaces'
+export type {
+  Fetcher,
+  CreateFetcher,
+  CreateFetcherConfig,
+  FetcherConfig,
+  IClientConfig,
+  CreateFetchFetcherConfig,
+  CreateCustomizedFetchFetcher,
+  DeepAnyObject,
+  EmptyObjectResponse,
+  EmptyObjectResult,
+  FieldErrors,
+  Errors,
+  ErrorType,
+  HttpMethod,
+  AutomaticResponseParsing,
+  ResponseParsing,
+  FetchConfig,
+  ImageTransformation,
+  JsonApiDocument,
+  JsonApiResponse,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  NoContentResponse,
+  NoContentResult,
+  IQuery,
+  IProductsQuery,
+  RawFetchRequest,
+  RawFetchResponse,
+  RelationType,
+  IRelationships,
+  Result,
+  ResultResponse,
+  IToken,
+  RequiredAnyToken,
+  OptionalAnyToken,
+  RequiredAccountToken,
+  OptionalAccountToken,
+  IOAuthToken,
+  IOAuthTokenResult,
+  AllowedCustomizations,
+  DefaultCustomizations,
+  WithCommonOptions
+} from './interfaces'
+
+export {
+  Client,
+  Http
+}

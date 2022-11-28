@@ -2,7 +2,7 @@
   "name": "Spree SDK packages",
   "entryPointStrategy": "packages",
   "entryPoints": [
-    "packages/sdk-core",
+    "packages/sdk-storefront",
     "packages/sdk-platform",
     "packages/sdk-fetcher-node-fetch",
     "packages/sdk-fetcher-axios"

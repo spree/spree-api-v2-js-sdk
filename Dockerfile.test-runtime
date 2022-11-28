@@ -13,7 +13,7 @@ FROM alpine
 
 WORKDIR /sdk
 
-COPY --from=0 /sdk/packages/sdk-core/spree-storefront-api-v2-sdk-*.tgz /sdk/storefront-api-v2-sdk.tgz
+COPY --from=0 /sdk/packages/sdk-storefront/spree-storefront-api-v2-sdk-*.tgz /sdk/storefront-api-v2-sdk.tgz
 COPY --from=0 /sdk/packages/sdk-fetcher-axios/spree-storefront-api-v2-sdk-axios-*.tgz /sdk/storefront-api-v2-sdk-axios.tgz
 COPY --from=0 /sdk/packages/sdk-fetcher-node-fetch/spree-storefront-api-v2-sdk-node-fetch-*.tgz /sdk/storefront-api-v2-sdk-node-fetch.tgz
 

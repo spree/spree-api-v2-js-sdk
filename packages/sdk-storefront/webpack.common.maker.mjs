@@ -9,29 +9,26 @@ import DeleteBeforeRun from './../../webpack-plugins/DeleteBeforeRun.mjs'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const baseDirectoryPath = __dirname
 const srcDirectoryPath = resolve(baseDirectoryPath, 'src')
-const distDirectoryPath = resolve(baseDirectoryPath, 'dist')
 const { WatchIgnorePlugin } = webpack
-const typeScriptConfigFilePath = resolve(baseDirectoryPath, 'tsconfig.json')
 
-export default {
+export default ({ typeScriptConfigFilePath }) => ({
   context: baseDirectoryPath,
   plugins: [
     new ProgressBar(),
     new DeleteBeforeRun(resolve(baseDirectoryPath, 'types')),
-    new WatchIgnorePlugin({ paths: [resolve(baseDirectoryPath, 'types')] }),
+    new WatchIgnorePlugin({ paths: [resolve(baseDirectoryPath, 'types')] })
   ],
   entry: {
     index: {
       import: resolve(srcDirectoryPath, 'index.ts'),
       library: {
-        name: 'SpreeSDKCore',
+        name: 'SpreeSDK',
         type: 'umd'
       }
     },
   },
   output: {
-    filename: '[name].js',
-    path: distDirectoryPath
+    filename: '[name].js'
   },
   mode: 'production',
   devtool: 'source-map',
@@ -70,4 +67,4 @@ export default {
       }
     })
   ]
-}
+})

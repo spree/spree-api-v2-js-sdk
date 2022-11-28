@@ -1,15 +1,15 @@
-import {
-  Addresses
-} from './endpoints'
 import type { CreateFetcherConfig, Fetcher, IClientConfig } from './interfaces/ClientConfig'
+import { EndpointOptions } from './Http'
+
+interface IEndpoints {
+  [key: string]: (x: EndpointOptions) => void
+}
 
 class Client {
-  public addresses: Addresses
-
   protected host: string
   protected fetcher: Fetcher
 
-  constructor(customOptions: IClientConfig) {
+  constructor(customOptions: IClientConfig, endpoints: IEndpoints) {
     const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
 
     const defaultOptions: Partial<IClientConfig> = {
@@ -25,15 +25,9 @@ class Client {
 
     this.fetcher = options.createFetcher(fetcherOptions)
 
-    this.addEndpoints()
-  }
-
-  protected addEndpoints(): void {
-    this.addresses = this.makeAddresses()
-  }
-
-  protected makeAddresses(): Addresses {
-    return new Addresses({ fetcher: this.fetcher })
+    for (const endpoint in endpoints) {
+      this[endpoint] = new endpoints[endpoint]({ fetcher: this.fetcher })
+    }
   }
 }
 
