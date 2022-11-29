@@ -5,9 +5,6 @@ WORKDIR /sdk
 COPY . /sdk
 
 RUN npm install npm@8.19.2 -g
-RUN ls
-RUN ls packages
-RUN ls packages/sdk-core
 RUN npm install
 RUN npm run build
 RUN npm run pack
@@ -17,7 +14,7 @@ FROM alpine
 WORKDIR /sdk
 
 COPY --from=0 /sdk/packages/sdk-storefront/spree-storefront-api-v2-sdk-*.tgz /sdk/storefront-api-v2-sdk.tgz
-COPY --from=0 /sdk/packages/sdk-fetcher-axios/spree-storefront-api-v2-sdk-axios-*.tgz /sdk/storefront-api-v2-sdk-axios.tgz
-COPY --from=0 /sdk/packages/sdk-fetcher-node-fetch/spree-storefront-api-v2-sdk-node-fetch-*.tgz /sdk/storefront-api-v2-sdk-node-fetch.tgz
+COPY --from=0 /sdk/packages/sdk-fetcher-axios/spree-axios-fetcher-*.tgz /sdk/axios-fetcher.tgz
+COPY --from=0 /sdk/packages/sdk-fetcher-node/spree-node-fetcher-*.tgz /sdk/node-fetcher.tgz
 
 COPY ./wait-for-it.sh /sdk/

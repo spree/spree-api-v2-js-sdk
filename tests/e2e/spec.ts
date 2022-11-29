@@ -8,8 +8,8 @@ import {
   findSingleRelationshipDocument
 } from '@spree/storefront-api-v2-sdk'
 import type { RelationType } from '@spree/storefront-api-v2-sdk'
-import createAxiosFetcher from '@spree/storefront-api-v2-sdk-axios/dist/server'
-import createFetchFetcher from '@spree/storefront-api-v2-sdk-node-fetch/dist/server'
+import createAxiosFetcher from '@spree/axios-fetcher/dist/server'
+import createFetchFetcher from '@spree/node-fetcher/dist/server'
 
 const createTests = function () {
   it('completes guest order', function () {
@@ -211,10 +211,10 @@ const createClientVersionInTheBrowserTests = ({
 
           switch (fetcherType) {
             case 'axios':
-              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk-axios/dist/client/index.js'
+              fetcherPath = '/app/node_modules/@spree/axios-fetcher/dist/client/index.js'
               break
             case 'fetch':
-              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk-node-fetch/dist/client/index.js'
+              fetcherPath = '/app/node_modules/@spree/node-fetcher/dist/client/index.js'
               break
             default:
               throw new Error(`${fetcherType} not recognized.`)

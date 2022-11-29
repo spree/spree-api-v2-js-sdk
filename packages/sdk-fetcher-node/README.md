@@ -3,13 +3,13 @@
 To use Spree SDK with [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) in NodeJS, install Node Fetch along with the fetcher using NPM:
 
 ```
-npm install @spree/storefront-api-v2-sdk-node-fetch node-fetch
+npm install @spree/node-fetcher node-fetch
 ```
 
 Set the fetcher to fetch:
 
 ```js
-const createFetchFetcher = require('@spree/storefront-api-v2-sdk-node-fetch/dist/server/index').default
+const createFetchFetcher = require('@spree/node-fetcher/dist/server/index').default
 const { makeClient } = require('@spree/storefront-api-v2-sdk')
 const client = makeClient({
   host: 'http://localhost:3000',
@@ -23,7 +23,7 @@ Modern web browsers include fetch natively. To use Spree SDK with native fetch, 
 
 ```html
 <script src="https://unpkg.com/@spree/storefront-api-v2-sdk@6.0.0/dist/client/index.js"></script>
-<script src="https://unpkg.com/@spree/storefront-api-v2-sdk-node-fetch@1.0.0/dist/client/index.js"></script>
+<script src="https://unpkg.com/@spree/node-fetcher@1.0.0/dist/client/index.js"></script>
 
 <script>
   const client = SpreeSDK.makeClient({

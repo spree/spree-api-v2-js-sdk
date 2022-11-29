@@ -1,7 +1,7 @@
 {
-  "name": "@spree/storefront-api-v2-sdk-node-fetch",
+  "name": "@spree/node-fetcher",
   "version": "1.0.0",
-  "description": "Node fetch fetcher for storefront api sdk.",
+  "description": "Node fetch fetcher for Spree api SDK.",
   "main": "dist/server/index.js",
   "export": {
     "./server/*": "./dist/server/*.js",

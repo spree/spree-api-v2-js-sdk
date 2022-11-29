@@ -1,7 +1,7 @@
 {
-  "name": "@spree/storefront-api-v2-sdk-axios",
+  "name": "@spree/axios-fetcher",
   "version": "1.0.0",
-  "description": "Axios fetcher for storefront api sdk.",
+  "description": "Axios fetcher for Spree api SDK.",
   "main": "dist/server/index.js",
   "export": {
     "./server/*": "./dist/server/*.js",

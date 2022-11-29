@@ -1,18 +1,17 @@
 {
-  "name": "spree-storefront-api-sdk",
+  "name": "spree-sdk",
   "private": true,
-  "description": "Node module to easily integrate your JavaScript or TypeScript application with Spree API V2. You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on",
   "scripts": {
     "build:sdk-core": "npm run build --workspace=@spree/core-api-v2-sdk",
     "build:sdk-storefront": "npm run build --workspace=@spree/storefront-api-v2-sdk",
     "build:sdk-platform": "npm run build --workspace=@spree/platform-api-v2-sdk",
-    "build:sdk-fetcher-axios": "npm run build --workspace=@spree/storefront-api-v2-sdk-axios",
-    "build:sdk-fetcher-fetch": "npm run build --workspace=@spree/storefront-api-v2-sdk-node-fetch",
-    "build": "npm run build:sdk-core && npm run build:sdk-storefront && npm run build:sdk-fetcher-axios && npm run build:sdk-fetcher-fetch",
+    "build:sdk-axios-fetcher": "npm run build --workspace=@spree/axios-fetcher",
+    "build:sdk-node-fetcher": "npm run build --workspace=@spree/node-fetcher",
+    "build": "npm run build:sdk-core && npm run build:sdk-storefront && npm run build:sdk-axios-fetcher && npm run build:sdk-node-fetcher",
     "pack:sdk-storefront": "npm pack --workspace=@spree/storefront-api-v2-sdk --pack-destination=packages/sdk-storefront",
-    "pack:sdk-fetcher-axios": "npm pack --workspace=@spree/storefront-api-v2-sdk-axios --pack-destination=packages/sdk-fetcher-axios",
-    "pack:sdk-fetcher-fetch": "npm pack --workspace=@spree/storefront-api-v2-sdk-node-fetch --pack-destination=packages/sdk-fetcher-node-fetch",
-    "pack": "npm run pack:sdk-storefront && npm run pack:sdk-fetcher-axios && npm run pack:sdk-fetcher-fetch",
+    "pack:sdk-axios-fetcher": "npm pack --workspace=@spree/axios-fetcher --pack-destination=packages/sdk-fetcher-axios",
+    "pack:sdk-node-fetcher": "npm pack --workspace=@spree/node-fetcher --pack-destination=packages/sdk-fetcher-node",
+    "pack": "npm run pack:sdk-storefront && npm run pack:sdk-axios-fetcher && npm run pack:sdk-node-fetcher",
     "lint": "eslint --ext .ts .",
     "test": "./test.sh",
     "docs": "typedoc"
@@ -33,7 +32,7 @@
     "packages/sdk-storefront",
     "packages/sdk-platform",
     "packages/sdk-fetcher-axios",
-    "packages/sdk-fetcher-node-fetch"
+    "packages/sdk-fetcher-node"
   ],
   "dependencies": {
     "npm": "^8.19.2"
