@@ -2,8 +2,9 @@
   "name": "Spree SDK packages",
   "entryPointStrategy": "packages",
   "entryPoints": [
-    "packages/sdk-core",
-    "packages/sdk-fetcher-node-fetch",
+    "packages/sdk-storefront",
+    "packages/sdk-platform",
+    "packages/sdk-fetcher-node",
     "packages/sdk-fetcher-axios"
   ],
   "out": "docs",
@@ -16,7 +17,7 @@
         "moduleRoot": true,
         "children": [
           { "title": "Quick start", "source": "quick-start.md" },
-          { "title": "Checkout flow", "source": "checkout-flow.md" },
+          { "title": "Storefront checkout flow", "source": "checkout-flow.md" },
           { "title": "Response schema", "source": "response-schema.md" },
           { "title": "Tokens", "source": "tokens.md" },
           { "title": "Helpers", "source": "helpers.md" },
@@ -29,11 +30,15 @@
         "moduleRoot": true
       },
       {
-        "title": "@spree/storefront-api-v2-sdk-axios",
+        "title": "@spree/platform-api-v2-sdk",
         "moduleRoot": true
       },
       {
-        "title": "@spree/storefront-api-v2-sdk-node-fetch",
+        "title": "@spree/axios-fetcher",
+        "moduleRoot": true
+      },
+      {
+        "title": "@spree/node-fetcher",
         "moduleRoot": true
       }
     ]

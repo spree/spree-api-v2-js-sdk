@@ -1,9 +1,15 @@
 // To import @spree/storefront-api-v2-sdk, run 'npm link' and 'npm link @spree/storefront-api-v2-sdk'
 // in the project's root directory.
-import { Client, makeClient, result, jsonApi } from '@spree/storefront-api-v2-sdk'
-import type { RelationType } from '@spree/storefront-api-v2-sdk/types/interfaces/Relationships'
-import createAxiosFetcher from '@spree/storefront-api-v2-sdk-axios/dist/server'
-import createFetchFetcher from '@spree/storefront-api-v2-sdk-node-fetch/dist/server'
+import {
+  Client,
+  makeClient,
+  fromJson,
+  extractSuccess,
+  findSingleRelationshipDocument
+} from '@spree/storefront-api-v2-sdk'
+import type { RelationType } from '@spree/storefront-api-v2-sdk'
+import createAxiosFetcher from '@spree/axios-fetcher/dist/server'
+import createFetchFetcher from '@spree/node-fetcher/dist/server'
 
 const createTests = function () {
   it('completes guest order', function () {
@@ -12,7 +18,7 @@ const createTests = function () {
 
     cy.wrap(null)
       .then(function () {
-        return result.extractSuccess(client.cart.create())
+        return extractSuccess(client.cart.create())
       })
       .then(function (cartCreateResponse) {
         const { token: order_token, number: order_number } = cartCreateResponse.data.attributes
@@ -20,10 +26,10 @@ const createTests = function () {
         return cy
           .wrap(null)
           .then(function () {
-            return result.extractSuccess(client.products.list({ include: 'default_variant' }))
+            return extractSuccess(client.products.list({ include: 'default_variant' }))
           })
           .then(function (variantsResponse) {
-            const variantId = jsonApi.findSingleRelationshipDocument(
+            const variantId = findSingleRelationshipDocument(
               variantsResponse,
               variantsResponse.data[0],
               'default_variant'
@@ -35,7 +41,7 @@ const createTests = function () {
             return client.checkout.orderUpdate({ order_token, order: orderFullAddress })
           })
           .then(function () {
-            return result.extractSuccess(client.checkout.shippingRates({ order_token }))
+            return extractSuccess(client.checkout.shippingRates({ order_token }))
           })
           .then(function (shippingResponse) {
             const firstShipment = shippingResponse.data[0]
@@ -54,7 +60,7 @@ const createTests = function () {
             })
           })
           .then(function () {
-            return result.extractSuccess(client.checkout.paymentMethods({ order_token }))
+            return extractSuccess(client.checkout.paymentMethods({ order_token }))
           })
           .then(function (paymentsResponse) {
             const checkPaymentId = paymentsResponse.data.find(
@@ -92,7 +98,7 @@ const createTests = function () {
 
     cy.wrap(null)
       .then(function () {
-        return result.extractSuccess(client.cart.create())
+        return extractSuccess(client.cart.create())
       })
       .then(function (cartCreateResponse) {
         const orderToken = cartCreateResponse.data.attributes.token
@@ -109,7 +115,7 @@ const createTests = function () {
 
     cy.wrap(null)
       .then(function () {
-        return result.extractSuccess(client.cart.create())
+        return extractSuccess(client.cart.create())
       })
       .then(function (cartCreateResponse) {
         const orderToken = cartCreateResponse.data.attributes.token
@@ -126,7 +132,7 @@ const createTests = function () {
 
     cy.wrap(null)
       .then(function () {
-        return result.extractSuccess(client.cart.create())
+        return extractSuccess(client.cart.create())
       })
       .then(function (cartCreateResponse) {
         const orderToken = cartCreateResponse.data.attributes.token
@@ -205,10 +211,10 @@ const createClientVersionInTheBrowserTests = ({
 
           switch (fetcherType) {
             case 'axios':
-              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk-axios/dist/client/index.js'
+              fetcherPath = '/app/node_modules/@spree/axios-fetcher/dist/client/index.js'
               break
             case 'fetch':
-              fetcherPath = '/app/node_modules/@spree/storefront-api-v2-sdk-node-fetch/dist/client/index.js'
+              fetcherPath = '/app/node_modules/@spree/node-fetcher/dist/client/index.js'
               break
             default:
               throw new Error(`${fetcherType} not recognized.`)
@@ -269,7 +275,7 @@ const createServerVersionInTheServerTests = ({
 
             // Send call to a mini Express server which calls Spree.
             return cy.request(host, payload).then(function (response) {
-              return result.fromJson(response.body)
+              return fromJson(response.body)
             })
           },
           get: function (_target: any, property: string | symbol, _receiver: any) {

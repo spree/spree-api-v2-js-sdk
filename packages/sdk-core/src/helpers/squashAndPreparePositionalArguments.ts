@@ -18,7 +18,7 @@ export const split = (source: Record<string, any>, specialKeys: string[]) => {
  * @deprecated This function is used only to support the old method signatures
  * and will be removed in the future.
  */
-const squashAndPreparePositionalArguments = (
+export const squashAndPreparePositionalArguments = (
   positionalArguments: Record<string, any>[],
   specialKeys: string[]
 ): Record<string, any> & { token: IToken } & { params: Record<string, any> } => {
@@ -59,5 +59,3 @@ const squashAndPreparePositionalArguments = (
     params
   }
 }
-
-export default squashAndPreparePositionalArguments

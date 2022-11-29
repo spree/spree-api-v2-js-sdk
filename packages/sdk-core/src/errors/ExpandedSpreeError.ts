@@ -1,4 +1,4 @@
-import { Errors, FieldErrors } from '../interfaces/errors/Errors'
+import { Errors, FieldErrors } from '../interfaces/Errors'
 import type { RawFetchResponse } from '../interfaces/RawFetchResponse'
 import BasicSpreeError from './BasicSpreeError'
 

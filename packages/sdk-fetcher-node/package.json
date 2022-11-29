@@ -1,0 +1,35 @@
+{
+  "name": "@spree/node-fetcher",
+  "version": "1.0.0",
+  "description": "Node fetch fetcher for Spree api SDK.",
+  "main": "dist/server/index.js",
+  "export": {
+    "./server/*": "./dist/server/*.js",
+    "./client/*": "./dist/client/*.js"
+  },
+  "typesVersions": {
+    "*": {
+      "dist/server/index": [
+        "types/index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "webpack",
+    "build:server": "webpack --config-name server",
+    "build:client": "webpack --config-name client",
+    "watch": "webpack --watch",
+    "watch:server": "webpack --watch --config-name server",
+    "watch:client": "webpack --watch --config-name client",
+    "lint": "eslint --ext .ts .",
+    "lint:fix": "eslint src/**/*.ts --fix"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "node-fetch": "^2.6.6"
+  },
+  "typedoc": {
+    "entryPoint": "./src/index.ts"
+  }
+}
+  

@@ -1,0 +1,1 @@
+Spree Storefront API SDK contains each endpoint according to [Spree Guides](https://api.spreecommerce.org/docs/api-v2/c230c08afa8e4-storefront-api).
