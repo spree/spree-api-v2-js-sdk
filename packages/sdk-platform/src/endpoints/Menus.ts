@@ -136,6 +136,6 @@ export default class Menus extends Http {
   public async remove(options: RemoveOptions): Promise<NoContentResult> {
     const { id, token, params } = squashAndPreparePositionalArguments([options], ['id'])
 
-    return await this.spreeResponse<NoContentResponse>('delete', routes.pagePath(id), token, params)
+    return await this.spreeResponse<NoContentResponse>('delete', routes.menuPath(id), token, params)
   }
 }

@@ -8,6 +8,7 @@ import Digitals from './Digitals'
 import Links from './Links'
 import Items from './Items'
 import Menus from './Menus'
+import MenuItems from './MenuItems'
 import OptionTypes from './OptionTypes'
 import OptionValues from './OptionValues'
 import Orders from './Orders'
@@ -51,6 +52,7 @@ export {
   Links,
   Items,
   Menus,
+  MenuItems,
   OptionTypes,
   OptionValues,
   Orders,
