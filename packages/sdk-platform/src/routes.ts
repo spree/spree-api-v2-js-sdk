@@ -1,6 +1,7 @@
 export const platformPath = `api/v2/platform`
 
 const endpoints = {
+  oauthTokenPath: (): string => `spree_oauth/token`,
   addressesPath: (): string => `${platformPath}/addresses`,
   addressPath: (id: string): string => `${platformPath}/addresses/${encodeURIComponent(id)}`,
   adjustmentsPath: (): string => `${platformPath}/adjustments`,

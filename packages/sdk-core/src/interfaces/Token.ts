@@ -34,4 +34,20 @@ export interface IOAuthToken {
   created_at: number
 }
 
+export interface IPlatformToken {
+  access_token: string
+  token_type: 'Bearer'
+  expires_in: number
+  scope: string
+  created_at: number
+}
+
+export interface IPlatformUserToken extends IPlatformToken {
+  refresh_token: string
+}
+
 export interface IOAuthTokenResult extends ResultResponse<IOAuthToken> {}
+
+export interface IPlatformTokenResult extends ResultResponse<IPlatformToken> {}
+
+export interface IPlatformUserTokenResult extends ResultResponse<IPlatformUserToken> {}

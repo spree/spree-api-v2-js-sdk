@@ -44,6 +44,10 @@ export type {
   OptionalAccountToken,
   IOAuthToken,
   IOAuthTokenResult,
+  IPlatformToken,
+  IPlatformTokenResult,
+  IPlatformUserToken,
+  IPlatformUserTokenResult,
   AllowedCustomizations,
   DefaultCustomizations,
   WithCommonOptions

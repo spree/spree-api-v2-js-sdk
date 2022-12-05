@@ -3,6 +3,7 @@ import type { IClientConfig } from '@spree/core-api-v2-sdk'
 import {
   Addresses,
   Adjustments,
+  Authentication,
   Classifications,
   Countries,
   Pages,
@@ -48,6 +49,7 @@ import {
 const endpoints = {
   addresses: Addresses,
   adjustments: Adjustments,
+  authentication: Authentication,
   classifications: Classifications,
   countries: Countries,
   pages: Pages,
