@@ -1,5 +1,6 @@
 import Addresses from './Addresses'
 import Adjustments from './Adjustments'
+import Authentication from './Authentication'
 import Classifications from './Classifications'
 import Countries from './Countries'
 import Pages from './Pages'
@@ -44,6 +45,7 @@ import Zones from './Zones'
 export {
   Addresses,
   Adjustments,
+  Authentication,
   Classifications,
   Countries,
   Pages,
