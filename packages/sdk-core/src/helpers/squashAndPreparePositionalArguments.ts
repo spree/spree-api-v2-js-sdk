@@ -24,7 +24,15 @@ export const squashAndPreparePositionalArguments = (
 ): Record<string, any> & { token: IToken } & { params: Record<string, any> } => {
   // Using reverse() ensures we treat the first object with priority.
   // It replicates the order of arguments for endpoints methods.
-  const mergedArguments: Record<string, any> = Object.assign({}, ...positionalArguments.filter(Boolean).reverse())
+  const mergedArguments: Record<string, any> = Object.assign({},
+    ...[...positionalArguments] // make a copy of the original array (for reverse)
+      .filter(Boolean)
+      .map(x =>
+        Object.keys(x).filter(key => x[key]) // remove empty props from objects
+          .reduce((ac, a) => ({ ...ac, [a]: x[a] }), {}) // turn array into object with props
+      ).filter(x => Object.keys(x).length) // filter out empty objects
+      .reverse()
+  )
   const [restArguments, tokensArguments] = split(mergedArguments, [
     'order_token',
     'bearer_token',
