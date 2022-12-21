@@ -1,4 +1,3 @@
-import Client from './Client'
 import Http from './Http'
 
 export * from './errors'
@@ -53,7 +52,10 @@ export type {
   WithCommonOptions
 } from './interfaces'
 
+export type {
+  EndpointOptions
+} from './Http'
+
 export {
-  Client,
   Http
 }
