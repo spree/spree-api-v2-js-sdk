@@ -6,7 +6,8 @@ import type {
   IQuery,
   IToken,
   NoContentResponse,
-  NoContentResult
+  NoContentResult,
+  AllowedClientBuilderOptions
 } from '@spree/core-api-v2-sdk'
 import type {
   IAccountResult,
@@ -41,7 +42,7 @@ import type { ICreditCard, ICreditCardResult, ICreditCards, ICreditCardsResult }
 import type { IOrder, IOrderResult, IOrders, IOrdersResult } from '../interfaces/Order'
 import routes from '../routes'
 
-export default class Account extends Http {
+export default class Account<ClientOptions extends AllowedClientBuilderOptions> extends Http {
   /**
    * Creates new account and returns its attributes. See [api docs](https://api.spreecommerce.org/docs/api-v2/534a12ece987f-create-an-account).
    * 
@@ -238,15 +239,8 @@ export default class Account extends Http {
    * const response = await client.account.accountInfo({ bearer_token: '7381273269536713689562374856' })
    * ```
    */
-  public async accountInfo(options: AccountInfoOptions): Promise<IAccountResult>
-  /**
-   * @hidden
-   * @deprecated Use the combined options signature instead.
-   */
-  public async accountInfo(token: IToken, params?: IQuery): Promise<IAccountResult>
-  public async accountInfo(...allArguments: any[]): Promise<IAccountResult> {
-    const [tokenOrOptions, positionalParams = {}] = allArguments
-    const { token, params } = squashAndPreparePositionalArguments([tokenOrOptions, positionalParams], [])
+  public async accountInfo(options: AccountInfoOptions<ClientOptions>): Promise<IAccountResult> {
+    const { token, params } = squashAndPreparePositionalArguments([options || {}], [])
 
     return await this.spreeResponse<IAccount>('get', routes.accountPath(), token, params)
   }

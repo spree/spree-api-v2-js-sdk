@@ -7,34 +7,46 @@ import {
   SpreeSDKError
 } from './errors'
 import FetchError from './errors/FetchError'
+import { isFetchError } from './helpers/typeguards/isFetchError'
 import * as result from './helpers/result'
+import { ClientBuilderOptions } from './interfaces/ClientBuilderOptions'
 import type { Fetcher } from './interfaces/ClientConfig'
 import type { ErrorType } from './interfaces/ErrorType'
 import type { FetchConfig, HttpMethod, ResponseParsing } from './interfaces/FetchConfig'
 import type { JsonApiResponse } from './interfaces/JsonApi'
 import type { ResultResponse } from './interfaces/ResultResponse'
-import type { IToken } from './interfaces/Token'
+import { SpreeOrderHeaders } from './interfaces/SpreeOrderHeaders'
+import type { BearerToken, IToken } from './interfaces/Token'
 
-export type EndpointOptions = {
+export type EndpointOptions = ClientBuilderOptions & {
   fetcher: Fetcher
 }
 
 export default class Http {
   public fetcher: Fetcher
+  public bearerToken: BearerToken | undefined
+  public orderToken: BearerToken | undefined
+  public locale: EndpointOptions['locale'] | undefined
+  public currency: EndpointOptions['currency'] | undefined
 
-  constructor({ fetcher }: EndpointOptions) {
+  constructor({ fetcher, bearer_token, order_token, locale, currency }: EndpointOptions) {
     this.fetcher = fetcher
+    this.bearerToken = bearer_token
+    this.orderToken = order_token
+    this.locale = locale
+    this.currency = currency
   }
 
   protected async spreeResponse<ResponseType = JsonApiResponse>(
     method: HttpMethod,
     url: string,
-    tokens: IToken = {},
-    params: any = {},
+    userTokens: IToken = {},
+    userParams: any = {},
     responseParsing: ResponseParsing = 'automatic'
   ): Promise<ResultResponse<ResponseType>> {
     try {
-      const headers = this.spreeOrderHeaders(tokens)
+      const headers = this.spreeOrderHeaders(userTokens)
+      const params = this.spreeParams(userParams)
 
       const fetchOptions: FetchConfig = {
         url,
@@ -101,8 +113,13 @@ export default class Http {
     }
   }
 
-  protected spreeOrderHeaders(tokens: IToken): { [headerName: string]: string } {
-    const header = {}
+  protected spreeOrderHeaders(userTokens: IToken): SpreeOrderHeaders {
+    const header: SpreeOrderHeaders = {}
+    const tokens = {
+      orderToken: this.orderToken,
+      bearerToken: this.bearerToken,
+      ...userTokens
+    }
 
     if (tokens.orderToken) {
       header['X-Spree-Order-Token'] = tokens.orderToken
@@ -113,5 +130,15 @@ export default class Http {
     }
 
     return header
+  }
+
+  protected spreeParams(userParams: any): Record<string, any> {
+    const params = {
+      locale: this.locale,
+      currency: this.currency,
+      ...userParams
+    }
+
+    return params
   }
 }

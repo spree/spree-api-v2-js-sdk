@@ -1,9 +1,18 @@
 import type { IAddress } from './attributes/Address'
-import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from '@spree/core-api-v2-sdk'
-import type { IQuery } from '@spree/core-api-v2-sdk'
-import type { IRelationships } from '@spree/core-api-v2-sdk'
-import type { ResultResponse } from '@spree/core-api-v2-sdk'
-import type { WithCommonOptions } from '@spree/core-api-v2-sdk'
+import type {
+  IQuery,
+  MakeOptional,
+  MakeRequired,
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  ResultResponse,
+  WithCommonOptions,
+  AllowedClientBuilderOptions,
+  ClientBuilderOptions,
+  WithClientBuilderOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface AccountAttr extends JsonApiDocument {
   data: {
@@ -75,7 +84,15 @@ export interface AccountAddressResult extends ResultResponse<AccountAddressRespo
 
 export interface AccountAddressesResult extends ResultResponse<AccountAddressesResponse> {}
 
-export type AccountInfoOptions = WithCommonOptions<{ suggestToken: true; suggestQuery: true }>
+export type AccountContractTestOptions<ClientOptions extends AllowedClientBuilderOptions> = WithClientBuilderOptions<
+  ClientOptions,
+  MakeRequired<Partial<ClientBuilderOptions>, 'locale'>
+>
+
+export type AccountInfoOptions<ClientOptions extends AllowedClientBuilderOptions> = WithClientBuilderOptions<
+  ClientOptions,
+  MakeRequired<ClientBuilderOptions, 'bearer_token'>
+>
 
 export type CreditCardsListOptions = WithCommonOptions<{
   suggestToken: true

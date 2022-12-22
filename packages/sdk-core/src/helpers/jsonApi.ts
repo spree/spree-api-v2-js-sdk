@@ -1,6 +1,7 @@
 import type { JsonApiDocument, JsonApiResponse } from '../interfaces/JsonApi'
 import type { RelationType } from '../interfaces/Relationships'
 import { DocumentRelationshipError } from '../errors'
+import { isNotNull } from './typeguards/isNotNull'
 
 const findDocument = <DocumentType extends JsonApiDocument>(
   spreeSuccessResponse: JsonApiResponse,
@@ -41,8 +42,8 @@ const findRelationshipDocuments = <DocumentType extends JsonApiDocument>(
   }
 
   return documentReferences
-    .map<DocumentType>((relationType: RelationType) => findDocument<DocumentType>(spreeSuccessResponse, relationType))
-    .filter(Boolean)
+    .map<DocumentType | null>((relationType) => findDocument<DocumentType>(spreeSuccessResponse, relationType))
+    .filter(isNotNull)
 }
 
 const findSingleRelationshipDocument = <DocumentType extends JsonApiDocument>(

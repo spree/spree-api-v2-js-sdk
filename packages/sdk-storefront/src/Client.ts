@@ -1,4 +1,15 @@
-import type { IClientConfig, CreateFetcherConfig, Fetcher, } from '@spree/core-api-v2-sdk'
+import type {
+  IClientConfig,
+  CreateFetcherConfig,
+  Fetcher,
+  BearerToken,
+  OrderToken,
+  AllowedClientBuilderOptions,
+  DefaultBuilderOptions,
+  Currency,
+  Locale,
+  SetProperty
+} from '@spree/core-api-v2-sdk'
 import {
   Account,
   Authentication,
@@ -15,8 +26,8 @@ import {
   Wishlists
 } from './endpoints'
 
-class Client {
-  public account: Account
+class Client<ClientOptions extends AllowedClientBuilderOptions = DefaultBuilderOptions> {
+  public account: Account<ClientOptions>
   public authentication: Authentication
   public cart: Cart
   public checkout: Checkout
@@ -32,6 +43,7 @@ class Client {
 
   protected host: string
   protected fetcher: Fetcher
+  protected config: IClientConfig
 
   constructor(customOptions: IClientConfig) {
     const spreeHostEnvironmentValue: string | null = (globalThis.process && globalThis.process.env.SPREE_HOST) || null
@@ -40,30 +52,56 @@ class Client {
       host: spreeHostEnvironmentValue || 'http://localhost:3000/'
     }
 
-    const options: IClientConfig = {
-      ...defaultOptions,
-      ...customOptions
+    this.config = { ...defaultOptions, ...customOptions }
+    this.host = this.config.host
+
+    const fetcherOptions: CreateFetcherConfig = { host: this.config.host }
+
+    this.fetcher = this.config.createFetcher(fetcherOptions)
+
+    const endpointOptions = {
+      fetcher: this.fetcher,
+      bearer_token: this.config.bearer_token,
+      order_token: this.config.order_token,
+      locale: this.config.locale,
+      currency: this.config.currency
     }
 
-    const fetcherOptions: CreateFetcherConfig = { host: options.host }
+    this.account = new Account(endpointOptions)
+    this.authentication = new Authentication(endpointOptions)
+    this.cart = new Cart(endpointOptions)
+    this.checkout = new Checkout(endpointOptions)
+    this.countries = new Countries(endpointOptions)
+    this.digitalAssets = new DigitalAssets(endpointOptions)
+    this.menus = new Menus(endpointOptions)
+    this.order = new Order(endpointOptions)
+    this.pages = new Pages(endpointOptions)
+    this.products = new Products(endpointOptions)
+    this.taxons = new Taxons(endpointOptions)
+    this.vendors = new Vendors(endpointOptions)
+    this.wishlists = new Wishlists(endpointOptions)
+  }
 
-    this.fetcher = options.createFetcher(fetcherOptions)
+  public withOrderToken(order_token: OrderToken) {
+    return this.builderInstance<SetProperty<ClientOptions, 'order_token', true>>({ order_token })
+  }
 
-    const config = { fetcher: this.fetcher }
+  public withBearerToken(bearer_token: BearerToken) {
+    return this.builderInstance<SetProperty<ClientOptions, 'bearer_token', true>>({ bearer_token })
+  }
 
-    this.account = new Account(config)
-    this.authentication = new Authentication(config)
-    this.cart = new Cart(config)
-    this.checkout = new Checkout(config)
-    this.countries = new Countries(config)
-    this.digitalAssets = new DigitalAssets(config)
-    this.menus = new Menus(config)
-    this.order = new Order(config)
-    this.pages = new Pages(config)
-    this.products = new Products(config)
-    this.taxons = new Taxons(config)
-    this.vendors = new Vendors(config)
-    this.wishlists = new Wishlists(config)
+  public withLocale(locale: Locale) {
+    return this.builderInstance<SetProperty<ClientOptions, 'locale', true>>({ locale })
+  }
+
+  public withCurrency(currency: Currency) {
+    return this.builderInstance<SetProperty<ClientOptions, 'currency', true>>({ currency })
+  }
+
+  protected builderInstance<T extends AllowedClientBuilderOptions = ClientOptions>(
+    config: Partial<IClientConfig> = {}
+  ): Client<T> {
+    return new Client<T>({ ...this.config, ...config })
   }
 }
 
