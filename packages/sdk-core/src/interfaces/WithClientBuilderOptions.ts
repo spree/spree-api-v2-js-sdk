@@ -24,16 +24,17 @@ export type WithClientBuilderOptions<
   UserCustomOptionsOnly extends Record<string, unknown> = Omit<UserOptions, keyof ClientBuilderOptions>,
   UserEndpointOptionsOnly extends ClientBuilderOptions = Omit<UserOptions, keyof UserCustomOptionsOnly>,
   OptionalEndpointOptionsOnly extends ClientBuilderOptions = FilterOptionalKeys<UserEndpointOptionsOnly>,
-  RequiredEndpointOptionsOnly extends ClientBuilderOptions = FilterRequiredKeys<UserEndpointOptionsOnly>
-> = UserCustomOptionsOnly &
-  OptionalEndpointOptionsOnly &
-  Partial<RequiredEndpointOptionsOnly> & {
-    [K in keyof Required<ClientBuilderOptions> as RequiredEndpointOptionsOnly extends Pick<
-      Required<ClientBuilderOptions>,
-      K
-    >
-      ? ClientOptions[K] extends true
-        ? never
-        : K
-      : never]-?: UserOptions[K]
-  }
+  RequiredEndpointOptionsOnly extends ClientBuilderOptions = FilterRequiredKeys<UserEndpointOptionsOnly>,
+  Options extends ClientBuilderOptions = UserCustomOptionsOnly &
+    Partial<OptionalEndpointOptionsOnly> &
+    Partial<RequiredEndpointOptionsOnly> & Required<{
+      [K in keyof Required<ClientBuilderOptions> as RequiredEndpointOptionsOnly extends Pick<
+        Required<ClientBuilderOptions>,
+        K
+      >
+        ? ClientOptions[K] extends true
+          ? never
+          : K
+        : never]-?: UserOptions[K]
+    }>
+> = {} extends Options ? Options | void : Options

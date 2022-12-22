@@ -84,11 +84,6 @@ export interface AccountAddressResult extends ResultResponse<AccountAddressRespo
 
 export interface AccountAddressesResult extends ResultResponse<AccountAddressesResponse> {}
 
-export type AccountContractTestOptions<ClientOptions extends AllowedClientBuilderOptions> = WithClientBuilderOptions<
-  ClientOptions,
-  MakeRequired<Partial<ClientBuilderOptions>, 'locale'>
->
-
 export type AccountInfoOptions<ClientOptions extends AllowedClientBuilderOptions> = WithClientBuilderOptions<
   ClientOptions,
   MakeRequired<ClientBuilderOptions, 'bearer_token'>
