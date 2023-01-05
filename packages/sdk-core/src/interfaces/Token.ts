@@ -1,5 +1,9 @@
 import { ResultResponse } from './ResultResponse'
 
+export type BearerToken = string
+
+export type OrderToken = string
+
 /**
  * @deprecated Use
  * {@link RequiredAnyToken},
@@ -10,21 +14,21 @@ import { ResultResponse } from './ResultResponse'
  * instead.
  */
 export interface IToken {
-  orderToken?: string
-  bearerToken?: string
+  orderToken?: OrderToken
+  bearerToken?: BearerToken
 }
 
 export type RequiredAnyToken =
-  | { order_token: string; bearer_token?: never }
-  | { order_token?: never; bearer_token: string }
+  | { order_token: OrderToken; bearer_token?: never }
+  | { order_token?: never; bearer_token: BearerToken }
 
 export type OptionalAnyToken =
-  | { order_token?: string; bearer_token?: never }
-  | { order_token?: never; bearer_token?: string }
+  | { order_token?: OrderToken; bearer_token?: never }
+  | { order_token?: never; bearer_token?: BearerToken }
 
-export type RequiredAccountToken = { bearer_token: string }
+export type RequiredAccountToken = { bearer_token: BearerToken }
 
-export type OptionalAccountToken = { bearer_token?: string }
+export type OptionalAccountToken = { bearer_token?: BearerToken }
 
 export interface IOAuthToken {
   access_token: string

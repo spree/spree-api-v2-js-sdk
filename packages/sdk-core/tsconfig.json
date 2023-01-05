@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     "declaration": true,
     "declarationDir": "./types",
-    "importsNotUsedAsValues": "preserve"
+    "importsNotUsedAsValues": "preserve",
+    "strictNullChecks": true
   }
 }

@@ -1,3 +1,4 @@
+import { ClientBuilderOptions } from './ClientBuilderOptions'
 import type { FetchConfig } from './FetchConfig'
 
 export type Fetcher = {
@@ -14,4 +15,4 @@ export type FetcherConfig = {
   createFetcher: CreateFetcher
 }
 
-export type IClientConfig = CreateFetcherConfig & FetcherConfig
+export type IClientConfig = CreateFetcherConfig & FetcherConfig & ClientBuilderOptions
