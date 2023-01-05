@@ -1,8 +1,6 @@
 import type { IAddress } from './attributes/Address'
 import type {
   IQuery,
-  MakeOptional,
-  MakeRequired,
   JsonApiDocument,
   JsonApiListResponse,
   JsonApiSingleResponse,
@@ -10,7 +8,6 @@ import type {
   ResultResponse,
   WithCommonOptions,
   AllowedClientBuilderOptions,
-  ClientBuilderOptions,
   WithClientBuilderOptions
 } from '@spree/core-api-v2-sdk'
 
@@ -86,7 +83,7 @@ export interface AccountAddressesResult extends ResultResponse<AccountAddressesR
 
 export type AccountInfoOptions<ClientOptions extends AllowedClientBuilderOptions> = WithClientBuilderOptions<
   ClientOptions,
-  MakeRequired<ClientBuilderOptions, 'bearer_token'>
+  'bearer_token'
 >
 
 export type CreditCardsListOptions = WithCommonOptions<{

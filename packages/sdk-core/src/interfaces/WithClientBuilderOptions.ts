@@ -1,6 +1,7 @@
 import { AllowedClientBuilderOptions, ClientBuilderOptions } from './ClientBuilderOptions'
 import { FilterOptionalKeys } from './FilterOptionalKeys'
 import { FilterRequiredKeys } from './FilterRequiredKeys'
+import type { MakeRequired } from './MakeRequired'
 
 /**
  * Transforms {@link ClientBuilderOptions} properties of {@link UserOptions} into optional types based on
@@ -18,10 +19,10 @@ import { FilterRequiredKeys } from './FilterRequiredKeys'
  * // "locale" MyUserOptions's locale is required, but Options' locale transforms into optional, because MyClientOptions's locale is true
  * // "currency" stays required, because MyClientOptions's locale is false, and MyUserOptions's currency is required.
  */
-export type WithClientBuilderOptions<
+type WithSingleClientBuilderOptions<
   ClientOptions extends AllowedClientBuilderOptions,
   UserOptions extends ClientBuilderOptions,
-  UserCustomOptionsOnly extends Record<string, unknown> = Omit<UserOptions, keyof ClientBuilderOptions>,
+  UserCustomOptionsOnly extends Record<string, unknown> = {},
   UserEndpointOptionsOnly extends ClientBuilderOptions = Omit<UserOptions, keyof UserCustomOptionsOnly>,
   OptionalEndpointOptionsOnly extends ClientBuilderOptions = FilterOptionalKeys<UserEndpointOptionsOnly>,
   RequiredEndpointOptionsOnly extends ClientBuilderOptions = FilterRequiredKeys<UserEndpointOptionsOnly>,
@@ -38,3 +39,12 @@ export type WithClientBuilderOptions<
         : never]-?: UserOptions[K]
     }>
 > = {} extends Options ? Options | void : Options
+
+export type WithClientBuilderOptions<
+  ClientOptions extends AllowedClientBuilderOptions,
+  UserOptions extends keyof ClientBuilderOptions,
+  UserCustomOptionsOnly extends Record<string, unknown> = {}
+> = {
+  [K in UserOptions]-?:
+    WithSingleClientBuilderOptions<ClientOptions, MakeRequired<ClientBuilderOptions, K>, UserCustomOptionsOnly>
+}[UserOptions]
