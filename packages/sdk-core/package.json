@@ -1,6 +1,6 @@
 {
   "name": "@spree/core-api-v2-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Core SDK package containing the HTTP client, helper functions, typescript interfaces and more.",
   "engines": {
