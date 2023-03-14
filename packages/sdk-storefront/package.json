@@ -1,6 +1,6 @@
 {
   "name": "@spree/storefront-api-v2-sdk",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "Node module to easily integrate your JavaScript or TypeScript application with Spree Storefront API V2. You can create an entirely custom Storefront in JS/TS with this package including one page checkout, Single Page Apps, PWAs and so on.",
   "engines": {
     "node": ">=14.17.0"
@@ -28,7 +28,7 @@
   },
   "homepage": "https://guides.spreecommerce.org/api/v2",
   "devDependencies": {
-    "@spree/core-api-v2-sdk": "^1.0.1",
+    "@spree/core-api-v2-sdk": "^1.0.2",
     "@types/node": "^14.17.11",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
