@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import { resolve, dirname } from 'path'
+import path, { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import nodeExternals from 'webpack-node-externals'
 import ProgressBar from './../../webpack-plugins/ProgressBar.mjs'
@@ -15,6 +15,7 @@ export default ({ typeScriptConfigFilePath }) => ({
   context: baseDirectoryPath,
   plugins: [
     new ProgressBar(),
+    new DeleteBeforeRun(resolve(baseDirectoryPath, 'dist')),
     new DeleteBeforeRun(resolve(baseDirectoryPath, 'types')),
     new WatchIgnorePlugin({ paths: [resolve(baseDirectoryPath, 'types')] })
   ],
@@ -57,6 +58,9 @@ export default ({ typeScriptConfigFilePath }) => ({
     modules: [srcDirectoryPath, 'node_modules']
   },
   resolve: {
+    // alias: {
+    //   '@spree/core-api-v2-sdk': path.join(baseDirectoryPath, 'packages/sdk-core')
+    // },
     symlinks: false,
     extensions: ['.tsx', '.ts', '.js']
   },

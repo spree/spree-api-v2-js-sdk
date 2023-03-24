@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
+    "lib": ["dom", "es2016"],
     "noUnusedParameters": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
@@ -8,6 +9,16 @@
     "esModuleInterop": true,
     "declaration": true,
     "declarationDir": "./types",
-    "importsNotUsedAsValues": "preserve"
-  }
+    "importsNotUsedAsValues": "preserve",
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "paths": {
+      "@spree/core-api-v2-sdk": ["../sdk-core/src"]
+    },
+    "strictFunctionTypes": true,
+    "typeRoots": ["./types/sdk-core/src", "./types/sdk-storefront/src"],
+  },
+  "references": [
+    { "path": "./../sdk-core" }
+  ]
 }

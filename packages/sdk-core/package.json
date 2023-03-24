@@ -6,7 +6,7 @@
   "engines": {
     "node": ">=14.17.0"
   },
-  "main": "dist/index.js",
+  "main": "dist/index",
   "types": "types/index.d.ts",
   "scripts": {
     "prepare": "npm run build",

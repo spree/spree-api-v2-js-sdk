@@ -53,7 +53,10 @@ export type {
   WithCommonOptions
 } from './interfaces'
 
+const MyCustomFunction = () => 4
+
 export {
+  MyCustomFunction,
   Client,
   Http
 }
