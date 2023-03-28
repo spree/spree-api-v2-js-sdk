@@ -7,6 +7,8 @@
     "build:sdk-platform": "npm run build --workspace=@spree/platform-api-v2-sdk",
     "build:sdk-axios-fetcher": "npm run build --workspace=@spree/axios-fetcher",
     "build:sdk-node-fetcher": "npm run build --workspace=@spree/node-fetcher",
+    "dts-bundle": "npm run dts-bundle --workspace=@spree/storefront-api-v2-sdk",
+    "rollup": "npm run rollup --workspace=@spree/storefront-api-v2-sdk",
     "build": "npm run build:sdk-core && npm run build:sdk-storefront && npm run build:sdk-axios-fetcher && npm run build:sdk-node-fetcher",
     "pack:sdk-storefront": "npm pack --workspace=@spree/storefront-api-v2-sdk --pack-destination=packages/sdk-storefront",
     "pack:sdk-axios-fetcher": "npm pack --workspace=@spree/axios-fetcher --pack-destination=packages/sdk-fetcher-axios",

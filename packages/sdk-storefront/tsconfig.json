@@ -12,11 +12,11 @@
     "importsNotUsedAsValues": "preserve",
     "baseUrl": ".",
     "outDir": "./dist",
-    "paths": {
-      "@spree/core-api-v2-sdk": ["../sdk-core/src"]
-    },
+    // "paths": {
+    //   "@spree/core-api-v2-sdk": ["../sdk-core/src"]
+    // },
     "strictFunctionTypes": true,
-    "typeRoots": ["./types/sdk-core/src", "./types/sdk-storefront/src"],
+    "typeRoots": ["./types/index.d.ts"]
   },
   "references": [
     { "path": "./../sdk-core" }

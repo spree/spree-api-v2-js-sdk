@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "lib": ["dom", "es2016"],
     "moduleResolution": "node",
     "noUnusedParameters": true,
     "sourceMap": true,
@@ -12,5 +13,6 @@
     "importsNotUsedAsValues": "preserve",
     "composite": true,
     "rootDir": "src",
+    "typeRoots": ["./types/index.d.ts"]
   }
 }

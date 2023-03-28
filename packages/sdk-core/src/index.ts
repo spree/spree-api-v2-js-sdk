@@ -1,8 +1,28 @@
 import Client from './Client'
 import Http from './Http'
 
-export * from './errors'
-export * from './helpers'
+export {
+  BasicSpreeError,
+  ExpandedSpreeError,
+  MisconfigurationError,
+  NoResponseError,
+  SpreeError,
+  SpreeSDKError,
+  FetchError,
+  DocumentRelationshipError
+} from './errors'
+export {
+  findDocument,
+  findRelationshipDocuments,
+  findSingleRelationshipDocument,
+  objectToQuerystring,
+  makeSuccess,
+  makeFail,
+  toJson,
+  fromJson,
+  extractSuccess,
+  squashAndPreparePositionalArguments
+} from './helpers'
 
 export type {
   Fetcher,

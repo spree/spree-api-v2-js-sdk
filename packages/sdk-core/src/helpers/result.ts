@@ -1,8 +1,28 @@
-import * as errors from '../errors'
+import {
+  BasicSpreeError,
+  ExpandedSpreeError,
+  MisconfigurationError,
+  NoResponseError,
+  SpreeError,
+  SpreeSDKError,
+  FetchError,
+  DocumentRelationshipError
+} from '../errors'
 import CastError from '../errors/CastError'
 import DeserializeError from '../errors/DeserializeError'
 import type { Result } from '../interfaces/Result'
 import type { ResultResponse } from '../interfaces/ResultResponse'
+
+const errors = {
+  BasicSpreeError,
+  ExpandedSpreeError,
+  MisconfigurationError,
+  NoResponseError,
+  SpreeError,
+  SpreeSDKError,
+  FetchError,
+  DocumentRelationshipError
+}
 
 const makeSuccess = <F extends Error, S>(value: S): Result<F, S> => {
   return {
@@ -47,7 +67,7 @@ const toJson = <F extends Error, S>(result: Result<F, S>): { type: string; subty
   }
 }
 
-const castError = (error: { name: string; message: string; stack? }): errors.SpreeSDKError => {
+const castError = (error: { name: string; message: string; stack? }): SpreeSDKError => {
   if (!(error.name in errors)) {
     throw new CastError('Error not recognized')
   }
@@ -59,7 +79,7 @@ const castError = (error: { name: string; message: string; stack? }): errors.Spr
  * Converts JSON to a Result instance.
  * If the JSON represents a fail, converts the error into an instance of SpreeSDKError its subtype.
  */
-const fromJson = (json: { [key: string]: any }): Result<errors.SpreeSDKError, any> => {
+const fromJson = (json: { [key: string]: any }): Result<SpreeSDKError, any> => {
   if (json.type === 'SpreeSDKResult') {
     if (json.subtype === 'success') {
       return makeSuccess(json.value)

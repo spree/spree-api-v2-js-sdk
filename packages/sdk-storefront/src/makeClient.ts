@@ -16,7 +16,7 @@ import {
   Wishlists
 } from './endpoints'
 
-const endpoints = {
+const clientEndpoints = {
   account: Account,
   authentication: Authentication,
   cart: Cart,
@@ -32,6 +32,6 @@ const endpoints = {
   wishlists: Wishlists
 }
 
-const makeClient = (config: IClientConfig): Client => new Client(config, endpoints)
+const makeClient = (config: IClientConfig): Client & typeof clientEndpoints => new Client(config, clientEndpoints) as Client & typeof clientEndpoints
 
 export default makeClient
