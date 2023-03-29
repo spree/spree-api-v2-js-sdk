@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "lib": ["dom", "es2016"],
     "moduleResolution": "node",
     "noUnusedParameters": true,
     "sourceMap": true,
@@ -9,6 +10,8 @@
     "esModuleInterop": true,
     "declaration": true,
     "declarationDir": "./types",
-    "importsNotUsedAsValues": "preserve"
+    "importsNotUsedAsValues": "preserve",
+    "composite": true,
+    "rootDir": "src"
   }
 }
