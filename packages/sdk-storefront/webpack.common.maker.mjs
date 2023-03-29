@@ -15,6 +15,7 @@ export default ({ typeScriptConfigFilePath }) => ({
   context: baseDirectoryPath,
   plugins: [
     new ProgressBar(),
+    new DeleteBeforeRun(resolve(baseDirectoryPath, 'dist')),
     new DeleteBeforeRun(resolve(baseDirectoryPath, 'types')),
     new WatchIgnorePlugin({ paths: [resolve(baseDirectoryPath, 'types')] })
   ],
