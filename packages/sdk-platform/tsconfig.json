@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
+    "lib": ["dom", "es2016"],
     "noUnusedParameters": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
@@ -9,5 +10,8 @@
     "declaration": true,
     "declarationDir": "./types",
     "importsNotUsedAsValues": "preserve"
-  }
+  },
+  "references": [
+    { "path": "./../sdk-core" }
+  ]
 }
