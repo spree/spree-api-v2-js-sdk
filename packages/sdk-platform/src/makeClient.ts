@@ -92,6 +92,10 @@ const endpoints = {
   zones: Zones
 }
 
-const makeClient = (config: IClientConfig): Client => new Client(config, endpoints)
+type Endpoints = {
+  [key in keyof typeof endpoints]: InstanceType<typeof endpoints[key]>
+}
+
+const makeClient = (config: IClientConfig): Client & Endpoints => new Client(config, endpoints) as Client & Endpoints
 
 export default makeClient
