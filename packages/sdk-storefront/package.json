@@ -5,8 +5,13 @@
   "engines": {
     "node": ">=14.17.0"
   },
-  "main": "dist/server/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/server/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "dist/*": ["./dist/index.d.ts"]
+    }
+  },
   "scripts": {
     "build": "webpack",
     "build:server": "webpack --config-name server",
