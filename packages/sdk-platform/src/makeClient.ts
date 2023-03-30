@@ -1,4 +1,4 @@
-import { Client } from '@spree/core-api-v2-sdk'
+import { Client as CoreClient } from '@spree/core-api-v2-sdk'
 import type { IClientConfig } from '@spree/core-api-v2-sdk'
 import {
   Addresses,
@@ -95,7 +95,9 @@ const endpoints = {
 type Endpoints = {
   [key in keyof typeof endpoints]: InstanceType<typeof endpoints[key]>
 }
+type Client = CoreClient & Endpoints
 
-const makeClient = (config: IClientConfig): Client & Endpoints => new Client(config, endpoints) as Client & Endpoints
+const makeClient = (config: IClientConfig): Client => new CoreClient(config, endpoints) as Client
 
+export type { Client, Endpoints }
 export default makeClient
