@@ -1,8 +1,13 @@
-import type { WithCommonOptions } from '@spree/core-api-v2-sdk'
-import type { ImageTransformation } from '@spree/core-api-v2-sdk'
-import type { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from '@spree/core-api-v2-sdk'
-import type { IRelationships } from '@spree/core-api-v2-sdk'
-import type { ResultResponse } from '@spree/core-api-v2-sdk'
+import type {
+  WithCommonOptions,
+  ImageTransformation,
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  LocalizedSlugs,
+  ResultResponse
+} from '@spree/core-api-v2-sdk'
 
 export interface ProductAttr extends JsonApiDocument {
   type: string
@@ -25,6 +30,7 @@ export interface ProductAttr extends JsonApiDocument {
     display_price: string
     compare_at_price: string | null
     display_compare_at_price: string | null
+    localized_slugs: LocalizedSlugs
   }
   relationships: IRelationships
 }

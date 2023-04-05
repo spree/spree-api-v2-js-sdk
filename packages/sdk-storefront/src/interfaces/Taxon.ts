@@ -1,7 +1,12 @@
-import { JsonApiDocument, JsonApiListResponse, JsonApiSingleResponse } from '@spree/core-api-v2-sdk'
-import { IRelationships } from '@spree/core-api-v2-sdk'
-import { ResultResponse } from '@spree/core-api-v2-sdk'
-import { WithCommonOptions } from '@spree/core-api-v2-sdk'
+import {
+  JsonApiDocument,
+  JsonApiListResponse,
+  JsonApiSingleResponse,
+  IRelationships,
+  LocalizedSlugs,
+  ResultResponse,
+  WithCommonOptions
+} from '@spree/core-api-v2-sdk'
 
 export interface TaxonAttr extends JsonApiDocument {
   type: string
@@ -21,6 +26,7 @@ export interface TaxonAttr extends JsonApiDocument {
     is_root: boolean
     is_child: boolean
     is_leaf: string
+    localized_slugs: LocalizedSlugs
     updated_at: Date
   }
 
