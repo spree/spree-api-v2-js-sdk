@@ -7,7 +7,7 @@ import type {
   WithCommonOptions
 } from '@spree/core-api-v2-sdk'
 
-export interface PageAttr {
+export interface ItemAttr {
   quantity: number
   price: string
   created_at: string
@@ -43,7 +43,7 @@ export interface PageAttr {
 export interface ItemData extends JsonApiDocument {
   type: string
   id: string
-  attributes: PageAttr
+  attributes: ItemAttr
   relationships: IRelationships
 }
 

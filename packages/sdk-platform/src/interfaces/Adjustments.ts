@@ -7,7 +7,7 @@ import type {
   WithCommonOptions
 } from '@spree/core-api-v2-sdk'
 
-interface AdjustmentAttr {
+export interface AdjustmentAttr {
   source_type: string
   adjustable_type: string
   amount: string

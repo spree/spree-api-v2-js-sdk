@@ -7,7 +7,7 @@ import type {
   WithCommonOptions
 } from '@spree/core-api-v2-sdk'
 
-interface ClassificationAttr {
+export interface ClassificationAttr {
   position: number
   created_at: string
   updated_at: string

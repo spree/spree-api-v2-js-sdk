@@ -7,7 +7,7 @@ import type {
   WithCommonOptions
 } from '@spree/core-api-v2-sdk'
 
-interface CountriesAttr {
+export interface CountriesAttr {
   iso_name: string
   iso: string
   iso3: string
