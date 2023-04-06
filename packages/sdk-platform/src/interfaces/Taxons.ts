@@ -3,6 +3,7 @@ import type {
   JsonApiListResponse,
   JsonApiSingleResponse,
   IRelationships,
+  LocalizedSlugs,
   ResultResponse,
   WithCommonOptions
 } from '@spree/core-api-v2-sdk'
@@ -25,6 +26,7 @@ export interface TaxonAttr {
   is_root: boolean
   is_child: boolean
   is_leaf: boolean
+  localized_slugs: LocalizedSlugs
   public_metadata?: {
     [key: string]: string
   }
