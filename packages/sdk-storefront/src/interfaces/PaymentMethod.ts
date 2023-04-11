@@ -8,6 +8,9 @@ export interface PaymentMethodAttr extends JsonApiDocument {
     type: string
     name: string
     description: string
+    preferences: {
+      [key: string]: string
+    }
   }
 }
 
