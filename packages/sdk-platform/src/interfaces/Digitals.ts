@@ -14,7 +14,7 @@ export interface DigitalAttr {
   byte_size: number
 }
 
-export interface PageData extends JsonApiDocument {
+export interface DigitalData extends JsonApiDocument {
   type: string
   id: string
   attributes: DigitalAttr
@@ -22,11 +22,11 @@ export interface PageData extends JsonApiDocument {
 }
 
 export interface IDigital extends JsonApiSingleResponse {
-  data: PageData
+  data: DigitalData
 }
 
 export interface IDigitals extends JsonApiListResponse {
-  data: PageData[]
+  data: DigitalData[]
 }
 
 export interface IDigitalResult extends ResultResponse<IDigital> {}

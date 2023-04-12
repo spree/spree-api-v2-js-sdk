@@ -12,7 +12,7 @@ export interface SectionAttr {
   content: any
   settings: {
     gutters: string
-  },
+  }
   fit: string
   destination: string
   type: string
@@ -29,7 +29,7 @@ export interface SectionData extends JsonApiDocument {
   relationships: IRelationships
 }
 
-export interface PageParams {
+export interface SectionParams {
   cms_page: {
     name: string
     cms_page_id: string
@@ -67,12 +67,12 @@ export type ShowOptions = WithCommonOptions<
 
 export type CreateOptions = WithCommonOptions<
   { suggestToken: true; onlyAccountToken: true; suggestQuery: true },
-  PageParams
+  SectionParams
 >
 
 export type UpdateOptions = WithCommonOptions<
   { suggestToken: true; onlyAccountToken: true; suggestQuery: true },
-  PageParams & { id: string }
+  SectionParams & { id: string }
 >
 
 export type RemoveOptions = WithCommonOptions<

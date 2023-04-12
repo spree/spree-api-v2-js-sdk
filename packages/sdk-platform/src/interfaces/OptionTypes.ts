@@ -31,8 +31,8 @@ export interface OptionTypeData extends JsonApiDocument {
 
 export interface OptionTypeParams {
   option_type: {
-    name: 'color',
-    presentation: 'Color',
+    name: 'color'
+    presentation: 'Color'
     public_metadata?: {
       [key: string]: string
     }

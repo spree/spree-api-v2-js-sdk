@@ -50,7 +50,7 @@ export interface MenuItemParams {
 
 export interface MenuItemRepositionParams {
   menu_item: {
-    new_parent_id: number,
+    new_parent_id: number
     new_position_idx: number
   }
 }
