@@ -3,6 +3,7 @@ import type {
   JsonApiListResponse,
   JsonApiSingleResponse,
   IRelationships,
+  LocalizedSlugs,
   ResultResponse,
   WithCommonOptions
 } from '@spree/core-api-v2-sdk'
@@ -31,6 +32,7 @@ export interface ProductAttr {
   currency: string
   price: string
   compare_at_price: any
+  localized_slugs: LocalizedSlugs
   public_metadata?: {
     [key: string]: string
   }

@@ -29,6 +29,7 @@ export type {
   JsonApiResponse,
   JsonApiListResponse,
   JsonApiSingleResponse,
+  LocalizedSlugs,
   NoContentResponse,
   NoContentResult,
   IQuery,
