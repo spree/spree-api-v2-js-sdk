@@ -5,3 +5,7 @@ import makeClient, { Client, Endpoints } from './makeClient'
 
 export { makeClient, endpoints, routes, platformPath }
 export type { Client, Endpoints }
+
+export type {
+  LocalizedSlugs
+} from '@spree/core-api-v2-sdk'
