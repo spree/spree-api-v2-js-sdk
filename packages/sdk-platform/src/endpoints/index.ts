@@ -5,6 +5,7 @@ import Classifications from './Classifications'
 import Countries from './Countries'
 import Pages from './Pages'
 import Sections from './Sections'
+import DataFeeds from './DataFeeds'
 import Digitals from './Digitals'
 import Links from './Links'
 import Items from './Items'
@@ -50,6 +51,7 @@ export {
   Countries,
   Pages,
   Sections,
+  DataFeeds,
   Digitals,
   Links,
   Items,
